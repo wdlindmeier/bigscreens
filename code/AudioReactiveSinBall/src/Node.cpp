@@ -22,7 +22,7 @@ void Node::update(const float fftBandValue,
     // Lets say the amount of averaging depends on the band delta.
     // This should be 0-1
     float bandDelta = fabs(fftBandValue - mPrevBandValue);
-    mPrevBandValue = fftBandValue;
+    mPrevBandValue = fftBandValue; //ci::math<float>::clamp(fftBandValue, 0, 1.0);
     
     float deltaSize = minSize + (bandDelta * (maxSize - minSize));
     mAttackSize = (deltaSize * attackWeight) + (mAttackSize * (1.0-attackWeight));
@@ -31,8 +31,6 @@ void Node::update(const float fftBandValue,
     mGainSize = (gainSize * gainWeight) + (mGainSize * (1.0-gainWeight));
     
     mSize = ((mGainSize * gainWeight) + (mAttackSize * attackWeight)) / (gainWeight + attackWeight);
-    
-    // mSize = (mGainSize + mAttackSize) / 2.0f;
 }
 
 void Node::draw(const Vec3f & position, const Vec3f & axisProgress)

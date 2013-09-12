@@ -76,7 +76,9 @@ class AudioReactiveSinBallApp : public AppNative {
     float                       mGainWeight;
     bool                        mDidHitInterestingAudio;
     bool                        mDidHitInterestingVisual;
-    float                       mMaxBandValue;
+    float                       mMaxNodeSize;
+    float                       mMinNodeSize;
+
     int                         mMaxBand;
     
     InterfaceGl                 mParams;
@@ -116,7 +118,8 @@ void AudioReactiveSinBallApp::setup()
     mNumNodes = NumFFTChannels;
     mMouseIsDown = false;
     mMousePos = Vec2f::zero();
-    mMaxBandValue = 26.0f;
+    mMinNodeSize = 3.0f;
+    mMaxNodeSize = 26.0f;
     mAttackWeight = 0.85f;
     mGainWeight = 0.35f;
     mMaxBand = NumFFTChannels;
@@ -126,17 +129,18 @@ void AudioReactiveSinBallApp::setup()
     mDidHitInterestingVisual = false;
 
     mParams = params::InterfaceGl(getWindow(), "Scene Params", toPixels(Vec2i(250, 250)));
-    mParams.addParam("Time Step Size", &mStepSize, "min=0 max=5.0 step=0.01");
+    mParams.addParam("Time Step Size", &mStepSize, "min=0 max=5.0 step=0.001");
     mParams.addParam("Progress", &mProgress, "min=0.0 max=3.2 step=0.01");
     mParams.addParam("Num Nodes", &mNumNodes, "min=0 max=1000");
     mParams.addParam("Sphere Radius", &mSphereRadius, "min=0 max=1000");
     mParams.addParam("Radius Lerp", &mRadialLerp, "min=0 max=1.0 step=0.01");
     mParams.addParam("Radius Decay", &mRadialDecay, "min=0 max=1.0 step=0.01");
-    mParams.addParam("Max Node Size", &mMaxBandValue, "min=0 max=200");
+    mParams.addParam("Min Node Size", &mMinNodeSize, "min=0 max=200");
+    mParams.addParam("Max Node Size", &mMaxNodeSize, "min=0 max=200");
     mParams.addParam("Attack Weight", &mAttackWeight, "min=0 max=1.0 step=0.01");
     mParams.addParam("Gain Weight", &mGainWeight, "min=0 max=1.0 step=0.01");
     mParams.addParam("Max Band", &mMaxBand, "min=0 max=" + to_string(NumFFTChannels));
-    
+
     mParams.hide();
     
     mMoviePath = getResourcePath("reich.mp3");
@@ -194,8 +198,9 @@ void AudioReactiveSinBallApp::loadMovieFile()
 void AudioReactiveSinBallApp::resetClock()
 {
     float numSeconds = mMovie->getDuration();
-    mProgressStep = M_PI / (numSeconds * getFrameRate());
+    mProgressStep = M_PI / (numSeconds * 60);
     mProgress = 0.0f;
+    mTimestep = 0.0f;
     mInterestingVisualMomentIndex = 0;
     mNextInterestingVisualMoment = InterestingVisualMoments[mInterestingVisualMomentIndex];
     mPrevInterestingVisualMoment = mNextInterestingVisualMoment * -1;
@@ -256,13 +261,20 @@ void AudioReactiveSinBallApp::update()
         float *fftData = mMovie->getFftData();
         float bandValue = fftData[fftChannel];
         
-        const static float kMinBandValue = 2.0f;
         Node & node = mNodes[i];
         node.update(bandValue,
-                    kMinBandValue,
-                    mMaxBandValue,
+                    mMinNodeSize,
+                    mMaxNodeSize,
                     mAttackWeight,
                     mGainWeight);
+        // Nice and chunky!
+        /*
+        node.update(1,
+                    kMinBandValue,
+                    mMaxBandValue,
+                    0.5,
+                    0.5);
+        */
     }
 }
 
@@ -336,7 +348,7 @@ void AudioReactiveSinBallApp::draw()
     
     // Draw Balls    
     gl::enableDepthWrite();
-    gl::enableDepthRead();    
+    gl::enableDepthRead();
 
     float nodeSize = mNodes.size();
     for(int i=0;i<nodeSize;i++)
@@ -349,7 +361,8 @@ void AudioReactiveSinBallApp::draw()
         float y = mCenter.y + (yProgress * mSphereRadiusActual);
         float x = mCenter.x + (sin(offset) * mSphereRadiusActual * zProgress);
         float z = mCenter.z + (cos(offset) * mSphereRadiusActual * zProgress);
-        
+        Vec3f position(x,y,z);
+
         /*
          // Old world.
          // Colors morph.
@@ -360,7 +373,7 @@ void AudioReactiveSinBallApp::draw()
         */
         
         Node & n = mNodes[i];
-        Vec3f position(x,y,z);
+
         Vec3f progress(fmod(offset * mProgress, (float)nodeSize) / nodeSize,
                        yProgress,
                        zProgress);

@@ -15,7 +15,13 @@ class Node
     
 public:
     
-    Node(const float scalarNode) : mScalarNode(scalarNode), mPrevBandValue(0) {};
+    Node(const float scalarNode) :
+    mScalarNode(scalarNode),
+    mAttackSize(0),
+    mGainSize(0),
+    mSize(0),
+    mPrevBandValue(0)
+    {};
     
     void update(const float fftBandValue,
                 float minSize,
