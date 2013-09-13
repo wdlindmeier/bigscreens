@@ -5,6 +5,9 @@
 #include "cinder/params/Params.h"
 #include "Node.h"
 
+#include "cinder/qtime/MovieWriter.h"
+#include "cinder/Utilities.h"
+
 const static float InterestingVisualMoments[] =
 {
     0.50, 0.65, 0.66, 0.71, 0.96, 0.98, 0.99, 1.00, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07, 1.08, 1.09,
@@ -98,11 +101,16 @@ class AudioReactiveSinBallApp : public AppNative {
     int                         mInterestingAudioMomentIndex;
     bool                        mUseInterestingAudioMoments;
     
+    qtime::MovieWriter          mMovieWriter;
+    bool                        mDidWriteMovie;
+    bool                        mDidCreateMovieWriter;
+    
 };
 
 void AudioReactiveSinBallApp::prepareSettings( Settings *settings )
 {
     settings->setWindowSize( 900, 700 );
+    settings->setFrameRate(30);
 }
 
 
@@ -127,6 +135,9 @@ void AudioReactiveSinBallApp::setup()
     mRadialDecay = 0.95f;
     mDidHitInterestingAudio = false;
     mDidHitInterestingVisual = false;
+    mDidCreateMovieWriter = false;
+
+    mDidWriteMovie = true;
 
     mParams = params::InterfaceGl(getWindow(), "Scene Params", toPixels(Vec2i(250, 250)));
     mParams.addParam("Time Step Size", &mStepSize, "min=0 max=5.0 step=0.001");
@@ -140,6 +151,7 @@ void AudioReactiveSinBallApp::setup()
     mParams.addParam("Attack Weight", &mAttackWeight, "min=0 max=1.0 step=0.01");
     mParams.addParam("Gain Weight", &mGainWeight, "min=0 max=1.0 step=0.01");
     mParams.addParam("Max Band", &mMaxBand, "min=0 max=" + to_string(NumFFTChannels));
+    mParams.addText("FPS", "label=``");
 
     mParams.hide();
     
@@ -166,6 +178,7 @@ void AudioReactiveSinBallApp::resize()
                        0.1f,
                        5000.0f );
     mMayaCam.setCurrentCam( cam );
+    
 }
 
 void AudioReactiveSinBallApp::loadMovieFile()
@@ -276,10 +289,20 @@ void AudioReactiveSinBallApp::update()
                     0.5);
         */
     }
+
 }
 
 void AudioReactiveSinBallApp::draw()
 {
+    
+    if (!mDidWriteMovie && isFullScreen() && !mDidCreateMovieWriter)
+    {
+        mMovieWriter = qtime::MovieWriter(getDocumentsDirectory() / "audioSinBallRender.mov",
+                                          getWindowWidth(),
+                                          getWindowHeight());
+        mDidCreateMovieWriter = true;
+    }
+
     bool isMoviePlaying = mMovie && mMovie->isPlaying();
     
     float scalarVisualMoment = 0.0f;
@@ -393,6 +416,11 @@ void AudioReactiveSinBallApp::draw()
     
     gl::disableDepthRead();
     
+    if (!mDidWriteMovie && isFullScreen())
+    {
+        mMovieWriter.addFrame(copyWindowSurface(Area(Vec2i::zero(), getWindowSize())));
+    }
+    
     // Draw the interface
     if (mParams.isVisible())
     {
@@ -423,6 +451,12 @@ void AudioReactiveSinBallApp::keyDown( KeyEvent event )
     
     switch ( c )
     {
+        case 's':
+        {
+            mMovieWriter.finish();
+            mDidWriteMovie = true;
+            break;
+        }
         case ' ':
         {
             loadMovieFile();
