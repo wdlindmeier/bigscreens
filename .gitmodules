@@ -1,0 +1,3 @@
+[submodule "cinder_dev"]
+	path = cinder_dev
+	url = https://github.com/ryanbartley/cinder_dev
