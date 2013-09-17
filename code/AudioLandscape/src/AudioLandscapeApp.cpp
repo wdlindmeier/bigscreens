@@ -22,6 +22,7 @@ class AudioLandscapeApp : public AppNative {
 	void update();
 	void draw();
     void loadMovieFile();
+    void keyDown(KeyEvent event);
 
     
     CameraPersp         mCamera;
@@ -78,6 +79,7 @@ void AudioLandscapeApp::setup()
     mParams.addParam("Camera FOV", &mCameraFOV, "min=0 max=360.0f step=1.0f");
     mParams.addParam("Audio Scale", &mAudioScale, "min=0 max=500.0f step=1.0f");
     mParams.addText("FPS");
+    mParams.setOptions( "", "iconified=true" );
     
     mNodeInterval = Vec3f((float)getWindowWidth() / (float)kNumFFTChannels,
                           1.0,
@@ -99,8 +101,6 @@ void AudioLandscapeApp::setup()
                                    y + 0.5) * mNodeInterval;
             n.setPosition(position);
             n.setRadius(1.0f);
-//            float scalarX = (float)x / (float)kNumFFTChannels;
-//            n.setColor(ColorA(1.0f-scalarX, 1.0, scalarX, 1.0f));
             n.setColor(ColorA(1,1,1,1));
             yNodes.push_back(n);
         }
@@ -115,6 +115,10 @@ void AudioLandscapeApp::setup()
 
 void AudioLandscapeApp::loadMovieFile()
 {
+    if (mMovie)
+    {
+        mMovie->stop();
+    }
 	try {
 		// load up the movie, set it to loop, and begin playing
 		mMovie = qtime::MovieGl::create( mMoviePath );
@@ -141,6 +145,11 @@ void AudioLandscapeApp::update()
     boost::posix_time::ptime timeNow = boost::posix_time::microsec_clock::local_time();
     boost::posix_time::time_duration timeDelta = timeNow - mTimeUpdated;
     mTimeUpdated = timeNow;
+ 
+    if (!mMovie)
+    {
+        return;
+    }
     
     float incrementZ = timeDelta.total_milliseconds() / 50.0f;
     mNodeRowIndex += incrementZ;
@@ -185,6 +194,18 @@ void AudioLandscapeApp::update()
 
 void AudioLandscapeApp::draw()
 {
+    gl::clear( Color( 0, 0, 0 ) );
+    mParams.setOptions("FPS", "label=`FPS: "+to_string((int)getAverageFps())+"`");
+    
+    if (!mMovie)
+    {
+        if (mParams.isVisible())
+        {
+            mParams.draw();
+        }
+        return;
+    }
+    
     Vec3f eye(getWindowWidth()/2.f,
               mCameraY,
               mCameraZ);
@@ -200,13 +221,8 @@ void AudioLandscapeApp::draw()
                            0.01f, // near
                            10000.0f); // far
     
-	// clear out the window with black
-	gl::clear( Color( 0, 0, 0 ) );
-    
-    mParams.setOptions("FPS", "label=`FPS: "+to_string((int)getAverageFps())+"`");
-
     gl::enableAdditiveBlending();
-    // gl::enableAlphaBlending();
+
     gl::enableDepthRead();
     gl::enableDepthWrite();
     
@@ -259,12 +275,14 @@ void AudioLandscapeApp::draw()
     gl::draw(meshSurf);
     gl::disableWireframe();
     
+
+    // Draw the nodes
     /*
     mShaderNodes.bind();
     
     Matrix44f camMat = mCamera.getProjectionMatrix() * mCamera.getModelViewMatrix();
    
-    for ( int y = 0; y < kNumFFTChannels; ++y )
+    for ( int y = 0; y < kMeshDepth; ++y )
     {
         for ( int x = 0; x < kNumFFTChannels; ++x )
         {
@@ -283,11 +301,19 @@ void AudioLandscapeApp::draw()
     
     mShaderNodes.unbind();
     */
-    
 
     if (mParams.isVisible())
     {
         mParams.draw();
+    }
+}
+
+void AudioLandscapeApp::keyDown(KeyEvent event)
+{
+    if (event.getChar() == ' ')
+    {
+        if(!mMoviePath.empty())
+            loadMovieFile();
     }
 }
 
