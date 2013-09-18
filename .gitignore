@@ -2,6 +2,7 @@
 *.xcuserdatad
 build/
 DerivedData/
+Documentation/
 
 # Compiled Object files
 *.slo
