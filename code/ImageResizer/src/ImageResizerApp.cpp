@@ -109,26 +109,58 @@ void ImageResizerApp::update()
         
         // Figure out the scale
         cv::Size inputSize = mInputMat.size();
-        float heightRatio = (float)kOutputHeight / (float)inputSize.height;
         
-        // Scale the input UP
-        cv::Size scaledSize(mInputMat.cols * heightRatio, kOutputHeight);
+        cv::Size scaledSize = inputSize;
+        
+        // Only scale the image if it's shorter than the output height
+        bool scaleUp = inputSize.height < kOutputHeight;
+        if (scaleUp)
+        {
+            float heightRatio = (float)kOutputHeight / (float)inputSize.height;
+            scaledSize.width = mInputMat.cols * heightRatio;
+            scaledSize.height = kOutputHeight;
+        }
+        
         cv::Mat scaledInput(scaledSize, mInputMat.type());
-        cv::resize(mInputMat, scaledInput, scaledSize, 1, 1, cv::INTER_AREA);
+        cv::Mat flippedScaledInput(scaledSize, mInputMat.type());
+        if (scaleUp)
+        {
+            cv::resize(mInputMat, scaledInput, scaledSize, 1, 1, cv::INTER_AREA);
+        }
+        else
+        {
+            scaledInput = mInputMat;
+        }
+        
+        cv::flip(scaledInput, flippedScaledInput, 1);
         
         // Create the output container
         cv::Mat outMat(cv::Size(kOutputWidth, kOutputHeight), mInputMat.type());
         
         int newX = 0;
+        bool flip = false;
         while (newX < kOutputWidth)
         {
             // Get the region of interest
             int regionWidth = std::min<int>(scaledSize.width, kOutputWidth - newX);
             cv::Mat region = outMat(cv::Rect(newX, 0,
                                              regionWidth,
-                                             scaledSize.height));
+                                             kOutputHeight));
             newX = newX + scaledSize.width;
-            scaledInput(cv::Rect(0,0,regionWidth,scaledSize.height)).copyTo(region);
+            
+            cv::Rect copyRegion(0,
+                                (int)((scaledSize.height - kOutputHeight) * 0.5),
+                                regionWidth,
+                                kOutputHeight);
+            if (flip)
+            {
+                flippedScaledInput(copyRegion).copyTo(region);
+            }
+            else
+            {
+                scaledInput(copyRegion).copyTo(region);
+            }
+            //flip = !flip;
         }
 
         // Save to output
