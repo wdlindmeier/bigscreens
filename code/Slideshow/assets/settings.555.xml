@@ -1,0 +1,19 @@
+<settings>
+	<client_id>555</client_id>
+    <name>Controller</name>
+	<server>
+		<ip>127.0.0.1</ip>
+		<port>9002</port>
+	</server>
+    <local_location>
+		<x>0</x>
+		<y>0</y>
+	</local_location>
+    <local_dimensions>
+		<width>240</width>
+		<height>100</height>
+	</local_dimensions>
+    <offset_window>true</offset_window>
+	<asynchronous>true</asynchronous>
+	<asynchreceive>true</asynchreceive>
+</settings>

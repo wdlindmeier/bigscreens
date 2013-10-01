@@ -18,7 +18,35 @@
 		638458295D5145A299563855 /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095B0FEA8B38453BA93B3D5B /* TCPAsyncClient.cpp */; };
 		77B9D3820EC04469985C5984 /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 287C9ADE6E48480AB5033C1A /* TCPClient.cpp */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		A9D9DDF717FA5D1500F081F2 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D9DDF617FA5D1500F081F2 /* settings.xml */; };
+		A9D8A67817FB0AD80080A0EE /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 96909E1D54074FFEAE12C637 /* CinderApp.icns */; };
+		A9D8A67A17FB0AD80080A0EE /* SlideshowApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9F62753484731B19416A3 /* SlideshowApp.cpp */; };
+		A9D8A67B17FB0AD80080A0EE /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B023D0E267A49A99B278DAC /* MPEClient.cpp */; };
+		A9D8A67C17FB0AD80080A0EE /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095B0FEA8B38453BA93B3D5B /* TCPAsyncClient.cpp */; };
+		A9D8A67D17FB0AD80080A0EE /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 287C9ADE6E48480AB5033C1A /* TCPClient.cpp */; };
+		A9D8A67F17FB0AD80080A0EE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9D8A68017FB0AD80080A0EE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		A9D8A68117FB0AD80080A0EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		A9D8A68217FB0AD80080A0EE /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		A9D8A68317FB0AD80080A0EE /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		A9D8A68417FB0AD80080A0EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		A9D8A68517FB0AD80080A0EE /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		A9D8A68617FB0AD80080A0EE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		A9D8A68E17FB0B4D0080A0EE /* settings.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D8A68C17FB0B4D0080A0EE /* settings.0.xml */; };
+		A9D8A69017FB0B5D0080A0EE /* settings.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D8A68D17FB0B4D0080A0EE /* settings.1.xml */; };
+		A9D8A69417FB12690080A0EE /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 96909E1D54074FFEAE12C637 /* CinderApp.icns */; };
+		A9D8A69617FB12690080A0EE /* SlideshowApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9F62753484731B19416A3 /* SlideshowApp.cpp */; };
+		A9D8A69717FB12690080A0EE /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B023D0E267A49A99B278DAC /* MPEClient.cpp */; };
+		A9D8A69817FB12690080A0EE /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095B0FEA8B38453BA93B3D5B /* TCPAsyncClient.cpp */; };
+		A9D8A69917FB12690080A0EE /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 287C9ADE6E48480AB5033C1A /* TCPClient.cpp */; };
+		A9D8A69B17FB12690080A0EE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9D8A69C17FB12690080A0EE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		A9D8A69D17FB12690080A0EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		A9D8A69E17FB12690080A0EE /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		A9D8A69F17FB12690080A0EE /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		A9D8A6A017FB12690080A0EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		A9D8A6A117FB12690080A0EE /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		A9D8A6A217FB12690080A0EE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		A9D8A6A917FB12E80080A0EE /* settings.555.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D8A6A817FB12E80080A0EE /* settings.555.xml */; };
 		D8C7C7FBEBA34D11AD30E1CD /* SlideshowApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9F62753484731B19416A3 /* SlideshowApp.cpp */; };
 		F5B92DCB20C04437B2418DC6 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 96909E1D54074FFEAE12C637 /* CinderApp.icns */; };
 /* End PBXBuildFile section */
@@ -40,10 +68,16 @@
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		7B023D0E267A49A99B278DAC /* MPEClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = MPEClient.cpp; path = "../blocks/Most-Pixels-Ever/src/MPEClient.cpp"; sourceTree = "<group>"; };
 		7F60CA0989CB4A2F87FE203C /* MPEMessageHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = MPEMessageHandler.hpp; path = "../blocks/Most-Pixels-Ever/include/MPEMessageHandler.hpp"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Slideshow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slideshow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Slideshow 0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Slideshow 0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDCE60B27544C83BF2EEAD4 /* MPEClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MPEClient.h; path = "../blocks/Most-Pixels-Ever/include/MPEClient.h"; sourceTree = "<group>"; };
 		96909E1D54074FFEAE12C637 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
-		A9D9DDF617FA5D1500F081F2 /* settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = settings.xml; path = ../assets/settings.xml; sourceTree = "<group>"; };
+		A9D8A68A17FB0AD80080A0EE /* Slideshow 1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Slideshow 1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D8A68B17FB0AD90080A0EE /* Slideshow copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Slideshow copy-Info.plist"; path = "/Users/bill/Documents/ITP/BIG-Screens/code/Slideshow/xcode/Slideshow copy-Info.plist"; sourceTree = "<absolute>"; };
+		A9D8A68C17FB0B4D0080A0EE /* settings.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = settings.0.xml; path = ../assets/settings.0.xml; sourceTree = "<group>"; };
+		A9D8A68D17FB0B4D0080A0EE /* settings.1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = settings.1.xml; path = ../assets/settings.1.xml; sourceTree = "<group>"; };
+		A9D8A6A617FB12690080A0EE /* Slideshow Controller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Slideshow Controller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D8A6A717FB12690080A0EE /* Slideshow 1 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Slideshow 1 copy-Info.plist"; path = "/Users/bill/Documents/ITP/BIG-Screens/code/Slideshow/xcode/Slideshow 1 copy-Info.plist"; sourceTree = "<absolute>"; };
+		A9D8A6A817FB12E80080A0EE /* settings.555.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = settings.555.xml; path = ../assets/settings.555.xml; sourceTree = "<group>"; };
 		CED99CF47BBC4FB8A3D9EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D435723DBCD0427F8B1CB8C4 /* MPEApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = MPEApp.hpp; path = "../blocks/Most-Pixels-Ever/include/MPEApp.hpp"; sourceTree = "<group>"; };
 		DB2B84DB2690424DB7C7861F /* MPEProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = MPEProtocol.hpp; path = "../blocks/Most-Pixels-Ever/include/MPEProtocol.hpp"; sourceTree = "<group>"; };
@@ -65,6 +99,36 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D8A67E17FB0AD80080A0EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A67F17FB0AD80080A0EE /* Cocoa.framework in Frameworks */,
+				A9D8A68017FB0AD80080A0EE /* OpenGL.framework in Frameworks */,
+				A9D8A68117FB0AD80080A0EE /* CoreVideo.framework in Frameworks */,
+				A9D8A68217FB0AD80080A0EE /* QTKit.framework in Frameworks */,
+				A9D8A68317FB0AD80080A0EE /* Accelerate.framework in Frameworks */,
+				A9D8A68417FB0AD80080A0EE /* AudioToolbox.framework in Frameworks */,
+				A9D8A68517FB0AD80080A0EE /* AudioUnit.framework in Frameworks */,
+				A9D8A68617FB0AD80080A0EE /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D8A69A17FB12690080A0EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A69B17FB12690080A0EE /* Cocoa.framework in Frameworks */,
+				A9D8A69C17FB12690080A0EE /* OpenGL.framework in Frameworks */,
+				A9D8A69D17FB12690080A0EE /* CoreVideo.framework in Frameworks */,
+				A9D8A69E17FB12690080A0EE /* QTKit.framework in Frameworks */,
+				A9D8A69F17FB12690080A0EE /* Accelerate.framework in Frameworks */,
+				A9D8A6A017FB12690080A0EE /* AudioToolbox.framework in Frameworks */,
+				A9D8A6A117FB12690080A0EE /* AudioUnit.framework in Frameworks */,
+				A9D8A6A217FB12690080A0EE /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +178,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* Slideshow.app */,
+				8D1107320486CEB800E47090 /* Slideshow 0.app */,
+				A9D8A68A17FB0AD80080A0EE /* Slideshow 1.app */,
+				A9D8A6A617FB12690080A0EE /* Slideshow Controller.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +194,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				A9D8A68B17FB0AD90080A0EE /* Slideshow copy-Info.plist */,
+				A9D8A6A717FB12690080A0EE /* Slideshow 1 copy-Info.plist */,
 			);
 			name = Slideshow;
 			sourceTree = "<group>";
@@ -144,7 +212,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A9D9DDF617FA5D1500F081F2 /* settings.xml */,
+				A9D8A6A817FB12E80080A0EE /* settings.555.xml */,
+				A9D8A68C17FB0B4D0080A0EE /* settings.0.xml */,
+				A9D8A68D17FB0B4D0080A0EE /* settings.1.xml */,
 				96909E1D54074FFEAE12C637 /* CinderApp.icns */,
 				CED99CF47BBC4FB8A3D9EC76 /* Info.plist */,
 			);
@@ -195,9 +265,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* Slideshow */ = {
+		8D1107260486CEB800E47090 /* Slideshow 0 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Slideshow" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Slideshow 0" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -207,10 +277,46 @@
 			);
 			dependencies = (
 			);
-			name = Slideshow;
+			name = "Slideshow 0";
 			productInstallPath = "$(HOME)/Applications";
 			productName = Slideshow;
-			productReference = 8D1107320486CEB800E47090 /* Slideshow.app */;
+			productReference = 8D1107320486CEB800E47090 /* Slideshow 0.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9D8A67517FB0AD80080A0EE /* Slideshow 1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9D8A68717FB0AD80080A0EE /* Build configuration list for PBXNativeTarget "Slideshow 1" */;
+			buildPhases = (
+				A9D8A67617FB0AD80080A0EE /* Resources */,
+				A9D8A67917FB0AD80080A0EE /* Sources */,
+				A9D8A67E17FB0AD80080A0EE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Slideshow 1";
+			productInstallPath = "$(HOME)/Applications";
+			productName = Slideshow;
+			productReference = A9D8A68A17FB0AD80080A0EE /* Slideshow 1.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9D8A69117FB12690080A0EE /* Slideshow Controller */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9D8A6A317FB12690080A0EE /* Build configuration list for PBXNativeTarget "Slideshow Controller" */;
+			buildPhases = (
+				A9D8A69217FB12690080A0EE /* Resources */,
+				A9D8A69517FB12690080A0EE /* Sources */,
+				A9D8A69A17FB12690080A0EE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Slideshow Controller";
+			productInstallPath = "$(HOME)/Applications";
+			productName = Slideshow;
+			productReference = A9D8A6A617FB12690080A0EE /* Slideshow Controller.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -234,7 +340,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* Slideshow */,
+				8D1107260486CEB800E47090 /* Slideshow 0 */,
+				A9D8A67517FB0AD80080A0EE /* Slideshow 1 */,
+				A9D8A69117FB12690080A0EE /* Slideshow Controller */,
 			);
 		};
 /* End PBXProject section */
@@ -244,8 +352,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D9DDF717FA5D1500F081F2 /* settings.xml in Resources */,
+				A9D8A68E17FB0B4D0080A0EE /* settings.0.xml in Resources */,
 				F5B92DCB20C04437B2418DC6 /* CinderApp.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D8A67617FB0AD80080A0EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A69017FB0B5D0080A0EE /* settings.1.xml in Resources */,
+				A9D8A67817FB0AD80080A0EE /* CinderApp.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D8A69217FB12690080A0EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A6A917FB12E80080A0EE /* settings.555.xml in Resources */,
+				A9D8A69417FB12690080A0EE /* CinderApp.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,9 +389,131 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9D8A67917FB0AD80080A0EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A67A17FB0AD80080A0EE /* SlideshowApp.cpp in Sources */,
+				A9D8A67B17FB0AD80080A0EE /* MPEClient.cpp in Sources */,
+				A9D8A67C17FB0AD80080A0EE /* TCPAsyncClient.cpp in Sources */,
+				A9D8A67D17FB0AD80080A0EE /* TCPClient.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D8A69517FB12690080A0EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D8A69617FB12690080A0EE /* SlideshowApp.cpp in Sources */,
+				A9D8A69717FB12690080A0EE /* MPEClient.cpp in Sources */,
+				A9D8A69817FB12690080A0EE /* TCPAsyncClient.cpp in Sources */,
+				A9D8A69917FB12690080A0EE /* TCPClient.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		A9D8A68817FB0AD80080A0EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Slideshow_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = "Slideshow 1";
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9D8A68917FB0AD80080A0EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Slideshow_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=1";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = "Slideshow 1";
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A9D8A6A417FB12690080A0EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Slideshow_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=555",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = "Slideshow Controller";
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9D8A6A517FB12690080A0EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Slideshow_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=555";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = "Slideshow Controller";
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -280,12 +528,13 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"CLIENT_ID=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
-				PRODUCT_NAME = Slideshow;
+				PRODUCT_NAME = "Slideshow 0";
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
 			};
@@ -303,11 +552,12 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Slideshow_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=0";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
-				PRODUCT_NAME = Slideshow;
+				PRODUCT_NAME = "Slideshow 0";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
@@ -351,7 +601,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Slideshow" */ = {
+		A9D8A68717FB0AD80080A0EE /* Build configuration list for PBXNativeTarget "Slideshow 1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9D8A68817FB0AD80080A0EE /* Debug */,
+				A9D8A68917FB0AD80080A0EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9D8A6A317FB12690080A0EE /* Build configuration list for PBXNativeTarget "Slideshow Controller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9D8A6A417FB12690080A0EE /* Debug */,
+				A9D8A6A517FB12690080A0EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Slideshow 0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
