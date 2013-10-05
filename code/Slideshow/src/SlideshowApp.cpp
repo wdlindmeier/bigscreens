@@ -20,7 +20,7 @@ class SlideshowApp : public AppNative, public MPEApp
 public:
 	void setup();
     void mpeReset();
-    
+    void prepareSettings(Settings *settings);
 	void update();
     void updateParams();
     void mpeFrameUpdate(long serverFrameNumber);
@@ -69,6 +69,11 @@ ci::DataSourceRef SlideshowApp::mpeSettingsFile()
 }
 
 const static int kInitialSlideRate = 120;
+
+void SlideshowApp::prepareSettings(Settings *settings)
+{
+    settings->setBorderless();
+}
 
 void SlideshowApp::setup()
 {
