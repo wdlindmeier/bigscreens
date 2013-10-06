@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>24F12020-4D02-4353-9D6F-93DC02ADB8E5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GridMaker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>87AF6915-18C4-4282-A94E-6CA714774F20</key>
+		<string>ssh://github.com/wdlindmeier/bigscreens.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>code/GridMaker/xcode/GridMaker.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>87AF6915-18C4-4282-A94E-6CA714774F20</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/wdlindmeier/bigscreens.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>87AF6915-18C4-4282-A94E-6CA714774F20</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>87AF6915-18C4-4282-A94E-6CA714774F20</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BIG-Screens</string>
+		</dict>
+	</array>
+</dict>
+</plist>
