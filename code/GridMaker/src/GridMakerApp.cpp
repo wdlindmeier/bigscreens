@@ -1,6 +1,8 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
+#include "cinder/Rect.h"
+#include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "Helpers.hpp"
 #include <boost/iterator/filter_iterator.hpp>
@@ -16,10 +18,11 @@ struct ScreenRegion
     bool isActive;
     ColorAf color;
 
-    ScreenRegion(float x1, float y1, float x2, float y2) :
+    ScreenRegion(int x1, int y1, int x2, int y2) :
     rect(x1,y1,x2,y2),
     isActive(false),
-    color(Rand::randFloat(),Rand::randFloat(),Rand::randFloat(),1.0f)
+    color(1.0f,1.0f,1.0f,1.0f)
+    //color(Rand::randFloat(),Rand::randFloat(),Rand::randFloat(),1.0f)
     {
     };
 };
@@ -31,6 +34,20 @@ struct Layout
     
     Layout() : name(""){};
 };
+
+template<typename T>
+bool RectCompare(RectT<T> rectA, RectT<T> rectB)
+{
+    return  (int)rectA.x1 == (int)rectB.x1 &&
+            (int)rectA.x2 == (int)rectB.x2 &&
+            (int)rectA.y1 == (int)rectB.y1 &&
+            (int)rectA.y2 == (int)rectB.y2;
+}
+
+Rectf RectfFromRectInt(RectT<int> rectA)
+{
+    return Rectf((float)rectA.x1, (float)rectA.y1, (float)rectA.x2, (float)rectA.y2);
+}
 
 bool RectsOverlap(Rectf rectA, Rectf rectB)
 {
@@ -78,6 +95,7 @@ Vec2i MousePositionSnappedToSize(const Vec2i & pos, const int snapSize)
 
 class GridMakerApp : public AppNative {
   public:
+    void prepareSettings(Settings *settings);
 	void setup();
 	void shutdown();
 	void mouseDown( MouseEvent event );
@@ -88,6 +106,7 @@ class GridMakerApp : public AppNative {
     void keyUp(KeyEvent event);
 	void update();
 	void draw();
+    void drawLayout(const Layout & layout, const float scalarAmount, const Layout & compareTolayout);
     void splitScreen();
     void finishJoining(MouseEvent event);
     void finishRemoving(MouseEvent event);
@@ -98,6 +117,7 @@ class GridMakerApp : public AppNative {
 
     vector<Layout> mGridLayouts;
     int mIdxCurrentLayout;
+    int mIdxPrevLayout;
     int mSelectedRegionIndex;
     bool mIsAdding;
     bool mIsRemoving;
@@ -107,7 +127,14 @@ class GridMakerApp : public AppNative {
     Vec2i mMousePositionEnd;
     Vec2i mMousePosition;
     Rectf mDrawingRect;
+    float mTransitionAmt;
+    gl::Texture mScreenTexture;
 };
+
+void GridMakerApp::prepareSettings(Settings *settings)
+{
+    settings->setWindowSize(1000, 200);
+}
 
 void GridMakerApp::setup()
 {
@@ -117,6 +144,9 @@ void GridMakerApp::setup()
     mIsJoining = false;
     mSelectedRegionIndex = -1;
     mIdxCurrentLayout = -1;
+    mIdxPrevLayout = -1;
+    mTransitionAmt = 1.0;
+    mScreenTexture = loadImage(loadResource("screen.png"));
     loadAllGrids();
     if (mIdxCurrentLayout > -1)
     {
@@ -148,7 +178,7 @@ void GridMakerApp::shutdown()
             string filename = layout.name;
             if (filename != "")
             {
-                fs::path gridPath = getAppPath() / ".." / filename;
+                fs::path gridPath = getAssetPath(filename);
                 fs::remove(gridPath);
             }
         }
@@ -166,7 +196,7 @@ void GridMakerApp::serialize()
         long timestamp = time(&t);
         filename = to_string(timestamp) + ".grid";
     }
-    fs::path gridPath = getAppPath() / ".." / filename;
+    fs::path gridPath = getAssetPath(".") / filename;
     
     std::ofstream oStream( gridPath.string() );
 
@@ -188,7 +218,7 @@ void GridMakerApp::serialize()
 
 void GridMakerApp::loadAllGrids()
 {
-    fs::path gridPath = getAppPath() / "..";
+    fs::path gridPath = getAssetPath(".");
     fs::directory_iterator dir_first(gridPath), dir_last;
     
     // Filter on the .grid filetype
@@ -251,7 +281,7 @@ void GridMakerApp::mouseDown( MouseEvent event )
 {
     mMousePositionStart = MousePositionSnappedToSize(event.getPos(), kGridSnapSize);
     mDrawingRect = Rectf(mMousePosition.x, mMousePosition.y,
-                         mMousePosition.x, mMousePosition.y);
+                              mMousePosition.x, mMousePosition.y);
 }
 
 void GridMakerApp::mouseDrag(MouseEvent event)
@@ -269,7 +299,7 @@ void GridMakerApp::mouseDrag(MouseEvent event)
     {
         // +1 to avoid snap-to-grid collisions
         mDrawingRect = Rectf(mMousePosition.x + 1, mMousePosition.y + 1,
-                             mMousePosition.x + 1, mMousePosition.y + 1);
+                                  mMousePosition.x + 1, mMousePosition.y + 1);
     }
 
     Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
@@ -279,7 +309,6 @@ void GridMakerApp::mouseDrag(MouseEvent event)
     {
         mMousePositionEnd = mMousePosition;
     }
-
 }
 
 void GridMakerApp::mouseMove(MouseEvent event)
@@ -287,7 +316,7 @@ void GridMakerApp::mouseMove(MouseEvent event)
     mMousePosition = MousePositionSnappedToSize(event.getPos(), kGridSnapSize);
     // +1 to avoid snap-to-grid collisions
     mDrawingRect = Rectf(mMousePosition.x + 1, mMousePosition.y + 1,
-                         mMousePosition.x + 1, mMousePosition.y + 1);
+                              mMousePosition.x + 1, mMousePosition.y + 1);
     Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
     mIsMouseValid = RectIsValid(mDrawingRect, curLayout.regions);
 }
@@ -433,28 +462,140 @@ void GridMakerApp::keyUp(KeyEvent event)
     else if (key == 'n')
     {
         mGridLayouts.push_back(Layout());
+        mIdxPrevLayout = mIdxCurrentLayout;
         mIdxCurrentLayout = mGridLayouts.size() - 1;
+        mTransitionAmt = 0.0f;
+    }
+    else if (key == 'd')
+    {
+        Layout dupLayout = curLayout;
+        dupLayout.name = "";
+        mGridLayouts.push_back(dupLayout);
+        mIdxPrevLayout = mIdxCurrentLayout;
+        mIdxCurrentLayout = mGridLayouts.size() - 1;
+        mTransitionAmt = 0.0f;
     }
     else if (event.getCode() == KeyEvent::KEY_RIGHT)
     {
+        mIdxPrevLayout = mIdxCurrentLayout;
         mIdxCurrentLayout = (mIdxCurrentLayout + 1) % mGridLayouts.size();
-        // TODO; Transition
+        mTransitionAmt = 0.0f;
         splitScreen();
     }
     else if (event.getCode() == KeyEvent::KEY_LEFT)
     {
+        mIdxPrevLayout = mIdxCurrentLayout;
         mIdxCurrentLayout = mIdxCurrentLayout - 1;
         if (mIdxCurrentLayout < 0)
         {
             mIdxCurrentLayout = mGridLayouts.size() - 1;
         }
-        // TODO; Transition
+        mTransitionAmt = 0.0f;
         splitScreen();
     }
 }
 
+const static float kTransitionStep = 0.035;
+
 void GridMakerApp::update()
 {
+    if (mTransitionAmt < 1.0)
+    {
+        mTransitionAmt = std::min<float>(mTransitionAmt + kTransitionStep, 1.0f);
+    }
+}
+
+void GridMakerApp::drawLayout(const Layout & layout,
+                              const float scalarAmount,
+                              const Layout & compareTolayout)
+{
+    // Draw the rects
+    for (int i = 0; i < layout.regions.size(); ++i)
+    {
+        ScreenRegion reg = layout.regions[i];
+        bool isHovered = reg.rect.contains(mMousePosition);
+        bool isJoining = (mSelectedRegionIndex == i) || (mIsJoining && isHovered);
+        bool isRemoving = (mIsRemoving && isHovered);
+        
+        float alpha = scalarAmount;
+        
+        Rectf rA = reg.rect;
+        
+        if(reg.isActive)
+        {
+            if (scalarAmount < 1.0f)
+            {
+                // Check if this is a persistant region
+                for (int j = 0; j < compareTolayout.regions.size(); ++j)
+                {
+                    ScreenRegion compareReg = compareTolayout.regions[j];
+                    
+                    Rectf rB = compareReg.rect;
+                    
+                    if (compareReg.isActive &&
+                        RectCompare(rA, rB))
+                    {
+                        // No transition. Just draw at full blast.
+                        alpha = 1.0f;
+                        break;
+                    }
+                }
+            }
+
+            if (isJoining)
+            {
+                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
+            }
+            else if (isRemoving)
+            {
+                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
+            }
+            else
+            {
+                ColorAf transColor = reg.color;
+                transColor[3] = alpha;
+                gl::color(transColor);
+                
+                mScreenTexture.enableAndBind();
+            }
+            
+            gl::pushMatrices();
+            gl::translate(rA.getCenter());
+            gl::scale(alpha, alpha, 1.0f);
+            
+            Rectf scaledRect(rA.getWidth() * -0.5f,
+                             rA.getHeight() * -0.5f,
+                             rA.getWidth() * 0.5f,
+                             rA.getHeight() * 0.5f);
+            gl::drawSolidRect(scaledRect);
+            
+            mScreenTexture.unbind();
+            
+            gl::lineWidth(2.0f);
+            gl::color(1.0f,1.0f,1.0f,std::min<float>(0.8f, alpha));
+            gl::drawStrokedRect(scaledRect);
+            
+            gl::popMatrices();
+        }
+        else
+        {
+            gl::lineWidth(1.0f);
+            
+            if (isJoining)
+            {
+                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
+            }
+            else if (isRemoving)
+            {
+                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
+            }
+            else
+            {
+                gl::color(ColorAf(0.25f, 0.25f, 0.25f, alpha));
+            }
+            gl::drawStrokedRect(rA);
+        }
+    }
 }
 
 void GridMakerApp::draw()
@@ -462,50 +603,23 @@ void GridMakerApp::draw()
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
     
+    gl::enableAlphaBlending();
+    
     gl::lineWidth(1);
-
+    
     Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
     
-    // Draw the rects
-    for (int i = 0; i < curLayout.regions.size(); ++i)
+    if (mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
     {
-        ScreenRegion reg = curLayout.regions[i];
-        bool isHovered = reg.rect.contains(mMousePosition);
-        bool isJoining = (mSelectedRegionIndex == i) || (mIsJoining && isHovered);
-        bool isRemoving = (mIsRemoving && isHovered);
+        Layout & prevLayout = mGridLayouts[mIdxPrevLayout];
         
-        if(reg.isActive)
-        {
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,1.0f));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,1.0f));
-            }
-            else
-            {
-                gl::color(reg.color);
-            }
-            gl::drawSolidRect(reg.rect);
-        }
-        else
-        {
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,1.0f));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,1.0f));
-            }
-            else
-            {
-                gl::color(0.5f, 0.5f, 0.5f);
-            }
-            gl::drawStrokedRect(reg.rect);
-        }
+        drawLayout(prevLayout, 1.0 - std::min(mTransitionAmt / 0.5f, 1.0f), curLayout);
+        
+        drawLayout(curLayout, std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f), prevLayout);
+    }
+    else
+    {
+        drawLayout(curLayout, mTransitionAmt, Layout());
     }
 
     float height = getWindowHeight();
@@ -536,6 +650,10 @@ void GridMakerApp::draw()
         
         gl::color(1.0f, 1.0f, 1.0f);
         gl::drawStrokedRect(mDrawingRect);
+        
+        gl::drawString(to_string((int)mDrawingRect.getWidth()) + " x " +
+                       to_string((int)mDrawingRect.getHeight()),
+                       mMousePosition);
     }
 }
 
@@ -598,7 +716,7 @@ void GridMakerApp::splitScreen()
                 {
                     int x2 = xLines[x + incX] - 1;
                     int y2 = yLines[y + incY] - 1;
-                    Rectf testRect(x1,y1,x2,y2);
+                    Rectf testRect(x1, y1, x2, y2);
                     if(RectIsValid(testRect, newRegions, false))
                     {
                         didFit = true;
