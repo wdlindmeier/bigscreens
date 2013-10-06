@@ -3,6 +3,7 @@
 #include "cinder/Rand.h"
 #include "cinder/Utilities.h"
 #include "Helpers.hpp"
+#include <boost/iterator/filter_iterator.hpp>
 #include <fstream>
 
 using namespace ci;
@@ -21,6 +22,14 @@ struct ScreenRegion
     color(Rand::randFloat(),Rand::randFloat(),Rand::randFloat(),1.0f)
     {
     };
+};
+
+struct Layout
+{
+    vector<ScreenRegion> regions;
+    string name;
+    
+    Layout() : name(""){};
 };
 
 bool RectsOverlap(Rectf rectA, Rectf rectB)
@@ -70,6 +79,7 @@ Vec2i MousePositionSnappedToSize(const Vec2i & pos, const int snapSize)
 class GridMakerApp : public AppNative {
   public:
 	void setup();
+	void shutdown();
 	void mouseDown( MouseEvent event );
     void mouseUp(MouseEvent event);
     void mouseDrag(MouseEvent event);
@@ -82,10 +92,12 @@ class GridMakerApp : public AppNative {
     void finishJoining(MouseEvent event);
     void finishRemoving(MouseEvent event);
     void finishAdding(MouseEvent event);
-    void serialize(fs::path writePath);
-    void load(fs::path readPath);
-    
-    vector<ScreenRegion> mRegions;
+    void serialize();
+    void loadAllGrids();
+    Layout load(fs::path readPath);
+
+    vector<Layout> mGridLayouts;
+    int mIdxCurrentLayout;
     int mSelectedRegionIndex;
     bool mIsAdding;
     bool mIsRemoving;
@@ -104,16 +116,64 @@ void GridMakerApp::setup()
     mIsMouseValid = true;
     mIsJoining = false;
     mSelectedRegionIndex = -1;
+    mIdxCurrentLayout = -1;
+    loadAllGrids();
+    if (mIdxCurrentLayout > -1)
+    {
+        splitScreen();
+    }
+    else
+    {
+        console() << "Didn't find any serialized grids." << endl;
+        // Add an empty layout
+        mGridLayouts.push_back(Layout());
+        mIdxCurrentLayout = 0;
+    }
 }
 
-void GridMakerApp::serialize(fs::path writePath)
+void GridMakerApp::shutdown()
 {
-    std::ofstream oStream( writePath.string() );
+    // Save current state
+    for (int i = 0; i < mGridLayouts.size(); ++i)
+    {
+        mIdxCurrentLayout = i;
+        Layout & layout = mGridLayouts[mIdxCurrentLayout];
+        if (layout.regions.size() > 0)
+        {
+            serialize();
+        }
+        else
+        {
+            // Just delete them if they're empty
+            string filename = layout.name;
+            if (filename != "")
+            {
+                fs::path gridPath = getAppPath() / ".." / filename;
+                fs::remove(gridPath);
+            }
+        }
+    }
+}
+
+void GridMakerApp::serialize()
+{
+    Layout & layout = mGridLayouts[mIdxCurrentLayout];
+    
+    string filename = layout.name;
+    if (filename == "")
+    {
+        time_t t;
+        long timestamp = time(&t);
+        filename = to_string(timestamp) + ".grid";
+    }
+    fs::path gridPath = getAppPath() / ".." / filename;
+    
+    std::ofstream oStream( gridPath.string() );
 
     vector<string> output;
-    for (int i = 0; i < mRegions.size(); ++i)
+    for (int i = 0; i < layout.regions.size(); ++i)
     {
-        ScreenRegion & reg = mRegions[i];
+        ScreenRegion & reg = layout.regions[i];
         if (reg.isActive)
         {
             oStream << to_string((int)reg.rect.x1) << ",";
@@ -126,11 +186,44 @@ void GridMakerApp::serialize(fs::path writePath)
     oStream.close();
 }
 
-void GridMakerApp::load(fs::path readPath)
+void GridMakerApp::loadAllGrids()
 {
+    fs::path gridPath = getAppPath() / "..";
+    fs::directory_iterator dir_first(gridPath), dir_last;
+    
+    // Filter on the .grid filetype
+    auto pred = [](const fs::directory_entry& p)
+    {
+        string filename = string(p.path().filename().c_str());
+        std::transform(filename.begin(), filename.end(), filename.begin(), ::tolower);
+        return fs::is_regular_file(p) && filename.find( ".grid" ) != -1;
+    };
+    
+    std::vector<fs::path> gridFiles;
+    std::copy(make_filter_iterator(pred, dir_first, dir_last),
+              make_filter_iterator(pred, dir_last, dir_last),
+              std::back_inserter(gridFiles));
+    
+    mGridLayouts.clear();
+    for (int i = 0; i < gridFiles.size(); ++i)
+    {
+        Layout gridLayout = load(gridFiles[i]);
+        if (gridLayout.regions.size() > 0)
+        {
+            mGridLayouts.push_back(gridLayout);
+        }
+    }
+    if (mGridLayouts.size() > 0)
+    {
+        mIdxCurrentLayout = 0;
+    }
+}
+
+Layout GridMakerApp::load(fs::path readPath)
+{
+    Layout layout;
     if (fs::exists(readPath))
     {
-        mRegions.clear();
         fstream inFile(readPath.string());
         string line;
         while (getline (inFile, line))
@@ -142,14 +235,16 @@ void GridMakerApp::load(fs::path readPath)
             int y2 = stoi(tokens[3]);
             ScreenRegion reg(x1,y1,x2,y2);
             reg.isActive = true;
-            mRegions.push_back(reg);
+            layout.regions.push_back(reg);
         }
-        splitScreen();
+        
+        layout.name = readPath.filename().string();
     }
     else
     {
         console() << "ERROR: File doesn't exist at path " << readPath << endl;
     }
+    return layout;
 }
 
 void GridMakerApp::mouseDown( MouseEvent event )
@@ -177,7 +272,8 @@ void GridMakerApp::mouseDrag(MouseEvent event)
                              mMousePosition.x + 1, mMousePosition.y + 1);
     }
 
-    mIsMouseValid = RectIsValid(mDrawingRect, mRegions);
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    mIsMouseValid = RectIsValid(mDrawingRect, curLayout.regions);
     
     if (mIsMouseValid)
     {
@@ -192,7 +288,8 @@ void GridMakerApp::mouseMove(MouseEvent event)
     // +1 to avoid snap-to-grid collisions
     mDrawingRect = Rectf(mMousePosition.x + 1, mMousePosition.y + 1,
                          mMousePosition.x + 1, mMousePosition.y + 1);
-    mIsMouseValid = RectIsValid(mDrawingRect, mRegions);
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    mIsMouseValid = RectIsValid(mDrawingRect, curLayout.regions);
 }
 
 void GridMakerApp::mouseUp(MouseEvent event)
@@ -219,7 +316,8 @@ void GridMakerApp::finishAdding(MouseEvent event)
     {
         ScreenRegion r(mDrawingRect.x1, mDrawingRect.y1, mDrawingRect.x2, mDrawingRect.y2);
         r.isActive = true;
-        mRegions.push_back(r);
+        Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+        curLayout.regions.push_back(r);
     }
     
     splitScreen();
@@ -228,15 +326,16 @@ void GridMakerApp::finishAdding(MouseEvent event)
 void GridMakerApp::finishRemoving(MouseEvent event)
 {
     vector<ScreenRegion> keepRegions;
-    for (int i = 0; i < mRegions.size(); ++i)
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    for (int i = 0; i < curLayout.regions.size(); ++i)
     {
-        ScreenRegion & reg = mRegions[i];
+        ScreenRegion & reg = curLayout.regions[i];
         if (!reg.rect.contains(mMousePosition))
         {
             keepRegions.push_back(reg);
         }
     }
-    mRegions = keepRegions;
+    curLayout.regions = keepRegions;
     
     splitScreen();
 }
@@ -244,9 +343,10 @@ void GridMakerApp::finishRemoving(MouseEvent event)
 void GridMakerApp::finishJoining(MouseEvent event)
 {
     int selectedIdx = -1;
-    for (int i = 0; i < mRegions.size(); ++i)
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    for (int i = 0; i < curLayout.regions.size(); ++i)
     {
-        ScreenRegion reg = mRegions[i];
+        ScreenRegion reg = curLayout.regions[i];
         if (reg.rect.contains(mMousePosition))
         {
             selectedIdx = i;
@@ -261,9 +361,9 @@ void GridMakerApp::finishJoining(MouseEvent event)
     else if (mSelectedRegionIndex != -1)
     {
         // Join them
-        ScreenRegion & regA = mRegions[mSelectedRegionIndex];
+        ScreenRegion & regA = curLayout.regions[mSelectedRegionIndex];
         regA.isActive = false;
-        ScreenRegion & regB = mRegions[selectedIdx];
+        ScreenRegion & regB = curLayout.regions[selectedIdx];
         regB.isActive = false;
         
         int x1 = std::min<int>(regA.rect.x1,regB.rect.x1);
@@ -278,15 +378,15 @@ void GridMakerApp::finishJoining(MouseEvent event)
         keepRegions.push_back(newReg);
         
         // Remove any regions that fall within the new region
-        for (int i = 0; i < mRegions.size(); ++i)
+        for (int i = 0; i < curLayout.regions.size(); ++i)
         {
-            ScreenRegion & reg = mRegions[i];
+            ScreenRegion & reg = curLayout.regions[i];
             if (!RectsOverlap(reg.rect, newReg.rect))
             {
                 keepRegions.push_back(reg);
             }
         }
-        mRegions = keepRegions;
+        curLayout.regions = keepRegions;
 
         mSelectedRegionIndex = -1;
         
@@ -315,6 +415,8 @@ void GridMakerApp::keyUp(KeyEvent event)
     mIsJoining = event.isControlDown();
     mIsRemoving = event.isAltDown();
     
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    
     char key = event.getChar();
     if (key == 's')
     {
@@ -322,17 +424,32 @@ void GridMakerApp::keyUp(KeyEvent event)
     }
     else if (key == ' ')
     {
-        mRegions.clear();
-    }
-    else if (key == 'r')
-    {
-        fs::path gridPath = getAppPath() / ".." / "grid.csv";
-        load(gridPath);
+        curLayout.regions.clear();
     }
     else if (key == 'w')
     {
-        fs::path gridPath = getAppPath() / ".." / "grid.csv";
-        serialize(gridPath);
+        serialize();
+    }
+    else if (key == 'n')
+    {
+        mGridLayouts.push_back(Layout());
+        mIdxCurrentLayout = mGridLayouts.size() - 1;
+    }
+    else if (event.getCode() == KeyEvent::KEY_RIGHT)
+    {
+        mIdxCurrentLayout = (mIdxCurrentLayout + 1) % mGridLayouts.size();
+        // TODO; Transition
+        splitScreen();
+    }
+    else if (event.getCode() == KeyEvent::KEY_LEFT)
+    {
+        mIdxCurrentLayout = mIdxCurrentLayout - 1;
+        if (mIdxCurrentLayout < 0)
+        {
+            mIdxCurrentLayout = mGridLayouts.size() - 1;
+        }
+        // TODO; Transition
+        splitScreen();
     }
 }
 
@@ -347,10 +464,12 @@ void GridMakerApp::draw()
     
     gl::lineWidth(1);
 
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    
     // Draw the rects
-    for (int i = 0; i < mRegions.size(); ++i)
+    for (int i = 0; i < curLayout.regions.size(); ++i)
     {
-        ScreenRegion reg = mRegions[i];
+        ScreenRegion reg = curLayout.regions[i];
         bool isHovered = reg.rect.contains(mMousePosition);
         bool isJoining = (mSelectedRegionIndex == i) || (mIsJoining && isHovered);
         bool isRemoving = (mIsRemoving && isHovered);
@@ -424,6 +543,8 @@ void GridMakerApp::splitScreen()
 {
     mSelectedRegionIndex = -1;
     
+    Layout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    
     vector<int> xLines;
     xLines.push_back(0);
     xLines.push_back(getWindowWidth() + 1);
@@ -433,9 +554,9 @@ void GridMakerApp::splitScreen()
     
     vector<ScreenRegion> newRegions;
     
-    for (int i = 0; i < mRegions.size(); ++i)
+    for (int i = 0; i < curLayout.regions.size(); ++i)
     {
-        const ScreenRegion & reg = mRegions[i];
+        const ScreenRegion & reg = curLayout.regions[i];
         if (reg.isActive)
         {
             newRegions.push_back(reg);
@@ -534,7 +655,7 @@ void GridMakerApp::splitScreen()
         }
     }
 
-    mRegions = newRegions;
+    curLayout.regions = newRegions;
     
 }
 

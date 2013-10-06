@@ -36,7 +36,7 @@
 		8D1107320486CEB800E47090 /* GridMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D3DBA91800D04700B8F792 /* Helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Helpers.hpp; sourceTree = "<group>"; };
 		C6D3B8C47C954AA2A2F7C3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = GridMakerApp.cpp; path = ../src/GridMakerApp.cpp; sourceTree = "<group>"; };
+		FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GridMakerApp.cpp; path = ../src/GridMakerApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
