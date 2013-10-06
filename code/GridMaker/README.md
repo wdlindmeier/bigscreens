@@ -1,6 +1,8 @@
 #Grid Maker
 
-[Screencast](http://www.youtube.com/watch?v=JWHiI1-KH2Q)
+[Screencast Video](http://www.youtube.com/watch?v=JWHiI1-KH2Q)
+
+![Screenshot](https://raw.github.com/wdlindmeier/bigscreens/master/code/GridMaker/grid_maker_screenshot.png)
 
 ###Usage
 
