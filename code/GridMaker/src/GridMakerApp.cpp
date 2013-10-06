@@ -1,7 +1,9 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
+#include "cinder/Utilities.h"
 #include "Helpers.hpp"
+#include <fstream>
 
 using namespace ci;
 using namespace ci::app;
@@ -80,6 +82,8 @@ class GridMakerApp : public AppNative {
     void finishJoining(MouseEvent event);
     void finishRemoving(MouseEvent event);
     void finishAdding(MouseEvent event);
+    void serialize(fs::path writePath);
+    void load(fs::path readPath);
     
     vector<ScreenRegion> mRegions;
     int mSelectedRegionIndex;
@@ -100,6 +104,52 @@ void GridMakerApp::setup()
     mIsMouseValid = true;
     mIsJoining = false;
     mSelectedRegionIndex = -1;
+}
+
+void GridMakerApp::serialize(fs::path writePath)
+{
+    std::ofstream oStream( writePath.string() );
+
+    vector<string> output;
+    for (int i = 0; i < mRegions.size(); ++i)
+    {
+        ScreenRegion & reg = mRegions[i];
+        if (reg.isActive)
+        {
+            oStream << to_string((int)reg.rect.x1) << ",";
+            oStream << to_string((int)reg.rect.y1) << ",";
+            oStream << to_string((int)reg.rect.x2) << ",";
+            oStream << to_string((int)reg.rect.y2) << ",";
+            oStream << "\n";
+        }
+    }
+    oStream.close();
+}
+
+void GridMakerApp::load(fs::path readPath)
+{
+    if (fs::exists(readPath))
+    {
+        mRegions.clear();
+        fstream inFile(readPath.string());
+        string line;
+        while (getline (inFile, line))
+        {
+            vector<string> tokens = ci::split(line, ",");
+            int x1 = stoi(tokens[0]);
+            int y1 = stoi(tokens[1]);
+            int x2 = stoi(tokens[2]);
+            int y2 = stoi(tokens[3]);
+            ScreenRegion reg(x1,y1,x2,y2);
+            reg.isActive = true;
+            mRegions.push_back(reg);
+        }
+        splitScreen();
+    }
+    else
+    {
+        console() << "ERROR: File doesn't exist at path " << readPath << endl;
+    }
 }
 
 void GridMakerApp::mouseDown( MouseEvent event )
@@ -173,15 +223,10 @@ void GridMakerApp::finishAdding(MouseEvent event)
     }
     
     splitScreen();
-    
-    mIsAdding = false;
-    
 }
 
 void GridMakerApp::finishRemoving(MouseEvent event)
 {
-    // find the rect and flip it
-    
     vector<ScreenRegion> keepRegions;
     for (int i = 0; i < mRegions.size(); ++i)
     {
@@ -194,8 +239,6 @@ void GridMakerApp::finishRemoving(MouseEvent event)
     mRegions = keepRegions;
     
     splitScreen();
-    
-    mIsRemoving = false;
 }
 
 void GridMakerApp::finishJoining(MouseEvent event)
@@ -280,6 +323,16 @@ void GridMakerApp::keyUp(KeyEvent event)
     else if (key == ' ')
     {
         mRegions.clear();
+    }
+    else if (key == 'r')
+    {
+        fs::path gridPath = getAppPath() / ".." / "grid.csv";
+        load(gridPath);
+    }
+    else if (key == 'w')
+    {
+        fs::path gridPath = getAppPath() / ".." / "grid.csv";
+        serialize(gridPath);
     }
 }
 
