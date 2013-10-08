@@ -5,8 +5,14 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "Helpers.hpp"
+#include "cinder/Camera.h"
 #include <boost/iterator/filter_iterator.hpp>
 #include <fstream>
+
+// TMP
+#include "cinder/ObjLoader.h"
+#include "cinder/gl/Vbo.h"
+#include "cinder/gl/Fbo.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -129,6 +135,14 @@ class GridMakerApp : public AppNative {
     Rectf mDrawingRect;
     float mTransitionAmt;
     gl::Texture mScreenTexture;
+    
+    // TMP / TODO: Move
+    void renderTankToFBO();
+    gl::VboMesh		mVBO;
+    TriMesh			mMesh;
+    gl::Fbo         mTankFBO;
+    Matrix44f		mTankRotation;
+    static const int	FBO_WIDTH = 512, FBO_HEIGHT = 512;
 };
 
 void GridMakerApp::prepareSettings(Settings *settings)
@@ -159,6 +173,18 @@ void GridMakerApp::setup()
         mGridLayouts.push_back(Layout());
         mIdxCurrentLayout = 0;
     }
+    
+    // TMP / TODO: MOVE
+    DataSourceRef file = loadResource( "T72.obj" );
+    ObjLoader loader( file );
+	loader.load( &mMesh );
+	mVBO = gl::VboMesh( mMesh );
+    mTankRotation.setToIdentity();
+    gl::Fbo::Format format;
+	format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
+	format.enableColorBuffer( true, 2 ); // create an FBO with two color attachments
+	mTankFBO = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
+
 }
 
 void GridMakerApp::shutdown()
@@ -503,6 +529,9 @@ void GridMakerApp::update()
     {
         mTransitionAmt = std::min<float>(mTransitionAmt + kTransitionStep, 1.0f);
     }
+    
+    mTankRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
+    renderTankToFBO();
 }
 
 void GridMakerApp::drawLayout(const Layout & layout,
@@ -569,6 +598,28 @@ void GridMakerApp::drawLayout(const Layout & layout,
                              rA.getHeight() * 0.5f);
             gl::drawSolidRect(scaledRect);
             
+            Rectf tankBounds = mTankFBO.getTexture(0).getBounds();
+
+            // "Get cetered fill"
+            float aspectWidth = scaledRect.getWidth() / tankBounds.getWidth();
+            float aspectHeight = scaledRect.getHeight() / tankBounds.getHeight();
+            float scaleFactor = std::max<float>(aspectWidth, aspectHeight);
+            Vec2f drawSize = scaledRect.getSize();
+            float areaMarginX = drawSize.x > drawSize.y ? 0 : ((drawSize.y - drawSize.x) * 0.5f);
+            float areaMarginY = drawSize.x > drawSize.y ? ((drawSize.x - drawSize.y) * 0.5f) : 0;
+            areaMarginX /= scaleFactor;
+            areaMarginY /= scaleFactor;
+            float areaWidth = scaledRect.getWidth() / scaleFactor;
+            float areaHeight = scaledRect.getHeight() / scaleFactor;
+            Area drawArea(areaMarginX,
+                          areaMarginY,
+                          areaMarginX + areaWidth,
+                          areaMarginY + areaHeight);
+            
+            gl::draw(mTankFBO.getTexture(0),
+                     drawArea,
+                     scaledRect);
+
             mScreenTexture.unbind();
             
             gl::lineWidth(2.0f);
@@ -598,11 +649,52 @@ void GridMakerApp::drawLayout(const Layout & layout,
     }
 }
 
+void GridMakerApp::renderTankToFBO()
+{
+    // bind the framebuffer - now everything we draw will go there
+	mTankFBO.bindFramebuffer();
+    
+    gl::enableAlphaBlending();
+    gl::enableAdditiveBlending();
+    
+	// setup the viewport to match the dimensions of the FBO
+	gl::setViewport( mTankFBO.getBounds() );
+ 
+	// clear out both of the attachments of the FBO with black
+	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
+    
+    CameraPersp cam(mTankFBO.getWidth(),
+                    mTankFBO.getHeight(),
+                    45.0f );
+	gl::setMatrices( cam );
+    
+    gl::pushMatrices();
+    gl::translate(mTankFBO.getWidth() * 0.5f,
+                  mTankFBO.getHeight() * 0.7f,
+                  -600.0f);
+    // Flip vertically
+    gl::rotate(Vec3f(180.0f, 0, 0));
+    gl::multModelView( mTankRotation );
+
+    gl::color(ColorAf(1.0f,1.0f,1.0f,0.5f));
+    gl::enableWireframe();
+    gl::draw( mVBO );
+    gl::disableWireframe();
+    gl::popMatrices();
+
+	// unbind the framebuffer, so that drawing goes to the screen again
+	mTankFBO.unbindFramebuffer();
+}
+
 void GridMakerApp::draw()
 {
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
     
+    // set the viewport to match our window
+	gl::setViewport( getWindowBounds() );
+    gl::setMatricesWindow( getWindowSize() );
+
     gl::enableAlphaBlending();
     
     gl::lineWidth(1);
@@ -655,6 +747,7 @@ void GridMakerApp::draw()
                        to_string((int)mDrawingRect.getHeight()),
                        mMousePosition);
     }
+    
 }
 
 void GridMakerApp::splitScreen()
