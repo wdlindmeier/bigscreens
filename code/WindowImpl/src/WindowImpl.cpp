@@ -3,7 +3,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
 
-#include "Window.h"
+#include "SceneWindow.h"
 
 using namespace ci;
 using namespace ci::app;
