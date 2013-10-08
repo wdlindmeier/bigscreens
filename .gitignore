@@ -3,6 +3,7 @@
 build/
 DerivedData/
 Documentation/
+xcshareddata/
 
 # Compiled Object files
 *.slo
