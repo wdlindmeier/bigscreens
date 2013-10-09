@@ -6,27 +6,13 @@
 #include "cinder/Utilities.h"
 #include "Helpers.hpp"
 #include "cinder/Camera.h"
-#include <boost/iterator/filter_iterator.hpp>
 #include "GridLayout.h"
-
-// TMP
-#include "cinder/ObjLoader.h"
-#include "cinder/gl/Vbo.h"
-#include "cinder/gl/Fbo.h"
+#include "TankContent.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 using namespace bigscreens;
-
-template<typename T>
-bool RectCompare(RectT<T> rectA, RectT<T> rectB)
-{
-    return  (int)rectA.x1 == (int)rectB.x1 &&
-            (int)rectA.x2 == (int)rectB.x2 &&
-            (int)rectA.y1 == (int)rectB.y1 &&
-            (int)rectA.y2 == (int)rectB.y2;
-}
 
 Rectf RectfFromRectInt(RectT<int> rectA)
 {
@@ -88,6 +74,7 @@ class GridMakerApp : public AppNative {
     void mouseMove(MouseEvent event);
     void keyDown(KeyEvent event);
     void keyUp(KeyEvent event);
+    void clearSelection();
 	void update();
 	void draw();
     void drawLayout(const GridLayout & layout,
@@ -113,20 +100,14 @@ class GridMakerApp : public AppNative {
     Vec2i mMousePosition;
     Rectf mDrawingRect;
     float mTransitionAmt;
-    gl::Texture mScreenTexture;
     
-    // TMP / TODO: Move
-    void renderTankToFBO();
-    gl::VboMesh		mVBO;
-    TriMesh			mMesh;
-    gl::Fbo         mTankFBO;
-    Matrix44f		mTankRotation;
-    static const int	FBO_WIDTH = 512, FBO_HEIGHT = 512;
+    ci::gl::Texture mScreenTexture;
+    TankContent mContent;
 };
 
 void GridMakerApp::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1000, 200);
+    settings->setWindowSize(960, 270);
 }
 
 void GridMakerApp::setup()
@@ -139,7 +120,6 @@ void GridMakerApp::setup()
     mIdxCurrentLayout = -1;
     mIdxPrevLayout = -1;
     mTransitionAmt = 1.0;
-    mScreenTexture = loadImage(loadResource("screen.png"));
     loadAllGrids();
     if (mIdxCurrentLayout > -1)
     {
@@ -153,17 +133,8 @@ void GridMakerApp::setup()
         mIdxCurrentLayout = 0;
     }
     
-    // TMP / TODO: MOVE to content something
-    DataSourceRef file = loadResource( "T72.obj" );
-    ObjLoader loader( file );
-	loader.load( &mMesh );
-	mVBO = gl::VboMesh( mMesh );
-    mTankRotation.setToIdentity();
-    gl::Fbo::Format format;
-	format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
-	format.enableColorBuffer( true, 2 ); // create an FBO with two color attachments
-	mTankFBO = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
-
+    mScreenTexture = loadImage(app::loadResource("screen.png"));
+    mContent.load("T72.obj");
 }
 
 void GridMakerApp::shutdown()
@@ -192,37 +163,12 @@ void GridMakerApp::save()
 void GridMakerApp::loadAllGrids()
 {
     fs::path gridPath = getAssetPath(".");
-    fs::directory_iterator dir_first(gridPath), dir_last;
-    
-    // Filter on the .grid filetype
-    auto pred = [](const fs::directory_entry& p)
-    {
-        string filename = string(p.path().filename().c_str());
-        std::transform(filename.begin(), filename.end(), filename.begin(), ::tolower);
-        return fs::is_regular_file(p) && filename.find( ".grid" ) != -1;
-    };
-    
-    std::vector<fs::path> gridFiles;
-    std::copy(make_filter_iterator(pred, dir_first, dir_last),
-              make_filter_iterator(pred, dir_last, dir_last),
-              std::back_inserter(gridFiles));
-    
-    mGridLayouts.clear();
-    for (int i = 0; i < gridFiles.size(); ++i)
-    {
-        GridLayout gridLayout = GridLayout::load(gridFiles[i]);
-        if (gridLayout.getRegions().size() > 0)
-        {
-            mGridLayouts.push_back(gridLayout);
-        }
-    }
+    mGridLayouts = GridLayout::loadAllFromPath(gridPath);
     if (mGridLayouts.size() > 0)
     {
         mIdxCurrentLayout = 0;
     }
-    
 }
-
 
 void GridMakerApp::mouseDown( MouseEvent event )
 {
@@ -330,13 +276,17 @@ void GridMakerApp::finishJoining(MouseEvent event)
         if (reg.rect.contains(mMousePosition))
         {
             selectedIdx = i;
+            reg.isSelected = i != mSelectedRegionIndex;
             break;
         }
     }
+    // re-set the regions so the selection is updated
+    curLayout.setRegions(regions);
     
     if (mSelectedRegionIndex == selectedIdx)
     {
         mSelectedRegionIndex = -1;
+        clearSelection();
     }
     else if (mSelectedRegionIndex != -1)
     {
@@ -369,6 +319,7 @@ void GridMakerApp::finishJoining(MouseEvent event)
         curLayout.setRegions(keepRegions);
 
         mSelectedRegionIndex = -1;
+        clearSelection();
         
         splitScreen();
     }
@@ -376,7 +327,6 @@ void GridMakerApp::finishJoining(MouseEvent event)
     {
         mSelectedRegionIndex = selectedIdx;
     }
-    
 }
 
 void GridMakerApp::keyDown(KeyEvent event)
@@ -392,7 +342,13 @@ void GridMakerApp::keyDown(KeyEvent event)
 void GridMakerApp::keyUp(KeyEvent event)
 {
     mIsAdding = event.isShiftDown();
-    mIsJoining = event.isControlDown();
+    bool isJoining = event.isControlDown();
+    if (!isJoining && mIsJoining)
+    {
+        clearSelection();
+    }
+    mIsJoining = isJoining;
+    
     mIsRemoving = event.isAltDown();
     
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
@@ -446,7 +402,18 @@ void GridMakerApp::keyUp(KeyEvent event)
     }
 }
 
-const static float kTransitionStep = 0.035;
+void GridMakerApp::clearSelection()
+{
+    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    vector<ScreenRegion> regions = curLayout.getRegions();
+    for (int i = 0; i < regions.size(); ++i)
+    {
+        ScreenRegion & reg = regions[i];
+        reg.isSelected = false;
+    }
+}
+
+const static float kTransitionStep = 0.05;
 
 void GridMakerApp::update()
 {
@@ -455,166 +422,7 @@ void GridMakerApp::update()
         mTransitionAmt = std::min<float>(mTransitionAmt + kTransitionStep, 1.0f);
     }
     
-    mTankRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
-    renderTankToFBO();
-}
-
-void GridMakerApp::drawLayout(const GridLayout & layout,
-                              const float scalarAmount,
-                              const GridLayout & compareTolayout)
-{
-    vector<ScreenRegion> curRegions = layout.getRegions();
-    int regionSize = curRegions.size();
-    
-    vector<ScreenRegion> compareRegions = compareTolayout.getRegions();
-    int compareRegionSize = compareRegions.size();
-    
-    for (int i = 0; i < regionSize; ++i)
-    {
-        ScreenRegion reg = curRegions[i];
-        
-        bool isHovered = reg.rect.contains(mMousePosition);
-        bool isJoining = (mSelectedRegionIndex == i) || (mIsJoining && isHovered);
-        bool isRemoving = (mIsRemoving && isHovered);
-        
-        float alpha = scalarAmount;
-
-        Rectf rA = reg.rect;
-        
-        if(reg.isActive)
-        {
-            if (scalarAmount < 1.0f)
-            {
-                // Check if this is a persistant region
-                for (int j = 0; j < compareRegionSize; ++j)
-                {
-                    ScreenRegion compareReg = compareRegions[j];
-                    
-                    Rectf rB = compareReg.rect;
-                    
-                    if (compareReg.isActive &&
-                        RectCompare(rA, rB))
-                    {
-                        // No transition. Just draw at full blast.
-                        alpha = 1.0f;
-                        break;
-                    }
-                }
-            }
-
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
-            }
-            else
-            {
-                ColorAf transColor = reg.color;
-                transColor[3] = alpha;
-                gl::color(transColor);
-                
-                mScreenTexture.enableAndBind();
-            }
-            
-            gl::pushMatrices();
-            gl::translate(rA.getCenter());
-            gl::scale(alpha, alpha, 1.0f);
-            
-            Rectf scaledRect(rA.getWidth() * -0.5f,
-                             rA.getHeight() * -0.5f,
-                             rA.getWidth() * 0.5f,
-                             rA.getHeight() * 0.5f);
-            gl::drawSolidRect(scaledRect);
-            
-            Rectf tankBounds = mTankFBO.getTexture(0).getBounds();
-
-            // "Get cetered fill"
-            float aspectWidth = scaledRect.getWidth() / tankBounds.getWidth();
-            float aspectHeight = scaledRect.getHeight() / tankBounds.getHeight();
-            float scaleFactor = std::max<float>(aspectWidth, aspectHeight);
-            Vec2f drawSize = scaledRect.getSize();
-            float areaMarginX = drawSize.x > drawSize.y ? 0 : ((drawSize.y - drawSize.x) * 0.5f);
-            float areaMarginY = drawSize.x > drawSize.y ? ((drawSize.x - drawSize.y) * 0.5f) : 0;
-            areaMarginX /= scaleFactor;
-            areaMarginY /= scaleFactor;
-            float areaWidth = scaledRect.getWidth() / scaleFactor;
-            float areaHeight = scaledRect.getHeight() / scaleFactor;
-            Area drawArea(areaMarginX,
-                          areaMarginY,
-                          areaMarginX + areaWidth,
-                          areaMarginY + areaHeight);
-            
-            gl::draw(mTankFBO.getTexture(0),
-                     drawArea,
-                     scaledRect);
-
-            mScreenTexture.unbind();
-            
-            gl::lineWidth(2.0f);
-            gl::color(1.0f,1.0f,1.0f,std::min<float>(0.8f, alpha));
-            gl::drawStrokedRect(scaledRect);
-            
-            gl::popMatrices();
-        }
-        else
-        {
-            gl::lineWidth(1.0f);
-            
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
-            }
-            else
-            {
-                gl::color(ColorAf(0.25f, 0.25f, 0.25f, alpha));
-            }
-            gl::drawStrokedRect(rA);
-        }
-    }
-}
-
-void GridMakerApp::renderTankToFBO()
-{
-    // bind the framebuffer - now everything we draw will go there
-	mTankFBO.bindFramebuffer();
-    
-    gl::enableAlphaBlending();
-    gl::enableAdditiveBlending();
-    
-	// setup the viewport to match the dimensions of the FBO
-	gl::setViewport( mTankFBO.getBounds() );
- 
-	// clear out both of the attachments of the FBO with black
-	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
-    
-    CameraPersp cam(mTankFBO.getWidth(),
-                    mTankFBO.getHeight(),
-                    45.0f );
-	gl::setMatrices( cam );
-    
-    gl::pushMatrices();
-    gl::translate(mTankFBO.getWidth() * 0.5f,
-                  mTankFBO.getHeight() * 0.7f,
-                  -600.0f);
-    // Flip vertically
-    gl::rotate(Vec3f(180.0f, 0, 0));
-    gl::multModelView( mTankRotation );
-
-    gl::color(ColorAf(1.0f,1.0f,1.0f,0.5f));
-    gl::enableWireframe();
-    gl::draw( mVBO );
-    gl::disableWireframe();
-    gl::popMatrices();
-
-	// unbind the framebuffer, so that drawing goes to the screen again
-	mTankFBO.unbindFramebuffer();
+    mContent.update();
 }
 
 void GridMakerApp::draw()
@@ -628,29 +436,55 @@ void GridMakerApp::draw()
 
     gl::enableAlphaBlending();
     
-    gl::lineWidth(1);
-    
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    
+    GridRenderMode mode = GridRenderModeNormal;
+    if (mIsAdding)
+    {
+        mode = GridRenderModeAdding;
+    }
+    else if(mIsJoining)
+    {
+        mode = GridRenderModeJoining;
+    }
+    else if(mIsRemoving)
+    {
+        mode = GridRenderModeRemoving;
+    }
     
     if (mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
     {
         GridLayout & prevLayout = mGridLayouts[mIdxPrevLayout];
+
+        prevLayout.render(1.0 - std::min(mTransitionAmt / 0.5f, 1.0f),
+                          curLayout,
+                          mMousePosition,
+                          mode,
+                          mContent);
         
-        drawLayout(prevLayout, 1.0 - std::min(mTransitionAmt / 0.5f, 1.0f), curLayout);
-        
-        drawLayout(curLayout, std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f), prevLayout);
+        curLayout.render(std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f),
+                         prevLayout,
+                         mMousePosition,
+                         mode,
+                         mContent);
+
     }
     else
     {
-        drawLayout(curLayout, mTransitionAmt, GridLayout());
+        curLayout.render(mTransitionAmt,
+                         GridLayout(),
+                         mMousePosition,
+                         mode,
+                         mContent);
     }
 
     float height = getWindowHeight();
     float width = getWindowWidth();
     
-    // Draw the active rect
     if (mIsAdding)
     {
+        gl::lineWidth(1.0f);
+        
         if (mIsMouseValid)
         {
             gl::color(0.0f, 1.0f, 1.0f);
@@ -729,70 +563,11 @@ void GridMakerApp::splitScreen()
         for (int x = 0; x < xLines.size() - 1; ++x)
         {
             int x1 = xLines[x];
-            
-            int incX = 1;
-            int incY = 1;
-            bool didFit = false;
-            
-            for (int i = 0; i < 2; ++i)
+            int x2 = xLines[x + 1] - 1;
+            int y2 = yLines[y + 1] - 1;
+            Rectf testRect(x1, y1, x2, y2);
+            if (RectIsValid(testRect, newRegions, false))
             {
-                bool didHitWall = false;
-                while(!didHitWall)
-                {
-                    int x2 = xLines[x + incX] - 1;
-                    int y2 = yLines[y + incY] - 1;
-                    Rectf testRect(x1, y1, x2, y2);
-                    if(RectIsValid(testRect, newRegions, false))
-                    {
-                        didFit = true;
-                        // This will try to consume more empty plots, but I think
-                        // it's better to just do it manually.
-                        /*
-                        if (i == 0)
-                        {
-                            if ((x + incX) >= xLines.size() - 1)
-                            {
-                                didHitWall = true;
-                            }
-                            else
-                            {
-                                ++incX;
-                            }
-                        }
-                        else
-                        {
-                            if ((y + incY) >= yLines.size() - 1)
-                            {
-                                didHitWall = true;
-                            }
-                            else
-                            {
-                                ++incY;
-                            }
-                        }*/
-                    }
-                    /*
-                    else
-                    {
-                        if (i == 0)
-                        {
-                            --incX;
-                        }
-                        else
-                        {
-                            --incY;
-                        }
-                        didHitWall = true;
-                    }
-                    */
-                    break;
-                }
-            }
-            
-            if (didFit)
-            {
-                int x2 = xLines[x + incX] - 1;
-                int y2 = yLines[y + incY] - 1;
                 newRegions.push_back(ScreenRegion(x1,y1,x2,y2));
             }
         }

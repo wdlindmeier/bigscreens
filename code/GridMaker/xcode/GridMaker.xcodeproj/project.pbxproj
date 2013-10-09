@@ -17,13 +17,8 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A902F65A18048A1E00DFEEAE /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F65918048A1E00DFEEAE /* GridLayout.cpp */; };
+		A902F6D71804E7D100DFEEAE /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F6D51804E7D100DFEEAE /* TankContent.cpp */; };
 		A95EAFCB1801CC0100AACFCB /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCA1801CC0100AACFCB /* screen.png */; };
-		A95EAFD118045FDD00AACFCB /* missile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCC18045FDD00AACFCB /* missile.jpg */; };
-		A95EAFD218045FDD00AACFCB /* MQ-9.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCD18045FDD00AACFCB /* MQ-9.mtl */; };
-		A95EAFD318045FDD00AACFCB /* MQ-9.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCE18045FDD00AACFCB /* MQ-9.obj */; };
-		A95EAFD418045FDD00AACFCB /* predator_Normal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCF18045FDD00AACFCB /* predator_Normal.jpg */; };
-		A95EAFD518045FDD00AACFCB /* predator.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFD018045FDD00AACFCB /* predator.jpg */; };
-		A95EAFD7180461F900AACFCB /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFD6180461F900AACFCB /* cube.obj */; };
 		A95EAFD91804635700AACFCB /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFD81804635700AACFCB /* T72.obj */; };
 		A95EAFDB180463A800AACFCB /* crane.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFDA180463A800AACFCB /* crane.obj */; };
 		D16C133F93124B2F924A72E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE37C12D14EB896421C62 /* CinderApp.icns */; };
@@ -47,13 +42,9 @@
 		A902F65718048A1E00DFEEAE /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
 		A902F65918048A1E00DFEEAE /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
 		A902F65B18048A8000DFEEAE /* SharedTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SharedTypes.hpp; sourceTree = "<group>"; };
+		A902F6D51804E7D100DFEEAE /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
+		A902F6D81804E7EA00DFEEAE /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
 		A95EAFCA1801CC0100AACFCB /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screen.png; path = ../resources/screen.png; sourceTree = "<group>"; };
-		A95EAFCC18045FDD00AACFCB /* missile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = missile.jpg; path = ../resources/missile.jpg; sourceTree = "<group>"; };
-		A95EAFCD18045FDD00AACFCB /* MQ-9.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "MQ-9.mtl"; path = "../resources/MQ-9.mtl"; sourceTree = "<group>"; };
-		A95EAFCE18045FDD00AACFCB /* MQ-9.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "MQ-9.obj"; path = "../resources/MQ-9.obj"; sourceTree = "<group>"; };
-		A95EAFCF18045FDD00AACFCB /* predator_Normal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = predator_Normal.jpg; path = ../resources/predator_Normal.jpg; sourceTree = "<group>"; };
-		A95EAFD018045FDD00AACFCB /* predator.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = predator.jpg; path = ../resources/predator.jpg; sourceTree = "<group>"; };
-		A95EAFD6180461F900AACFCB /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cube.obj; path = ../resources/cube.obj; sourceTree = "<group>"; };
 		A95EAFD81804635700AACFCB /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = T72.obj; path = ../resources/T72.obj; sourceTree = "<group>"; };
 		A95EAFDA180463A800AACFCB /* crane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crane.obj; path = ../resources/crane.obj; sourceTree = "<group>"; };
 		A9D3DBA91800D04700B8F792 /* Helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Helpers.hpp; sourceTree = "<group>"; };
@@ -90,6 +81,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A902F6D51804E7D100DFEEAE /* TankContent.cpp */,
 				FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */,
 			);
 			name = Source;
@@ -144,9 +136,10 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				2C262FEFEEC147B9AE7DC2FE /* GridMaker_Prefix.pch */,
 				A9D3DBA91800D04700B8F792 /* Helpers.hpp */,
 				3A6B2A5F9BF24A92996041F7 /* Resources.h */,
-				2C262FEFEEC147B9AE7DC2FE /* GridMaker_Prefix.pch */,
+				A902F6D81804E7EA00DFEEAE /* TankContent.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -156,14 +149,8 @@
 			children = (
 				A95EAFDA180463A800AACFCB /* crane.obj */,
 				A95EAFD81804635700AACFCB /* T72.obj */,
-				A95EAFD6180461F900AACFCB /* cube.obj */,
 				6D6DE37C12D14EB896421C62 /* CinderApp.icns */,
 				C6D3B8C47C954AA2A2F7C3C1 /* Info.plist */,
-				A95EAFCC18045FDD00AACFCB /* missile.jpg */,
-				A95EAFCD18045FDD00AACFCB /* MQ-9.mtl */,
-				A95EAFCE18045FDD00AACFCB /* MQ-9.obj */,
-				A95EAFD018045FDD00AACFCB /* predator.jpg */,
-				A95EAFCF18045FDD00AACFCB /* predator_Normal.jpg */,
 				A95EAFCA1801CC0100AACFCB /* screen.png */,
 			);
 			name = Resources;
@@ -258,16 +245,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A95EAFD7180461F900AACFCB /* cube.obj in Resources */,
-				A95EAFD118045FDD00AACFCB /* missile.jpg in Resources */,
 				D16C133F93124B2F924A72E5 /* CinderApp.icns in Resources */,
 				A95EAFDB180463A800AACFCB /* crane.obj in Resources */,
-				A95EAFD318045FDD00AACFCB /* MQ-9.obj in Resources */,
-				A95EAFD418045FDD00AACFCB /* predator_Normal.jpg in Resources */,
-				A95EAFD518045FDD00AACFCB /* predator.jpg in Resources */,
 				A95EAFD91804635700AACFCB /* T72.obj in Resources */,
 				A95EAFCB1801CC0100AACFCB /* screen.png in Resources */,
-				A95EAFD218045FDD00AACFCB /* MQ-9.mtl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +261,7 @@
 			files = (
 				2432F1B16E57434AB1663C23 /* GridMakerApp.cpp in Sources */,
 				A902F65A18048A1E00DFEEAE /* GridLayout.cpp in Sources */,
+				A902F6D71804E7D100DFEEAE /* TankContent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
