@@ -28,6 +28,7 @@ class GridMakerApp : public AppNative {
     // Load / Save
     void loadAllGrids();
     void save();
+    void reload();
 
     // Mouse
 	void mouseDown( MouseEvent event );
@@ -110,39 +111,7 @@ void GridMakerApp::prepareSettings(Settings *settings)
 
 void GridMakerApp::setup()
 {
-    mIsAdding = false;
-    mIsRemoving = false;
-    mIsMouseValid = true;
-    mIsJoining = false;
-    mIsPlaying = false;
-    mSelectedRegionIndex = -1;
-    mIdxCurrentLayout = -1;
-    mIdxPrevLayout = -1;
-    mTransitionAmt = 1.0f;
-    mPlaybackSpeed = 1.0f;
-    mTotalDuration = 0;
-    mStartTime = 0;
-    mPlayheadTime = 0;
-    mLastFrameTime = getMilliCount();
-    loadAllGrids();
-    if (mIdxCurrentLayout > -1)
-    {
-        splitScreen();
-    }
-    else
-    {
-        console() << "Didn't find any serialized grids." << endl;
-        // Add an empty layout
-        GridLayout newLayout;
-        newLayout.setTimestamp(0);
-        newLayout.setTransitionDuration(kDefaultTransitionDuration);
-
-        mGridLayouts.push_back(newLayout);
-        
-        mIdxCurrentLayout = 0;
-    }
-    
-    calculateTotalDuration();
+    reload();
 
     mScreenTexture = loadImage(app::loadResource("screen.png"));
     mTexturePlaying = loadImage(app::loadResource("playing.png"));
@@ -176,6 +145,46 @@ void GridMakerApp::save()
             layout.remove();
         }
     }
+}
+
+void GridMakerApp::reload()
+{
+    mGridLayouts.clear();
+    mIsAdding = false;
+    mIsRemoving = false;
+    mIsMouseValid = true;
+    mIsJoining = false;
+    mIsPlaying = false;
+    mSelectedRegionIndex = -1;
+    mIdxCurrentLayout = -1;
+    mIdxPrevLayout = -1;
+    mTransitionAmt = 1.0f;
+    mPlaybackSpeed = 1.0f;
+    mTotalDuration = 0;
+    mStartTime = 0;
+    mPlayheadTime = 0;
+    mLastFrameTime = getMilliCount();
+
+    loadAllGrids();
+    
+    if (mIdxCurrentLayout > -1)
+    {
+        splitScreen();
+    }
+    else
+    {
+        console() << "Didn't find any serialized grids." << endl;
+        // Add an empty layout
+        GridLayout newLayout;
+        newLayout.setTimestamp(0);
+        newLayout.setTransitionDuration(kDefaultTransitionDuration);
+        
+        mGridLayouts.push_back(newLayout);
+        
+        mIdxCurrentLayout = 0;
+    }
+    
+    calculateTotalDuration();
 }
 
 void GridMakerApp::loadAllGrids()
@@ -316,6 +325,10 @@ void GridMakerApp::keyUp(KeyEvent event)
     else if (key == 'c')
     {
         clearCurrentLayout();
+    }
+    else if (key == 'l')
+    {
+        reload();
     }
     else if (key == 'x')
     {

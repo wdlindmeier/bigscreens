@@ -13,6 +13,7 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
 #include "SharedTypes.hpp"
+#include "GridLayout.h"
 #include <time.h>
 #include <sys/timeb.h>
 
@@ -91,4 +92,8 @@ namespace bigscreens
         return pos - ci::Vec2i(pos.x % snapSize, pos.y % snapSize);
     }
 
+    static bool sortByTimestamp(const GridLayout & layout1, const GridLayout & layout2)
+    {
+        return (layout1.getTimestamp() < layout2.getTimestamp());
+    }
 }

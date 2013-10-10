@@ -23,20 +23,12 @@ GridLayout::GridLayout() :
     mName(""),
     mRegions(),
     mTimestamp(0),
-    mTransitionMillisec(1000)
+    mTransitionMillisec(1000),
+    mUniqueID(to_string(arc4random() % 9999999))
 {
     loadAssets();
 };
-/*
-GridLayout::GridLayout(const GridLayout & gl) :
-    mName(gl.getName()),
-    mRegions(gl.getRegions()),
-    mTimestamp(gl.getTimestamp()),
-    mTransitionMillisec(gl.getTransitionDuration())
-{
-    loadAssets();
-};
-*/
+
 void GridLayout::loadAssets()
 {
     mScreenTexture = loadImage(app::loadResource("screen.png"));
@@ -82,6 +74,7 @@ GridLayout GridLayout::load(const fs::path & filePath)
         }
         
         layout.setName(filePath.filename().string());
+        layout.setUniqueID(layout.getName());
         layout.setRegions(regions);
     }
     else
@@ -96,7 +89,9 @@ void GridLayout::serialize()
     string filename = mName;
     if (filename == "")
     {
-        filename = to_string(mTimestamp) + ".grid";
+        // Just randomizing the name. This could (very rarely) clobber another file.
+        // Exciting!!!
+        filename = mUniqueID;
     }
     fs::path gridPath = cinder::app::getAssetPath(".") / filename;
     
@@ -123,11 +118,6 @@ void GridLayout::serialize()
     oStream.close();
 }
  
-static bool sortByTimestamp(const GridLayout & layout1, const GridLayout & layout2)
-{
-    return (layout1.getTimestamp() < layout2.getTimestamp());
-}
-
 std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory)
 {    
     fs::directory_iterator dir_first(directory), dir_last;
@@ -179,12 +169,12 @@ void GridLayout::remove()
     }
 }
     
-    /*
+/*
 void GridLayout::update()
 {
 //    mContent.update();
 }
-    */
+*/
     
 void GridLayout::render(const float transitionAmount,
                         const GridLayout & otherLayout,
