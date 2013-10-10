@@ -9,9 +9,7 @@
 #pragma once
 
 #include "cinder/Cinder.h"
-#include "cinder/Rand.h"
 #include "cinder/Rect.h"
-#include "cinder/gl/Texture.h"
 
 namespace bigscreens
 {
@@ -46,13 +44,4 @@ namespace bigscreens
         {
         };
     };
-}
-
-template<typename T>
-static bool RectCompare(ci::RectT<T> rectA, ci::RectT<T> rectB)
-{
-    return  (int)rectA.x1 == (int)rectB.x1 &&
-            (int)rectA.x2 == (int)rectB.x2 &&
-            (int)rectA.y1 == (int)rectB.y1 &&
-            (int)rectA.y2 == (int)rectB.y2;
 }

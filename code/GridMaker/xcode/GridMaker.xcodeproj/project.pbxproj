@@ -18,6 +18,8 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A902F65A18048A1E00DFEEAE /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F65918048A1E00DFEEAE /* GridLayout.cpp */; };
 		A902F6D71804E7D100DFEEAE /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F6D51804E7D100DFEEAE /* TankContent.cpp */; };
+		A902F6DC1806F92A00DFEEAE /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = A902F6DA1806F92A00DFEEAE /* paused.png */; };
+		A902F6DD1806F92A00DFEEAE /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = A902F6DB1806F92A00DFEEAE /* playing.png */; };
 		A95EAFCB1801CC0100AACFCB /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFCA1801CC0100AACFCB /* screen.png */; };
 		A95EAFD91804635700AACFCB /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFD81804635700AACFCB /* T72.obj */; };
 		A95EAFDB180463A800AACFCB /* crane.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFDA180463A800AACFCB /* crane.obj */; };
@@ -44,6 +46,9 @@
 		A902F65B18048A8000DFEEAE /* SharedTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SharedTypes.hpp; sourceTree = "<group>"; };
 		A902F6D51804E7D100DFEEAE /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
 		A902F6D81804E7EA00DFEEAE /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
+		A902F6D91806E45200DFEEAE /* Utilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utilities.hpp; sourceTree = "<group>"; };
+		A902F6DA1806F92A00DFEEAE /* paused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paused.png; path = ../resources/paused.png; sourceTree = "<group>"; };
+		A902F6DB1806F92A00DFEEAE /* playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playing.png; path = ../resources/playing.png; sourceTree = "<group>"; };
 		A95EAFCA1801CC0100AACFCB /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screen.png; path = ../resources/screen.png; sourceTree = "<group>"; };
 		A95EAFD81804635700AACFCB /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = T72.obj; path = ../resources/T72.obj; sourceTree = "<group>"; };
 		A95EAFDA180463A800AACFCB /* crane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crane.obj; path = ../resources/crane.obj; sourceTree = "<group>"; };
@@ -147,6 +152,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A902F6DA1806F92A00DFEEAE /* paused.png */,
+				A902F6DB1806F92A00DFEEAE /* playing.png */,
 				A95EAFDA180463A800AACFCB /* crane.obj */,
 				A95EAFD81804635700AACFCB /* T72.obj */,
 				6D6DE37C12D14EB896421C62 /* CinderApp.icns */,
@@ -180,6 +187,7 @@
 			children = (
 				A902F65718048A1E00DFEEAE /* GridLayout.h */,
 				A902F65B18048A8000DFEEAE /* SharedTypes.hpp */,
+				A902F6D91806E45200DFEEAE /* Utilities.hpp */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -245,6 +253,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A902F6DD1806F92A00DFEEAE /* playing.png in Resources */,
+				A902F6DC1806F92A00DFEEAE /* paused.png in Resources */,
 				D16C133F93124B2F924A72E5 /* CinderApp.icns in Resources */,
 				A95EAFDB180463A800AACFCB /* crane.obj in Resources */,
 				A95EAFD91804635700AACFCB /* T72.obj in Resources */,

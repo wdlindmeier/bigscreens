@@ -9,6 +9,7 @@
 #include "GridLayout.h"
 #include "cinder/app/App.h"
 #include "cinder/Utilities.h"
+#include "Utilities.hpp"
 #include <fstream>
 #include <boost/iterator/filter_iterator.hpp>
 
@@ -20,18 +21,22 @@ namespace bigscreens
 
 GridLayout::GridLayout() :
     mName(""),
-    mRegions()
+    mRegions(),
+    mTimestamp(0),
+    mTransitionMillisec(1000)
 {
     loadAssets();
 };
-
+/*
 GridLayout::GridLayout(const GridLayout & gl) :
     mName(gl.getName()),
-    mRegions(gl.getRegions())
+    mRegions(gl.getRegions()),
+    mTimestamp(gl.getTimestamp()),
+    mTransitionMillisec(gl.getTransitionDuration())
 {
     loadAssets();
 };
-    
+*/
 void GridLayout::loadAssets()
 {
     mScreenTexture = loadImage(app::loadResource("screen.png"));
@@ -49,15 +54,31 @@ GridLayout GridLayout::load(const fs::path & filePath)
 
         while (getline (inFile, line))
         {
-            lineCount++;
             vector<string> tokens = ci::split(line, ",");
-            int x1 = stoi(tokens[0]);
-            int y1 = stoi(tokens[1]);
-            int x2 = stoi(tokens[2]);
-            int y2 = stoi(tokens[3]);
-            ScreenRegion reg(x1,y1,x2,y2);
-            reg.isActive = true;
-            regions.push_back(reg);
+            
+            if (tokens.size() > 0) // ignore blank lines
+            {
+                if (lineCount == 0)
+                {
+                    if (tokens.size() > 1)
+                    {
+                        // First line is timing info
+                        layout.setTimestamp(stoll(tokens[0]));
+                        layout.setTransitionDuration(stoll(tokens[1]));
+                    }
+                }
+                else
+                {
+                    int x1 = stoi(tokens[0]);
+                    int y1 = stoi(tokens[1]);
+                    int x2 = stoi(tokens[2]);
+                    int y2 = stoi(tokens[3]);
+                    ScreenRegion reg(x1,y1,x2,y2);
+                    reg.isActive = true;
+                    regions.push_back(reg);
+                }
+            }
+            lineCount++;
         }
         
         layout.setName(filePath.filename().string());
@@ -70,6 +91,43 @@ GridLayout GridLayout::load(const fs::path & filePath)
     return layout;
 }
     
+void GridLayout::serialize()
+{
+    string filename = mName;
+    if (filename == "")
+    {
+        filename = to_string(mTimestamp) + ".grid";
+    }
+    fs::path gridPath = cinder::app::getAssetPath(".") / filename;
+    
+    std::ofstream oStream( gridPath.string() );
+    
+    vector<string> output;
+
+    // First line is timing info
+    oStream << to_string(mTimestamp) << "," << to_string(mTransitionMillisec) << "\n";
+    
+    // Following is the rect regions
+    for (int i = 0; i < mRegions.size(); ++i)
+    {
+        ScreenRegion & reg = mRegions[i];
+        if (reg.isActive)
+        {
+            oStream << to_string((int)reg.rect.x1) << ",";
+            oStream << to_string((int)reg.rect.y1) << ",";
+            oStream << to_string((int)reg.rect.x2) << ",";
+            oStream << to_string((int)reg.rect.y2) << ",";
+            oStream << "\n";
+        }
+    }
+    oStream.close();
+}
+ 
+static bool sortByTimestamp(const GridLayout & layout1, const GridLayout & layout2)
+{
+    return (layout1.getTimestamp() < layout2.getTimestamp());
+}
+
 std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory)
 {    
     fs::directory_iterator dir_first(directory), dir_last;
@@ -91,40 +149,25 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
     for (int i = 0; i < gridFiles.size(); ++i)
     {
         GridLayout gridLayout = GridLayout::load(gridFiles[i]);
+        
+        if (gridLayout.getTimestamp() == 0)
+        {
+            ci::app::console() << "Adding a default timestamp\n";
+            // Add some default time and duration
+            gridLayout.setTimestamp(kDefaultTimestampOffset * i);
+            gridLayout.setTransitionDuration(kDefaultTransitionDuration);
+        }
+        
         if (gridLayout.getRegions().size() > 0)
         {
             gridLayouts.push_back(gridLayout);
         }
     }
+    
+    // Sort them by their timestamp
+    std::sort(gridLayouts.begin(), gridLayouts.end(), sortByTimestamp);
+    
     return gridLayouts;
-}
-
-void GridLayout::serialize()
-{
-    string filename = mName;
-    if (filename == "")
-    {
-        int randNum = arc4random() % 9999999;
-        filename = to_string(randNum) + ".grid";
-    }
-    fs::path gridPath = cinder::app::getAssetPath(".") / filename;
-    
-    std::ofstream oStream( gridPath.string() );
-    
-    vector<string> output;
-    for (int i = 0; i < mRegions.size(); ++i)
-    {
-        ScreenRegion & reg = mRegions[i];
-        if (reg.isActive)
-        {
-            oStream << to_string((int)reg.rect.x1) << ",";
-            oStream << to_string((int)reg.rect.y1) << ",";
-            oStream << to_string((int)reg.rect.x2) << ",";
-            oStream << to_string((int)reg.rect.y2) << ",";
-            oStream << "\n";
-        }
-    }
-    oStream.close();
 }
 
 void GridLayout::remove()
@@ -136,10 +179,12 @@ void GridLayout::remove()
     }
 }
     
+    /*
 void GridLayout::update()
 {
 //    mContent.update();
 }
+    */
     
 void GridLayout::render(const float transitionAmount,
                         const GridLayout & otherLayout,
@@ -175,7 +220,7 @@ void GridLayout::render(const float transitionAmount,
                     
                     Rectf rB = compareReg.rect;
                     
-                    if (compareReg.isActive && RectCompare(rA, rB))
+                    if (compareReg.isActive && rectCompare(rA, rB))
                     {
                         // No transition. Just draw at full blast.
                         alpha = 1.0f;
