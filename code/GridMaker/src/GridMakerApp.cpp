@@ -4,102 +4,75 @@
 #include "cinder/Rect.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
+#include "Utilities.hpp"
 #include "Helpers.hpp"
 #include "cinder/Camera.h"
-#include <boost/iterator/filter_iterator.hpp>
 #include "GridLayout.h"
-
-// TMP
-#include "cinder/ObjLoader.h"
-#include "cinder/gl/Vbo.h"
-#include "cinder/gl/Fbo.h"
+#include "TankContent.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 using namespace bigscreens;
 
-template<typename T>
-bool RectCompare(RectT<T> rectA, RectT<T> rectB)
-{
-    return  (int)rectA.x1 == (int)rectB.x1 &&
-            (int)rectA.x2 == (int)rectB.x2 &&
-            (int)rectA.y1 == (int)rectB.y1 &&
-            (int)rectA.y2 == (int)rectB.y2;
-}
-
-Rectf RectfFromRectInt(RectT<int> rectA)
-{
-    return Rectf((float)rectA.x1, (float)rectA.y1, (float)rectA.x2, (float)rectA.y2);
-}
-
-bool RectsOverlap(Rectf rectA, Rectf rectB)
-{
-    return rectA.contains(rectB.getUpperLeft()) ||
-    rectA.contains(rectB.getUpperRight()) ||
-    rectA.contains(rectB.getLowerLeft()) ||
-    rectA.contains(rectB.getLowerRight()) ||
-    rectB.contains(rectA.getUpperLeft()) ||
-    rectB.contains(rectA.getUpperRight()) ||
-    rectB.contains(rectA.getLowerLeft()) ||
-    rectB.contains(rectA.getLowerRight());
-};
-
-bool RectIsValid(const Rectf & rect,
-                 const vector<ScreenRegion> & regions,
-                 const bool ignoreInactive = true)
-{
-    bool didOverlap = false;
-    for (int i = 0; i < regions.size(); ++i)
-    {
-        ScreenRegion reg = regions[i];
-        if ((reg.isActive || !ignoreInactive) && RectsOverlap(reg.rect, rect))
-        {
-            didOverlap = true;
-            break;
-        }
-    }
-    return !didOverlap;
-}
-
-inline Rectf RectFromTwoPos(const Vec2f & posA, const Vec2f & posB)
-{
-    int x1 = std::min(posA.x, posB.x);
-    int x2 = std::max(posA.x, posB.x);
-    int y1 = std::min(posA.y, posB.y);
-    int y2 = std::max(posA.y, posB.y);
-    return Rectf(x1, y1, x2, y2);
-}
-
 const int kGridSnapSize = 5;
-Vec2i MousePositionSnappedToSize(const Vec2i & pos, const int snapSize)
-{
-    return pos - Vec2i(pos.x % snapSize, pos.y % snapSize);
-}
 
 class GridMakerApp : public AppNative {
   public:
+    
+    // Setup
     void prepareSettings(Settings *settings);
 	void setup();
 	void shutdown();
+
+    // Load / Save
+    void loadAllGrids();
+    void save();
+    void reload();
+
+    // Mouse
 	void mouseDown( MouseEvent event );
     void mouseUp(MouseEvent event);
     void mouseDrag(MouseEvent event);
     void mouseMove(MouseEvent event);
+    
+    // Key
     void keyDown(KeyEvent event);
     void keyUp(KeyEvent event);
-	void update();
-	void draw();
+    
+    // Playback
+    void advance();
+    void reverse();
+    void restart();
+    void play();
+    void pause();
+    void newLayoutWasSet();
+    
+    // App Loop
+    void update();
+    void draw();
     void drawLayout(const GridLayout & layout,
                     const float scalarAmount,
                     const GridLayout & compareTolayout);
+
+    // Grid Editing
+    void clearSelection();
+    void insertLayout(GridLayout newLayout);
     void splitScreen();
     void finishJoining(MouseEvent event);
     void finishRemoving(MouseEvent event);
     void finishAdding(MouseEvent event);
-    void loadAllGrids();
-    void save();
+    void deleteCurrentLayout();
+    void clearCurrentLayout();
+    void duplicateCurrentLayout();
+    
+    // Time Editing
+    void adjustLayoutTimestamps(int startingIndex, long long duration);
 
+    // Misc
+    void calculateTotalDuration();
+    
+    // Member Vars
     vector<GridLayout> mGridLayouts;
     int mIdxCurrentLayout;
     int mIdxPrevLayout;
@@ -113,71 +86,56 @@ class GridMakerApp : public AppNative {
     Vec2i mMousePosition;
     Rectf mDrawingRect;
     float mTransitionAmt;
-    gl::Texture mScreenTexture;
     
-    // TMP / TODO: Move
-    void renderTankToFBO();
-    gl::VboMesh		mVBO;
-    TriMesh			mMesh;
-    gl::Fbo         mTankFBO;
-    Matrix44f		mTankRotation;
-    static const int	FBO_WIDTH = 512, FBO_HEIGHT = 512;
+    long long mStartTime;
+    long long mPlayheadTime;
+    long long mLastFrameTime;
+    long long mTotalDuration;
+    
+    float mPlaybackSpeed;
+    bool mIsPlaying;
+
+    ci::gl::Texture mScreenTexture;
+    TankContent mContent;
+    
+    ci::gl::Texture mTexturePlaying;
+    ci::gl::Texture mTexturePaused;
 };
+
+#pragma mark - Setup
 
 void GridMakerApp::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1000, 200);
+    settings->setWindowSize(960, 270);
 }
 
 void GridMakerApp::setup()
 {
-    mIsAdding = false;
-    mIsRemoving = false;
-    mIsMouseValid = true;
-    mIsJoining = false;
-    mSelectedRegionIndex = -1;
-    mIdxCurrentLayout = -1;
-    mIdxPrevLayout = -1;
-    mTransitionAmt = 1.0;
-    mScreenTexture = loadImage(loadResource("screen.png"));
-    loadAllGrids();
-    if (mIdxCurrentLayout > -1)
-    {
-        splitScreen();
-    }
-    else
-    {
-        console() << "Didn't find any serialized grids." << endl;
-        // Add an empty layout
-        mGridLayouts.push_back(GridLayout());
-        mIdxCurrentLayout = 0;
-    }
-    
-    // TMP / TODO: MOVE to content something
-    DataSourceRef file = loadResource( "T72.obj" );
-    ObjLoader loader( file );
-	loader.load( &mMesh );
-	mVBO = gl::VboMesh( mMesh );
-    mTankRotation.setToIdentity();
-    gl::Fbo::Format format;
-	format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
-	format.enableColorBuffer( true, 2 ); // create an FBO with two color attachments
-	mTankFBO = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
+    reload();
 
+    mScreenTexture = loadImage(app::loadResource("screen.png"));
+    mTexturePlaying = loadImage(app::loadResource("playing.png"));
+    mTexturePaused = loadImage(app::loadResource("paused.png"));
+
+    mContent.load("T72.obj");
 }
 
 void GridMakerApp::shutdown()
 {
+    // TODO: Ask user if they want to save
+    
     // Save current state
-    save();
+    // save();
 }
+
+#pragma mark - File Management
 
 void GridMakerApp::save()
 {
+    console() << "Saving\n";
     for (int i = 0; i < mGridLayouts.size(); ++i)
     {
-        mIdxCurrentLayout = i;
-        GridLayout & layout = mGridLayouts[mIdxCurrentLayout];
+        GridLayout & layout = mGridLayouts[i];
         if (layout.getRegions().size() > 0)
         {
             layout.serialize();
@@ -189,55 +147,73 @@ void GridMakerApp::save()
     }
 }
 
-void GridMakerApp::loadAllGrids()
+void GridMakerApp::reload()
 {
-    fs::path gridPath = getAssetPath(".");
-    fs::directory_iterator dir_first(gridPath), dir_last;
-    
-    // Filter on the .grid filetype
-    auto pred = [](const fs::directory_entry& p)
-    {
-        string filename = string(p.path().filename().c_str());
-        std::transform(filename.begin(), filename.end(), filename.begin(), ::tolower);
-        return fs::is_regular_file(p) && filename.find( ".grid" ) != -1;
-    };
-    
-    std::vector<fs::path> gridFiles;
-    std::copy(make_filter_iterator(pred, dir_first, dir_last),
-              make_filter_iterator(pred, dir_last, dir_last),
-              std::back_inserter(gridFiles));
-    
     mGridLayouts.clear();
-    for (int i = 0; i < gridFiles.size(); ++i)
+    mIsAdding = false;
+    mIsRemoving = false;
+    mIsMouseValid = true;
+    mIsJoining = false;
+    mIsPlaying = false;
+    mSelectedRegionIndex = -1;
+    mIdxCurrentLayout = -1;
+    mIdxPrevLayout = -1;
+    mTransitionAmt = 1.0f;
+    mPlaybackSpeed = 1.0f;
+    mTotalDuration = 0;
+    mStartTime = 0;
+    mPlayheadTime = 0;
+    mLastFrameTime = getMilliCount();
+
+    loadAllGrids();
+    
+    if (mIdxCurrentLayout > -1)
     {
-        GridLayout gridLayout = GridLayout::load(gridFiles[i]);
-        if (gridLayout.getRegions().size() > 0)
-        {
-            mGridLayouts.push_back(gridLayout);
-        }
+        splitScreen();
     }
-    if (mGridLayouts.size() > 0)
+    else
     {
+        console() << "Didn't find any serialized grids." << endl;
+        // Add an empty layout
+        GridLayout newLayout;
+        newLayout.setTimestamp(0);
+        newLayout.setTransitionDuration(kDefaultTransitionDuration);
+        
+        mGridLayouts.push_back(newLayout);
+        
         mIdxCurrentLayout = 0;
     }
     
+    calculateTotalDuration();
 }
 
+void GridMakerApp::loadAllGrids()
+{
+    fs::path gridPath = getAssetPath(".");
+    mGridLayouts = GridLayout::loadAllFromPath(gridPath);
+    int numLayouts = mGridLayouts.size();
+    if (numLayouts > 0)
+    {
+        mIdxCurrentLayout = 0;
+    }
+}
+
+#pragma mark - Mouse Input
 
 void GridMakerApp::mouseDown( MouseEvent event )
 {
-    mMousePositionStart = MousePositionSnappedToSize(event.getPos(), kGridSnapSize);
+    mMousePositionStart = mousePositionSnappedToSize(event.getPos(), kGridSnapSize);
     mDrawingRect = Rectf(mMousePosition.x, mMousePosition.y,
                               mMousePosition.x, mMousePosition.y);
 }
 
 void GridMakerApp::mouseDrag(MouseEvent event)
 {
-    mMousePosition = MousePositionSnappedToSize(event.getPos(), kGridSnapSize);
+    mMousePosition = mousePositionSnappedToSize(event.getPos(), kGridSnapSize);
     
     if (mIsAdding)
     {
-        mDrawingRect = RectFromTwoPos(mMousePosition, mMousePositionStart);
+        mDrawingRect = rectFromTwoPos(mMousePosition, mMousePositionStart);
         // +1 to avoid snap-to-grid collisions
         mDrawingRect.x1 += 1;
         mDrawingRect.y1 += 1;
@@ -250,7 +226,7 @@ void GridMakerApp::mouseDrag(MouseEvent event)
     }
 
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
-    mIsMouseValid = RectIsValid(mDrawingRect, curLayout.getRegions());
+    mIsMouseValid = rectIsValid(mDrawingRect, curLayout.getRegions());
     
     if (mIsMouseValid)
     {
@@ -260,12 +236,12 @@ void GridMakerApp::mouseDrag(MouseEvent event)
 
 void GridMakerApp::mouseMove(MouseEvent event)
 {
-    mMousePosition = MousePositionSnappedToSize(event.getPos(), kGridSnapSize);
+    mMousePosition = mousePositionSnappedToSize(event.getPos(), kGridSnapSize);
     // +1 to avoid snap-to-grid collisions
     mDrawingRect = Rectf(mMousePosition.x + 1, mMousePosition.y + 1,
                               mMousePosition.x + 1, mMousePosition.y + 1);
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
-    mIsMouseValid = RectIsValid(mDrawingRect, curLayout.getRegions());
+    mIsMouseValid = rectIsValid(mDrawingRect, curLayout.getRegions());
 }
 
 void GridMakerApp::mouseUp(MouseEvent event)
@@ -285,6 +261,289 @@ void GridMakerApp::mouseUp(MouseEvent event)
         finishJoining(event);
     }
 }
+
+#pragma mark - Key Input
+
+void GridMakerApp::keyDown(KeyEvent event)
+{
+    mIsAdding = event.isShiftDown();
+    if (mIsAdding) console() << "ADDING" << endl;
+    mIsJoining = event.isControlDown();
+    if (mIsJoining) console() << "JOINING" << endl;
+    mIsRemoving = event.isAltDown();
+    if (mIsRemoving) console() << "REMOVING" << endl;
+}
+
+void GridMakerApp::keyUp(KeyEvent event)
+{
+    
+    mIsAdding = event.isShiftDown();
+    
+    bool isJoining = event.isControlDown();
+    if (!isJoining && mIsJoining)
+    {
+        clearSelection();
+    }
+    mIsJoining = isJoining;
+    
+    mIsRemoving = event.isAltDown();
+    
+    if (mIsAdding || mIsJoining || mIsRemoving)
+    {
+        // Don't allow playback while editing
+        pause();
+    }
+    
+    char key = event.getChar();
+    if (key == 's')
+    {
+        save();
+    }
+    else if (key == ' ') // start / stop
+    {
+        if (mIsPlaying)
+        {
+            pause();
+        }
+        else
+        {
+            play();
+        }
+    }
+    else if (event.getCode() == KeyEvent::KEY_RIGHT)
+    {
+        advance();
+    }
+    else if (event.getCode() == KeyEvent::KEY_LEFT)
+    {
+        reverse();
+    }
+    else if (key == 'r')
+    {
+        restart();
+    }
+    else if (key == 'c')
+    {
+        clearCurrentLayout();
+    }
+    else if (key == 'l')
+    {
+        reload();
+    }
+    else if (key == 'x')
+    {
+        deleteCurrentLayout();
+    }
+    else if (key == 'n') // new layout
+    {
+        insertLayout(GridLayout());
+    }
+    else if (key == 'd')
+    {
+        duplicateCurrentLayout();
+    }
+}
+
+#pragma mark - Playback
+
+void GridMakerApp::restart()
+{
+    mStartTime = 0;
+    mIdxCurrentLayout = 0;
+    mTransitionAmt = 1.0f;
+    mPlayheadTime = 0;
+//    play();
+}
+
+void GridMakerApp::play()
+{
+    mLastFrameTime = getMilliCount();
+    mIsPlaying = true;
+}
+
+void GridMakerApp::pause()
+{
+    mIsPlaying = false;
+}
+
+void GridMakerApp::advance()
+{
+    mIdxPrevLayout = mIdxCurrentLayout;
+    mIdxCurrentLayout = (mIdxCurrentLayout + 1) % mGridLayouts.size();
+    newLayoutWasSet();
+}
+
+void GridMakerApp::reverse()
+{
+    mIdxPrevLayout = mIdxCurrentLayout;
+    mIdxCurrentLayout = mIdxCurrentLayout - 1;
+    if (mIdxCurrentLayout < 0)
+    {
+        mIdxCurrentLayout = mGridLayouts.size() - 1;
+    }
+
+    newLayoutWasSet();
+}
+
+void GridMakerApp::newLayoutWasSet()
+{
+    mTransitionAmt = mIsPlaying ? 0.0f : 1.0f;
+    
+    // Always reset the playhead so if we fwd/bck while playing it
+    // continues from the current frame.
+    GridLayout & layout = mGridLayouts[mIdxCurrentLayout];
+    mPlayheadTime = layout.getTimestamp();
+    
+    splitScreen();
+}
+
+#pragma mark - App Loop
+
+void GridMakerApp::update()
+{
+    if (mIsPlaying)
+    {
+        long long timestamp = getMilliCount();
+        
+        long long timeDelta = (timestamp - mLastFrameTime) * mPlaybackSpeed;
+        mPlayheadTime += timeDelta;
+
+        mLastFrameTime = timestamp;
+        
+        int nextID = mIdxCurrentLayout + 1;
+        
+       // Don't loop. We can do this manually
+        if (nextID < mGridLayouts.size())
+        {
+            GridLayout & nextLayout = mGridLayouts[nextID];
+            
+            long long startTimeNextLayout = nextLayout.getTimestamp();
+            if (startTimeNextLayout <= mPlayheadTime)
+            {
+                advance();
+            }
+        }
+
+        GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+        long long startTimeCurLayout = curLayout.getTimestamp();
+        long timeIntoLayout = mPlayheadTime - startTimeCurLayout;
+        long transitionDuration = curLayout.getTransitionDuration();
+        
+        // Dont transition into the first slide
+        if (mIdxCurrentLayout > 0)
+        {
+            mTransitionAmt = (float)std::min<double>((double)timeIntoLayout / (double)transitionDuration, 1.0);
+        }
+    }
+    
+    mContent.update();
+}
+
+void GridMakerApp::draw()
+{
+	// clear out the window with black
+	gl::clear( Color( 0, 0, 0 ) );
+    
+    // set the viewport to match our window
+	gl::setViewport( getWindowBounds() );
+    gl::setMatricesWindow( getWindowSize() );
+
+    gl::enableAlphaBlending();
+    
+    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    
+    GridRenderMode mode = GridRenderModeNormal;
+    if (mIsAdding)
+    {
+        mode = GridRenderModeAdding;
+    }
+    else if(mIsJoining)
+    {
+        mode = GridRenderModeJoining;
+    }
+    else if(mIsRemoving)
+    {
+        mode = GridRenderModeRemoving;
+    }
+    
+    if (mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
+    {
+        GridLayout & prevLayout = mGridLayouts[mIdxPrevLayout];
+
+        prevLayout.render(1.0 - std::min(mTransitionAmt / 0.5f, 1.0f),
+                          curLayout,
+                          mMousePosition,
+                          mode,
+                          mContent);
+        
+        curLayout.render(std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f),
+                         prevLayout,
+                         mMousePosition,
+                         mode,
+                         mContent);
+
+    }
+    else
+    {
+        curLayout.render(mTransitionAmt,
+                         GridLayout(),
+                         mMousePosition,
+                         mode,
+                         mContent);
+    }
+    
+    gl::color(Color::white());
+    if (mIsPlaying)
+    {
+        gl::draw(mTexturePlaying, Rectf(15,15,35,35));
+    }
+    else
+    {
+        gl::draw(mTexturePaused, Rectf(15,15,35,35));
+    }
+    
+    // Draw the current frame num
+    gl::drawString("Frame " + to_string(mIdxCurrentLayout), Vec2f(42, 25));
+
+    float height = getWindowHeight();
+    float width = getWindowWidth();
+    
+    if (mIsAdding)
+    {
+        gl::lineWidth(1.0f);
+        
+        if (mIsMouseValid)
+        {
+            gl::color(0.0f, 1.0f, 1.0f);
+        }
+        else
+        {
+            gl::color(1.0f, 0.0f, 0.0f);
+        }
+        
+        // Draw guide lines
+        float x1 = mDrawingRect.getX1();
+        float x2 = mDrawingRect.getX2();
+        float y1 = mDrawingRect.getY1();
+        float y2 = mDrawingRect.getY2();
+        
+        gl::drawLine(Vec2f(x1, 0), Vec2f(x1, height));
+        gl::drawLine(Vec2f(x2, 0), Vec2f(x2, height));
+        gl::drawLine(Vec2f(0, y1), Vec2f(width, y1));
+        gl::drawLine(Vec2f(0, y2), Vec2f(width, y2));
+        
+        gl::color(1.0f, 1.0f, 1.0f);
+        gl::drawStrokedRect(mDrawingRect);
+        
+        gl::drawString(to_string((int)mDrawingRect.getWidth()) + " x " +
+                       to_string((int)mDrawingRect.getHeight()),
+                       mMousePosition);
+    }
+    
+}
+
+
+#pragma mark - Grid Modification
 
 void GridMakerApp::finishAdding(MouseEvent event)
 {
@@ -330,13 +589,17 @@ void GridMakerApp::finishJoining(MouseEvent event)
         if (reg.rect.contains(mMousePosition))
         {
             selectedIdx = i;
+            reg.isSelected = i != mSelectedRegionIndex;
             break;
         }
     }
+    // re-set the regions so the selection is updated
+    curLayout.setRegions(regions);
     
     if (mSelectedRegionIndex == selectedIdx)
     {
         mSelectedRegionIndex = -1;
+        clearSelection();
     }
     else if (mSelectedRegionIndex != -1)
     {
@@ -361,14 +624,15 @@ void GridMakerApp::finishJoining(MouseEvent event)
         for (int i = 0; i < regions.size(); ++i)
         {
             ScreenRegion & reg = regions[i];
-            if (!RectsOverlap(reg.rect, newReg.rect))
+            if (!rectsOverlap(reg.rect, newReg.rect))
             {
                 keepRegions.push_back(reg);
             }
         }
         curLayout.setRegions(keepRegions);
-
+        
         mSelectedRegionIndex = -1;
+        clearSelection();
         
         splitScreen();
     }
@@ -376,309 +640,79 @@ void GridMakerApp::finishJoining(MouseEvent event)
     {
         mSelectedRegionIndex = selectedIdx;
     }
-    
 }
 
-void GridMakerApp::keyDown(KeyEvent event)
+void GridMakerApp::insertLayout(GridLayout newLayout)
 {
-    mIsAdding = event.isShiftDown();
-    if (mIsAdding) console() << "ADDING" << endl;
-    mIsJoining = event.isControlDown();
-    if (mIsJoining) console() << "JOINING" << endl;
-    mIsRemoving = event.isAltDown();
-    if (mIsRemoving) console() << "REMOVING" << endl;
+    newLayout.setTransitionDuration(kDefaultTransitionDuration);
+    GridLayout & currentLayout = mGridLayouts[mIdxCurrentLayout];
+    newLayout.setTimestamp(currentLayout.getTimestamp());
+    
+    int insertAtPosition = mIdxCurrentLayout + 1;
+    mGridLayouts.insert(mGridLayouts.begin() + insertAtPosition, newLayout);
+    adjustLayoutTimestamps(insertAtPosition, kDefaultTimestampOffset);
+
+    mIdxPrevLayout = mIdxCurrentLayout;
+    mIdxCurrentLayout = insertAtPosition;
+    mTransitionAmt = 0.0f;
+    calculateTotalDuration();
+    newLayoutWasSet();
 }
 
-void GridMakerApp::keyUp(KeyEvent event)
+void GridMakerApp::deleteCurrentLayout()
 {
-    mIsAdding = event.isShiftDown();
-    mIsJoining = event.isControlDown();
-    mIsRemoving = event.isAltDown();
+    int nextIdx = mIdxCurrentLayout + 1;
+    // Ddjust the time of all past the current index
+    if (mGridLayouts.size() > nextIdx)
+    {
+        // We'll need to adjust the time
+        GridLayout & layoutRemove = mGridLayouts[mIdxCurrentLayout];
+        GridLayout & layoutNext = mGridLayouts[nextIdx];
+        long long adjustTime = (layoutNext.getTimestamp() - layoutRemove.getTimestamp()) * -1;
+        adjustLayoutTimestamps(nextIdx, adjustTime);
+    }
     
-    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    // Delete the current index
+    assert(mGridLayouts.size() > 0);
+    mGridLayouts.erase(mGridLayouts.begin() + mIdxCurrentLayout);
     
-    char key = event.getChar();
-    if (key == 's')
+    // Then roll back one if the current index is greater than the grid count
+    if (mIdxCurrentLayout >= mGridLayouts.size())
     {
-        splitScreen();
-    }
-    else if (key == ' ')
-    {
-        curLayout.setRegions(vector<ScreenRegion>());
-    }
-    else if (key == 'w')
-    {
-        save();
-    }
-    else if (key == 'n')
-    {
-        mGridLayouts.push_back(GridLayout());
-        mIdxPrevLayout = mIdxCurrentLayout;
         mIdxCurrentLayout = mGridLayouts.size() - 1;
-        mTransitionAmt = 0.0f;
     }
-    else if (key == 'd')
+    
+    if (mGridLayouts.size() == 0)
     {
-        GridLayout dupLayout(curLayout);
-        dupLayout.setName("");
-        mGridLayouts.push_back(dupLayout);
-        mIdxPrevLayout = mIdxCurrentLayout;
-        mIdxCurrentLayout = mGridLayouts.size() - 1;
-        mTransitionAmt = 0.0f;
-    }
-    else if (event.getCode() == KeyEvent::KEY_RIGHT)
-    {
-        mIdxPrevLayout = mIdxCurrentLayout;
-        mIdxCurrentLayout = (mIdxCurrentLayout + 1) % mGridLayouts.size();
-        mTransitionAmt = 0.0f;
-        splitScreen();
-    }
-    else if (event.getCode() == KeyEvent::KEY_LEFT)
-    {
-        mIdxPrevLayout = mIdxCurrentLayout;
-        mIdxCurrentLayout = mIdxCurrentLayout - 1;
-        if (mIdxCurrentLayout < 0)
-        {
-            mIdxCurrentLayout = mGridLayouts.size() - 1;
-        }
-        mTransitionAmt = 0.0f;
-        splitScreen();
+        // Insert a blank one.
+        // We should never have zero
+        insertLayout(GridLayout());
     }
 }
 
-const static float kTransitionStep = 0.035;
-
-void GridMakerApp::update()
+void GridMakerApp::clearCurrentLayout()
 {
-    if (mTransitionAmt < 1.0)
-    {
-        mTransitionAmt = std::min<float>(mTransitionAmt + kTransitionStep, 1.0f);
-    }
-    
-    mTankRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
-    renderTankToFBO();
-}
-
-void GridMakerApp::drawLayout(const GridLayout & layout,
-                              const float scalarAmount,
-                              const GridLayout & compareTolayout)
-{
-    vector<ScreenRegion> curRegions = layout.getRegions();
-    int regionSize = curRegions.size();
-    
-    vector<ScreenRegion> compareRegions = compareTolayout.getRegions();
-    int compareRegionSize = compareRegions.size();
-    
-    for (int i = 0; i < regionSize; ++i)
-    {
-        ScreenRegion reg = curRegions[i];
-        
-        bool isHovered = reg.rect.contains(mMousePosition);
-        bool isJoining = (mSelectedRegionIndex == i) || (mIsJoining && isHovered);
-        bool isRemoving = (mIsRemoving && isHovered);
-        
-        float alpha = scalarAmount;
-
-        Rectf rA = reg.rect;
-        
-        if(reg.isActive)
-        {
-            if (scalarAmount < 1.0f)
-            {
-                // Check if this is a persistant region
-                for (int j = 0; j < compareRegionSize; ++j)
-                {
-                    ScreenRegion compareReg = compareRegions[j];
-                    
-                    Rectf rB = compareReg.rect;
-                    
-                    if (compareReg.isActive &&
-                        RectCompare(rA, rB))
-                    {
-                        // No transition. Just draw at full blast.
-                        alpha = 1.0f;
-                        break;
-                    }
-                }
-            }
-
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
-            }
-            else
-            {
-                ColorAf transColor = reg.color;
-                transColor[3] = alpha;
-                gl::color(transColor);
-                
-                mScreenTexture.enableAndBind();
-            }
-            
-            gl::pushMatrices();
-            gl::translate(rA.getCenter());
-            gl::scale(alpha, alpha, 1.0f);
-            
-            Rectf scaledRect(rA.getWidth() * -0.5f,
-                             rA.getHeight() * -0.5f,
-                             rA.getWidth() * 0.5f,
-                             rA.getHeight() * 0.5f);
-            gl::drawSolidRect(scaledRect);
-            
-            Rectf tankBounds = mTankFBO.getTexture(0).getBounds();
-
-            // "Get cetered fill"
-            float aspectWidth = scaledRect.getWidth() / tankBounds.getWidth();
-            float aspectHeight = scaledRect.getHeight() / tankBounds.getHeight();
-            float scaleFactor = std::max<float>(aspectWidth, aspectHeight);
-            Vec2f drawSize = scaledRect.getSize();
-            float areaMarginX = drawSize.x > drawSize.y ? 0 : ((drawSize.y - drawSize.x) * 0.5f);
-            float areaMarginY = drawSize.x > drawSize.y ? ((drawSize.x - drawSize.y) * 0.5f) : 0;
-            areaMarginX /= scaleFactor;
-            areaMarginY /= scaleFactor;
-            float areaWidth = scaledRect.getWidth() / scaleFactor;
-            float areaHeight = scaledRect.getHeight() / scaleFactor;
-            Area drawArea(areaMarginX,
-                          areaMarginY,
-                          areaMarginX + areaWidth,
-                          areaMarginY + areaHeight);
-            
-            gl::draw(mTankFBO.getTexture(0),
-                     drawArea,
-                     scaledRect);
-
-            mScreenTexture.unbind();
-            
-            gl::lineWidth(2.0f);
-            gl::color(1.0f,1.0f,1.0f,std::min<float>(0.8f, alpha));
-            gl::drawStrokedRect(scaledRect);
-            
-            gl::popMatrices();
-        }
-        else
-        {
-            gl::lineWidth(1.0f);
-            
-            if (isJoining)
-            {
-                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
-            }
-            else if (isRemoving)
-            {
-                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
-            }
-            else
-            {
-                gl::color(ColorAf(0.25f, 0.25f, 0.25f, alpha));
-            }
-            gl::drawStrokedRect(rA);
-        }
-    }
-}
-
-void GridMakerApp::renderTankToFBO()
-{
-    // bind the framebuffer - now everything we draw will go there
-	mTankFBO.bindFramebuffer();
-    
-    gl::enableAlphaBlending();
-    gl::enableAdditiveBlending();
-    
-	// setup the viewport to match the dimensions of the FBO
-	gl::setViewport( mTankFBO.getBounds() );
- 
-	// clear out both of the attachments of the FBO with black
-	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
-    
-    CameraPersp cam(mTankFBO.getWidth(),
-                    mTankFBO.getHeight(),
-                    45.0f );
-	gl::setMatrices( cam );
-    
-    gl::pushMatrices();
-    gl::translate(mTankFBO.getWidth() * 0.5f,
-                  mTankFBO.getHeight() * 0.7f,
-                  -600.0f);
-    // Flip vertically
-    gl::rotate(Vec3f(180.0f, 0, 0));
-    gl::multModelView( mTankRotation );
-
-    gl::color(ColorAf(1.0f,1.0f,1.0f,0.5f));
-    gl::enableWireframe();
-    gl::draw( mVBO );
-    gl::disableWireframe();
-    gl::popMatrices();
-
-	// unbind the framebuffer, so that drawing goes to the screen again
-	mTankFBO.unbindFramebuffer();
-}
-
-void GridMakerApp::draw()
-{
-	// clear out the window with black
-	gl::clear( Color( 0, 0, 0 ) );
-    
-    // set the viewport to match our window
-	gl::setViewport( getWindowBounds() );
-    gl::setMatricesWindow( getWindowSize() );
-
-    gl::enableAlphaBlending();
-    
-    gl::lineWidth(1);
-    
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
-    
-    if (mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
-    {
-        GridLayout & prevLayout = mGridLayouts[mIdxPrevLayout];
-        
-        drawLayout(prevLayout, 1.0 - std::min(mTransitionAmt / 0.5f, 1.0f), curLayout);
-        
-        drawLayout(curLayout, std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f), prevLayout);
-    }
-    else
-    {
-        drawLayout(curLayout, mTransitionAmt, GridLayout());
-    }
+    curLayout.setRegions(vector<ScreenRegion>());
+}
 
-    float height = getWindowHeight();
-    float width = getWindowWidth();
-    
-    // Draw the active rect
-    if (mIsAdding)
+void GridMakerApp::duplicateCurrentLayout()
+{
+    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    GridLayout dupLayout(curLayout);
+    dupLayout.setName("");
+    insertLayout(dupLayout);
+}
+
+void GridMakerApp::clearSelection()
+{
+    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    vector<ScreenRegion> regions = curLayout.getRegions();
+    for (int i = 0; i < regions.size(); ++i)
     {
-        if (mIsMouseValid)
-        {
-            gl::color(0.0f, 1.0f, 1.0f);
-        }
-        else
-        {
-            gl::color(1.0f, 0.0f, 0.0f);
-        }
-        
-        // Draw guide lines
-        float x1 = mDrawingRect.getX1();
-        float x2 = mDrawingRect.getX2();
-        float y1 = mDrawingRect.getY1();
-        float y2 = mDrawingRect.getY2();
-        
-        gl::drawLine(Vec2f(x1, 0), Vec2f(x1, height));
-        gl::drawLine(Vec2f(x2, 0), Vec2f(x2, height));
-        gl::drawLine(Vec2f(0, y1), Vec2f(width, y1));
-        gl::drawLine(Vec2f(0, y2), Vec2f(width, y2));
-        
-        gl::color(1.0f, 1.0f, 1.0f);
-        gl::drawStrokedRect(mDrawingRect);
-        
-        gl::drawString(to_string((int)mDrawingRect.getWidth()) + " x " +
-                       to_string((int)mDrawingRect.getHeight()),
-                       mMousePosition);
+        ScreenRegion & reg = regions[i];
+        reg.isSelected = false;
     }
-    
 }
 
 void GridMakerApp::splitScreen()
@@ -729,77 +763,39 @@ void GridMakerApp::splitScreen()
         for (int x = 0; x < xLines.size() - 1; ++x)
         {
             int x1 = xLines[x];
-            
-            int incX = 1;
-            int incY = 1;
-            bool didFit = false;
-            
-            for (int i = 0; i < 2; ++i)
+            int x2 = xLines[x + 1] - 1;
+            int y2 = yLines[y + 1] - 1;
+            Rectf testRect(x1, y1, x2, y2);
+            if (rectIsValid(testRect, newRegions, false))
             {
-                bool didHitWall = false;
-                while(!didHitWall)
-                {
-                    int x2 = xLines[x + incX] - 1;
-                    int y2 = yLines[y + incY] - 1;
-                    Rectf testRect(x1, y1, x2, y2);
-                    if(RectIsValid(testRect, newRegions, false))
-                    {
-                        didFit = true;
-                        // This will try to consume more empty plots, but I think
-                        // it's better to just do it manually.
-                        /*
-                        if (i == 0)
-                        {
-                            if ((x + incX) >= xLines.size() - 1)
-                            {
-                                didHitWall = true;
-                            }
-                            else
-                            {
-                                ++incX;
-                            }
-                        }
-                        else
-                        {
-                            if ((y + incY) >= yLines.size() - 1)
-                            {
-                                didHitWall = true;
-                            }
-                            else
-                            {
-                                ++incY;
-                            }
-                        }*/
-                    }
-                    /*
-                    else
-                    {
-                        if (i == 0)
-                        {
-                            --incX;
-                        }
-                        else
-                        {
-                            --incY;
-                        }
-                        didHitWall = true;
-                    }
-                    */
-                    break;
-                }
-            }
-            
-            if (didFit)
-            {
-                int x2 = xLines[x + incX] - 1;
-                int y2 = yLines[y + incY] - 1;
                 newRegions.push_back(ScreenRegion(x1,y1,x2,y2));
             }
         }
     }
 
     curLayout.setRegions(newRegions);
+}
 
+#pragma mark - Time Editing
+
+// Add or remove time from the playhead
+void GridMakerApp::adjustLayoutTimestamps(int startingIndex, long long duration)
+{
+    int layoutCount = mGridLayouts.size();
+    for (int i = startingIndex; i < layoutCount; ++i)
+    {
+        GridLayout & layout = mGridLayouts[i];
+        layout.setTimestamp(layout.getTimestamp() + duration);
+    }
+}
+
+#pragma mark - Misc
+
+void GridMakerApp::calculateTotalDuration()
+{
+    int numLayouts = mGridLayouts.size();
+    GridLayout & lastLayout = mGridLayouts[numLayouts - 1];
+    mTotalDuration = lastLayout.getTimestamp() + lastLayout.getTransitionDuration();
 }
 
 CINDER_APP_NATIVE( GridMakerApp, RendererGl )
