@@ -96,4 +96,9 @@ namespace bigscreens
     {
         return (layout1.getTimestamp() < layout2.getTimestamp());
     }
+    
+    static ci::fs::path SharedGridPath()
+    {
+        return cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets" / "grid";
+    }
 }

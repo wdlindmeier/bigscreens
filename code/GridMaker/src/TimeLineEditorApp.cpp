@@ -110,12 +110,15 @@ void TimeLineEditorApp::shutdown()
 void TimeLineEditorApp::save()
 {
     console() << "Saving\n";
+
+    fs::path gridPath = SharedGridPath();
+
     for (int i = 0; i < mGridLayouts.size(); ++i)
     {
         GridLayout & layout = mGridLayouts[i];
         if (layout.getRegions().size() > 0)
         {
-            layout.serialize();
+            layout.serialize(gridPath);
         }
         else
         {
@@ -126,7 +129,7 @@ void TimeLineEditorApp::save()
 
 void TimeLineEditorApp::loadAllGrids()
 {
-    fs::path gridPath = getAssetPath(".");
+    fs::path gridPath = SharedGridPath();
     mGridLayouts = GridLayout::loadAllFromPath(gridPath);
     console() << mGridLayouts.size() << " Layouts found\n";
 }

@@ -16,6 +16,10 @@
 using namespace cinder;
 using namespace std;
 
+// Shared screen texture.
+// This should be part of the content.
+static ci::gl::Texture ScreenTexture;
+
 namespace bigscreens
 {
 
@@ -31,10 +35,13 @@ GridLayout::GridLayout() :
 
 void GridLayout::loadAssets()
 {
-    mScreenTexture = loadImage(app::loadResource("screen.png"));
+    if (!ScreenTexture)
+    {
+        ScreenTexture = loadImage(app::loadResource("screen.png"));
+    }
 }
     
-GridLayout GridLayout::load(const fs::path & filePath)
+GridLayout GridLayout::load(const fs::path & filePath, float scale)
 {
     GridLayout layout;
     vector<ScreenRegion> regions;
@@ -61,10 +68,10 @@ GridLayout GridLayout::load(const fs::path & filePath)
                 }
                 else
                 {
-                    int x1 = stoi(tokens[0]);
-                    int y1 = stoi(tokens[1]);
-                    int x2 = stoi(tokens[2]);
-                    int y2 = stoi(tokens[3]);
+                    int x1 = stoi(tokens[0]) * scale;
+                    int y1 = stoi(tokens[1]) * scale;
+                    int x2 = stoi(tokens[2]) * scale;
+                    int y2 = stoi(tokens[3]) * scale;
                     ScreenRegion reg(x1,y1,x2,y2);
                     reg.isActive = true;
                     regions.push_back(reg);
@@ -84,18 +91,17 @@ GridLayout GridLayout::load(const fs::path & filePath)
     return layout;
 }
     
-void GridLayout::serialize()
+void GridLayout::serialize(const cinder::fs::path & directory, float scale)
 {
-    string filename = mName;
-    if (filename == "")
+    if (mName == "")
     {
         // Just randomizing the name. This could (very rarely) clobber another file.
         // Exciting!!!
-        filename = mUniqueID;
+        mName = mUniqueID;
     }
-    fs::path gridPath = cinder::app::getAssetPath(".") / filename;
+    mPath = directory / mName;
     
-    std::ofstream oStream( gridPath.string() );
+    std::ofstream oStream( mPath.string() );
     
     vector<string> output;
 
@@ -108,17 +114,17 @@ void GridLayout::serialize()
         ScreenRegion & reg = mRegions[i];
         if (reg.isActive)
         {
-            oStream << to_string((int)reg.rect.x1) << ",";
-            oStream << to_string((int)reg.rect.y1) << ",";
-            oStream << to_string((int)reg.rect.x2) << ",";
-            oStream << to_string((int)reg.rect.y2) << ",";
+            oStream << to_string((int)(reg.rect.x1 / scale)) << ",";
+            oStream << to_string((int)(reg.rect.y1 / scale)) << ",";
+            oStream << to_string((int)(reg.rect.x2 / scale)) << ",";
+            oStream << to_string((int)(reg.rect.y2 / scale)) << ",";
             oStream << "\n";
         }
     }
     oStream.close();
 }
  
-std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory)
+std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory, float scale)
 {    
     fs::directory_iterator dir_first(directory), dir_last;
     
@@ -138,7 +144,9 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
     std::vector<GridLayout> gridLayouts;
     for (int i = 0; i < gridFiles.size(); ++i)
     {
-        GridLayout gridLayout = GridLayout::load(gridFiles[i]);
+        fs::path gridPath = gridFiles[i];
+        GridLayout gridLayout = GridLayout::load(gridPath, scale);
+        gridLayout.setPath(gridPath);
         
         if (gridLayout.getTimestamp() == 0)
         {
@@ -162,10 +170,9 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
 
 void GridLayout::remove()
 {
-    if (mName != "")
+    if (mPath != fs::path())
     {
-        fs::path gridPath = ci::app::getAssetPath(mName);
-        fs::remove(gridPath);
+        fs::remove(mPath);
     }
 }
     
@@ -221,12 +228,12 @@ void GridLayout::render(const float transitionAmount,
             
             if (isJoining)
             {
-                mScreenTexture.unbind();
+                ScreenTexture.unbind();
                 gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
             }
             else if (isRemoving)
             {
-                mScreenTexture.unbind();
+                ScreenTexture.unbind();
                 gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
             }
             else
@@ -235,7 +242,10 @@ void GridLayout::render(const float transitionAmount,
                 transColor[3] = alpha;
                 gl::color(transColor);
                 
-                mScreenTexture.enableAndBind();
+                if (ScreenTexture)
+                {
+                    ScreenTexture.enableAndBind();
+                }
             }
             
             gl::pushMatrices();
@@ -271,7 +281,10 @@ void GridLayout::render(const float transitionAmount,
                      drawArea,
                      scaledRect);
             
-            mScreenTexture.unbind();
+            if (ScreenTexture)
+            {
+                ScreenTexture.unbind();
+            }
             
             gl::lineWidth(2.0f);
             gl::color(1.0f,1.0f,1.0f,std::min<float>(0.8f, alpha));

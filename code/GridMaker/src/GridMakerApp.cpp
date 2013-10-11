@@ -85,13 +85,12 @@ class GridMakerApp : public AppNative {
     Vec2i mMousePositionEnd;
     Vec2i mMousePosition;
     Rectf mDrawingRect;
-    float mTransitionAmt;
     
+    float mTransitionAmt;
     long long mStartTime;
     long long mPlayheadTime;
     long long mLastFrameTime;
     long long mTotalDuration;
-    
     float mPlaybackSpeed;
     bool mIsPlaying;
 
@@ -104,9 +103,15 @@ class GridMakerApp : public AppNative {
 
 #pragma mark - Setup
 
+const static int kNumScreens = 3;
+const static int kScreenWidth = 3840;
+const static int kScreenHeight = 1080;
+const static float kScreenScale = 0.25f;
+
 void GridMakerApp::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(960, 270);
+    settings->setWindowSize(kScreenWidth * kScreenScale,
+                            kScreenHeight * kScreenScale * kNumScreens);
 }
 
 void GridMakerApp::setup()
@@ -133,12 +138,15 @@ void GridMakerApp::shutdown()
 void GridMakerApp::save()
 {
     console() << "Saving\n";
+    
+    fs::path gridPath = SharedGridPath();
+    
     for (int i = 0; i < mGridLayouts.size(); ++i)
     {
         GridLayout & layout = mGridLayouts[i];
         if (layout.getRegions().size() > 0)
         {
-            layout.serialize();
+            layout.serialize(gridPath, kScreenScale);
         }
         else
         {
@@ -156,6 +164,8 @@ void GridMakerApp::reload()
     mIsJoining = false;
     mIsPlaying = false;
     mSelectedRegionIndex = -1;
+
+    // playback
     mIdxCurrentLayout = -1;
     mIdxPrevLayout = -1;
     mTransitionAmt = 1.0f;
@@ -189,8 +199,8 @@ void GridMakerApp::reload()
 
 void GridMakerApp::loadAllGrids()
 {
-    fs::path gridPath = getAssetPath(".");
-    mGridLayouts = GridLayout::loadAllFromPath(gridPath);
+    fs::path gridPath = SharedGridPath();
+    mGridLayouts = GridLayout::loadAllFromPath(gridPath, kScreenScale);
     int numLayouts = mGridLayouts.size();
     if (numLayouts > 0)
     {
@@ -441,6 +451,8 @@ void GridMakerApp::update()
 
 void GridMakerApp::draw()
 {
+    mContent.render();
+    
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
     
@@ -502,6 +514,17 @@ void GridMakerApp::draw()
         gl::draw(mTexturePaused, Rectf(15,15,35,35));
     }
     
+    // Screen bounds
+    gl::lineWidth(1.0f);
+    gl::color(ColorAf(0.0f, 1.0f, 0.0f, 0.5f));
+    float screenHeight = kScreenHeight * kScreenScale;
+    for (int i = 0; i < kNumScreens; ++i)
+    {
+        float y = screenHeight * (i + 1);
+        gl::drawLine(Vec2f(0, y),
+                     Vec2f(getWindowWidth(), y));
+    }
+
     // Draw the current frame num
     gl::drawString("Frame " + to_string(mIdxCurrentLayout), Vec2f(42, 25));
 

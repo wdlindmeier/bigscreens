@@ -35,11 +35,11 @@ public:
     GridLayout();
     ~GridLayout(){};
 
-    static GridLayout load(const cinder::fs::path & filePath);
-    static std::vector<GridLayout> loadAllFromPath(const cinder::fs::path & directory);
-    
+    static GridLayout load(const cinder::fs::path & filePath, float scale = 1.0f);
+    static std::vector<GridLayout> loadAllFromPath(const cinder::fs::path & directory,
+                                                   float scale = 1.0f);
     void loadAssets();
-    void serialize();
+    void serialize(const cinder::fs::path & directory, float scale = 1.0f);
     void remove();
     
     std::string getName() const { return mName; };
@@ -65,15 +65,18 @@ public:
     void setUniqueID( const std::string & uid ) { mUniqueID = uid; }
     
     bool operator==(GridLayout & other){ return mUniqueID == other.getUniqueID(); };
+    
+    void setPath(const ci::fs::path & path){ mPath = path; };
+    ci::fs::path getPath(){ return mPath; }
 
 private:
     
     std::vector<bigscreens::ScreenRegion> mRegions;
     std::string mName;
     std::string mUniqueID;
-    ci::gl::Texture mScreenTexture;
     long long mTimestamp;
     long mTransitionMillisec;
+    ci::fs::path mPath;
     
 };
     

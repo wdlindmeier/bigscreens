@@ -26,6 +26,7 @@ public:
     void render();
     ci::gl::Texture getTexture();
     ci::Vec2i getSize();
+    void reset();
     
 private:
     
