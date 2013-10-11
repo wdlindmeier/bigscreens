@@ -20,19 +20,28 @@ typedef std::pair<ci::Vec2i, ci::Vec2i> OriginAndDimension;
 	
 class SceneWindow {
 public:
-	SceneWindow( Content * subContent, OriginAndDimension * origAndDim, ci::gl::FboRef scratch, ColorA clearColor = ColorA::black(), float clearDepth = 1.0f ) : content( subContent ), origAndDim(origAndDim), mScratch( scratch ), clearColor(clearColor), clearDepth(clearDepth) { render(); }
-	~SceneWindow() {}
+	SceneWindow( Content * subContent, ci::Area *origAndDim, ci::gl::FboRef scratch, ci::gl::FboRef accumulation, ColorA color )
+	: mContent( subContent ), mScratch( scratch ), mAccumulation( accumulation ), mClearColor( color ), 
+		mOrigAndDim( new ci::Area( Vec2i( origAndDim->x1, ci::app::getWindowHeight() - origAndDim->y2 ), Vec2i( origAndDim->x2, origAndDim->y1 ) ) ),
+		mLastAspect( mContent->getCamera().getAspectRatio() ), mWidth( origAndDim->getWidth() ), mHeight( origAndDim->getHeight() )
+	{
+		mContent->getCamera().setAspectRatio( (float)mWidth / mHeight );
+		render();
+	}
+	~SceneWindow()
+	{
+		mContent->getCamera().setAspectRatio( mLastAspect );
+		delete mOrigAndDim;
+	}
 	
 	void render()
 	{
-		mScratch->bindFramebuffer();
 		setScissorAndViewport();
+		mScratch->bindFramebuffer();
 		
-		gl::clearColor( clearColor );
-		gl::clear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT ) ;
+		gl::clear( mClearColor );
 		
-		content->render();
-		
+		mContent->render();
 		
 		mScratch->unbindFramebuffer();
 		blitToScreen();
@@ -41,22 +50,23 @@ public:
 private:
 	void setScissorAndViewport()
 	{
-		gl::viewport( origAndDim->first, origAndDim->second );
-		gl::scissor( origAndDim->first, origAndDim->second );
+		gl::viewport( mOrigAndDim->x1, mOrigAndDim->y1, mWidth, mHeight );
+		gl::scissor( mOrigAndDim->x1, mOrigAndDim->y2, mWidth, mHeight );
 	}
 	
 	void blitToScreen()
 	{
-		mScratch->blitToScreen( ci::Area( origAndDim->first.x, origAndDim->first.y, origAndDim->second.x, origAndDim->second.y ), ci::Area( origAndDim->first.x, origAndDim->first.y, origAndDim->second.x, origAndDim->second.y ) );
+		mScratch->blitTo( mAccumulation, *mOrigAndDim, *mOrigAndDim ); 
 	}
 	
 	
 private:
-	Content * content;
-	OriginAndDimension * origAndDim;
-	ci::gl::FboRef	mScratch;
-	ColorA clearColor;
-	float clearDepth;
+	Content * mContent;
+	Area * mOrigAndDim;
+	ci::gl::FboRef	mScratch, mAccumulation;
+	ColorA mClearColor;
+	float mLastAspect;
+	int mWidth, mHeight;
 };
 
 }

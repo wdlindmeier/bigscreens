@@ -21,31 +21,15 @@ namespace bigscreens {
 
 class Content {
 public:
-	Content( )
-	{
-		mCam.setPerspective(60, (float)640 / 480 , 1, 1000);
-		mCam.lookAt( Vec3f( 0,0,1 ), Vec3f( 0,0,-1 ) );
-	}
-	~Content() {}
+	Content( ) {}
+	virtual ~Content() {}
 	
-	CameraPersp& getCamera() { return mCam; }
+	virtual CameraPersp& getCamera() = 0;
 	
-	void render()
-	{
-		gl::bindStockShader( gl::ShaderDef().color() );
-		
-		gl::pushMatrices();
-		gl::setMatrices(mCam);
-		gl::multModelView( Matrix44f::createTranslation( Vec3f( 0,0,-1 ) ) );
-		gl::multModelView( Matrix44f::createScale( 10 ) );
-		
-		gl::drawCube( Vec3f(0,0,0), Vec3f(1,1,1));
-		
-		gl::popMatrices();
-	}
+	virtual void render() = 0;
 	
 private:
-	CameraPersp mCam;
+	
 };
 
 }

@@ -18,6 +18,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		B351126917FF6154005E3AE0 /* SceneWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B351126717FF6154005E3AE0 /* SceneWindow.cpp */; };
 		B351126C17FF7299005E3AE0 /* Content.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B351126A17FF7299005E3AE0 /* Content.cpp */; };
+		B3FB37761804C41F0013ED40 /* ExampleContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3FB37741804C41F0013ED40 /* ExampleContent.cpp */; };
 		CB7457854BDB4893A89668CB /* WindowImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B1B7D82D144D6290105D16 /* WindowImpl.cpp */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,8 @@
 		B351126817FF6154005E3AE0 /* SceneWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneWindow.h; path = ../src/SceneWindow.h; sourceTree = "<group>"; };
 		B351126A17FF7299005E3AE0 /* Content.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Content.cpp; path = ../src/Content.cpp; sourceTree = "<group>"; };
 		B351126B17FF7299005E3AE0 /* Content.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Content.h; path = ../src/Content.h; sourceTree = "<group>"; };
+		B3FB37741804C41F0013ED40 /* ExampleContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleContent.cpp; path = ../src/ExampleContent.cpp; sourceTree = "<group>"; };
+		B3FB37751804C41F0013ED40 /* ExampleContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleContent.h; path = ../src/ExampleContent.h; sourceTree = "<group>"; };
 		D5B1B7D82D144D6290105D16 /* WindowImpl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowImpl.cpp; path = ../src/WindowImpl.cpp; sourceTree = "<group>"; };
 		F04A4CBBD066465A9985D120 /* WindowImpl_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowImpl_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +81,8 @@
 				B351126817FF6154005E3AE0 /* SceneWindow.h */,
 				B351126A17FF7299005E3AE0 /* Content.cpp */,
 				B351126B17FF7299005E3AE0 /* Content.h */,
+				B3FB37741804C41F0013ED40 /* ExampleContent.cpp */,
+				B3FB37751804C41F0013ED40 /* ExampleContent.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			files = (
 				B351126C17FF7299005E3AE0 /* Content.cpp in Sources */,
 				CB7457854BDB4893A89668CB /* WindowImpl.cpp in Sources */,
+				B3FB37761804C41F0013ED40 /* ExampleContent.cpp in Sources */,
 				B351126917FF6154005E3AE0 /* SceneWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,7 +235,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../cinder_dev;
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -255,7 +261,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../cinder_dev;
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
