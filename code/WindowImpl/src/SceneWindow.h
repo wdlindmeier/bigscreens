@@ -12,7 +12,6 @@
 #include "cinder/gl/Fbo.h"
 #include "Content.h"
 
-
 namespace bigscreens {
 
 typedef std::shared_ptr<class SceneWindow> SceneWindowRef;
@@ -20,16 +19,17 @@ typedef std::pair<ci::Vec2i, ci::Vec2i> OriginAndDimension;
 	
 class SceneWindow {
 public:
-	SceneWindow( Content * subContent, ci::Area *origAndDim, ci::gl::FboRef scratch, ci::gl::FboRef accumulation, ColorA color )
+	SceneWindow( Content * subContent, ci::Rectf *origAndDim, ci::gl::FboRef scratch, ci::gl::FboRef accumulation, ColorA color )
 	: mContent( subContent ), mScratch( scratch ), mAccumulation( accumulation ), mClearColor( color ), 
-		mOrigAndDim( new ci::Area( Vec2i( origAndDim->x1, ci::app::getWindowHeight() - origAndDim->y2 ), Vec2i( origAndDim->x2, origAndDim->y1 ) ) ),
-		mLastAspect( mContent->getCamera().getAspectRatio() ), mWidth( origAndDim->getWidth() ), mHeight( origAndDim->getHeight() )
+		mOrigAndDim( new OriginAndDimension( Vec2i( origAndDim->x1, ci::app::getWindowHeight() - origAndDim->y2 ), Vec2i( origAndDim->getWidth(), origAndDim->getHeight() ) ) ),
+		mLastAspect( mContent->getCamera().getAspectRatio() )
 	{
-		mContent->getCamera().setAspectRatio( (float)mWidth / mHeight );
+		mContent->getCamera().setAspectRatio( (float)mOrigAndDim->second.x / mOrigAndDim->second.y );
 		render();
 	}
 	~SceneWindow()
 	{
+		
 		mContent->getCamera().setAspectRatio( mLastAspect );
 		delete mOrigAndDim;
 	}
@@ -37,6 +37,8 @@ public:
 	void render()
 	{
 		setScissorAndViewport();
+		
+		gl::enable( GL_SCISSOR_TEST );
 		mScratch->bindFramebuffer();
 		
 		gl::clear( mClearColor );
@@ -44,29 +46,34 @@ public:
 		mContent->render();
 		
 		mScratch->unbindFramebuffer();
+		gl::disable( GL_SCISSOR_TEST );
+		
 		blitToScreen();
 	}
 	
 private:
 	void setScissorAndViewport()
 	{
-		gl::viewport( mOrigAndDim->x1, mOrigAndDim->y1, mWidth, mHeight );
-		gl::scissor( mOrigAndDim->x1, mOrigAndDim->y2, mWidth, mHeight );
+		gl::viewport( mOrigAndDim->first.x, mOrigAndDim->first.y, mOrigAndDim->second.x, mOrigAndDim->second.y );
+		gl::scissor( mOrigAndDim->first.x, mOrigAndDim->first.y, mOrigAndDim->second.x, mOrigAndDim->second.y );
 	}
 	
 	void blitToScreen()
 	{
-		mScratch->blitTo( mAccumulation, *mOrigAndDim, *mOrigAndDim ); 
+//		mScratch->blitTo( mAccumulation, *mOrigAndDim, *mOrigAndDim );
+		mScratch->blitToScreen( ci::Area( mOrigAndDim->first.x, mOrigAndDim->first.y,
+										  mOrigAndDim->first.x + mOrigAndDim->second.x, mOrigAndDim->first.y + mOrigAndDim->second.y ),
+							   ci::Area( mOrigAndDim->first.x, mOrigAndDim->first.y,
+										mOrigAndDim->first.x + mOrigAndDim->second.x, mOrigAndDim->first.y + mOrigAndDim->second.y ) );
 	}
 	
 	
 private:
 	Content * mContent;
-	Area * mOrigAndDim;
+	OriginAndDimension * mOrigAndDim;
 	ci::gl::FboRef	mScratch, mAccumulation;
 	ColorA mClearColor;
 	float mLastAspect;
-	int mWidth, mHeight;
 };
 
 }

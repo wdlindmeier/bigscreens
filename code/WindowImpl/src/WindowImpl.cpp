@@ -14,13 +14,14 @@ class WindowImplApp : public AppNative {
   public:
 	void setup();
 	void mouseDown( MouseEvent event );
-	void prepareSettings( Settings * settings ) { }
+	void prepareSettings( Settings * settings ) { settings->setWindowSize( 960, 270 ); }
 	void update();
 	void draw();
 	
-	bigscreens::ExampleContent	mContent;
-	gl::FboRef					mScratchFbo;
-	gl::FboRef					mAccumulationFbo;
+	bigscreens::ExampleContent		mContent;
+	gl::FboRef						mScratchFbo;
+	gl::FboRef						mAccumulationFbo;
+	std::vector<Rectf>				mDimensions;
 	int i;
 };
 
@@ -29,7 +30,15 @@ void WindowImplApp::setup()
 	mScratchFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
 	mAccumulationFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
 	i = 0;
-	cout << "size " << sizeof( mContent ) << endl;
+	mDimensions.push_back(Rectf( 726, 11, 875, 135 ));
+	mDimensions.push_back(Rectf( 11, 11, 290, 260 ));
+	mDimensions.push_back(Rectf( 301, 11, 575, 260 ));
+	mDimensions.push_back(Rectf( 586, 11, 715, 135 ));
+	mDimensions.push_back(Rectf( 586, 146, 950, 260 ));
+	mDimensions.push_back(Rectf( 586, 146, 950, 260 ));
+	gl::clear();
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
 }
 
 void WindowImplApp::mouseDown( MouseEvent event )
@@ -43,30 +52,19 @@ void WindowImplApp::update()
 
 void WindowImplApp::draw()
 {
-	gl::clear();
-	bigscreens::OriginAndDimension mWindowDim( Vec2i( 0, 0 ), Vec2i( 200, 200 ) );
+	
+	
 	// clear out the window with black
-	{
-		bigscreens::SceneWindowRef	mWindow( new bigscreens::SceneWindow( &mContent, &mWindowDim, mScratchFbo, mAccumulationFbo, ColorA::white() ) );
-	}
-	bigscreens::OriginAndDimension mNextWindowDim( Vec2i( 200, 200 ), Vec2i( 600, 400 ) );
-	{
-		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &mNextWindowDim, mScratchFbo, mAccumulationFbo, ColorA( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
-	}
-	bigscreens::OriginAndDimension mThirdWindowDim( Vec2i( 200, 0 ), Vec2i( 400, 200 ) );
-	{
-		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &mThirdWindowDim, mScratchFbo, mAccumulationFbo, ColorA( 0.0f, 1.0f, 0.0f, 1.0f ) ) );
-	}
-	bigscreens::OriginAndDimension mFourthWindowDim( Vec2i( 0, 200 ), Vec2i( 200, 400 ) );
-	{
-		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &mFourthWindowDim, mScratchFbo, mAccumulationFbo, ColorA( 0.0f, 0.0f, 1.0f, 1.0f ) ) );
+	for( auto dimIt = mDimensions.begin(); dimIt != mDimensions.end(); ++dimIt ) {
+		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &(*dimIt), mScratchFbo, mAccumulationFbo, ColorA( 1.0f, 0.0f, 1.0f, 1.0f ) ) );
 	}
 	
-	gl::viewport( Vec2i( 0, 0 ), Vec2i(640, 480) );
-	gl::pushMatrices();
-	gl::setMatricesWindow(getWindowSize());
-	gl::draw( mScratchFbo->getTexture(), Vec2i( i, i ) );
-	gl::popMatrices();
+	
+//	gl::viewport( Vec2i( 0, 0 ), getWindowSize() );
+//	gl::pushMatrices();
+//	gl::setMatricesWindow(getWindowSize());
+//	gl::draw( mScratchFbo->getTexture(), Vec2i( i, i ) );
+//	gl::popMatrices();
 	
 }
 
