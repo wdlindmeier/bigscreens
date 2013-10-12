@@ -30,10 +30,14 @@ void TankContent::load(const std::string & objFilename)
 	mFBO = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
 }
 
+void TankContent::reset()
+{
+    mRotation.setToIdentity();
+}
+
 void TankContent::update()
 {
     mRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
-    render();
 }
 
 void TankContent::render()

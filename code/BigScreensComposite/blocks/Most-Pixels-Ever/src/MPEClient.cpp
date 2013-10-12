@@ -45,6 +45,7 @@ namespace mpe
 
         bool                            mIsRendering3D;
         long                            mLastFrameConfirmed;
+        bool                            mIsScissorEnabled;
 
         // 3D Positioning
         float                           mFieldOfView;
@@ -84,6 +85,7 @@ namespace mpe
         mIsAsync(false),
         mAsyncReceivesData(false),
         mClientName(""),
+        mIsScissorEnabled(true),
         mAspectRatio(getWindowAspectRatio()),
         mFieldOfView(25.0f),
         mCameraZ(-880)
@@ -96,6 +98,16 @@ namespace mpe
         ~MPENonThreadedClient(){ stop(); }
 
         #pragma mark - Accessors
+        
+        bool getIsScissorEnabled()
+        {
+            return mIsScissorEnabled;
+        }
+        
+        void setIsScissorEnabled(const bool isEnabled)
+        {
+            mIsScissorEnabled = isEnabled;
+        }
 
         virtual bool isThreaded()
         {
@@ -247,11 +259,14 @@ namespace mpe
 
         virtual void draw()
         {
-            glEnable(GL_SCISSOR_TEST);
-            glScissor(0, 0,
-                      mLocalViewportRect.getWidth(),
-                      mLocalViewportRect.getHeight());
-            
+            if (mIsScissorEnabled)
+            {
+                glEnable(GL_SCISSOR_TEST);
+                glScissor(0, 0,
+                          mLocalViewportRect.getWidth(),
+                          mLocalViewportRect.getHeight());
+            }
+
             glPushMatrix();
 
             // Only show the area of the view we're interested in.
@@ -262,6 +277,7 @@ namespace mpe
 
             glPopMatrix();
             
+            // Disable every time in case the user turned it off
             gl::disable(GL_SCISSOR_TEST);
 
             if (isConnected() && !mIsAsync)
