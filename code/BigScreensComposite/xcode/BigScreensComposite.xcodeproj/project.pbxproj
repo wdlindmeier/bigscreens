@@ -132,6 +132,8 @@
 		A902F754180863C200DFEEAE /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
 		AC92D2E51BE24DAE83F0231D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1053B656A6D44369CF81142 /* MPEProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = MPEProtocol.hpp; path = "../blocks/Most-Pixels-Ever/include/MPEProtocol.hpp"; sourceTree = "<group>"; };
+		B35EB685180AECB400F0A059 /* Content.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Content.h; sourceTree = "<group>"; };
+		B35EB686180AECB400F0A059 /* SceneWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneWindow.hpp; sourceTree = "<group>"; };
 		BCD267BE61924BA8ABDBB9D0 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
 		C0800836628D409ABC8CB58B /* TCPAsyncClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = TCPAsyncClient.cpp; path = "../blocks/Most-Pixels-Ever/src/TCPAsyncClient.cpp"; sourceTree = "<group>"; };
 		DBB8F89BDD9F4F898983724A /* TCPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPClient.h; path = "../blocks/Most-Pixels-Ever/include/TCPClient.h"; sourceTree = "<group>"; };
@@ -336,6 +338,8 @@
 		A902F65D1804DD3C00DFEEAE /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				B35EB685180AECB400F0A059 /* Content.h */,
+				B35EB686180AECB400F0A059 /* SceneWindow.hpp */,
 				A902F6FB1808441600DFEEAE /* Utilities.hpp */,
 				A902F65E1804DD3C00DFEEAE /* GridLayout.h */,
 				A902F65F1804DD3C00DFEEAE /* SharedTypes.hpp */,
