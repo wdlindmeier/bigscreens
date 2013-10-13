@@ -16,9 +16,6 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		B351126917FF6154005E3AE0 /* SceneWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B351126717FF6154005E3AE0 /* SceneWindow.cpp */; };
-		B351126C17FF7299005E3AE0 /* Content.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B351126A17FF7299005E3AE0 /* Content.cpp */; };
-		B3FB37761804C41F0013ED40 /* ExampleContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3FB37741804C41F0013ED40 /* ExampleContent.cpp */; };
 		CB7457854BDB4893A89668CB /* WindowImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B1B7D82D144D6290105D16 /* WindowImpl.cpp */; };
 /* End PBXBuildFile section */
 
@@ -37,11 +34,8 @@
 		7D16BFC57B5A4F7384927ABB /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		7F4741311B594B2C8BAA62E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* WindowImpl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WindowImpl.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B351126717FF6154005E3AE0 /* SceneWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SceneWindow.cpp; path = ../src/SceneWindow.cpp; sourceTree = "<group>"; };
-		B351126817FF6154005E3AE0 /* SceneWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneWindow.h; path = ../src/SceneWindow.h; sourceTree = "<group>"; };
-		B351126A17FF7299005E3AE0 /* Content.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Content.cpp; path = ../src/Content.cpp; sourceTree = "<group>"; };
+		B351126817FF6154005E3AE0 /* SceneWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SceneWindow.hpp; path = ../src/SceneWindow.hpp; sourceTree = "<group>"; };
 		B351126B17FF7299005E3AE0 /* Content.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Content.h; path = ../src/Content.h; sourceTree = "<group>"; };
-		B3FB37741804C41F0013ED40 /* ExampleContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleContent.cpp; path = ../src/ExampleContent.cpp; sourceTree = "<group>"; };
 		B3FB37751804C41F0013ED40 /* ExampleContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleContent.h; path = ../src/ExampleContent.h; sourceTree = "<group>"; };
 		D5B1B7D82D144D6290105D16 /* WindowImpl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowImpl.cpp; path = ../src/WindowImpl.cpp; sourceTree = "<group>"; };
 		F04A4CBBD066465A9985D120 /* WindowImpl_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowImpl_Prefix.pch; sourceTree = "<group>"; };
@@ -77,11 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				D5B1B7D82D144D6290105D16 /* WindowImpl.cpp */,
-				B351126717FF6154005E3AE0 /* SceneWindow.cpp */,
-				B351126817FF6154005E3AE0 /* SceneWindow.h */,
-				B351126A17FF7299005E3AE0 /* Content.cpp */,
+				B351126817FF6154005E3AE0 /* SceneWindow.hpp */,
 				B351126B17FF7299005E3AE0 /* Content.h */,
-				B3FB37741804C41F0013ED40 /* ExampleContent.cpp */,
 				B3FB37751804C41F0013ED40 /* ExampleContent.h */,
 			);
 			name = Source;
@@ -222,10 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B351126C17FF7299005E3AE0 /* Content.cpp in Sources */,
 				CB7457854BDB4893A89668CB /* WindowImpl.cpp in Sources */,
-				B3FB37761804C41F0013ED40 /* ExampleContent.cpp in Sources */,
-				B351126917FF6154005E3AE0 /* SceneWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

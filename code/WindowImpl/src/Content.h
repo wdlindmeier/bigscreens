@@ -8,24 +8,26 @@
 
 #pragma once
 
-#include <map>
 #include "cinder/Camera.h"
-#include "cinder/gl/gl.h"
-#include "cinder/gl/Shader.h"
-#include "cinder/gl/GlslProg.h"
-#include "cinder/Matrix44.h"
 
 using namespace ci;
+
+// Interface for creating windows
 
 namespace bigscreens {
 
 class Content {
 public:
-	Content( ) {}
+	Content() {}
 	virtual ~Content() {}
 	
+	// This is to manipulate the aspect ratio
+	// so that we can use different windows
+	// for our content
 	virtual CameraPersp& getCamera() = 0;
 	
+	// This is what every renderable class
+	// should have
 	virtual void render() = 0;
 	
 private:

@@ -3,7 +3,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
 
-#include "SceneWindow.h"
+#include "SceneWindow.hpp"
 #include "ExampleContent.h"
 
 using namespace ci;
@@ -52,20 +52,10 @@ void WindowImplApp::update()
 
 void WindowImplApp::draw()
 {
-	
-	
 	// clear out the window with black
 	for( auto dimIt = mDimensions.begin(); dimIt != mDimensions.end(); ++dimIt ) {
-		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &(*dimIt), mScratchFbo, mAccumulationFbo, ColorA( 1.0f, 0.0f, 1.0f, 1.0f ) ) );
+		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &(*dimIt), mScratchFbo ) );
 	}
-	
-	
-//	gl::viewport( Vec2i( 0, 0 ), getWindowSize() );
-//	gl::pushMatrices();
-//	gl::setMatricesWindow(getWindowSize());
-//	gl::draw( mScratchFbo->getTexture(), Vec2i( i, i ) );
-//	gl::popMatrices();
-	
 }
 
 CINDER_APP_NATIVE( WindowImplApp, RendererGl )
