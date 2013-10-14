@@ -9,30 +9,44 @@
 #pragma once
 
 #include "cinder/Cinder.h"
+#include "cinder/app/App.h"
 #include "cinder/Rect.h"
 #include "cinder/gl/gl.h"
 
 namespace bigscreens
 {
-    class RenderableContent
-    {
-    public:
-        virtual void render() = 0;
-        virtual ci::gl::Texture getTexture() = 0;
-    };
+	// SceneWindow type, more interested in the dimensions from
+	// an origin for opengl.
+	typedef std::pair<ci::Vec2i, ci::Vec2i> OriginAndDimension;
+	
+    class RenderableContent {
+	public:
+		RenderableContent() {}
+		virtual ~RenderableContent() {}
+		
+		// This is to manipulate the aspect ratio
+		// so that we can use different windows
+		// for our content
+		virtual ci::CameraPersp& getCamera() = 0;
+		
+		// This is what every renderable class
+		// should have
+		virtual void render() = 0;
+		
+	private:
+		
+	};
     
     struct ScreenRegion
     {
         ci::Rectf rect;
         bool isActive;
         bool isSelected;
-        ci::ColorAf color;
         
         ScreenRegion(int x1, int y1, int x2, int y2) :
         rect(x1,y1,x2,y2),
         isActive(false),
-        isSelected(false),
-        color(1.0f,1.0f,1.0f,1.0f)
+        isSelected(false)
         {
         };
 
@@ -40,10 +54,23 @@ namespace bigscreens
         ScreenRegion(const ScreenRegion & reg) :
         rect(reg.rect),
         isActive(reg.isActive),
-        isSelected(reg.isSelected),
-        color(reg.color)
+        isSelected(reg.isSelected)
         {
         };
+		
+		OriginAndDimension getOriginAndDimension()
+		{
+			return OriginAndDimension( ci::Vec2i( rect.x1, ci::app::getWindowHeight() - rect.y2 ),
+									   ci::Vec2i( rect.getWidth(), rect.getHeight() ) );
+		}
+		
+		float * getOutline()
+		{
+			return new float[8] { rect.x1, rect.y1,
+								  rect.x1, rect.y1 + rect.y2,
+								  rect.x1 + rect.x2, rect.y1 + rect.y2,
+								  rect.x1 + rect.x2, rect.y1 };
+		}
     };
     
     struct Slider
@@ -90,24 +117,24 @@ namespace bigscreens
         
         void render(bool isEnabled)
         {
-            ci::gl::lineWidth(1.0f);
-            ci::gl::color(ci::Color::white());
-            ci::gl::drawLine(ci::Vec2f(mRect.x1, mRect.getCenter().y),
-                         ci::Vec2f(mRect.x2, mRect.getCenter().y));
-            ci::gl::lineWidth(6.0f);
-            if (isEnabled)
-            {
-                ci::gl::color(ci::ColorAf(1.0f, 0, 0, 1.0f));
-            }
-            else
-            {
-                ci::gl::color(ci::ColorAf(0.5f, 0.5f, 0.5f, 1.0f));
-            }
-            float offsetX = mRect.getWidth() * mValue;
-            ci::gl::drawLine(ci::Vec2f(mRect.x1 + offsetX,
-                                       mRect.y1),
-                             ci::Vec2f(mRect.x1 + offsetX,
-                                       mRect.y2));
+//            ci::gl::lineWidth(1.0f);
+//            ci::gl::color(ci::Color::white());
+//            ci::gl::drawLine(ci::Vec2f(mRect.x1, mRect.getCenter().y),
+//                         ci::Vec2f(mRect.x2, mRect.getCenter().y));
+//            ci::gl::lineWidth(6.0f);
+//            if (isEnabled)
+//            {
+//                ci::gl::color(ci::ColorAf(1.0f, 0, 0, 1.0f));
+//            }
+//            else
+//            {
+//                ci::gl::color(ci::ColorAf(0.5f, 0.5f, 0.5f, 1.0f));
+//            }
+//            float offsetX = mRect.getWidth() * mValue;
+//            ci::gl::drawLine(ci::Vec2f(mRect.x1 + offsetX,
+//                                       mRect.y1),
+//                             ci::Vec2f(mRect.x1 + offsetX,
+//                                       mRect.y2));
         }
     };
     

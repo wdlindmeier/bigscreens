@@ -9,21 +9,18 @@
 #pragma once
 
 #include "cinder/gl/Fbo.h"
-#include "Content.h"
+#include "cinder/gl/gl.h"
+#include "SharedTypes.hpp"
 
 namespace bigscreens {
 
 typedef std::shared_ptr<class SceneWindow> SceneWindowRef;
-// Making this class more interested in the dimensions from
-// an origin for opengl.
-typedef std::pair<ci::Vec2i, ci::Vec2i> OriginAndDimension;
 	
 class SceneWindow {
 public:
-	SceneWindow( Content * subContent, ci::Rectf *origAndDim, ci::gl::FboRef scratch )
+	SceneWindow( RenderableContent * subContent, ScreenRegion *origAndDim, ci::gl::FboRef scratch )
 	: mContent( subContent ), mScratch( scratch ), mLastAspect( mContent->getCamera().getAspectRatio() ),
-		mOrigAndDim(  Vec2i( origAndDim->x1, ci::app::getWindowHeight() - origAndDim->y2 ),
-					  Vec2i( origAndDim->getWidth(), origAndDim->getHeight() ) )
+		mOrigAndDim( origAndDim->getOriginAndDimension() ), mOutLine( origAndDim->getOutline() )
 	{
 		// After we have the camera's original aspect ratio,
 		// set the new aspect ratio to the dimensions of the window
@@ -36,6 +33,7 @@ public:
 	{
 		// On the way, reset the lastAspect ratio
 		mContent->getCamera().setAspectRatio( mLastAspect );
+		delete [] mOutLine;
 	}
 	
 	void render()
@@ -44,16 +42,18 @@ public:
 		setScissorAndViewport();
 		
 		// Enable the test here
-		gl::enable( GL_SCISSOR_TEST );
+		ci::gl::enable( GL_SCISSOR_TEST );
 		mScratch->bindFramebuffer();
 		
-		gl::clear();
+		ci::gl::clear();
 		
 		// Render our scene to the fbo
 		mContent->render();
 		
+		renderOutline();
+		
 		mScratch->unbindFramebuffer();
-		gl::disable( GL_SCISSOR_TEST );
+		ci::gl::disable( GL_SCISSOR_TEST );
 		// Disable the test
 		
 		// Blit the result to the screen,
@@ -66,8 +66,8 @@ private:
 	void setScissorAndViewport()
 	{
 		// This is LowerLeft and Width and Height
-		gl::viewport( mOrigAndDim.first.x, mOrigAndDim.first.y, mOrigAndDim.second.x, mOrigAndDim.second.y );
-		gl::scissor( mOrigAndDim.first.x, mOrigAndDim.first.y, mOrigAndDim.second.x, mOrigAndDim.second.y );
+		ci::gl::viewport( mOrigAndDim.first.x, mOrigAndDim.first.y, mOrigAndDim.second.x, mOrigAndDim.second.y );
+		ci::gl::scissor( mOrigAndDim.first.x, mOrigAndDim.first.y, mOrigAndDim.second.x, mOrigAndDim.second.y );
 	}
 	
 	void blitToScreen()
@@ -78,12 +78,18 @@ private:
 										mOrigAndDim.first.x + mOrigAndDim.second.x, mOrigAndDim.first.y + mOrigAndDim.second.y ) );
 	}
 	
+	void renderOutline()
+	{
+		// This needs to be completed
+	}
+	
 	
 private:
-	Content * mContent;
-	OriginAndDimension mOrigAndDim;
-	ci::gl::FboRef	mScratch;
-	float mLastAspect;
+	RenderableContent * mContent;
+	OriginAndDimension	mOrigAndDim;
+	float			  * mOutLine;
+	ci::gl::FboRef		mScratch;
+	float				mLastAspect;
 };
 
 }
