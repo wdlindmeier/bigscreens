@@ -12,7 +12,6 @@
 #include "cinder/Cinder.h"
 #include "cinder/gl/Texture.h"
 
-
 namespace bigscreens
 {
 
@@ -35,11 +34,16 @@ public:
     GridLayout();
     ~GridLayout(){};
 
-    static GridLayout load(const cinder::fs::path & filePath, float scale = 1.0f);
+    static GridLayout load(const cinder::fs::path & filePath,
+                           float scale = 1.0f,
+                           const cinder::Vec2i & wrapSize = cinder::Vec2i::zero());
     static std::vector<GridLayout> loadAllFromPath(const cinder::fs::path & directory,
-                                                   float scale = 1.0f);
+                                                   float scale = 1.0f,
+                                                   const cinder::Vec2i & wrapSize = cinder::Vec2i::zero());
     void loadAssets();
-    void serialize(const cinder::fs::path & directory, float scale = 1.0f);
+    void serialize(const cinder::fs::path & directory,
+                   float scale = 1.0f,
+                   const cinder::Vec2i & wrapSize = cinder::Vec2i::zero());
     void remove();
     
     std::string getName() const { return mName; };

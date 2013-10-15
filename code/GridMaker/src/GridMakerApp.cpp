@@ -99,6 +99,8 @@ class GridMakerApp : public AppNative {
     
     ci::gl::Texture mTexturePlaying;
     ci::gl::Texture mTexturePaused;
+    
+    ci::Vec2i mGridWrap;
 };
 
 #pragma mark - Setup
@@ -116,6 +118,8 @@ void GridMakerApp::prepareSettings(Settings *settings)
 
 void GridMakerApp::setup()
 {
+    mGridWrap = Vec2i(kScreenWidth, kScreenHeight);
+
     reload();
 
     mScreenTexture = loadImage(app::loadResource("screen.png"));
@@ -146,7 +150,7 @@ void GridMakerApp::save()
         GridLayout & layout = mGridLayouts[i];
         if (layout.getRegions().size() > 0)
         {
-            layout.serialize(gridPath, kScreenScale);
+            layout.serialize(gridPath, kScreenScale, mGridWrap);
         }
         else
         {
@@ -200,7 +204,7 @@ void GridMakerApp::reload()
 void GridMakerApp::loadAllGrids()
 {
     fs::path gridPath = SharedGridPath();
-    mGridLayouts = GridLayout::loadAllFromPath(gridPath, kScreenScale);
+    mGridLayouts = GridLayout::loadAllFromPath(gridPath, kScreenScale, mGridWrap);
     int numLayouts = mGridLayouts.size();
     if (numLayouts > 0)
     {

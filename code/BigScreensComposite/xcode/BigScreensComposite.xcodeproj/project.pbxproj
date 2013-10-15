@@ -129,7 +129,7 @@
 		A902F71E18084E4E00DFEEAE /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen.png; sourceTree = "<group>"; };
 		A902F71F18084E4E00DFEEAE /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = T72.obj; sourceTree = "<group>"; };
 		A902F750180863B900DFEEAE /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../../GridMaker/src/TankContent.cpp; sourceTree = "<group>"; };
-		A902F754180863C200DFEEAE /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
+		A9E48A41180D8ED600F2F1C9 /* TankContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../../GridMaker/include/TankContent.h; sourceTree = "<group>"; };
 		AC92D2E51BE24DAE83F0231D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1053B656A6D44369CF81142 /* MPEProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = MPEProtocol.hpp; path = "../blocks/Most-Pixels-Ever/include/MPEProtocol.hpp"; sourceTree = "<group>"; };
 		B35EB685180AECB400F0A059 /* Content.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Content.h; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				A902F754180863C200DFEEAE /* TankContent.h */,
+				A9E48A41180D8ED600F2F1C9 /* TankContent.h */,
 				72E46A2955814B1E882B2670 /* Resources.h */,
 				BCD267BE61924BA8ABDBB9D0 /* BigScreensComposite_Prefix.pch */,
 			);
@@ -816,7 +816,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../../../Tools/cinder_master;
+				CINDER_PATH = /Users/bill/Tools/cinder_master;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -833,7 +833,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../../../Tools/cinder_master;
+				CINDER_PATH = /Users/bill/Tools/cinder_master;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

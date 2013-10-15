@@ -41,7 +41,9 @@ void GridLayout::loadAssets()
     }
 }
     
-GridLayout GridLayout::load(const fs::path & filePath, float scale)
+GridLayout GridLayout::load(const fs::path & filePath,
+                            float scale,
+                            const cinder::Vec2i & wrapSize)
 {
     GridLayout layout;
     vector<ScreenRegion> regions;
@@ -72,6 +74,25 @@ GridLayout GridLayout::load(const fs::path & filePath, float scale)
                     int y1 = stoi(tokens[1]) * scale;
                     int x2 = stoi(tokens[2]) * scale;
                     int y2 = stoi(tokens[3]) * scale;
+                    
+                    // WRAP
+                    if (wrapSize != Vec2i::zero())
+                    {
+                        // NOTE: Scaling wrap because the scale has already been applied
+                        // to the coords.
+                        Vec2f scaledWrap = wrapSize * scale;
+
+                        float width = x2 - x1;
+                        float height = y2 - y1;
+                        int row = x1 / (int)scaledWrap.x;
+                        x1 = x1 % (int)scaledWrap.x;
+                        y1 = (scaledWrap.y * row) + y1;
+                        // NOTE: Regions cant split across rows.
+                        // Their n2 values will always be on the same row as n1.
+                        x2 = x1 + width;
+                        y2 = y1 + height;
+                    }
+
                     ScreenRegion reg(x1,y1,x2,y2);
                     reg.isActive = true;
                     regions.push_back(reg);
@@ -91,7 +112,9 @@ GridLayout GridLayout::load(const fs::path & filePath, float scale)
     return layout;
 }
     
-void GridLayout::serialize(const cinder::fs::path & directory, float scale)
+void GridLayout::serialize(const cinder::fs::path & directory,
+                           float scale,
+                           const cinder::Vec2i & wrapSize)
 {
     if (mName == "")
     {
@@ -114,17 +137,36 @@ void GridLayout::serialize(const cinder::fs::path & directory, float scale)
         ScreenRegion & reg = mRegions[i];
         if (reg.isActive)
         {
-            oStream << to_string((int)(reg.rect.x1 / scale)) << ",";
-            oStream << to_string((int)(reg.rect.y1 / scale)) << ",";
-            oStream << to_string((int)(reg.rect.x2 / scale)) << ",";
-            oStream << to_string((int)(reg.rect.y2 / scale)) << ",";
+            int x1 = reg.rect.x1 / scale;
+            int y1 = reg.rect.y1 / scale;
+            int x2 = reg.rect.x2 / scale;
+            int y2 = reg.rect.y2 / scale;
+            
+            // UNWRAP
+            if (wrapSize != Vec2i::zero())
+            {
+                int row = y1 / (int)wrapSize.y;
+                int offsetX = row * (int)wrapSize.x;
+                int offsetY = (row * (int)wrapSize.y) * -1;
+                x1 += offsetX;
+                x2 += offsetX;
+                y1 += offsetY;
+                y2 += offsetY;
+            }
+            
+            oStream << to_string(x1) << ",";
+            oStream << to_string(y1) << ",";
+            oStream << to_string(x2) << ",";
+            oStream << to_string(y2) << ",";
             oStream << "\n";
         }
     }
     oStream.close();
 }
  
-std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory, float scale)
+std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & directory,
+                                                    float scale,
+                                                    const cinder::Vec2i & wrapSize)
 {    
     fs::directory_iterator dir_first(directory), dir_last;
     
@@ -145,7 +187,7 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
     for (int i = 0; i < gridFiles.size(); ++i)
     {
         fs::path gridPath = gridFiles[i];
-        GridLayout gridLayout = GridLayout::load(gridPath, scale);
+        GridLayout gridLayout = GridLayout::load(gridPath, scale, wrapSize);
         gridLayout.setPath(gridPath);
         
         if (gridLayout.getTimestamp() == 0)

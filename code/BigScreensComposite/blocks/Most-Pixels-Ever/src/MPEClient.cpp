@@ -305,6 +305,9 @@ namespace mpe
         {
             gl::setMatricesWindow(mLocalViewportRect.getWidth(),
                                   mLocalViewportRect.getHeight());
+            glViewport(0, 0,
+                       mLocalViewportRect.getWidth(),
+                       mLocalViewportRect.getHeight());
             glTranslatef(mLocalViewportRect.getX1() * -1,
                          mLocalViewportRect.getY1() * -1,
                          0);
