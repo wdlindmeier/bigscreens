@@ -12,6 +12,7 @@
 #include "cinder/app/App.h"
 #include "cinder/Rect.h"
 #include "cinder/gl/gl.h"
+#include "cinder/Camera.h"
 
 namespace bigscreens
 {
@@ -39,9 +40,15 @@ namespace bigscreens
     
     struct ScreenRegion
     {
+		// Maybe it should have a "content" string
+		// that would be used to access content inside
+		// a map of content
+		// TODO: Reflect the associatedContent string
+		// inside of Gridlayout
         ci::Rectf rect;
         bool isActive;
         bool isSelected;
+		std::string associatedContent;
         
         ScreenRegion(int x1, int y1, int x2, int y2) :
         rect(x1,y1,x2,y2),
@@ -58,18 +65,12 @@ namespace bigscreens
         {
         };
 		
+		// Helper function to get the translated Origin and Dimension
+		// from the region to the SceneWindow
 		OriginAndDimension getOriginAndDimension()
 		{
 			return OriginAndDimension( ci::Vec2i( rect.x1, ci::app::getWindowHeight() - rect.y2 ),
 									   ci::Vec2i( rect.getWidth(), rect.getHeight() ) );
-		}
-		
-		float * getOutline()
-		{
-			return new float[8] { rect.x1, rect.y1,
-								  rect.x1, rect.y1 + rect.y2,
-								  rect.x1 + rect.x2, rect.y1 + rect.y2,
-								  rect.x1 + rect.x2, rect.y1 };
 		}
     };
     

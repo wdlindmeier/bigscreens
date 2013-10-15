@@ -29,6 +29,8 @@ namespace bigscreens {
 		GridLayout();
 		~GridLayout() {};
 		
+		GridLayout( const GridLayout * other );
+		
 		static GridLayout load( const ci::fs::path & filePath, float scale = 1.0f );
 		static std::vector<GridLayout> loadAllFromPath( const ci::fs::path & directory, float scale = 1.0f );
 		

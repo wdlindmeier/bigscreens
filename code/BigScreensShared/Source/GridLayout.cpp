@@ -24,6 +24,14 @@ namespace bigscreens {
 	{
 	}
 	
+	// this is a highly optimized copy constructor for the timeline class
+	// all we're really interested in is grabbing the regions so we can
+	// manipulate them
+	GridLayout::GridLayout( const GridLayout * other )
+	{
+		mRegions = other->mRegions;
+	}
+	
 	GridLayout GridLayout::load( const ci::fs::path &filePath, float scale )
 	{
 		GridLayout layout;

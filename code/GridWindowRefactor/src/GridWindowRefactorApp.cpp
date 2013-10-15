@@ -6,6 +6,8 @@
 #include "Utilities.hpp"
 #include "DummyContent.h"
 #include "cinder/gl/Fbo.h"
+#include "GridLayoutTimeline.h"
+#include "TankContent.h"
 
 const static float kScreenScale = 0.25f;
 
@@ -22,20 +24,27 @@ class GridWindowRefactorApp : public AppNative {
 	void update();
 	void draw();
 	
+	bigscreens::GridLayoutTimelineRef		mGridTimeline;
 	std::vector<bigscreens::GridLayout>		mGridLayouts;
-	bigscreens::ExampleContent				mContent;
+	bigscreens::ExampleContent				mExampleContent;
+	bigscreens::TankContent					mTankContent;
 	gl::FboRef								mScratchFbo;
 	std::vector<bigscreens::ScreenRegion>	mRegions;
 	int										curLayoutIdx;
+	bigscreens::OutLineBorderRef			mOutLine;
 };
 
 void GridWindowRefactorApp::setup()
 {
 	curLayoutIdx = 0;
-    fs::path gridPath = cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets" / "grid";
+    fs::path gridPath = bigscreens::SharedGridPath();
     mGridLayouts = bigscreens::GridLayout::loadAllFromPath(gridPath, kScreenScale);
 	mRegions = mGridLayouts[curLayoutIdx].getRegions();
 	mScratchFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
+	
+	mOutLine = std::shared_ptr<bigscreens::OutLineBorder>(new bigscreens::OutLineBorder());
+	
+	mTankContent.load( "../../BigScreensShared/Resources/T72.obj" );
 	
 	gl::clear();
 	gl::enableDepthRead();
@@ -66,17 +75,29 @@ void GridWindowRefactorApp::mouseDown( MouseEvent event )
 
 void GridWindowRefactorApp::update()
 {
+	mTankContent.update();
 	
+	// clear out the window with black
+	// we don't need to clear every frame only at the beginning and whenever we're transitioning
+	gl::clear( Color( 0, 0, 0 ) );
+	
+	//	here or probably in update we'll tick() the timeline and get back our layouts
+	//	auto gridLayouts = mGridTimeline->tick();
+	//  once we get it worked out we'll actually send tick to another thread after rendering and get the std::pair result as a future
+	//	before rendering.
+	//	first check if we need to do anything with the next gridlayout
+	//	if( !gridLayouts.second )
+	//		and if there's not just draw the gridLayouts in .first->getRegions() like below
+	for( auto dimIt = mRegions.begin(); dimIt != mRegions.end(); ++dimIt ) {
+		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mTankContent, &(*dimIt), mScratchFbo, mOutLine )  );
+	}
+	//  else {
+	//	We'll have to figure out the best way to transform. maybe scenewindow can take a color or alpha value like you were doing before and
+	//	use that to smoothly transition I'm open to suggestions.
 }
 
 void GridWindowRefactorApp::draw()
 {
-	// clear out the window with black
-	gl::clear( Color( 0, 0, 0 ) );
-	
-	for( auto dimIt = mRegions.begin(); dimIt != mRegions.end(); ++dimIt ) {
-		bigscreens::SceneWindowRef  mNextWindow( new bigscreens::SceneWindow( &mContent, &(*dimIt), mScratchFbo ) );
-	}
 	
 }
 

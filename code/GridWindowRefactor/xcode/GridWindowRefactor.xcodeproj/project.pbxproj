@@ -15,6 +15,7 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		B32CEE3B180E068300892BE1 /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B32CEE3A180E068300892BE1 /* TankContent.cpp */; };
 		B35EB72A180C7B5000F0A059 /* 0.grid in Resources */ = {isa = PBXBuildFile; fileRef = B35EB712180C7B5000F0A059 /* 0.grid */; };
 		B35EB72B180C7B5000F0A059 /* 10000.grid in Resources */ = {isa = PBXBuildFile; fileRef = B35EB713180C7B5000F0A059 /* 10000.grid */; };
 		B35EB72C180C7B5000F0A059 /* 12000.grid in Resources */ = {isa = PBXBuildFile; fileRef = B35EB714180C7B5000F0A059 /* 12000.grid */; };
@@ -32,6 +33,9 @@
 		B35EB738180C7B5000F0A059 /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = B35EB726180C7B5000F0A059 /* screen.png */; };
 		B35EB739180C7B5000F0A059 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = B35EB727180C7B5000F0A059 /* T72.obj */; };
 		B35EB73A180C7B5000F0A059 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EB729180C7B5000F0A059 /* GridLayout.cpp */; };
+		B35EB73D180C80E800F0A059 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EB73B180C80E800F0A059 /* GridLayoutTimeline.cpp */; };
+		B35EB747180CB80300F0A059 /* outline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B35EB746180CB80300F0A059 /* outline.vert */; };
+		B35EB749180CB82A00F0A059 /* outline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B35EB748180CB82A00F0A059 /* outline.frag */; };
 		EB4B00B6F30C4DEA8AAD759A /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3FA8C65FA7F048DFB7C43A0F /* CinderApp.icns */; };
 		FB0DF806E9D84071AC43E6B6 /* GridWindowRefactorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA824C293612472F97C9EB29 /* GridWindowRefactorApp.cpp */; };
 /* End PBXBuildFile section */
@@ -51,6 +55,7 @@
 		64BA83070AB84928B0AD77F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A68FCB3B9084371B34E3C8C /* GridWindowRefactor_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = GridWindowRefactor_Prefix.pch; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GridWindowRefactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridWindowRefactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32CEE3A180E068300892BE1 /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TankContent.cpp; sourceTree = "<group>"; };
 		B35EB70D180C6E5E00F0A059 /* DummyContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DummyContent.h; path = ../src/DummyContent.h; sourceTree = "<group>"; };
 		B35EB712180C7B5000F0A059 /* 0.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0.grid; sourceTree = "<group>"; };
 		B35EB713180C7B5000F0A059 /* 10000.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10000.grid; sourceTree = "<group>"; };
@@ -73,6 +78,11 @@
 		B35EB726180C7B5000F0A059 /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen.png; sourceTree = "<group>"; };
 		B35EB727180C7B5000F0A059 /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = T72.obj; sourceTree = "<group>"; };
 		B35EB729180C7B5000F0A059 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
+		B35EB73B180C80E800F0A059 /* GridLayoutTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayoutTimeline.cpp; sourceTree = "<group>"; };
+		B35EB73C180C80E800F0A059 /* GridLayoutTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayoutTimeline.h; sourceTree = "<group>"; };
+		B35EB744180CB2DE00F0A059 /* OutLineBorder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OutLineBorder.hpp; sourceTree = "<group>"; };
+		B35EB746180CB80300F0A059 /* outline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.vert; sourceTree = "<group>"; };
+		B35EB748180CB82A00F0A059 /* outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.frag; sourceTree = "<group>"; };
 		E0D30EF4FCF74BA385112AA6 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		EA824C293612472F97C9EB29 /* GridWindowRefactorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = GridWindowRefactorApp.cpp; path = ../src/GridWindowRefactorApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +210,7 @@
 		B35EB710180C7B5000F0A059 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B35EB745180CB74F00F0A059 /* shaders */,
 				B35EB711180C7B5000F0A059 /* grid */,
 				B35EB719180C7B5000F0A059 /* Hyperspace Bold Italic.ttf */,
 				B35EB71A180C7B5000F0A059 /* Hyperspace Bold.ttf */,
@@ -231,6 +242,9 @@
 				B35EB720180C7B5000F0A059 /* SceneWindow.hpp */,
 				B35EB721180C7B5000F0A059 /* SharedTypes.hpp */,
 				B35EB722180C7B5000F0A059 /* Utilities.hpp */,
+				B35EB73B180C80E800F0A059 /* GridLayoutTimeline.cpp */,
+				B35EB73C180C80E800F0A059 /* GridLayoutTimeline.h */,
+				B35EB744180CB2DE00F0A059 /* OutLineBorder.hpp */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -249,9 +263,19 @@
 		B35EB728180C7B5000F0A059 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				B32CEE3A180E068300892BE1 /* TankContent.cpp */,
 				B35EB729180C7B5000F0A059 /* GridLayout.cpp */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		B35EB745180CB74F00F0A059 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B35EB746180CB80300F0A059 /* outline.vert */,
+				B35EB748180CB82A00F0A059 /* outline.frag */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,8 +356,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35EB749180CB82A00F0A059 /* outline.frag in Sources */,
+				B32CEE3B180E068300892BE1 /* TankContent.cpp in Sources */,
 				B35EB735180C7B5000F0A059 /* NewGridLayout.cpp in Sources */,
 				FB0DF806E9D84071AC43E6B6 /* GridWindowRefactorApp.cpp in Sources */,
+				B35EB73D180C80E800F0A059 /* GridLayoutTimeline.cpp in Sources */,
+				B35EB747180CB80300F0A059 /* outline.vert in Sources */,
 				B35EB73A180C7B5000F0A059 /* GridLayout.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

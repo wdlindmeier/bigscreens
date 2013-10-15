@@ -101,4 +101,11 @@ namespace bigscreens
     {
         return cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets" / "grid";
     }
+	
+	// This is for the shader path but I couldn't get it working like the above
+	// TODO: get this working like the above
+	static std::string SharedShaderPath()
+	{
+		return "../../BigScreensShared/Assets/shaders/";
+	}
 }

@@ -11,6 +11,7 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/gl.h"
 #include "SharedTypes.hpp"
+#include "OutLineBorder.hpp"
 
 namespace bigscreens {
 
@@ -18,9 +19,9 @@ typedef std::shared_ptr<class SceneWindow> SceneWindowRef;
 	
 class SceneWindow {
 public:
-	SceneWindow( RenderableContent * subContent, ScreenRegion *origAndDim, ci::gl::FboRef scratch )
+	SceneWindow( RenderableContent * subContent, ScreenRegion *origAndDim, ci::gl::FboRef scratch, OutLineBorderRef outLine )
 	: mContent( subContent ), mScratch( scratch ), mLastAspect( mContent->getCamera().getAspectRatio() ),
-		mOrigAndDim( origAndDim->getOriginAndDimension() ), mOutLine( origAndDim->getOutline() )
+		mOrigAndDim( origAndDim->getOriginAndDimension() ), mOutLine( outLine )
 	{
 		// After we have the camera's original aspect ratio,
 		// set the new aspect ratio to the dimensions of the window
@@ -33,7 +34,6 @@ public:
 	{
 		// On the way, reset the lastAspect ratio
 		mContent->getCamera().setAspectRatio( mLastAspect );
-		delete [] mOutLine;
 	}
 	
 	void render()
@@ -45,7 +45,7 @@ public:
 		ci::gl::enable( GL_SCISSOR_TEST );
 		mScratch->bindFramebuffer();
 		
-		ci::gl::clear();
+		ci::gl::clear( ci::ColorA( 1.0f, 0.0f, 0.0f, 1.0f ) );
 		
 		// Render our scene to the fbo
 		mContent->render();
@@ -80,16 +80,16 @@ private:
 	
 	void renderOutline()
 	{
-		// This needs to be completed
+		mOutLine->render();
 	}
 	
 	
 private:
 	RenderableContent * mContent;
 	OriginAndDimension	mOrigAndDim;
-	float			  * mOutLine;
 	ci::gl::FboRef		mScratch;
 	float				mLastAspect;
+	OutLineBorderRef	mOutLine;
 };
 
 }
