@@ -48,7 +48,7 @@ namespace bigscreens
     
     struct Slider
     {
-        Slider(ci::Rectf rect) : mRect(rect), mValue(0){};
+        Slider(ci::Rectf rect) : mRect(rect), mValue(0), mIsActive(false){};
         Slider(){};
         ~Slider(){};
         
