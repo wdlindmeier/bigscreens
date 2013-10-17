@@ -30,7 +30,7 @@ void TankContent::load(const std::string & objFilename)
     ObjLoader loader( file );
 	mMesh = TriMesh::create( loader );
 //	loader.ge
-	std::cout << " my mesh is " << mMesh->getNumVertices() << " large " << std::endl;
+	std::cout << " my mesh is " << mMesh->getNumVertices() << " large and there are " << mMesh->getNumIndices() << " indices"<< std::endl;
 	mVao = gl::Vao::create();
 	mVao->bind();
 	
@@ -40,10 +40,10 @@ void TankContent::load(const std::string & objFilename)
 	gl::enableVertexAttribArray( pos );
 	gl::vertexAttribPointer( pos, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	
-//	mElementVbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mMesh->getNumIndices(), mMesh->getIndices().data() );
-//	mElementVbo->bind();
-//	
-//	mElementVbo->unbind();
+	mElementVbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mMesh->getNumIndices() * sizeof(unsigned int), mMesh->getIndices().data(), GL_STATIC_DRAW );
+	mElementVbo->bind();
+	
+	mElementVbo->unbind();
 	mVbo->unbind();
 	mVao->unbind();
 	mGlsl->unbind();
@@ -66,25 +66,26 @@ void TankContent::update()
 void TankContent::render()
 {
 	// clear out both of the attachments of the FBO with black
-	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
-    
+	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 1.0f ) );
+
 	mGlsl->bind();
 	mVao->bind();
-//	mElementVbo->bind();
+	mElementVbo->bind();
 	
 	gl::pushMatrices();
 	gl::setMatrices( mCam );
+	gl::multModelView( Matrix44f::createTranslation( Vec3f( 0, -100, 0 )));
     gl::multModelView( mRotation );
     mGlsl->uniform( "projection", gl::getProjection() );
 	mGlsl->uniform( "modelView", gl::getModelView() );
 	
-	gl::drawArrays( GL_LINES, 0, mMesh->getNumVertices() );
-//	gl::drawElements( GL_TRIANGLES, mMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+	gl::drawElements( GL_LINES, mMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
     gl::popMatrices();
 	
 	mVao->unbind();
 	mGlsl->unbind();
-//	mElementVbo->unbind();
+	mElementVbo->unbind();
+	
 }
 	
 }
