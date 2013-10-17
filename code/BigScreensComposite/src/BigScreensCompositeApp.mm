@@ -56,6 +56,10 @@ public:
     void draw();
     void mpeFrameRender(bool isNewFrame);
     
+    // Messages
+    void mpeMessageReceived(const std::string &message, const int fromClientID);
+    
+    // Misc
     void calculateTotalDuration();
     
     // Vars
@@ -114,6 +118,9 @@ void BigScreensCompositeApp::reload()
     mLastFrameTime = getMilliCount();
     mContent.reset();
     loadGrid();
+    
+    GridLayout & layout = mGridLayouts[mIdxCurrentLayout];
+    console() << "Layout " << mIdxCurrentLayout << " region count: " << layout.getRegions().size() << endl;
 }
 
 void BigScreensCompositeApp::loadAssets()
@@ -169,6 +176,13 @@ void BigScreensCompositeApp::mpeReset()
 
 #pragma mark - Input events
 
+const static std::string kMPEMessagePlay = "play";
+const static std::string kMPEMessagePause = "pause";
+const static std::string kMPEMessagePrev = "prev";
+const static std::string kMPEMessageNext = "next";
+const static std::string kMPEMessageLoad = "load";
+const static std::string kMPEMessageRestart = "restart";
+
 void BigScreensCompositeApp::keyUp(KeyEvent event)
 {
     char key = event.getChar();
@@ -176,28 +190,34 @@ void BigScreensCompositeApp::keyUp(KeyEvent event)
     {
         if (mIsPlaying)
         {
-            pause();
+            //pause();
+            mClient->sendMessage(kMPEMessagePause);
         }
         else
         {
-            play();
+            //play();
+            mClient->sendMessage(kMPEMessagePlay);
         }
     }
     else if (event.getCode() == KeyEvent::KEY_RIGHT)
     {
-        advance();
+        //advance();
+        mClient->sendMessage(kMPEMessageNext);
     }
     else if (event.getCode() == KeyEvent::KEY_LEFT)
     {
-        reverse();
+        //reverse();
+        mClient->sendMessage(kMPEMessagePrev);
     }
     else if (key == 'r')
     {
-        restart();
+        // restart();
+        mClient->sendMessage(kMPEMessageRestart);
     }
     else if (key == 'l')
     {
-        reload();
+        //reload();
+        mClient->sendMessage(kMPEMessageLoad);
     }
 }
 
@@ -306,19 +326,19 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 
 void BigScreensCompositeApp::draw()
 {
+    // We want to render the content before MPE renders
+    // since it changes the viewport and matrix.
+    mContent.render();
+    
     mClient->draw();
 }
 
 void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
 {
-    mContent.render();
-    
     gl::clear( Color( 0, 0, 0 ), true );
 
-    // set the viewport to match our window
-    gl::setViewport( Area(mClient->getVisibleRect()) );
-    gl::setMatricesWindow( getWindowSize() );
-    
+    // TODO: Use Ryans WindowImpl
+
     gl::enableAlphaBlending();
     
     if (mIdxCurrentLayout > -1)
@@ -364,10 +384,40 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     {
         gl::draw(mTexturePaused, Rectf(15,15,35,35));
     }
-    
+ 
     // Draw the current frame num
     gl::drawString("Frame " + to_string(mIdxCurrentLayout), Vec2f(42, 25));
+    
+}
 
+#pragma mark - Messages
+
+void BigScreensCompositeApp::mpeMessageReceived(const std::string &message, const int fromClientID)
+{
+    if (message == kMPEMessagePlay)
+    {
+        play();
+    }
+    else if (message == kMPEMessagePause)
+    {
+        pause();
+    }
+    else if (message == kMPEMessageNext)
+    {
+        advance();
+    }
+    else if (message == kMPEMessagePrev)
+    {
+        reverse();
+    }
+    else if (message == kMPEMessageRestart)
+    {
+        restart();
+    }
+    else if (message == kMPEMessageLoad)
+    {
+        reload();
+    }
 }
 
 #pragma mark - Misc

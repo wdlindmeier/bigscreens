@@ -56,6 +56,7 @@
 		7A68FCB3B9084371B34E3C8C /* GridWindowRefactor_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = GridWindowRefactor_Prefix.pch; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GridWindowRefactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridWindowRefactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B32CEE3A180E068300892BE1 /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TankContent.cpp; sourceTree = "<group>"; };
+		B334141C181085FE003BC82B /* TankContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TankContent.h; sourceTree = "<group>"; };
 		B35EB70D180C6E5E00F0A059 /* DummyContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DummyContent.h; path = ../src/DummyContent.h; sourceTree = "<group>"; };
 		B35EB712180C7B5000F0A059 /* 0.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0.grid; sourceTree = "<group>"; };
 		B35EB713180C7B5000F0A059 /* 10000.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10000.grid; sourceTree = "<group>"; };
@@ -237,6 +238,7 @@
 		B35EB71D180C7B5000F0A059 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				B334141C181085FE003BC82B /* TankContent.h */,
 				B35EB71E180C7B5000F0A059 /* GridLayout.h */,
 				B35EB71F180C7B5000F0A059 /* NewGridLayout.cpp */,
 				B35EB720180C7B5000F0A059 /* SceneWindow.hpp */,

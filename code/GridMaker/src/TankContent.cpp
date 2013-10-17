@@ -50,7 +50,7 @@ void TankContent::render()
     
 	// setup the viewport to match the dimensions of the FBO
 	gl::setViewport( mFBO.getBounds() );
-    
+
 	// clear out both of the attachments of the FBO with black
 	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
     
@@ -73,9 +73,12 @@ void TankContent::render()
     gl::draw( mVBO );
     gl::disableWireframe();
     gl::popMatrices();
+
+    gl::disableAlphaBlending();
     
 	// unbind the framebuffer, so that drawing goes to the screen again
 	mFBO.unbindFramebuffer();
+
 }
 
 ci::Vec2i TankContent::getSize()

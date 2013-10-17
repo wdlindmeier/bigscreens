@@ -18,7 +18,7 @@ using namespace bigscreens;
 const static float kTimelineDurationMinutes = 4.0f;
 const static long long kMsFullDuration = kTimelineDurationMinutes * 60 * 1000;
 const static long kRangeTransition = 20000; // 20 seconds
-const static long long kRangePosition = kMsFullDuration;
+const static float kPositionSliderMagnitude = 100.0f; // 10 ms
 
 // See misc
 static double millisecPerPixel();
@@ -43,6 +43,9 @@ public:
     void mouseUp(MouseEvent event);
     void mouseDrag(MouseEvent event);
     void mouseMove(MouseEvent event);
+    
+    // Editing
+    void adjustSliderPositionForMouseMove();
     void adjustSelectedLayoutTimestamp(long long timeDelta);
     
     // Key
@@ -92,6 +95,7 @@ void TimeLineEditorApp::setup()
                                    sliderOffsetY,
                                    xDuration + sliderWidth,
                                    sliderOffsetY + sliderHeight));
+    mSliderPosition.setValue(0.5f);
     float xTransition = (getWindowWidth() * 0.5f) + sliderOffsetX;
     mSliderTransition = Slider(Rectf(xTransition,
                                      sliderOffsetY,
@@ -183,6 +187,7 @@ void TimeLineEditorApp::mouseUp(MouseEvent event)
 {
     mMousePosition = event.getPos();
     mSliderPosition.setIsActive(false);
+    mSliderPosition.setValue(0.5f);
     mSliderTransition.setIsActive(false);
 }
 
@@ -191,16 +196,7 @@ void TimeLineEditorApp::mouseDrag(MouseEvent event)
     Vec2f mouseDelta = event.getPos() - mMousePosition;
     mMousePosition = event.getPos();
 
-    if (mSliderPosition.getIsActive())
-    {
-        mSliderPosition.update(mMousePosition);
-        assert(mIdxSelectedLayout > -1);
-        GridLayout & selectedLayout = mGridLayouts[mIdxSelectedLayout];
-        long long timestamp = mSliderPosition.getValue() * kRangePosition;
-        long long timeDelta = timestamp - selectedLayout.getTimestamp();
-        adjustSelectedLayoutTimestamp(timeDelta);
-    }
-    else if (mSliderTransition.getIsActive())
+    if (mSliderTransition.getIsActive())
     {
         mSliderTransition.update(mMousePosition);
         assert(mIdxSelectedLayout > -1);
@@ -208,7 +204,8 @@ void TimeLineEditorApp::mouseDrag(MouseEvent event)
         long long transitionDuration = mSliderTransition.getValue() * kRangeTransition;
         selectedLayout.setTransitionDuration(transitionDuration);
     }
-    else if (mIdxSelectedLayout > -1)
+    else if (mIdxSelectedLayout > -1 &&
+             !mSliderPosition.getIsActive())
     {
         long long timelineDelta = mouseDelta.x * millisecPerPixel();
         adjustSelectedLayoutTimestamp(timelineDelta);
@@ -221,6 +218,17 @@ void TimeLineEditorApp::mouseMove(MouseEvent event)
 }
 
 #pragma mark - Editing
+
+void TimeLineEditorApp::adjustSliderPositionForMouseMove()
+{
+    if (mSliderPosition.getIsActive())
+    {
+        mSliderPosition.update(mMousePosition);
+        assert(mIdxSelectedLayout > -1);
+        long long timeDelta = (mSliderPosition.getValue() - 0.5f) * kPositionSliderMagnitude;
+        adjustSelectedLayoutTimestamp(timeDelta);
+    }
+}
 
 void TimeLineEditorApp::adjustSelectedLayoutTimestamp(long long timeDelta)
 {
@@ -293,7 +301,7 @@ void TimeLineEditorApp::keyUp(KeyEvent event)
 
 void TimeLineEditorApp::update()
 {
-    
+    adjustSliderPositionForMouseMove();
 }
 
 void TimeLineEditorApp::draw()
@@ -405,7 +413,12 @@ void TimeLineEditorApp::renderSliders()
     float labelY = 18;
     mSliderPosition.render(mIdxSelectedLayout > -1);
     gl::drawString("Timestamp (ms): ", Vec2f(10, labelY));
-    gl::drawString(to_string((long)(mSliderPosition.getValue() * kRangePosition)),
+    long long positionMS = 0;
+    if (mIdxSelectedLayout != -1)
+    {
+        positionMS  = mGridLayouts[mIdxSelectedLayout].getTimestamp();
+    }
+    gl::drawString(to_string((long)positionMS),
                    Vec2f((getWindowWidth() * 0.5) - 150,
                          labelY));
 
@@ -454,14 +467,16 @@ void TimeLineEditorApp::updateSlidersForSelectedLayout()
     if (mIdxSelectedLayout > -1)
     {
         GridLayout & layout = mGridLayouts[mIdxSelectedLayout];
+        /*
         mSliderPosition.setValue((long double)layout.getTimestamp() /
                                  (float)kRangePosition);
+        */
         mSliderTransition.setValue((long double)layout.getTransitionDuration() /
                                    (float)kRangeTransition);
     }
     else
     {
-        mSliderPosition.setValue(0);
+        //mSliderPosition.setValue(0);
         mSliderTransition.setValue(0);
     }
 }
