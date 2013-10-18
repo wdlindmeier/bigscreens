@@ -31,6 +31,7 @@ class GridLayout
 public:
     
     GridLayout();
+    GridLayout(const GridLayout & other);
     ~GridLayout(){};
 
     static GridLayout load(const cinder::fs::path & filePath,

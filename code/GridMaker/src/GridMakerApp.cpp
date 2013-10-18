@@ -934,7 +934,7 @@ void GridMakerApp::duplicateCurrentLayout()
 {
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
     GridLayout dupLayout(curLayout);
-    dupLayout.setName("");
+    dupLayout.setName(dupLayout.getUniqueID() + ".grid");
     insertLayout(dupLayout);
 }
 

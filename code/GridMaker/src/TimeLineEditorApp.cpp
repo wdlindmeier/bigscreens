@@ -5,7 +5,6 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "Utilities.hpp"
-#include "Helpers.hpp"
 #include "cinder/Camera.h"
 #include "GridLayout.h"
 #include "TankContent.h"

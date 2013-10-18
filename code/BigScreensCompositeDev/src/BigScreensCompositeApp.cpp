@@ -77,9 +77,8 @@ public:
     
     RenderableContentRef mTankContent;
     OutLineBorderRef mOutLine;
-    
-    gl::FboRef mFBO;
-    
+  
+//    gl::FboRef mFBO;
 };
 
 #pragma mark - Setup
@@ -102,7 +101,7 @@ void BigScreensCompositeApp::setup()
     
     mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());
     
-    mFBO = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
+//    mFBO = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
     
     loadAssets();
     reload();
@@ -117,6 +116,7 @@ void BigScreensCompositeApp::shutdown()
 void BigScreensCompositeApp::reload()
 {
     mTimeline->reload();
+    mTimeline->restart();
     static_pointer_cast<TankContent>(mTankContent)->reset();
 }
 
@@ -262,8 +262,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     
 //    gl::enableDepthRead();
 //    gl::enableDepthWrite();
-    gl::disableDepthRead();
-    gl::disableDepthWrite();
+//    gl::disableDepthRead();
+//    gl::disableDepthWrite();
 
     for (int i = 0; i < renderContent.size(); ++i)
     {
@@ -275,13 +275,18 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         
         // TODO: Check if this should be rendered at all.
         // Maybe that happens in scenewindow
-        
-        SceneWindow scene(renderMe.second,
-                          renderMe.first,
-                          windowSize);
-//                          mFBO);
-        scene.render(offset);
-        mOutLine->render();
+        if (rectsOverlap(renderMe.first, mClient->getVisibleRect()))
+        {
+            SceneWindow scene(renderMe.second,
+                              renderMe.first,
+                              windowSize);
+    //                          mFBO);
+            scene.render(offset);
+
+            // NOTE:
+            // How exactly does this work?
+            mOutLine->render();
+        }
     }
 
     if (CLIENT_ID == 0)

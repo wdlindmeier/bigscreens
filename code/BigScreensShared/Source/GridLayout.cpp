@@ -19,14 +19,24 @@ namespace bigscreens
 {
 
 GridLayout::GridLayout() :
-    mName(""),
     mRegions(),
     mTimestamp(0),
     mTransitionMillisec(1000),
-    mUniqueID(to_string(arc4random() % 9999999))
+    mUniqueID(to_string(arc4random() % 9999999)),
+    mName("")//mUniqueID + ".grid")
 {
 };
-    
+
+GridLayout::GridLayout(const GridLayout & other) :
+mRegions(other.getRegions()),
+mTimestamp(other.getTimestamp()),
+mTransitionMillisec(other.getTransitionDuration()),
+mUniqueID(to_string(arc4random() % 9999999)),
+mName(other.getName())
+//mName(mUniqueID + ".grid")
+{
+};
+
 GridLayout GridLayout::load(const fs::path & filePath,
                             float scale,
                             const cinder::Vec2i & wrapSize)
@@ -91,7 +101,8 @@ GridLayout GridLayout::load(const fs::path & filePath,
             lineCount++;
         }
         
-        layout.setName(filePath.filename().string());
+        string filename = filePath.filename().string();
+        layout.setName(filename);
         layout.setUniqueID(layout.getName());
         layout.setRegions(regions);
     }
@@ -156,10 +167,11 @@ void GridLayout::serialize(const cinder::fs::path & directory,
     {
         // Just randomizing the name. This could (very rarely) clobber another file.
         // Exciting!!!
-        mName = mUniqueID;
+        mName = mUniqueID + ".grid";
     }
     mPath = directory / mName;
     
+    ci::app::console() << "Saving to path: " << mPath << endl;
     std::ofstream oStream( mPath.string() );
     
     vector<string> output;
