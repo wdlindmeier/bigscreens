@@ -59,7 +59,7 @@ class GridMakerApp : public AppNative {
                       const float transitionAmount,
                       const Vec2f & mousePosition,
                       const GridRenderMode mode,
-                      RenderableContent & content);
+                      RenderableContentRef & content);
 
     // Grid Editing
     void clearSelection();
@@ -107,7 +107,8 @@ class GridMakerApp : public AppNative {
 
     // Sample content
     ci::gl::Texture mScreenTexture;
-    TankContent mContent;
+    //TankContent mContent;
+    RenderableContentRef mTankContent;
     
     // Playback indicators
     ci::gl::Texture mTexturePlaying;
@@ -145,7 +146,10 @@ void GridMakerApp::setup()
     mTexturePlaying = loadImage(app::loadResource("playing.png"));
     mTexturePaused = loadImage(app::loadResource("paused.png"));
 
-    mContent.load("T72.obj");
+    TankContent *tank = new TankContent();
+    tank->load("T72.obj");
+    mTankContent = RenderableContentRef(tank);
+    //mContent.load("T72.obj");
     
     // Using params for content input.
     // NOTE: The text field is pretty slow to update (1 second or two),
@@ -468,12 +472,12 @@ void GridMakerApp::update()
         }
     }
     
-    mContent.update();
+    static_pointer_cast<TankContent>(mTankContent)->update();
 }
 
 void GridMakerApp::draw()
 {
-    mContent.render();
+    mTankContent->render(Vec2i::zero());
     
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
@@ -509,14 +513,14 @@ void GridMakerApp::draw()
                      1.0 - std::min(mTransitionAmt / 0.5f, 1.0f),
                      mMousePosition,
                      mode,
-                     mContent);
+                     mTankContent);
         
         renderLayout(curLayout,
                      prevLayout,
                      std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f),
                      mMousePosition,
                      mode,
-                     mContent);
+                     mTankContent);
     }
     else
     {
@@ -525,7 +529,7 @@ void GridMakerApp::draw()
                      mTransitionAmt,
                      mMousePosition,
                      mode,
-                     mContent);
+                     mTankContent);
     }
     
     gl::color(Color::white());
@@ -596,7 +600,7 @@ void GridMakerApp::renderLayout(const GridLayout & layout,
                                 const float transitionAmount,
                                 const Vec2f & mousePosition,
                                 const GridRenderMode mode,
-                                RenderableContent & content)
+                                RenderableContentRef & content)
 {
     vector<ScreenRegion> regions = layout.getRegions();
     int regionSize = regions.size();
@@ -651,7 +655,7 @@ void GridMakerApp::renderLayout(const GridLayout & layout,
                              rA.getHeight() * 0.5f);
             gl::drawSolidRect(scaledRect);
             
-            gl::Texture contentTexture = content.getTexture();
+            gl::Texture contentTexture = static_pointer_cast<TankContent>(content)->getTexture();
             Rectf tankBounds = contentTexture.getBounds();
             
             // "Get cetered fill"

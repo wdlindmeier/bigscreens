@@ -23,7 +23,8 @@ public:
     
     void load(const std::string & objFilename);
     void update();
-    void render();
+    void render(const ci::Vec2i & screenOffset);
+    ci::CameraPersp& getCamera(){ return mCam; };
     ci::gl::Texture getTexture();
     ci::Vec2i getSize();
     void reset();
@@ -34,4 +35,5 @@ private:
     ci::TriMesh			mMesh;
     ci::gl::Fbo         mFBO;
     ci::Matrix44f		mRotation;
+    ci::CameraPersp     mCam;
 };

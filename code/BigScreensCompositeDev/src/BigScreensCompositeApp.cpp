@@ -78,6 +78,8 @@ public:
     RenderableContentRef mTankContent;
     OutLineBorderRef mOutLine;
     
+    gl::FboRef mFBO;
+    
 };
 
 #pragma mark - Setup
@@ -100,6 +102,8 @@ void BigScreensCompositeApp::setup()
     
     mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());
     
+    mFBO = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
+    
     loadAssets();
     reload();
 }
@@ -113,6 +117,7 @@ void BigScreensCompositeApp::shutdown()
 void BigScreensCompositeApp::reload()
 {
     mTimeline->reload();
+    static_pointer_cast<TankContent>(mTankContent)->reset();
 }
 
 void BigScreensCompositeApp::loadAssets()
@@ -255,6 +260,11 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
     
+//    gl::enableDepthRead();
+//    gl::enableDepthWrite();
+    gl::disableDepthRead();
+    gl::disableDepthWrite();
+
     for (int i = 0; i < renderContent.size(); ++i)
     {
         // NOTE: Maybe we should load up the scene windows whenever the layout
@@ -269,22 +279,28 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         SceneWindow scene(renderMe.second,
                           renderMe.first,
                           windowSize);
+//                          mFBO);
         scene.render(offset);
         mOutLine->render();
     }
 
-    renderControls();
-    
+    if (CLIENT_ID == 0)
+    {
+        renderControls();
+    }
 }
 
 void BigScreensCompositeApp::renderControls()
 {
     // Draw the controls
+
+    // NOTE: This breaks the rendering of screens 2 & 3, so only draw controls on screen 1
+    
     gl::viewport(0, 0, getWindowWidth(), getWindowHeight());
     gl::setMatricesWindow( getWindowSize() );
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
     gl::translate(offset);
-
+    
     gl::enableAlphaBlending();
     gl::color(Color::white());
     if (mTimeline->isPlaying())
@@ -295,7 +311,9 @@ void BigScreensCompositeApp::renderControls()
     {
         gl::draw(mTexturePaused, Rectf(15,15,35,35));
     }
+    
     gl::disableAlphaBlending();
+
 }
 
 #pragma mark - Messages

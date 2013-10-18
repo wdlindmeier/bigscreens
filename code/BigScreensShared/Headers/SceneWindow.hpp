@@ -29,6 +29,8 @@ namespace bigscreens
         mContent( content ),
         mLastAspect( mContent->getCamera().getAspectRatio() ),
 		mOrigAndDim( OriginAndDimensionFromRectf(screenRegion, screenSize.y) )
+        //mOrigAndDim( OriginAndDimensionFromRectf(screenRegion, fbo->getHeight()) ),
+        //mFBO(fbo)
         {
         }
         
@@ -50,7 +52,6 @@ namespace bigscreens
             
             mLastAspect = mContent->getCamera().getAspectRatio();
             mContent->getCamera().setAspectRatio( (float)mOrigAndDim.second.x / mOrigAndDim.second.y );
-
             // Only render exactly what we have to
             
             setScissorAndViewport(offset);
@@ -59,17 +60,22 @@ namespace bigscreens
             //mFBO->bindFramebuffer();
             
             mContent->render(offset);
-            
+
             //mFBO->unbindFramebuffer();
             ci::gl::disable( GL_SCISSOR_TEST );
-
+            
+            // renderOutline();
+            
+            
             //blitToScreen();
-
+            
+            
             // Reset the aspect ratio.
             // NOTE: Moved this from the destructor.
             mContent->getCamera().setAspectRatio( mLastAspect );
+            
         }
-        
+
     private:
         
         void setScissorAndViewport(const ci::Vec2i & offset)
@@ -90,15 +96,15 @@ namespace bigscreens
         /*
          void blitToScreen()
          {
-         mFBO->blitToScreen(ci::Area(mOrigAndDim.first.x, mOrigAndDim.first.y,
-         mOrigAndDim.first.x + mOrigAndDim.second.x,
-         mOrigAndDim.first.y + mOrigAndDim.second.y ),
-         ci::Area(mOrigAndDim.first.x, mOrigAndDim.first.y,
-         mOrigAndDim.first.x + mOrigAndDim.second.x,
-         mOrigAndDim.first.y + mOrigAndDim.second.y ) );
-         }
-         */
-        
+            mFBO->blitToScreen(ci::Area(mOrigAndDim.first.x, mOrigAndDim.first.y,
+                                        mOrigAndDim.first.x + mOrigAndDim.second.x,
+                                        mOrigAndDim.first.y + mOrigAndDim.second.y ),
+                               ci::Area(mOrigAndDim.first.x, mOrigAndDim.first.y,
+                                        mOrigAndDim.first.x + mOrigAndDim.second.x,
+                                        mOrigAndDim.first.y + mOrigAndDim.second.y ) );
+        }
+        */
+
     private:
         
         RenderableContentRef    mContent;

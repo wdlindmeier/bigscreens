@@ -28,6 +28,9 @@ void TankContent::load(const std::string & objFilename)
 	format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
 	format.enableColorBuffer( true, 2 ); // create an FBO with two color attachments
 	mFBO = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
+    
+    mCam = CameraPersp(mFBO.getWidth(), mFBO.getHeight(), 45.0f );
+
 }
 
 void TankContent::reset()
@@ -40,7 +43,7 @@ void TankContent::update()
     mRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
 }
 
-void TankContent::render()
+void TankContent::render(const ci::Vec2i & screenOffset)
 {
     // bind the framebuffer - now everything we draw will go there
 	mFBO.bindFramebuffer();
@@ -54,10 +57,7 @@ void TankContent::render()
 	// clear out both of the attachments of the FBO with black
 	gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
     
-    CameraPersp cam(mFBO.getWidth(),
-                    mFBO.getHeight(),
-                    45.0f );
-	gl::setMatrices( cam );
+	gl::setMatrices( mCam );
     
     gl::pushMatrices();
     gl::translate(mFBO.getWidth() * 0.5f,

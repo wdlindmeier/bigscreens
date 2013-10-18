@@ -45,5 +45,4 @@ namespace bigscreens {
         float mCameraRotation;
         
     };
-    
 }
