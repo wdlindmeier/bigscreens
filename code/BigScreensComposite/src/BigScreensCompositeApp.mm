@@ -1,4 +1,5 @@
 #include "cinder/app/AppNative.h"
+#include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "MPEApp.hpp"
 #include "MPEClient.h"
@@ -25,6 +26,8 @@ class BigScreensCompositeApp : public AppNative, public MPEApp
 {
     
 public:
+    
+    BigScreensCompositeApp();
     
     // Setup / Load
     void prepareSettings(Settings *settings);
@@ -87,6 +90,14 @@ public:
 };
 
 #pragma mark - Setup
+
+BigScreensCompositeApp::BigScreensCompositeApp() :
+mScreenTexture(64,64),
+mTexturePlaying(64,64),
+mTexturePaused(64,64)
+{
+    
+};
 
 void BigScreensCompositeApp::prepareSettings(Settings *settings)
 {

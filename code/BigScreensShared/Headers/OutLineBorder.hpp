@@ -21,8 +21,8 @@ public:
 	OutLineBorder()
 	{
 		ci::gl::GlslProg::Format format;
-		format.vertex( ci::app::loadAsset( SharedShaderPath() + "outline.vert" ) )
-			.fragment( ci::app::loadAsset( SharedShaderPath() + "outline.frag" ) );
+		format.vertex( ci::app::loadResource( "outline.vert" ) )
+			.fragment( ci::app::loadResource( "outline.frag" ) );
 		mGlsl = ci::gl::GlslProg::create( format );
 		mGlsl->bind();
 		
@@ -74,7 +74,7 @@ public:
 		mGlsl->bind();
 			mVao->bind();
 				mElementVbo->bind();
-					ci::gl::drawElements( GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0 );
+					ci::gl::drawElements( GL_LINES, 24, GL_UNSIGNED_INT, 0 );
 				mElementVbo->unbind();
 			mVao->unbind();
 		mGlsl->unbind();

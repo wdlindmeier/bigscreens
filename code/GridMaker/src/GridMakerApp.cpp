@@ -5,10 +5,10 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "Utilities.hpp"
-#include "Helpers.hpp"
 #include "cinder/Camera.h"
 #include "GridLayout.h"
 #include "TankContent.h"
+#include "cinder/params/Params.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -40,6 +40,9 @@ class GridMakerApp : public AppNative {
     void keyDown(KeyEvent event);
     void keyUp(KeyEvent event);
     
+    // Button
+    void saveContentPressed();
+    
     // Playback
     void advance();
     void reverse();
@@ -51,17 +54,22 @@ class GridMakerApp : public AppNative {
     // App Loop
     void update();
     void draw();
-    void drawLayout(const GridLayout & layout,
-                    const float scalarAmount,
-                    const GridLayout & compareTolayout);
+    void renderLayout(const GridLayout & layout,
+                      const GridLayout & otherLayout,
+                      const float transitionAmount,
+                      const Vec2f & mousePosition,
+                      const GridRenderMode mode,
+                      RenderableContent & content);
 
     // Grid Editing
     void clearSelection();
+    void insertNewLayout();
     void insertLayout(GridLayout newLayout);
     void splitScreen();
     void finishJoining(MouseEvent event);
     void finishRemoving(MouseEvent event);
     void finishAdding(MouseEvent event);
+    void finishRegionSelection(MouseEvent event);
     void deleteCurrentLayout();
     void clearCurrentLayout();
     void duplicateCurrentLayout();
@@ -76,6 +84,8 @@ class GridMakerApp : public AppNative {
     vector<GridLayout> mGridLayouts;
     int mIdxCurrentLayout;
     int mIdxPrevLayout;
+    
+    // Editing
     int mSelectedRegionIndex;
     bool mIsAdding;
     bool mIsRemoving;
@@ -85,7 +95,8 @@ class GridMakerApp : public AppNative {
     Vec2i mMousePositionEnd;
     Vec2i mMousePosition;
     Rectf mDrawingRect;
-    
+
+    // Timing
     float mTransitionAmt;
     long long mStartTime;
     long long mPlayheadTime;
@@ -94,13 +105,21 @@ class GridMakerApp : public AppNative {
     float mPlaybackSpeed;
     bool mIsPlaying;
 
+    // Sample content
     ci::gl::Texture mScreenTexture;
     TankContent mContent;
     
+    // Playback indicators
     ci::gl::Texture mTexturePlaying;
     ci::gl::Texture mTexturePaused;
     
+    // size of the wrap
     ci::Vec2i mGridWrap;
+    
+    // Params
+    ci::params::InterfaceGlRef mParams;
+    string mContentName;
+    string mGridName;
 };
 
 #pragma mark - Setup
@@ -127,14 +146,32 @@ void GridMakerApp::setup()
     mTexturePaused = loadImage(app::loadResource("paused.png"));
 
     mContent.load("T72.obj");
+    
+    // Using params for content input.
+    // NOTE: The text field is pretty slow to update (1 second or two),
+    // but this seems like the best option for the moment.
+    mParams = params::InterfaceGl::create(getWindow(), "Content", Vec2i( 250, 300 ));
+    mParams->addParam( "Grid: ", &mGridName, "" );
+    mParams->addSeparator();
+    mParams->addButton( "Save Layouts", std::bind( &GridMakerApp::save, this ) );
+    mParams->addButton( "Reload", std::bind( &GridMakerApp::reload, this ) );
+    mParams->addSeparator();
+    mParams->addParam( "Region Content: ", &mContentName, "" );
+    mParams->addButton( "Save Region Content", std::bind( &GridMakerApp::saveContentPressed, this ) );
+    mParams->addSeparator();
+    mParams->addButton( "Delete Layout", std::bind( &GridMakerApp::deleteCurrentLayout, this ) );
+    mParams->addButton( "Insert Layout", std::bind( &GridMakerApp::insertNewLayout, this ) );
+    mParams->addButton( "Duplicate Layout", std::bind( &GridMakerApp::duplicateCurrentLayout, this ) );
+    mParams->addSeparator();
+    mParams->addButton( "Play", std::bind( &GridMakerApp::play, this ) );
+    mParams->addButton( "Pause", std::bind( &GridMakerApp::pause, this ) );
+    mParams->addButton( "Restart", std::bind( &GridMakerApp::restart, this ) );
+    mParams->addButton( "Advance", std::bind( &GridMakerApp::advance, this ) );
+    mParams->addButton( "Reverse", std::bind( &GridMakerApp::reverse, this ) );
 }
 
 void GridMakerApp::shutdown()
 {
-    // TODO: Ask user if they want to save
-    
-    // Save current state
-    // save();
 }
 
 #pragma mark - File Management
@@ -198,6 +235,7 @@ void GridMakerApp::reload()
         mIdxCurrentLayout = 0;
     }
     
+    newLayoutWasSet();
     calculateTotalDuration();
 }
 
@@ -262,17 +300,21 @@ void GridMakerApp::mouseUp(MouseEvent event)
 {
     if (mIsAdding)
     {
+        clearSelection();
         finishAdding(event);
     }
-
-    if (mIsRemoving)
+    else if (mIsRemoving)
     {
+        clearSelection();
         finishRemoving(event);
     }
-    
-    if(mIsJoining)
+    else if(mIsJoining)
     {
         finishJoining(event);
+    }
+    else
+    {
+        finishRegionSelection(event);
     }
 }
 
@@ -294,10 +336,7 @@ void GridMakerApp::keyUp(KeyEvent event)
     mIsAdding = event.isShiftDown();
     
     bool isJoining = event.isControlDown();
-    if (!isJoining && mIsJoining)
-    {
-        clearSelection();
-    }
+
     mIsJoining = isJoining;
     
     mIsRemoving = event.isAltDown();
@@ -308,23 +347,7 @@ void GridMakerApp::keyUp(KeyEvent event)
         pause();
     }
     
-    char key = event.getChar();
-    if (key == 's')
-    {
-        save();
-    }
-    else if (key == ' ') // start / stop
-    {
-        if (mIsPlaying)
-        {
-            pause();
-        }
-        else
-        {
-            play();
-        }
-    }
-    else if (event.getCode() == KeyEvent::KEY_RIGHT)
+    if (event.getCode() == KeyEvent::KEY_RIGHT)
     {
         advance();
     }
@@ -332,29 +355,20 @@ void GridMakerApp::keyUp(KeyEvent event)
     {
         reverse();
     }
-    else if (key == 'r')
+}
+
+#pragma mark - Button Input
+
+void GridMakerApp::saveContentPressed()
+{
+    if (mIdxCurrentLayout != -1 && mSelectedRegionIndex != -1)
     {
-        restart();
-    }
-    else if (key == 'c')
-    {
-        clearCurrentLayout();
-    }
-    else if (key == 'l')
-    {
-        reload();
-    }
-    else if (key == 'x')
-    {
-        deleteCurrentLayout();
-    }
-    else if (key == 'n') // new layout
-    {
-        insertLayout(GridLayout());
-    }
-    else if (key == 'd')
-    {
-        duplicateCurrentLayout();
+        GridLayout &layout = mGridLayouts[mIdxCurrentLayout];
+        vector<ScreenRegion> regions = layout.getRegions();
+        ScreenRegion &reg = regions[mSelectedRegionIndex];
+        reg.contentKey = mContentName;
+        // Update the content
+        layout.setRegions(regions);
     }
 }
 
@@ -382,6 +396,7 @@ void GridMakerApp::pause()
 
 void GridMakerApp::advance()
 {
+    clearSelection();
     mIdxPrevLayout = mIdxCurrentLayout;
     mIdxCurrentLayout = (mIdxCurrentLayout + 1) % mGridLayouts.size();
     newLayoutWasSet();
@@ -389,13 +404,13 @@ void GridMakerApp::advance()
 
 void GridMakerApp::reverse()
 {
+    clearSelection();
     mIdxPrevLayout = mIdxCurrentLayout;
     mIdxCurrentLayout = mIdxCurrentLayout - 1;
     if (mIdxCurrentLayout < 0)
     {
         mIdxCurrentLayout = mGridLayouts.size() - 1;
     }
-
     newLayoutWasSet();
 }
 
@@ -407,7 +422,10 @@ void GridMakerApp::newLayoutWasSet()
     // continues from the current frame.
     GridLayout & layout = mGridLayouts[mIdxCurrentLayout];
     mPlayheadTime = layout.getTimestamp();
+    mGridName = layout.getName();
     
+    mSelectedRegionIndex = -1;
+
     splitScreen();
 }
 
@@ -486,26 +504,28 @@ void GridMakerApp::draw()
     {
         GridLayout & prevLayout = mGridLayouts[mIdxPrevLayout];
 
-        prevLayout.render(1.0 - std::min(mTransitionAmt / 0.5f, 1.0f),
-                          curLayout,
-                          mMousePosition,
-                          mode,
-                          mContent);
+        renderLayout(prevLayout,
+                     curLayout,
+                     1.0 - std::min(mTransitionAmt / 0.5f, 1.0f),
+                     mMousePosition,
+                     mode,
+                     mContent);
         
-        curLayout.render(std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f),
-                         prevLayout,
-                         mMousePosition,
-                         mode,
-                         mContent);
-
+        renderLayout(curLayout,
+                     prevLayout,
+                     std::max((mTransitionAmt - 0.5f) / 0.5f, 0.0f),
+                     mMousePosition,
+                     mode,
+                     mContent);
     }
     else
     {
-        curLayout.render(mTransitionAmt,
-                         GridLayout(),
-                         mMousePosition,
-                         mode,
-                         mContent);
+        renderLayout(curLayout,
+                     GridLayout(),
+                     mTransitionAmt,
+                     mMousePosition,
+                     mode,
+                     mContent);
     }
     
     gl::color(Color::white());
@@ -520,7 +540,7 @@ void GridMakerApp::draw()
     
     // Screen bounds
     gl::lineWidth(1.0f);
-    gl::color(ColorAf(0.0f, 1.0f, 0.0f, 0.5f));
+    gl::color(ColorAf(0.3f, 0.0f, 0.9f, 1.0f));
     float screenHeight = kScreenHeight * kScreenScale;
     for (int i = 0; i < kNumScreens; ++i)
     {
@@ -567,8 +587,138 @@ void GridMakerApp::draw()
                        mMousePosition);
     }
     
+    mParams->draw();
+    
 }
 
+void GridMakerApp::renderLayout(const GridLayout & layout,
+                                const GridLayout & otherLayout,
+                                const float transitionAmount,
+                                const Vec2f & mousePosition,
+                                const GridRenderMode mode,
+                                RenderableContent & content)
+{
+    vector<ScreenRegion> regions = layout.getRegions();
+    int regionSize = regions.size();
+    
+    vector<ScreenRegion> compareRegions = otherLayout.getRegions();
+    int compareRegionSize = compareRegions.size();
+    
+    for (int i = 0; i < regionSize; ++i)
+    {
+        ScreenRegion & reg = regions[i];
+        
+        bool isHovered = reg.rect.contains(mousePosition);
+        bool isJoining = ((mode == GridRenderModeJoining) && isHovered);
+        bool isRemoving = ((mode == GridRenderModeRemoving) && isHovered);
+        
+        float alpha = transitionAmount;
+        
+        Rectf rA = reg.rect;
+        
+        if(reg.isActive)
+        {
+            if (transitionAmount < 1.0f)
+            {
+                // Check if this is a persistant region
+                for (int j = 0; j < compareRegionSize; ++j)
+                {
+                    ScreenRegion compareReg = compareRegions[j];
+                    
+                    Rectf rB = compareReg.rect;
+                    
+                    if (compareReg.isActive && rectCompare(rA, rB))
+                    {
+                        // No transition. Just draw at full blast.
+                        alpha = 1.0f;
+                        break;
+                    }
+                }
+            }
+            ColorAf transColor = reg.color;
+            transColor[3] = alpha;
+            gl::color(transColor);
+            
+            mScreenTexture.enableAndBind();
+            
+            gl::pushMatrices();
+            gl::translate(rA.getCenter());
+            gl::scale(alpha, alpha, 1.0f);
+            
+            Rectf scaledRect(rA.getWidth() * -0.5f,
+                             rA.getHeight() * -0.5f,
+                             rA.getWidth() * 0.5f,
+                             rA.getHeight() * 0.5f);
+            gl::drawSolidRect(scaledRect);
+            
+            gl::Texture contentTexture = content.getTexture();
+            Rectf tankBounds = contentTexture.getBounds();
+            
+            // "Get cetered fill"
+            float aspectWidth = scaledRect.getWidth() / tankBounds.getWidth();
+            float aspectHeight = scaledRect.getHeight() / tankBounds.getHeight();
+            float scaleFactor = std::max<float>(aspectWidth, aspectHeight);
+            Vec2f drawSize = scaledRect.getSize();
+            float areaMarginX = drawSize.x > drawSize.y ? 0 : ((drawSize.y - drawSize.x) * 0.5f);
+            float areaMarginY = drawSize.x > drawSize.y ? ((drawSize.x - drawSize.y) * 0.5f) : 0;
+            areaMarginX /= scaleFactor;
+            areaMarginY /= scaleFactor;
+            float areaWidth = scaledRect.getWidth() / scaleFactor;
+            float areaHeight = scaledRect.getHeight() / scaleFactor;
+            Area drawArea(areaMarginX,
+                          areaMarginY,
+                          areaMarginX + areaWidth,
+                          areaMarginY + areaHeight);
+            
+            gl::draw(contentTexture,
+                     drawArea,
+                     scaledRect);
+            
+            mScreenTexture.unbind();
+            
+            if (isJoining)
+            {
+                gl::lineWidth(5.0f);
+                gl::color(ColorAf(1.0f,1.0f,0.0f,std::min<float>(0.8f, alpha)));
+            }
+            else if (isRemoving)
+            {
+                gl::lineWidth(5.0f);
+                gl::color(ColorAf(1.0f,0.0f,0.0f,std::min<float>(0.8f, alpha)));
+            }
+            else if (reg.isSelected)
+            {
+                gl::lineWidth(5.0f);
+                gl::color(ColorAf(0.0f,1.0f,0.0f,std::min<float>(0.8f, alpha)));
+            }
+            else
+            {
+                gl::lineWidth(2.0f);
+                gl::color(1.0f,1.0f,1.0f,std::min<float>(0.8f, alpha));
+            }
+            gl::drawStrokedRect(scaledRect);
+            gl::popMatrices();
+        }
+        else
+        {
+            gl::lineWidth(1.0f);
+            
+            if (isJoining)
+            {
+                gl::color(ColorAf(1.0f,1.0f,0.0f,alpha));
+            }
+            else if (isRemoving)
+            {
+                gl::color(ColorAf(1.0f,0.0f,0.0f,alpha));
+            }
+            else
+            {
+                gl::color(ColorAf(0.25f, 0.25f, 0.25f, alpha));
+            }
+            gl::drawStrokedRect(rA);
+        }
+    }
+}
 
 #pragma mark - Grid Modification
 
@@ -604,7 +754,7 @@ void GridMakerApp::finishRemoving(MouseEvent event)
     splitScreen();
 }
 
-void GridMakerApp::finishJoining(MouseEvent event)
+void GridMakerApp::finishRegionSelection(MouseEvent event)
 {
     int selectedIdx = -1;
     GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
@@ -616,7 +766,49 @@ void GridMakerApp::finishJoining(MouseEvent event)
         if (reg.rect.contains(mMousePosition))
         {
             selectedIdx = i;
+            reg.isSelected = true;
+            mContentName = reg.contentKey;
+        }
+        else
+        {
+            reg.isSelected = false;
+        }
+    }
+    // re-set the regions so the selection is updated
+    curLayout.setRegions(regions);
+    
+    if (mSelectedRegionIndex == selectedIdx)
+    {
+        mSelectedRegionIndex = -1;
+    }
+    else
+    {
+        mSelectedRegionIndex = selectedIdx;
+    }
+
+    if (mSelectedRegionIndex == -1)
+    {
+        clearSelection();
+    }
+
+    console() << "finish selection. mSelectedRegionIndex: " << mSelectedRegionIndex << endl;
+}
+
+void GridMakerApp::finishJoining(MouseEvent event)
+{
+    console() << "finish joinging. mSelectedRegionIndex: " << mSelectedRegionIndex << endl;
+    int selectedIdx = -1;
+    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+    vector<ScreenRegion> regions = curLayout.getRegions();
+    int numRegions = regions.size();
+    for (int i = 0; i < numRegions; ++i)
+    {
+        ScreenRegion & reg = regions[i];
+        if (reg.rect.contains(mMousePosition))
+        {
+            selectedIdx = i;
             reg.isSelected = i != mSelectedRegionIndex;
+            mContentName = reg.contentKey;
             break;
         }
     }
@@ -626,7 +818,6 @@ void GridMakerApp::finishJoining(MouseEvent event)
     if (mSelectedRegionIndex == selectedIdx)
     {
         mSelectedRegionIndex = -1;
-        clearSelection();
     }
     else if (mSelectedRegionIndex != -1)
     {
@@ -667,10 +858,22 @@ void GridMakerApp::finishJoining(MouseEvent event)
     {
         mSelectedRegionIndex = selectedIdx;
     }
+    
+    if (mSelectedRegionIndex == -1)
+    {
+        clearSelection();
+    }
+}
+
+void GridMakerApp::insertNewLayout()
+{
+    insertLayout(GridLayout());
 }
 
 void GridMakerApp::insertLayout(GridLayout newLayout)
 {
+    clearSelection();
+
     newLayout.setTransitionDuration(kDefaultTransitionDuration);
     GridLayout & currentLayout = mGridLayouts[mIdxCurrentLayout];
     newLayout.setTimestamp(currentLayout.getTimestamp());
@@ -733,12 +936,17 @@ void GridMakerApp::duplicateCurrentLayout()
 
 void GridMakerApp::clearSelection()
 {
-    GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
-    vector<ScreenRegion> regions = curLayout.getRegions();
-    for (int i = 0; i < regions.size(); ++i)
+    mContentName = "";
+    if (mIdxCurrentLayout != -1)
     {
-        ScreenRegion & reg = regions[i];
-        reg.isSelected = false;
+        GridLayout & curLayout = mGridLayouts[mIdxCurrentLayout];
+        vector<ScreenRegion> regions = curLayout.getRegions();
+        for (int i = 0; i < regions.size(); ++i)
+        {
+            ScreenRegion & reg = regions[i];
+            reg.isSelected = false;
+        }
+        curLayout.setRegions(regions);
     }
 }
 
