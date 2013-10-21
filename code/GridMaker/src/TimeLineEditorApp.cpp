@@ -115,7 +115,7 @@ void TimeLineEditorApp::save()
 {
     console() << "Saving\n";
 
-    fs::path gridPath = SharedGridPath();
+    fs::path gridPath = SharedGridAssetPath(true);
 
     for (int i = 0; i < mGridLayouts.size(); ++i)
     {
@@ -133,7 +133,7 @@ void TimeLineEditorApp::save()
 
 void TimeLineEditorApp::loadAllGrids()
 {
-    fs::path gridPath = SharedGridPath();
+    fs::path gridPath = SharedGridAssetPath(true);
     mGridLayouts = GridLayout::loadAllFromPath(gridPath);
     console() << mGridLayouts.size() << " Layouts found\n";
 }

@@ -118,7 +118,7 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
                                                     const cinder::Vec2i & wrapSize)
 {    
     fs::directory_iterator dir_first(directory), dir_last;
-    
+
     // Filter on the .grid filetype
     auto pred = [](const fs::directory_entry& p)
     {
@@ -126,19 +126,17 @@ std::vector<GridLayout> GridLayout::loadAllFromPath(const cinder::fs::path & dir
         std::transform(filename.begin(), filename.end(), filename.begin(), ::tolower);
         return fs::is_regular_file(p) && filename.find( ".grid" ) != -1;
     };
-    
     std::vector<fs::path> gridFiles;
     std::copy(make_filter_iterator(pred, dir_first, dir_last),
               make_filter_iterator(pred, dir_last, dir_last),
               std::back_inserter(gridFiles));
-    
+
     std::vector<GridLayout> gridLayouts;
     for (int i = 0; i < gridFiles.size(); ++i)
     {
         fs::path gridPath = gridFiles[i];
         GridLayout gridLayout = GridLayout::load(gridPath, scale, wrapSize);
         gridLayout.setPath(gridPath);
-        
         if (gridLayout.getTimestamp() == 0)
         {
             ci::app::console() << "Adding a default timestamp\n";

@@ -56,7 +56,8 @@ namespace bigscreens
         ScreenRegion(int x1, int y1, int x2, int y2) :
         rect(x1,y1,x2,y2),
         isActive(false),
-        isSelected(false)
+        isSelected(false),
+        color(ci::ColorAf(1.0f,1.0f,1.0f,1.0f))
         {
         };
 
