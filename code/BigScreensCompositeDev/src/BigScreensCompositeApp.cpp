@@ -86,7 +86,8 @@ public:
 void BigScreensCompositeApp::prepareSettings(Settings *settings)
 {
 #if IS_IAC
-    settings->setBorderless();
+//    settings->setBorderless();
+    settings->setFullScreen();
 #endif
 }
 
@@ -97,6 +98,7 @@ void BigScreensCompositeApp::setup()
     mClient->setIsScissorEnabled(false);
     
     GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(IS_IAC), kScreenScale);
+
     mTimeline = std::shared_ptr<GridLayoutTimeline>(t);
     
     mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());

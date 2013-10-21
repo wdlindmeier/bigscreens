@@ -90,7 +90,7 @@ namespace bigscreens
     {
         return pos - ci::Vec2i(pos.x % snapSize, pos.y % snapSize);
     }
-    
+
     static ci::fs::path SharedAssetPath(bool isLocalApp)
     {
         if (isLocalApp)
@@ -102,14 +102,11 @@ namespace bigscreens
             return cinder::app::getAppPath() / ".." / "Assets";
         }
     }
-    
+
     static ci::fs::path SharedGridAssetPath(bool isLocalApp)
-    {
-        return SharedAssetPath(isLocalApp) / "grid";
-    }
-    
+
     // NOTE: Shaders should always be resources, not assets
-    
+
     template <typename T>
     bool VectorFind(const std::vector<T> & vec, T item)
     {
