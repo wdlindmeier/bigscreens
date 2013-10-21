@@ -1,3 +1,6 @@
 [submodule "cinder_dev"]
 	path = cinder_dev
 	url = https://github.com/ryanbartley/cinder_dev
+[submodule "code/BigScreensShared/Blocks/mpe_dev"]
+	path = code/BigScreensShared/Blocks/mpe_dev
+	url = https://github.com/wdlindmeier/Most-Pixels-Ever-Cinder

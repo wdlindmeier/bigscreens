@@ -1,0 +1,22 @@
+<settings>
+	<client_id>555</client_id>
+    <name>Big Screens Controller</name>
+	<server>
+        <!-- Middle Machine -->
+		<ip>192.168.130.241</ip>
+        <!-- My Machine -->
+        <!--ip>192.168.130.237</ip-->
+		<port>9002</port>
+	</server>
+    <local_location>
+		<x>120</x>
+		<y>120</y>
+	</local_location>
+    <local_dimensions>
+		<width>400</width>
+		<height>100</height>
+	</local_dimensions>
+    <offset_window>true</offset_window>
+	<asynchronous>true</asynchronous>
+	<asynchreceive>true</asynchreceive>
+</settings>

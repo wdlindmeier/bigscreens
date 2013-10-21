@@ -1,6 +1,5 @@
 //
 //  GridLayoutTimeline.h
-//  GridWindowRefactor
 //
 //  Created by Ryan Bartley on 10/14/13.
 //
@@ -8,36 +7,65 @@
 
 #pragma once
 
+#include "SharedTypes.hpp"
+#include "cinder/Cinder.h"
 #include "GridLayout.h"
-#include "Utilities.hpp"
 
-namespace bigscreens {
-	
-typedef std::shared_ptr<class GridLayoutTimeline> GridLayoutTimelineRef;
-	
-	// This is the container class for all GridLayouts
-	// it will be where all transitional and current
-	// GridLayout math will be constructed
-	
-class GridLayoutTimeline {
-public:
-	GridLayoutTimeline( const std::string & filePath = "", float scale = 1.0f )
-	: mGridLayouts( GridLayout::loadAllFromPath( ( (filePath == "") ? bigscreens::SharedGridPath() : filePath ), scale ) ),
-		currentLayoutIdx( 0 ), currentGridLayout( nullptr ), nextGridLayout( nullptr )
-	{
-	}
-	
-	~GridLayoutTimeline() {}
-	
-	const std::vector<GridLayout> & getGridLayouts() const { return mGridLayouts; }
-	// This will be the thread safe update function that will create correct Screen regions
-	// which will be used in the SceneWindow.
-	std::pair<std::shared_ptr<GridLayout>, std::shared_ptr<GridLayout> > tick();
-	
-private:
-	std::vector<GridLayout>		mGridLayouts;
-	int							currentLayoutIdx, prevLayoutIdx;
-	std::shared_ptr<GridLayout>	currentGridLayout, nextGridLayout;
-};
-	
+namespace bigscreens
+{
+    
+    typedef std::shared_ptr<class GridLayoutTimeline> GridLayoutTimelineRef;
+    
+    // This is the container class for all GridLayouts
+    // it will be where all transitional and current
+    // GridLayout math will be constructed
+    
+    class GridLayoutTimeline
+    {
+    public:
+        
+        GridLayoutTimeline( const cinder::fs::path & filePath, float scale = 1.0f );
+        ~GridLayoutTimeline() {}
+
+        // Neé "tick"
+        // NOTE: We don't actually want to use "future" since the transition amount
+        // requires a knowledge of the current time. Transitions are absolute milliseconds.
+        void update();
+        
+        // We're passing back the region and the content as a pair.
+        // No need to copy/send the whole layout.
+        // TODO: Make a shared content provider.
+        std::vector< std::pair<ci::Rectf, RenderableContentRef> > getRenderContent(ContentProvider *contentProvider);
+
+        // Playback control
+        void stepToNextLayout();
+        void stepToPreviousLayout();
+        void restart();
+        void play();
+        void pause();
+        void newLayoutWasSet();
+        void reload();
+        void loadAllGrids();
+        
+        bool isPlaying();
+        
+    private:
+        
+        cinder::fs::path mLoadPath;
+        
+        std::vector<GridLayout> mGridLayouts;
+        int mIdxCurrentLayout;
+        int mIdxPrevLayout;
+        
+        float mTransitionAmt;
+        long long mStartTime;
+        long long mPlayheadTime;
+        long long mLastFrameTime;
+        long long mTotalDuration;
+        float mPlaybackSpeed;
+        bool mIsPlaying;
+        float mScale;
+        
+    };
+    
 }

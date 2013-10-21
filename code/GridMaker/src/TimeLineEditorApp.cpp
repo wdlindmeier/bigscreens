@@ -5,10 +5,10 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "Utilities.hpp"
-#include "Helpers.hpp"
 #include "cinder/Camera.h"
 #include "GridLayout.h"
 #include "TankContent.h"
+#include "Slider.hpp"
 
 using namespace ci;
 using namespace ci::app;
@@ -257,7 +257,7 @@ void TimeLineEditorApp::adjustSelectedLayoutTimestamp(long long timeDelta)
         selectedLayout.setTimestamp(timeStamp);
         
         // Resort in ascending order
-        std::sort(mGridLayouts.begin(), mGridLayouts.end(), sortByTimestamp);
+        std::sort(mGridLayouts.begin(), mGridLayouts.end(), sortGridLayoutsByTimestamp);
         
         // Find the new selected index based on the unique ID
         int numLayouts = mGridLayouts.size();

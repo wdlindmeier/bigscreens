@@ -1,0 +1,1236 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A90D313018118B2E0068E386 /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A90D312F18118B2E0068E386 /* TankContent.cpp */; };
+		A90D313118118B2E0068E386 /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A90D312F18118B2E0068E386 /* TankContent.cpp */; };
+		A90D313218118B2E0068E386 /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A90D312F18118B2E0068E386 /* TankContent.cpp */; };
+		A90D31461811A0670068E386 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31331811A0670068E386 /* 361030.grid */; };
+		A90D31471811A0670068E386 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31331811A0670068E386 /* 361030.grid */; };
+		A90D31481811A0670068E386 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31331811A0670068E386 /* 361030.grid */; };
+		A90D31491811A0670068E386 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31341811A0670068E386 /* 581794.grid */; };
+		A90D314A1811A0670068E386 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31341811A0670068E386 /* 581794.grid */; };
+		A90D314B1811A0670068E386 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31341811A0670068E386 /* 581794.grid */; };
+		A90D314C1811A0670068E386 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31351811A0670068E386 /* 742765.grid */; };
+		A90D314D1811A0670068E386 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31351811A0670068E386 /* 742765.grid */; };
+		A90D314E1811A0670068E386 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31351811A0670068E386 /* 742765.grid */; };
+		A90D314F1811A0670068E386 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31361811A0670068E386 /* 777708.grid */; };
+		A90D31501811A0670068E386 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31361811A0670068E386 /* 777708.grid */; };
+		A90D31511811A0670068E386 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31361811A0670068E386 /* 777708.grid */; };
+		A90D31521811A0670068E386 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31371811A0670068E386 /* 966014.grid */; };
+		A90D31531811A0670068E386 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31371811A0670068E386 /* 966014.grid */; };
+		A90D31541811A0670068E386 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31371811A0670068E386 /* 966014.grid */; };
+		A90D31551811A0670068E386 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31381811A0670068E386 /* 1011131.grid */; };
+		A90D31561811A0670068E386 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31381811A0670068E386 /* 1011131.grid */; };
+		A90D31571811A0670068E386 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31381811A0670068E386 /* 1011131.grid */; };
+		A90D31581811A0670068E386 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31391811A0670068E386 /* 1014720.grid */; };
+		A90D31591811A0670068E386 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31391811A0670068E386 /* 1014720.grid */; };
+		A90D315A1811A0670068E386 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31391811A0670068E386 /* 1014720.grid */; };
+		A90D315B1811A0670068E386 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313A1811A0670068E386 /* 1696198.grid */; };
+		A90D315C1811A0670068E386 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313A1811A0670068E386 /* 1696198.grid */; };
+		A90D315D1811A0670068E386 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313A1811A0670068E386 /* 1696198.grid */; };
+		A90D315E1811A0670068E386 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313B1811A0670068E386 /* 1758248.grid */; };
+		A90D315F1811A0670068E386 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313B1811A0670068E386 /* 1758248.grid */; };
+		A90D31601811A0670068E386 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313B1811A0670068E386 /* 1758248.grid */; };
+		A90D31611811A0670068E386 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313C1811A0670068E386 /* 3281731.grid */; };
+		A90D31621811A0670068E386 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313C1811A0670068E386 /* 3281731.grid */; };
+		A90D31631811A0670068E386 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313C1811A0670068E386 /* 3281731.grid */; };
+		A90D31641811A0670068E386 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313D1811A0670068E386 /* 3997715.grid */; };
+		A90D31651811A0670068E386 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313D1811A0670068E386 /* 3997715.grid */; };
+		A90D31661811A0670068E386 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313D1811A0670068E386 /* 3997715.grid */; };
+		A90D31671811A0670068E386 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313E1811A0670068E386 /* 5022072.grid */; };
+		A90D31681811A0670068E386 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313E1811A0670068E386 /* 5022072.grid */; };
+		A90D31691811A0670068E386 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313E1811A0670068E386 /* 5022072.grid */; };
+		A90D316A1811A0670068E386 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313F1811A0670068E386 /* 6186955.grid */; };
+		A90D316B1811A0670068E386 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313F1811A0670068E386 /* 6186955.grid */; };
+		A90D316C1811A0670068E386 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D313F1811A0670068E386 /* 6186955.grid */; };
+		A90D316D1811A0670068E386 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31401811A0670068E386 /* 6751237.grid */; };
+		A90D316E1811A0670068E386 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31401811A0670068E386 /* 6751237.grid */; };
+		A90D316F1811A0670068E386 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31401811A0670068E386 /* 6751237.grid */; };
+		A90D31701811A0670068E386 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31411811A0670068E386 /* 7832294.grid */; };
+		A90D31711811A0670068E386 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31411811A0670068E386 /* 7832294.grid */; };
+		A90D31721811A0670068E386 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31411811A0670068E386 /* 7832294.grid */; };
+		A90D31731811A0670068E386 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31421811A0670068E386 /* 8556446.grid */; };
+		A90D31741811A0670068E386 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31421811A0670068E386 /* 8556446.grid */; };
+		A90D31751811A0670068E386 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31421811A0670068E386 /* 8556446.grid */; };
+		A90D31761811A0670068E386 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31431811A0670068E386 /* 8606981.grid */; };
+		A90D31771811A0670068E386 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31431811A0670068E386 /* 8606981.grid */; };
+		A90D31781811A0670068E386 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31431811A0670068E386 /* 8606981.grid */; };
+		A90D31791811A0670068E386 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31441811A0670068E386 /* 9386356.grid */; };
+		A90D317A1811A0670068E386 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31441811A0670068E386 /* 9386356.grid */; };
+		A90D317B1811A0670068E386 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31441811A0670068E386 /* 9386356.grid */; };
+		A90D317C1811A0670068E386 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31451811A0670068E386 /* 9740794.grid */; };
+		A90D317D1811A0670068E386 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31451811A0670068E386 /* 9740794.grid */; };
+		A90D317E1811A0670068E386 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A90D31451811A0670068E386 /* 9740794.grid */; };
+		A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
+		A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
+		A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
+		A97C889E1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
+		A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */; };
+		A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */; };
+		A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */; };
+		A97C88A21810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */; };
+		A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875B1810440800AE2AE2 /* TCPClient.cpp */; };
+		A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875B1810440800AE2AE2 /* TCPClient.cpp */; };
+		A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875B1810440800AE2AE2 /* TCPClient.cpp */; };
+		A97C88A61810440800AE2AE2 /* TCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C875B1810440800AE2AE2 /* TCPClient.cpp */; };
+		A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */; };
+		A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */; };
+		A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */; };
+		A97C88E118107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */; };
+		A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
+		A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
+		A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
+		A97C88EC18107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
+		A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
+		A97C88FF181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
+		A97C8900181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
+		A97C8901181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
+		A97C8902181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
+		A97C8903181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
+		A97C8904181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
+		A97C8905181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
+		A97C8906181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
+		A97C8907181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
+		A97C8908181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
+		A97C8909181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
+		A97C890A181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
+		A97C890B181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
+		A97C890C181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
+		A97C890D181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
+		A97C89101810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
+		A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
+		A97C89121810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
+		A97C89131810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
+		A97C89141810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
+		A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
+		A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
+		A97C89171810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
+		A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
+		A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
+		A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
+		A9E48EBE18103A8300F2F1C9 /* Hyperspace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */; };
+		A9E48EBF18103A8300F2F1C9 /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAD18103A8300F2F1C9 /* paused.png */; };
+		A9E48EC018103A8300F2F1C9 /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAE18103A8300F2F1C9 /* playing.png */; };
+		A9E48EC118103A8300F2F1C9 /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAF18103A8300F2F1C9 /* screen.png */; };
+		A9E48EC218103A8300F2F1C9 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EB018103A8300F2F1C9 /* T72.obj */; };
+		A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */; };
+		A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECB18103CA900F2F1C9 /* settings.0.xml */; };
+		A9E48ED418103CA900F2F1C9 /* settings.1.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */; };
+		A9E48ED518103CA900F2F1C9 /* settings.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECD18103CA900F2F1C9 /* settings.1.xml */; };
+		A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */; };
+		A9E48ED718103CA900F2F1C9 /* settings.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECF18103CA900F2F1C9 /* settings.2.xml */; };
+		A9E48ED818103CA900F2F1C9 /* settings.555.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */; };
+		A9E48ED918103CA900F2F1C9 /* settings.555.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED118103CA900F2F1C9 /* settings.555.xml */; };
+		A9E48EDC18103CE300F2F1C9 /* settings.555.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */; };
+		A9E48EDD18103CE300F2F1C9 /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAE18103A8300F2F1C9 /* playing.png */; };
+		A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */; };
+		A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAF18103A8300F2F1C9 /* screen.png */; };
+		A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
+		A9E48EE118103CE300F2F1C9 /* settings.1.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */; };
+		A9E48EE218103CE300F2F1C9 /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAD18103A8300F2F1C9 /* paused.png */; };
+		A9E48EE618103CE300F2F1C9 /* settings.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECD18103CA900F2F1C9 /* settings.1.xml */; };
+		A9E48EE818103CE300F2F1C9 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
+		A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECF18103CA900F2F1C9 /* settings.2.xml */; };
+		A9E48EEA18103CE300F2F1C9 /* settings.2.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */; };
+		A9E48EEC18103CE300F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
+		A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
+		A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECB18103CA900F2F1C9 /* settings.0.xml */; };
+		A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EB018103A8300F2F1C9 /* T72.obj */; };
+		A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED118103CA900F2F1C9 /* settings.555.xml */; };
+		A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */; };
+		A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
+		A9E48EFA18103CE300F2F1C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9E48EFB18103CE300F2F1C9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		A9E48EFC18103CE300F2F1C9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		A9E48EFD18103CE300F2F1C9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		A9E48EFE18103CE300F2F1C9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		A9E48EFF18103CE300F2F1C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		A9E48F0018103CE300F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		A9E48F0118103CE300F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		A9E48F0918103CE900F2F1C9 /* settings.555.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */; };
+		A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAE18103A8300F2F1C9 /* playing.png */; };
+		A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */; };
+		A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAF18103A8300F2F1C9 /* screen.png */; };
+		A9E48F0D18103CE900F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
+		A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */; };
+		A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAD18103A8300F2F1C9 /* paused.png */; };
+		A9E48F1318103CE900F2F1C9 /* settings.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECD18103CA900F2F1C9 /* settings.1.xml */; };
+		A9E48F1518103CE900F2F1C9 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
+		A9E48F1618103CE900F2F1C9 /* settings.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECF18103CA900F2F1C9 /* settings.2.xml */; };
+		A9E48F1718103CE900F2F1C9 /* settings.2.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */; };
+		A9E48F1918103CE900F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
+		A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
+		A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECB18103CA900F2F1C9 /* settings.0.xml */; };
+		A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EB018103A8300F2F1C9 /* T72.obj */; };
+		A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED118103CA900F2F1C9 /* settings.555.xml */; };
+		A9E48F1F18103CE900F2F1C9 /* Hyperspace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */; };
+		A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
+		A9E48F2718103CE900F2F1C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9E48F2818103CE900F2F1C9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		A9E48F2918103CE900F2F1C9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		A9E48F2A18103CE900F2F1C9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		A9E48F2B18103CE900F2F1C9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		A9E48F2C18103CE900F2F1C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		A9E48F2D18103CE900F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		A9E48F2E18103CE900F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		A9E48F3618103CF500F2F1C9 /* settings.555.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */; };
+		A9E48F3718103CF500F2F1C9 /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAE18103A8300F2F1C9 /* playing.png */; };
+		A9E48F3818103CF500F2F1C9 /* settings.0.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */; };
+		A9E48F3918103CF500F2F1C9 /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAF18103A8300F2F1C9 /* screen.png */; };
+		A9E48F3A18103CF500F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
+		A9E48F3B18103CF500F2F1C9 /* settings.1.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */; };
+		A9E48F3C18103CF500F2F1C9 /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EAD18103A8300F2F1C9 /* paused.png */; };
+		A9E48F4018103CF500F2F1C9 /* settings.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECD18103CA900F2F1C9 /* settings.1.xml */; };
+		A9E48F4218103CF500F2F1C9 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
+		A9E48F4318103CF500F2F1C9 /* settings.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECF18103CA900F2F1C9 /* settings.2.xml */; };
+		A9E48F4418103CF500F2F1C9 /* settings.2.IAC.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */; };
+		A9E48F4618103CF500F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
+		A9E48F4818103CF500F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
+		A9E48F4918103CF500F2F1C9 /* settings.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ECB18103CA900F2F1C9 /* settings.0.xml */; };
+		A9E48F4A18103CF500F2F1C9 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EB018103A8300F2F1C9 /* T72.obj */; };
+		A9E48F4B18103CF500F2F1C9 /* settings.555.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9E48ED118103CA900F2F1C9 /* settings.555.xml */; };
+		A9E48F4C18103CF500F2F1C9 /* Hyperspace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */; };
+		A9E48F5418103CF500F2F1C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9E48F5518103CF500F2F1C9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		A9E48F5618103CF500F2F1C9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		A9E48F5718103CF500F2F1C9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		A9E48F5818103CF500F2F1C9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		A9E48F5918103CF500F2F1C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */; };
+		C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
+		EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0091D8F80E81B9330029341E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		00B784AF0FF439BC000DE1D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		159A1C61600B47B3B2BA11F8 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensCompositeApp.cpp; path = ../src/BigScreensCompositeApp.cpp; sourceTree = "<group>"; };
+		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
+		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		8D1107320486CEB800E47090 /* BigScreens0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A90D312E18118B260068E386 /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
+		A90D312F18118B2E0068E386 /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
+		A90D31331811A0670068E386 /* 361030.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 361030.grid; sourceTree = "<group>"; };
+		A90D31341811A0670068E386 /* 581794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 581794.grid; sourceTree = "<group>"; };
+		A90D31351811A0670068E386 /* 742765.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 742765.grid; sourceTree = "<group>"; };
+		A90D31361811A0670068E386 /* 777708.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 777708.grid; sourceTree = "<group>"; };
+		A90D31371811A0670068E386 /* 966014.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 966014.grid; sourceTree = "<group>"; };
+		A90D31381811A0670068E386 /* 1011131.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1011131.grid; sourceTree = "<group>"; };
+		A90D31391811A0670068E386 /* 1014720.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1014720.grid; sourceTree = "<group>"; };
+		A90D313A1811A0670068E386 /* 1696198.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1696198.grid; sourceTree = "<group>"; };
+		A90D313B1811A0670068E386 /* 1758248.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1758248.grid; sourceTree = "<group>"; };
+		A90D313C1811A0670068E386 /* 3281731.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3281731.grid; sourceTree = "<group>"; };
+		A90D313D1811A0670068E386 /* 3997715.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3997715.grid; sourceTree = "<group>"; };
+		A90D313E1811A0670068E386 /* 5022072.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 5022072.grid; sourceTree = "<group>"; };
+		A90D313F1811A0670068E386 /* 6186955.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6186955.grid; sourceTree = "<group>"; };
+		A90D31401811A0670068E386 /* 6751237.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6751237.grid; sourceTree = "<group>"; };
+		A90D31411811A0670068E386 /* 7832294.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 7832294.grid; sourceTree = "<group>"; };
+		A90D31421811A0670068E386 /* 8556446.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8556446.grid; sourceTree = "<group>"; };
+		A90D31431811A0670068E386 /* 8606981.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8606981.grid; sourceTree = "<group>"; };
+		A90D31441811A0670068E386 /* 9386356.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9386356.grid; sourceTree = "<group>"; };
+		A90D31451811A0670068E386 /* 9740794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9740794.grid; sourceTree = "<group>"; };
+		A97C86CB1810440700AE2AE2 /* MPEApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEApp.hpp; sourceTree = "<group>"; };
+		A97C86CC1810440700AE2AE2 /* MPEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEClient.h; sourceTree = "<group>"; };
+		A97C86CD1810440700AE2AE2 /* MPEMessageHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEMessageHandler.hpp; sourceTree = "<group>"; };
+		A97C86CE1810440700AE2AE2 /* MPEProtocol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEProtocol.hpp; sourceTree = "<group>"; };
+		A97C86CF1810440700AE2AE2 /* TCPAsyncClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPAsyncClient.h; sourceTree = "<group>"; };
+		A97C86D01810440700AE2AE2 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
+		A97C87591810440800AE2AE2 /* MPEClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MPEClient.cpp; sourceTree = "<group>"; };
+		A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCPAsyncClient.cpp; sourceTree = "<group>"; };
+		A97C875B1810440800AE2AE2 /* TCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCPClient.cpp; sourceTree = "<group>"; };
+		A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayoutTimeline.cpp; sourceTree = "<group>"; };
+		A97C88E218107A8900AE2AE2 /* GridLayoutTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayoutTimeline.h; sourceTree = "<group>"; };
+		A97C88E718107B3000AE2AE2 /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
+		A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
+		A97C88FA181087BC00AE2AE2 /* basic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic.frag; sourceTree = "<group>"; };
+		A97C88FB181087BC00AE2AE2 /* basic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic.vert; sourceTree = "<group>"; };
+		A97C88FC181087BC00AE2AE2 /* outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.frag; sourceTree = "<group>"; };
+		A97C88FD181087BC00AE2AE2 /* outline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.vert; sourceTree = "<group>"; };
+		A97C890E1810AA7A00AE2AE2 /* texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.frag; sourceTree = "<group>"; };
+		A97C890F1810AA7A00AE2AE2 /* texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.vert; sourceTree = "<group>"; };
+		A97C89181810B24D00AE2AE2 /* OutLineBorder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutLineBorder.hpp; sourceTree = "<group>"; };
+		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
+		A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold.ttf"; sourceTree = "<group>"; };
+		A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Italic.ttf"; sourceTree = "<group>"; };
+		A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hyperspace.ttf; sourceTree = "<group>"; };
+		A9E48EA918103A8300F2F1C9 /* SceneWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneWindow.hpp; sourceTree = "<group>"; };
+		A9E48EAA18103A8300F2F1C9 /* SharedTypes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SharedTypes.hpp; sourceTree = "<group>"; };
+		A9E48EAB18103A8300F2F1C9 /* Utilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utilities.hpp; sourceTree = "<group>"; };
+		A9E48EAD18103A8300F2F1C9 /* paused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paused.png; sourceTree = "<group>"; };
+		A9E48EAE18103A8300F2F1C9 /* playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playing.png; sourceTree = "<group>"; };
+		A9E48EAF18103A8300F2F1C9 /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen.png; sourceTree = "<group>"; };
+		A9E48EB018103A8300F2F1C9 /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = T72.obj; sourceTree = "<group>"; };
+		A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.0.IAC.xml; sourceTree = "<group>"; };
+		A9E48ECB18103CA900F2F1C9 /* settings.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.0.xml; sourceTree = "<group>"; };
+		A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.1.IAC.xml; sourceTree = "<group>"; };
+		A9E48ECD18103CA900F2F1C9 /* settings.1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.1.xml; sourceTree = "<group>"; };
+		A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.2.IAC.xml; sourceTree = "<group>"; };
+		A9E48ECF18103CA900F2F1C9 /* settings.2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.2.xml; sourceTree = "<group>"; };
+		A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.555.IAC.xml; sourceTree = "<group>"; };
+		A9E48ED118103CA900F2F1C9 /* settings.555.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.555.xml; sourceTree = "<group>"; };
+		A9E48F0518103CE300F2F1C9 /* BigScreens1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9E48F3218103CE900F2F1C9 /* BigScreens2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreensController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensControllerApp.cpp; path = ../src/BigScreensControllerApp.cpp; sourceTree = "<group>"; };
+		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
+				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
+				5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */,
+				00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */,
+				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
+				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
+				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48EF918103CE300F2F1C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E48EFA18103CE300F2F1C9 /* Cocoa.framework in Frameworks */,
+				A9E48EFB18103CE300F2F1C9 /* OpenGL.framework in Frameworks */,
+				A9E48EFC18103CE300F2F1C9 /* CoreVideo.framework in Frameworks */,
+				A9E48EFD18103CE300F2F1C9 /* QTKit.framework in Frameworks */,
+				A9E48EFE18103CE300F2F1C9 /* Accelerate.framework in Frameworks */,
+				A9E48EFF18103CE300F2F1C9 /* AudioToolbox.framework in Frameworks */,
+				A9E48F0018103CE300F2F1C9 /* AudioUnit.framework in Frameworks */,
+				A9E48F0118103CE300F2F1C9 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F2618103CE900F2F1C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E48F2718103CE900F2F1C9 /* Cocoa.framework in Frameworks */,
+				A9E48F2818103CE900F2F1C9 /* OpenGL.framework in Frameworks */,
+				A9E48F2918103CE900F2F1C9 /* CoreVideo.framework in Frameworks */,
+				A9E48F2A18103CE900F2F1C9 /* QTKit.framework in Frameworks */,
+				A9E48F2B18103CE900F2F1C9 /* Accelerate.framework in Frameworks */,
+				A9E48F2C18103CE900F2F1C9 /* AudioToolbox.framework in Frameworks */,
+				A9E48F2D18103CE900F2F1C9 /* AudioUnit.framework in Frameworks */,
+				A9E48F2E18103CE900F2F1C9 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F5318103CF500F2F1C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E48F5418103CF500F2F1C9 /* Cocoa.framework in Frameworks */,
+				A9E48F5518103CF500F2F1C9 /* OpenGL.framework in Frameworks */,
+				A9E48F5618103CF500F2F1C9 /* CoreVideo.framework in Frameworks */,
+				A9E48F5718103CF500F2F1C9 /* QTKit.framework in Frameworks */,
+				A9E48F5818103CF500F2F1C9 /* Accelerate.framework in Frameworks */,
+				A9E48F5918103CF500F2F1C9 /* AudioToolbox.framework in Frameworks */,
+				A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */,
+				A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A90D312F18118B2E0068E386 /* TankContent.cpp */,
+				A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */,
+				43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00B784AF0FF439BC000DE1D7 /* Accelerate.framework */,
+				00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */,
+				00B784B10FF439BC000DE1D7 /* AudioUnit.framework */,
+				00B784B20FF439BC000DE1D7 /* CoreAudio.framework */,
+				5323E6B50EAFCA7E003A9687 /* QTKit.framework */,
+				5323E6B10EAFCA74003A9687 /* CoreVideo.framework */,
+				0091D8F80E81B9330029341E /* OpenGL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* BigScreens0.app */,
+				A9E48F0518103CE300F2F1C9 /* BigScreens1.app */,
+				A9E48F3218103CE900F2F1C9 /* BigScreens2.app */,
+				A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* BigScreensCompositeDev */ = {
+			isa = PBXGroup;
+			children = (
+				A9E48EC918103CA900F2F1C9 /* assets */,
+				A9E48E9718103A8300F2F1C9 /* BigScreensShared */,
+				29B97315FDCFA39411CA2CEA /* Headers */,
+				080E96DDFE201D6D7F000001 /* Source */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = BigScreensCompositeDev;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A90D312E18118B260068E386 /* TankContent.h */,
+				F3377C32D0D444C0A417BAA5 /* Resources.h */,
+				FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				159A1C61600B47B3B2BA11F8 /* CinderApp.icns */,
+				AC0EE697804E47DF989DE276 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A97C86C11810440700AE2AE2 /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				A97C86C21810440700AE2AE2 /* mpe_dev */,
+			);
+			path = Blocks;
+			sourceTree = "<group>";
+		};
+		A97C86C21810440700AE2AE2 /* mpe_dev */ = {
+			isa = PBXGroup;
+			children = (
+				A97C86CA1810440700AE2AE2 /* include */,
+				A97C87581810440800AE2AE2 /* src */,
+			);
+			path = mpe_dev;
+			sourceTree = "<group>";
+		};
+		A97C86CA1810440700AE2AE2 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A97C86CB1810440700AE2AE2 /* MPEApp.hpp */,
+				A97C86CC1810440700AE2AE2 /* MPEClient.h */,
+				A97C86CD1810440700AE2AE2 /* MPEMessageHandler.hpp */,
+				A97C86CE1810440700AE2AE2 /* MPEProtocol.hpp */,
+				A97C86CF1810440700AE2AE2 /* TCPAsyncClient.h */,
+				A97C86D01810440700AE2AE2 /* TCPClient.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A97C87581810440800AE2AE2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A97C87591810440800AE2AE2 /* MPEClient.cpp */,
+				A97C875A1810440800AE2AE2 /* TCPAsyncClient.cpp */,
+				A97C875B1810440800AE2AE2 /* TCPClient.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A97C88F9181087BC00AE2AE2 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A97C890E1810AA7A00AE2AE2 /* texture.frag */,
+				A97C890F1810AA7A00AE2AE2 /* texture.vert */,
+				A97C88FA181087BC00AE2AE2 /* basic.frag */,
+				A97C88FB181087BC00AE2AE2 /* basic.vert */,
+				A97C88FC181087BC00AE2AE2 /* outline.frag */,
+				A97C88FD181087BC00AE2AE2 /* outline.vert */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
+		A9E48E9718103A8300F2F1C9 /* BigScreensShared */ = {
+			isa = PBXGroup;
+			children = (
+				A97C86C11810440700AE2AE2 /* Blocks */,
+				A9E48E9818103A8300F2F1C9 /* Assets */,
+				A9E48EA518103A8300F2F1C9 /* Headers */,
+				A9E48EAC18103A8300F2F1C9 /* Resources */,
+				A9E48EB118103A8300F2F1C9 /* Source */,
+			);
+			name = BigScreensShared;
+			path = ../../BigScreensShared;
+			sourceTree = "<group>";
+		};
+		A9E48E9818103A8300F2F1C9 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A9E48E9918103A8300F2F1C9 /* grid */,
+				A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */,
+				A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */,
+				A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */,
+				A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */,
+				A97C88F9181087BC00AE2AE2 /* shaders */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		A9E48E9918103A8300F2F1C9 /* grid */ = {
+			isa = PBXGroup;
+			children = (
+				A90D31331811A0670068E386 /* 361030.grid */,
+				A90D31341811A0670068E386 /* 581794.grid */,
+				A90D31351811A0670068E386 /* 742765.grid */,
+				A90D31361811A0670068E386 /* 777708.grid */,
+				A90D31371811A0670068E386 /* 966014.grid */,
+				A90D31381811A0670068E386 /* 1011131.grid */,
+				A90D31391811A0670068E386 /* 1014720.grid */,
+				A90D313A1811A0670068E386 /* 1696198.grid */,
+				A90D313B1811A0670068E386 /* 1758248.grid */,
+				A90D313C1811A0670068E386 /* 3281731.grid */,
+				A90D313D1811A0670068E386 /* 3997715.grid */,
+				A90D313E1811A0670068E386 /* 5022072.grid */,
+				A90D313F1811A0670068E386 /* 6186955.grid */,
+				A90D31401811A0670068E386 /* 6751237.grid */,
+				A90D31411811A0670068E386 /* 7832294.grid */,
+				A90D31421811A0670068E386 /* 8556446.grid */,
+				A90D31431811A0670068E386 /* 8606981.grid */,
+				A90D31441811A0670068E386 /* 9386356.grid */,
+				A90D31451811A0670068E386 /* 9740794.grid */,
+			);
+			path = grid;
+			sourceTree = "<group>";
+		};
+		A9E48EA518103A8300F2F1C9 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A97C88E718107B3000AE2AE2 /* GridLayout.h */,
+				A97C88E218107A8900AE2AE2 /* GridLayoutTimeline.h */,
+				A97C89181810B24D00AE2AE2 /* OutLineBorder.hpp */,
+				A9E48EA918103A8300F2F1C9 /* SceneWindow.hpp */,
+				A9E48EAA18103A8300F2F1C9 /* SharedTypes.hpp */,
+				A9E48EAB18103A8300F2F1C9 /* Utilities.hpp */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		A9E48EAC18103A8300F2F1C9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A9E48EAD18103A8300F2F1C9 /* paused.png */,
+				A9E48EAE18103A8300F2F1C9 /* playing.png */,
+				A9E48EAF18103A8300F2F1C9 /* screen.png */,
+				A9E48EB018103A8300F2F1C9 /* T72.obj */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A9E48EB118103A8300F2F1C9 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */,
+				A97C88DD18107A8200AE2AE2 /* GridLayoutTimeline.cpp */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		A9E48EC918103CA900F2F1C9 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */,
+				A9E48ECB18103CA900F2F1C9 /* settings.0.xml */,
+				A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */,
+				A9E48ECD18103CA900F2F1C9 /* settings.1.xml */,
+				A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */,
+				A9E48ECF18103CA900F2F1C9 /* settings.2.xml */,
+				A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */,
+				A9E48ED118103CA900F2F1C9 /* settings.555.xml */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* BigScreens0 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BigScreens0" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BigScreens0;
+			productInstallPath = "$(HOME)/Applications";
+			productName = BigScreensCompositeDev;
+			productReference = 8D1107320486CEB800E47090 /* BigScreens0.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9E48EDA18103CE300F2F1C9 /* BigScreens1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9E48F0218103CE300F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreens1" */;
+			buildPhases = (
+				A9E48EDB18103CE300F2F1C9 /* Resources */,
+				A9E48EF418103CE300F2F1C9 /* Sources */,
+				A9E48EF918103CE300F2F1C9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BigScreens1;
+			productInstallPath = "$(HOME)/Applications";
+			productName = BigScreensCompositeDev;
+			productReference = A9E48F0518103CE300F2F1C9 /* BigScreens1.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9E48F0718103CE900F2F1C9 /* BigScreens2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9E48F2F18103CE900F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreens2" */;
+			buildPhases = (
+				A9E48F0818103CE900F2F1C9 /* Resources */,
+				A9E48F2118103CE900F2F1C9 /* Sources */,
+				A9E48F2618103CE900F2F1C9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BigScreens2;
+			productInstallPath = "$(HOME)/Applications";
+			productName = BigScreensCompositeDev;
+			productReference = A9E48F3218103CE900F2F1C9 /* BigScreens2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9E48F3418103CF500F2F1C9 /* BigScreensController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9E48F5C18103CF500F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreensController" */;
+			buildPhases = (
+				A9E48F3518103CF500F2F1C9 /* Resources */,
+				A9E48F4E18103CF500F2F1C9 /* Sources */,
+				A9E48F5318103CF500F2F1C9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BigScreensController;
+			productInstallPath = "$(HOME)/Applications";
+			productName = BigScreensCompositeDev;
+			productReference = A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensComposite" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* BigScreensCompositeDev */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* BigScreens0 */,
+				A9E48EDA18103CE300F2F1C9 /* BigScreens1 */,
+				A9E48F0718103CE900F2F1C9 /* BigScreens2 */,
+				A9E48F3418103CF500F2F1C9 /* BigScreensController */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A90D31701811A0670068E386 /* 7832294.grid in Resources */,
+				A90D317C1811A0670068E386 /* 9740794.grid in Resources */,
+				A9E48ED818103CA900F2F1C9 /* settings.555.IAC.xml in Resources */,
+				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
+				A90D314C1811A0670068E386 /* 742765.grid in Resources */,
+				A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */,
+				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
+				A90D31731811A0670068E386 /* 8556446.grid in Resources */,
+				A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
+				A9E48ED418103CA900F2F1C9 /* settings.1.IAC.xml in Resources */,
+				A9E48EBF18103A8300F2F1C9 /* paused.png in Resources */,
+				A9E48ED518103CA900F2F1C9 /* settings.1.xml in Resources */,
+				A90D31671811A0670068E386 /* 5022072.grid in Resources */,
+				A90D31551811A0670068E386 /* 1011131.grid in Resources */,
+				A90D31491811A0670068E386 /* 581794.grid in Resources */,
+				A90D31461811A0670068E386 /* 361030.grid in Resources */,
+				A90D316A1811A0670068E386 /* 6186955.grid in Resources */,
+				A90D316D1811A0670068E386 /* 6751237.grid in Resources */,
+				EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */,
+				A9E48ED718103CA900F2F1C9 /* settings.2.xml in Resources */,
+				A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */,
+				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A90D31611811A0670068E386 /* 3281731.grid in Resources */,
+				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
+				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
+				A97C8906181087BC00AE2AE2 /* outline.frag in Resources */,
+				A97C890A181087BC00AE2AE2 /* outline.vert in Resources */,
+				A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */,
+				A90D31761811A0670068E386 /* 8606981.grid in Resources */,
+				A9E48EC218103A8300F2F1C9 /* T72.obj in Resources */,
+				A90D315B1811A0670068E386 /* 1696198.grid in Resources */,
+				A90D31641811A0670068E386 /* 3997715.grid in Resources */,
+				A90D31581811A0670068E386 /* 1014720.grid in Resources */,
+				A9E48ED918103CA900F2F1C9 /* settings.555.xml in Resources */,
+				A9E48EBE18103A8300F2F1C9 /* Hyperspace.ttf in Resources */,
+				A90D31791811A0670068E386 /* 9386356.grid in Resources */,
+				A90D315E1811A0670068E386 /* 1758248.grid in Resources */,
+				A97C89101810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A90D31521811A0670068E386 /* 966014.grid in Resources */,
+				A97C89141810AA7A00AE2AE2 /* texture.vert in Resources */,
+				A90D314F1811A0670068E386 /* 777708.grid in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48EDB18103CE300F2F1C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A90D31711811A0670068E386 /* 7832294.grid in Resources */,
+				A90D317D1811A0670068E386 /* 9740794.grid in Resources */,
+				A9E48EDC18103CE300F2F1C9 /* settings.555.IAC.xml in Resources */,
+				A9E48EDD18103CE300F2F1C9 /* playing.png in Resources */,
+				A90D314D1811A0670068E386 /* 742765.grid in Resources */,
+				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
+				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
+				A90D31741811A0670068E386 /* 8556446.grid in Resources */,
+				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
+				A9E48EE118103CE300F2F1C9 /* settings.1.IAC.xml in Resources */,
+				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
+				A9E48EE618103CE300F2F1C9 /* settings.1.xml in Resources */,
+				A90D31681811A0670068E386 /* 5022072.grid in Resources */,
+				A90D31561811A0670068E386 /* 1011131.grid in Resources */,
+				A90D314A1811A0670068E386 /* 581794.grid in Resources */,
+				A90D31471811A0670068E386 /* 361030.grid in Resources */,
+				A90D316B1811A0670068E386 /* 6186955.grid in Resources */,
+				A90D316E1811A0670068E386 /* 6751237.grid in Resources */,
+				A9E48EE818103CE300F2F1C9 /* CinderApp.icns in Resources */,
+				A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */,
+				A9E48EEA18103CE300F2F1C9 /* settings.2.IAC.xml in Resources */,
+				A9E48EEC18103CE300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A90D31621811A0670068E386 /* 3281731.grid in Resources */,
+				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
+				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
+				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
+				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
+				A97C8903181087BC00AE2AE2 /* basic.vert in Resources */,
+				A90D31771811A0670068E386 /* 8606981.grid in Resources */,
+				A97C8907181087BC00AE2AE2 /* outline.frag in Resources */,
+				A90D315C1811A0670068E386 /* 1696198.grid in Resources */,
+				A90D31651811A0670068E386 /* 3997715.grid in Resources */,
+				A90D31591811A0670068E386 /* 1014720.grid in Resources */,
+				A97C890B181087BC00AE2AE2 /* outline.vert in Resources */,
+				A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A90D317A1811A0670068E386 /* 9386356.grid in Resources */,
+				A90D315F1811A0670068E386 /* 1758248.grid in Resources */,
+				A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */,
+				A90D31531811A0670068E386 /* 966014.grid in Resources */,
+				A97C88FF181087BC00AE2AE2 /* basic.frag in Resources */,
+				A90D31501811A0670068E386 /* 777708.grid in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F0818103CE900F2F1C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A90D31721811A0670068E386 /* 7832294.grid in Resources */,
+				A90D317E1811A0670068E386 /* 9740794.grid in Resources */,
+				A9E48F0918103CE900F2F1C9 /* settings.555.IAC.xml in Resources */,
+				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
+				A90D314E1811A0670068E386 /* 742765.grid in Resources */,
+				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
+				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
+				A90D31751811A0670068E386 /* 8556446.grid in Resources */,
+				A9E48F0D18103CE900F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
+				A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */,
+				A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */,
+				A9E48F1318103CE900F2F1C9 /* settings.1.xml in Resources */,
+				A90D31691811A0670068E386 /* 5022072.grid in Resources */,
+				A90D31571811A0670068E386 /* 1011131.grid in Resources */,
+				A90D314B1811A0670068E386 /* 581794.grid in Resources */,
+				A90D31481811A0670068E386 /* 361030.grid in Resources */,
+				A90D316C1811A0670068E386 /* 6186955.grid in Resources */,
+				A90D316F1811A0670068E386 /* 6751237.grid in Resources */,
+				A9E48F1518103CE900F2F1C9 /* CinderApp.icns in Resources */,
+				A9E48F1618103CE900F2F1C9 /* settings.2.xml in Resources */,
+				A9E48F1718103CE900F2F1C9 /* settings.2.IAC.xml in Resources */,
+				A9E48F1918103CE900F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A90D31631811A0670068E386 /* 3281731.grid in Resources */,
+				A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
+				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
+				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
+				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
+				A97C8908181087BC00AE2AE2 /* outline.frag in Resources */,
+				A90D31781811A0670068E386 /* 8606981.grid in Resources */,
+				A97C890C181087BC00AE2AE2 /* outline.vert in Resources */,
+				A90D315D1811A0670068E386 /* 1696198.grid in Resources */,
+				A90D31661811A0670068E386 /* 3997715.grid in Resources */,
+				A90D315A1811A0670068E386 /* 1014720.grid in Resources */,
+				A97C8900181087BC00AE2AE2 /* basic.frag in Resources */,
+				A9E48F1F18103CE900F2F1C9 /* Hyperspace.ttf in Resources */,
+				A90D317B1811A0670068E386 /* 9386356.grid in Resources */,
+				A90D31601811A0670068E386 /* 1758248.grid in Resources */,
+				A97C89121810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A90D31541811A0670068E386 /* 966014.grid in Resources */,
+				A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */,
+				A90D31511811A0670068E386 /* 777708.grid in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F3518103CF500F2F1C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E48F3618103CF500F2F1C9 /* settings.555.IAC.xml in Resources */,
+				A9E48F3718103CF500F2F1C9 /* playing.png in Resources */,
+				A9E48F3818103CF500F2F1C9 /* settings.0.IAC.xml in Resources */,
+				A9E48F3918103CF500F2F1C9 /* screen.png in Resources */,
+				A9E48F3A18103CF500F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
+				A9E48F3B18103CF500F2F1C9 /* settings.1.IAC.xml in Resources */,
+				A9E48F3C18103CF500F2F1C9 /* paused.png in Resources */,
+				A9E48F4018103CF500F2F1C9 /* settings.1.xml in Resources */,
+				A9E48F4218103CF500F2F1C9 /* CinderApp.icns in Resources */,
+				A9E48F4318103CF500F2F1C9 /* settings.2.xml in Resources */,
+				A9E48F4418103CF500F2F1C9 /* settings.2.IAC.xml in Resources */,
+				A9E48F4618103CF500F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A9E48F4818103CF500F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A9E48F4918103CF500F2F1C9 /* settings.0.xml in Resources */,
+				A9E48F4A18103CF500F2F1C9 /* T72.obj in Resources */,
+				A9E48F4B18103CF500F2F1C9 /* settings.555.xml in Resources */,
+				A9E48F4C18103CF500F2F1C9 /* Hyperspace.ttf in Resources */,
+				A97C8905181087BC00AE2AE2 /* basic.vert in Resources */,
+				A97C8909181087BC00AE2AE2 /* outline.frag in Resources */,
+				A97C890D181087BC00AE2AE2 /* outline.vert in Resources */,
+				A97C8901181087BC00AE2AE2 /* basic.frag in Resources */,
+				A97C89131810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A97C89171810AA7A00AE2AE2 /* texture.vert in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
+				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */,
+				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48EF418103CE300F2F1C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
+				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F2118103CE900F2F1C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,
+				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E48F4E18103CF500F2F1C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A97C88A61810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A97C88E118107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A97C889E1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A97C88A21810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */,
+				A97C88EC18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A9E48F0318103CE300F2F1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = BigScreens1;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9E48F0418103CE300F2F1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=1";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = BigScreens1;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A9E48F3018103CE900F2F1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=2",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = BigScreens2;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9E48F3118103CE900F2F1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=2";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = BigScreens2;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A9E48F5D18103CF500F2F1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=555",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = BigScreensController;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9E48F5E18103CF500F2F1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=555";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = BigScreensController;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CLIENT_ID=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = BigScreens0;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=0";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = BigScreens0;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9E48F0218103CE300F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreens1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9E48F0318103CE300F2F1C9 /* Debug */,
+				A9E48F0418103CE300F2F1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9E48F2F18103CE900F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreens2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9E48F3018103CE900F2F1C9 /* Debug */,
+				A9E48F3118103CE900F2F1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9E48F5C18103CF500F2F1C9 /* Build configuration list for PBXNativeTarget "BigScreensController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9E48F5D18103CF500F2F1C9 /* Debug */,
+				A9E48F5E18103CF500F2F1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BigScreens0" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensComposite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

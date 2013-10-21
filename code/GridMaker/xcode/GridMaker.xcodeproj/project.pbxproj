@@ -16,10 +16,8 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		A902F65A18048A1E00DFEEAE /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F65918048A1E00DFEEAE /* GridLayout.cpp */; };
 		A902F6E218072B2A00DFEEAE /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE37C12D14EB896421C62 /* CinderApp.icns */; };
 		A902F6E318072B2A00DFEEAE /* crane.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFDA180463A800AACFCB /* crane.obj */; };
-		A902F6E818072B2A00DFEEAE /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F65918048A1E00DFEEAE /* GridLayout.cpp */; };
 		A902F6EB18072B2A00DFEEAE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A902F6EC18072B2A00DFEEAE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
 		A902F6ED18072B2A00DFEEAE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
@@ -37,8 +35,10 @@
 		A902F7061808455500DFEEAE /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = A902F6FF1808455500DFEEAE /* screen.png */; };
 		A902F7071808455500DFEEAE /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A902F7001808455500DFEEAE /* T72.obj */; };
 		A902F7081808455500DFEEAE /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A902F7001808455500DFEEAE /* T72.obj */; };
-		A902F74E1808639200DFEEAE /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F74D1808639200DFEEAE /* TankContent.cpp */; };
+		A90D312C18118B070068E386 /* TankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A90D312B18118B070068E386 /* TankContent.cpp */; };
 		A95EAFDB180463A800AACFCB /* crane.obj in Resources */ = {isa = PBXBuildFile; fileRef = A95EAFDA180463A800AACFCB /* crane.obj */; };
+		A97C88E518107B0C00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E418107B0C00AE2AE2 /* GridLayout.cpp */; };
+		A97C88E618107B0C00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E418107B0C00AE2AE2 /* GridLayout.cpp */; };
 		D16C133F93124B2F924A72E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE37C12D14EB896421C62 /* CinderApp.icns */; };
 /* End PBXBuildFile section */
 
@@ -57,8 +57,6 @@
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		6D6DE37C12D14EB896421C62 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GridMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A902F65718048A1E00DFEEAE /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
-		A902F65918048A1E00DFEEAE /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
 		A902F65B18048A8000DFEEAE /* SharedTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SharedTypes.hpp; sourceTree = "<group>"; };
 		A902F6D91806E45200DFEEAE /* Utilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utilities.hpp; sourceTree = "<group>"; };
 		A902F6F618072B2A00DFEEAE /* TimeLineEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLineEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,10 +65,12 @@
 		A902F6FE1808455500DFEEAE /* playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playing.png; sourceTree = "<group>"; };
 		A902F6FF1808455500DFEEAE /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen.png; sourceTree = "<group>"; };
 		A902F7001808455500DFEEAE /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = T72.obj; sourceTree = "<group>"; };
-		A902F74D1808639200DFEEAE /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
-		A902F74F1808639D00DFEEAE /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
+		A90D312B18118B070068E386 /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
+		A90D312D18118B100068E386 /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
 		A95EAFDA180463A800AACFCB /* crane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crane.obj; path = ../resources/crane.obj; sourceTree = "<group>"; };
-		A9D3DBA91800D04700B8F792 /* Helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Helpers.hpp; sourceTree = "<group>"; };
+		A97C88E318107B0400AE2AE2 /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
+		A97C88E418107B0C00AE2AE2 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
+		A9E48E9618103A2900F2F1C9 /* Slider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Slider.hpp; path = ../include/Slider.hpp; sourceTree = "<group>"; };
 		C6D3B8C47C954AA2A2F7C3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GridMakerApp.cpp; path = ../src/GridMakerApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,7 +119,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A902F74D1808639200DFEEAE /* TankContent.cpp */,
+				A90D312B18118B070068E386 /* TankContent.cpp */,
 				FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */,
 				A902F6F818072B7800DFEEAE /* TimeLineEditorApp.cpp */,
 			);
@@ -176,10 +176,10 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				A902F74F1808639D00DFEEAE /* TankContent.h */,
+				A90D312D18118B100068E386 /* TankContent.h */,
 				2C262FEFEEC147B9AE7DC2FE /* GridMaker_Prefix.pch */,
-				A9D3DBA91800D04700B8F792 /* Helpers.hpp */,
 				3A6B2A5F9BF24A92996041F7 /* Resources.h */,
+				A9E48E9618103A2900F2F1C9 /* Slider.hpp */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 		A902F65618048A1E00DFEEAE /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				A902F65718048A1E00DFEEAE /* GridLayout.h */,
+				A97C88E318107B0400AE2AE2 /* GridLayout.h */,
 				A902F65B18048A8000DFEEAE /* SharedTypes.hpp */,
 				A902F6D91806E45200DFEEAE /* Utilities.hpp */,
 			);
@@ -227,7 +227,7 @@
 		A902F65818048A1E00DFEEAE /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A902F65918048A1E00DFEEAE /* GridLayout.cpp */,
+				A97C88E418107B0C00AE2AE2 /* GridLayout.cpp */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -345,8 +345,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2432F1B16E57434AB1663C23 /* GridMakerApp.cpp in Sources */,
-				A902F65A18048A1E00DFEEAE /* GridLayout.cpp in Sources */,
-				A902F74E1808639200DFEEAE /* TankContent.cpp in Sources */,
+				A97C88E518107B0C00AE2AE2 /* GridLayout.cpp in Sources */,
+				A90D312C18118B070068E386 /* TankContent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A902F6FA18072B7800DFEEAE /* TimeLineEditorApp.cpp in Sources */,
-				A902F6E818072B2A00DFEEAE /* GridLayout.cpp in Sources */,
+				A97C88E618107B0C00AE2AE2 /* GridLayout.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

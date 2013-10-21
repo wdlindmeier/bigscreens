@@ -13,7 +13,6 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
 #include "SharedTypes.hpp"
-#include "GridLayout.h"
 #include <time.h>
 #include <sys/timeb.h>
 
@@ -92,20 +91,40 @@ namespace bigscreens
         return pos - ci::Vec2i(pos.x % snapSize, pos.y % snapSize);
     }
 
-    static bool sortByTimestamp(const GridLayout & layout1, const GridLayout & layout2)
+    static ci::fs::path SharedAssetPath(bool isLocalApp)
     {
-        return (layout1.getTimestamp() < layout2.getTimestamp());
+        if (isLocalApp)
+        {
+            return cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets";
+        }
+        else
+        {
+            return cinder::app::getAppPath() / ".." / "Assets";
+        }
+    }
+
+    static ci::fs::path SharedGridAssetPath(bool isLocalApp)
+    {
+        return SharedAssetPath(isLocalApp) / "grid";
+    }
+
+    template <typename T>
+    bool VectorFind(const std::vector<T> & vec, T item)
+    {
+        return std::find(vec.begin(), vec.end(), item) != vec.end();
     }
     
-    static ci::fs::path SharedGridPath()
+    template <typename T>
+    void VectorErase(std::vector<T> & vec, T item)
     {
-        return cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets" / "grid";
+        vec.erase(std::remove(vec.begin(), vec.end(), item), vec.end());
     }
-	
-	// This is for the shader path but I couldn't get it working like the above
-	// TODO: get this working like the above
-	static std::string SharedShaderPath()
-	{
-		return "../../BigScreensShared/Assets/shaders/";
-	}
+    
+    static OriginAndDimension OriginAndDimensionFromRectf(const ci::Rectf & rect,
+                                                          const float maxHeight)
+    {
+        return OriginAndDimension(ci::Vec2i( rect.x1, maxHeight - rect.y2 ),
+                                  ci::Vec2i( rect.getWidth(), rect.getHeight() ) );
+    }
+    
 }
