@@ -36,7 +36,9 @@ namespace bigscreens
         // No need to copy/send the whole layout.
         // TODO: Make a shared content provider.
         std::vector< std::pair<ci::Rectf, RenderableContentRef> > getRenderContent(ContentProvider *contentProvider);
-
+        
+        std::vector<GridLayout> & getGridLayouts(){ return mGridLayouts; };
+        
         // Playback control
         void stepToNextLayout();
         void stepToPreviousLayout();

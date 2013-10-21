@@ -60,6 +60,8 @@ class GridMakerApp : public AppNative {
                       const Vec2f & mousePosition,
                       const GridRenderMode mode,
                       RenderableContentRef & content);
+    void drawPillars();
+    void drawMargins();
 
     // Grid Editing
     void clearSelection();
@@ -121,6 +123,8 @@ class GridMakerApp : public AppNative {
     ci::params::InterfaceGlRef mParams;
     string mContentName;
     string mGridName;
+    
+    bool mDrawPillars;
 };
 
 #pragma mark - Setup
@@ -128,6 +132,8 @@ class GridMakerApp : public AppNative {
 const static int kNumScreens = 3;
 const static int kScreenWidth = 3840;
 const static int kScreenHeight = 1080;
+const static int kScreenMarginBottom = 133;
+const static int kScreenMarginRight = 147; // Estimate
 const static float kScreenScale = 0.25f;
 
 void GridMakerApp::prepareSettings(Settings *settings)
@@ -151,10 +157,12 @@ void GridMakerApp::setup()
     mTankContent = RenderableContentRef(tank);
     //mContent.load("T72.obj");
     
+    mDrawPillars = true;
+    
     // Using params for content input.
     // NOTE: The text field is pretty slow to update (1 second or two),
     // but this seems like the best option for the moment.
-    mParams = params::InterfaceGl::create(getWindow(), "Content", Vec2i( 250, 300 ));
+    mParams = params::InterfaceGl::create(getWindow(), "Content", Vec2i( 250, 330 ));
     mParams->addParam( "Grid: ", &mGridName, "" );
     mParams->addSeparator();
     mParams->addButton( "Save Layouts", std::bind( &GridMakerApp::save, this ) );
@@ -172,6 +180,8 @@ void GridMakerApp::setup()
     mParams->addButton( "Restart", std::bind( &GridMakerApp::restart, this ) );
     mParams->addButton( "Advance", std::bind( &GridMakerApp::advance, this ) );
     mParams->addButton( "Reverse", std::bind( &GridMakerApp::reverse, this ) );
+    mParams->addSeparator();
+    mParams->addParam( "Draw Pillars", &mDrawPillars);
 }
 
 void GridMakerApp::shutdown()
@@ -184,7 +194,7 @@ void GridMakerApp::save()
 {
     console() << "Saving\n";
     
-    fs::path gridPath = SharedGridPath();
+    fs::path gridPath = SharedGridAssetPath(true);
     
     for (int i = 0; i < mGridLayouts.size(); ++i)
     {
@@ -245,7 +255,7 @@ void GridMakerApp::reload()
 
 void GridMakerApp::loadAllGrids()
 {
-    fs::path gridPath = SharedGridPath();
+    fs::path gridPath = SharedGridAssetPath(true);
     mGridLayouts = GridLayout::loadAllFromPath(gridPath, kScreenScale, mGridWrap);
     int numLayouts = mGridLayouts.size();
     if (numLayouts > 0)
@@ -591,8 +601,89 @@ void GridMakerApp::draw()
                        mMousePosition);
     }
     
-    mParams->draw();
+    if (!mIsAdding && !mIsJoining && !mIsRemoving)
+    {
+        if (mDrawPillars)
+        {
+            drawMargins();
+            drawPillars();
+        }
+        mParams->draw();
+    }
     
+}
+
+void GridMakerApp::drawPillars()
+{
+    const static float pxPerFoot = (float)((kScreenWidth * kNumScreens) - kScreenMarginRight) / 120.0f;
+    const static float pillarWidth = 3.0f * pxPerFoot;
+    const static float posPillar1 = 3.5f * pxPerFoot;
+    const static float posPillar2 = (3.5f + 33.166f) * pxPerFoot;
+    const static float posPillar3 = (3.5f + 33.166f + 31.8333f) * pxPerFoot;
+    const static float posPillar4 = (3.5f + 33.166f + 31.8333f + 33.33333f) * pxPerFoot;
+    
+    float x = ((int)posPillar1 % (int)mGridWrap.x) * kScreenScale;
+    float x1 = x - (pillarWidth * 0.5f * kScreenScale);
+    float x2 = x + (pillarWidth * 0.5f * kScreenScale);
+    float row = ((int)posPillar1 / (int)mGridWrap.x);
+    float y1 = row * mGridWrap.y * kScreenScale;
+    float y2 = y1 + (mGridWrap.y * kScreenScale);
+    
+    gl::color(ColorAf(0.95,0.95,0.9));
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+
+    x = ((int)posPillar2 % (int)mGridWrap.x) * kScreenScale;
+    x1 = x - (pillarWidth * 0.5f * kScreenScale);
+    x2 = x + (pillarWidth * 0.5f * kScreenScale);
+    row = ((int)posPillar2 / (int)mGridWrap.x);
+    y1 = row * mGridWrap.y * kScreenScale;
+    y2 = y1 + (mGridWrap.y * kScreenScale);
+    
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+
+    x = ((int)posPillar3 % (int)mGridWrap.x) * kScreenScale;
+    x1 = x - (pillarWidth * 0.5f * kScreenScale);
+    x2 = x + (pillarWidth * 0.5f * kScreenScale);
+    row = ((int)posPillar3 / (int)mGridWrap.x);
+    y1 = row * mGridWrap.y * kScreenScale;
+    y2 = y1 + (mGridWrap.y * kScreenScale);
+    
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+    
+    x = ((int)posPillar4 % (int)mGridWrap.x) * kScreenScale;
+    x1 = x - (pillarWidth * 0.5f * kScreenScale);
+    x2 = x + (pillarWidth * 0.5f * kScreenScale);
+    row = ((int)posPillar4 / (int)mGridWrap.x);
+    y1 = row * mGridWrap.y * kScreenScale;
+    y2 = y1 + (mGridWrap.y * kScreenScale);
+    
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+
+}
+
+void GridMakerApp::drawMargins()
+{
+    gl::color(ColorAf(0.95,0.95,0.9));
+    const static float visibleScreenHeight = kScreenHeight - kScreenMarginBottom;
+    gl::drawSolidRect(Rectf(0,
+                            visibleScreenHeight * kScreenScale,
+                            kScreenWidth * kScreenScale,
+                            kScreenHeight * kScreenScale));
+
+    gl::drawSolidRect(Rectf(0,
+                            (kScreenHeight + visibleScreenHeight) * kScreenScale,
+                            kScreenWidth * kScreenScale,
+                            kScreenHeight * 2 * kScreenScale));
+
+    gl::drawSolidRect(Rectf(0,
+                            ((kScreenHeight * 2) + visibleScreenHeight) * kScreenScale,
+                            kScreenWidth * kScreenScale,
+                            kScreenHeight * 3 * kScreenScale));
+
+    gl::drawSolidRect(Rectf((kScreenWidth - kScreenMarginRight) * kScreenScale,
+                            kScreenHeight * 2 * kScreenScale,
+                            kScreenWidth * kScreenScale,
+                            kScreenHeight * 3 * kScreenScale));
 }
 
 void GridMakerApp::renderLayout(const GridLayout & layout,
@@ -655,6 +746,7 @@ void GridMakerApp::renderLayout(const GridLayout & layout,
                              rA.getHeight() * 0.5f);
             gl::drawSolidRect(scaledRect);
             
+
             gl::Texture contentTexture = static_pointer_cast<TankContent>(content)->getTexture();
             Rectf tankBounds = contentTexture.getBounds();
             
