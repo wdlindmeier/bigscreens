@@ -213,120 +213,6 @@
 		A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */; };
-		A9EC915E18157088006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913718157088006FF304 /* 361030.grid */; };
-		A9EC915F18157088006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913718157088006FF304 /* 361030.grid */; };
-		A9EC916018157088006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913718157088006FF304 /* 361030.grid */; };
-		A9EC916118157088006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913818157088006FF304 /* 581794.grid */; };
-		A9EC916218157088006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913818157088006FF304 /* 581794.grid */; };
-		A9EC916318157088006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913818157088006FF304 /* 581794.grid */; };
-		A9EC916418157088006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913918157088006FF304 /* 742765.grid */; };
-		A9EC916518157088006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913918157088006FF304 /* 742765.grid */; };
-		A9EC916618157088006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913918157088006FF304 /* 742765.grid */; };
-		A9EC916718157088006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913A18157088006FF304 /* 777708.grid */; };
-		A9EC916818157088006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913A18157088006FF304 /* 777708.grid */; };
-		A9EC916918157088006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913A18157088006FF304 /* 777708.grid */; };
-		A9EC916A18157088006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913B18157088006FF304 /* 966014.grid */; };
-		A9EC916B18157088006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913B18157088006FF304 /* 966014.grid */; };
-		A9EC916C18157088006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913B18157088006FF304 /* 966014.grid */; };
-		A9EC916D18157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913C18157088006FF304 /* 1011131.grid */; };
-		A9EC916E18157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913C18157088006FF304 /* 1011131.grid */; };
-		A9EC916F18157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913C18157088006FF304 /* 1011131.grid */; };
-		A9EC917018157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913D18157088006FF304 /* 1014720.grid */; };
-		A9EC917118157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913D18157088006FF304 /* 1014720.grid */; };
-		A9EC917218157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913D18157088006FF304 /* 1014720.grid */; };
-		A9EC917318157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913E18157088006FF304 /* 1696198.grid */; };
-		A9EC917418157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913E18157088006FF304 /* 1696198.grid */; };
-		A9EC917518157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913E18157088006FF304 /* 1696198.grid */; };
-		A9EC917618157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913F18157088006FF304 /* 1758248.grid */; };
-		A9EC917718157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913F18157088006FF304 /* 1758248.grid */; };
-		A9EC917818157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC913F18157088006FF304 /* 1758248.grid */; };
-		A9EC917918157088006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914018157088006FF304 /* 3281731.grid */; };
-		A9EC917A18157088006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914018157088006FF304 /* 3281731.grid */; };
-		A9EC917B18157088006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914018157088006FF304 /* 3281731.grid */; };
-		A9EC917C18157088006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914118157088006FF304 /* 3997715.grid */; };
-		A9EC917D18157088006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914118157088006FF304 /* 3997715.grid */; };
-		A9EC917E18157088006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914118157088006FF304 /* 3997715.grid */; };
-		A9EC917F18157088006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914218157088006FF304 /* 5022072.grid */; };
-		A9EC918018157088006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914218157088006FF304 /* 5022072.grid */; };
-		A9EC918118157088006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914218157088006FF304 /* 5022072.grid */; };
-		A9EC918218157088006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914318157088006FF304 /* 6186955.grid */; };
-		A9EC918318157088006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914318157088006FF304 /* 6186955.grid */; };
-		A9EC918418157088006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914318157088006FF304 /* 6186955.grid */; };
-		A9EC918518157088006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914418157088006FF304 /* 6751237.grid */; };
-		A9EC918618157088006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914418157088006FF304 /* 6751237.grid */; };
-		A9EC918718157088006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914418157088006FF304 /* 6751237.grid */; };
-		A9EC918818157088006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914518157088006FF304 /* 7832294.grid */; };
-		A9EC918918157088006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914518157088006FF304 /* 7832294.grid */; };
-		A9EC918A18157088006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914518157088006FF304 /* 7832294.grid */; };
-		A9EC918B18157088006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914618157088006FF304 /* 8556446.grid */; };
-		A9EC918C18157088006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914618157088006FF304 /* 8556446.grid */; };
-		A9EC918D18157088006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914618157088006FF304 /* 8556446.grid */; };
-		A9EC918E18157088006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914718157088006FF304 /* 8606981.grid */; };
-		A9EC918F18157088006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914718157088006FF304 /* 8606981.grid */; };
-		A9EC919018157088006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914718157088006FF304 /* 8606981.grid */; };
-		A9EC919118157088006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914818157088006FF304 /* 9386356.grid */; };
-		A9EC919218157088006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914818157088006FF304 /* 9386356.grid */; };
-		A9EC919318157088006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914818157088006FF304 /* 9386356.grid */; };
-		A9EC919418157088006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914918157088006FF304 /* 9740794.grid */; };
-		A9EC919518157088006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914918157088006FF304 /* 9740794.grid */; };
-		A9EC919618157088006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914918157088006FF304 /* 9740794.grid */; };
-		A9EC919718157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914B18157088006FF304 /* 1011131.grid */; };
-		A9EC919818157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914B18157088006FF304 /* 1011131.grid */; };
-		A9EC919918157088006FF304 /* 1011131.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914B18157088006FF304 /* 1011131.grid */; };
-		A9EC919A18157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914C18157088006FF304 /* 1014720.grid */; };
-		A9EC919B18157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914C18157088006FF304 /* 1014720.grid */; };
-		A9EC919C18157088006FF304 /* 1014720.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914C18157088006FF304 /* 1014720.grid */; };
-		A9EC919D18157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914D18157088006FF304 /* 1696198.grid */; };
-		A9EC919E18157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914D18157088006FF304 /* 1696198.grid */; };
-		A9EC919F18157088006FF304 /* 1696198.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914D18157088006FF304 /* 1696198.grid */; };
-		A9EC91A018157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914E18157088006FF304 /* 1758248.grid */; };
-		A9EC91A118157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914E18157088006FF304 /* 1758248.grid */; };
-		A9EC91A218157088006FF304 /* 1758248.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914E18157088006FF304 /* 1758248.grid */; };
-		A9EC91A318157088006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914F18157088006FF304 /* 3281731.grid */; };
-		A9EC91A418157089006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914F18157088006FF304 /* 3281731.grid */; };
-		A9EC91A518157089006FF304 /* 3281731.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC914F18157088006FF304 /* 3281731.grid */; };
-		A9EC91A618157089006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915018157088006FF304 /* 361030.grid */; };
-		A9EC91A718157089006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915018157088006FF304 /* 361030.grid */; };
-		A9EC91A818157089006FF304 /* 361030.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915018157088006FF304 /* 361030.grid */; };
-		A9EC91A918157089006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915118157088006FF304 /* 3997715.grid */; };
-		A9EC91AA18157089006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915118157088006FF304 /* 3997715.grid */; };
-		A9EC91AB18157089006FF304 /* 3997715.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915118157088006FF304 /* 3997715.grid */; };
-		A9EC91AC18157089006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915218157088006FF304 /* 5022072.grid */; };
-		A9EC91AD18157089006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915218157088006FF304 /* 5022072.grid */; };
-		A9EC91AE18157089006FF304 /* 5022072.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915218157088006FF304 /* 5022072.grid */; };
-		A9EC91AF18157089006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915318157088006FF304 /* 581794.grid */; };
-		A9EC91B018157089006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915318157088006FF304 /* 581794.grid */; };
-		A9EC91B118157089006FF304 /* 581794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915318157088006FF304 /* 581794.grid */; };
-		A9EC91B218157089006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915418157088006FF304 /* 6186955.grid */; };
-		A9EC91B318157089006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915418157088006FF304 /* 6186955.grid */; };
-		A9EC91B418157089006FF304 /* 6186955.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915418157088006FF304 /* 6186955.grid */; };
-		A9EC91B518157089006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915518157088006FF304 /* 6751237.grid */; };
-		A9EC91B618157089006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915518157088006FF304 /* 6751237.grid */; };
-		A9EC91B718157089006FF304 /* 6751237.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915518157088006FF304 /* 6751237.grid */; };
-		A9EC91B818157089006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915618157088006FF304 /* 742765.grid */; };
-		A9EC91B918157089006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915618157088006FF304 /* 742765.grid */; };
-		A9EC91BA18157089006FF304 /* 742765.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915618157088006FF304 /* 742765.grid */; };
-		A9EC91BB18157089006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915718157088006FF304 /* 777708.grid */; };
-		A9EC91BC18157089006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915718157088006FF304 /* 777708.grid */; };
-		A9EC91BD18157089006FF304 /* 777708.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915718157088006FF304 /* 777708.grid */; };
-		A9EC91BE18157089006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915818157088006FF304 /* 7832294.grid */; };
-		A9EC91BF18157089006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915818157088006FF304 /* 7832294.grid */; };
-		A9EC91C018157089006FF304 /* 7832294.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915818157088006FF304 /* 7832294.grid */; };
-		A9EC91C118157089006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915918157088006FF304 /* 8556446.grid */; };
-		A9EC91C218157089006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915918157088006FF304 /* 8556446.grid */; };
-		A9EC91C318157089006FF304 /* 8556446.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915918157088006FF304 /* 8556446.grid */; };
-		A9EC91C418157089006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915A18157088006FF304 /* 8606981.grid */; };
-		A9EC91C518157089006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915A18157088006FF304 /* 8606981.grid */; };
-		A9EC91C618157089006FF304 /* 8606981.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915A18157088006FF304 /* 8606981.grid */; };
-		A9EC91C718157089006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915B18157088006FF304 /* 9386356.grid */; };
-		A9EC91C818157089006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915B18157088006FF304 /* 9386356.grid */; };
-		A9EC91C918157089006FF304 /* 9386356.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915B18157088006FF304 /* 9386356.grid */; };
-		A9EC91CA18157089006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915C18157088006FF304 /* 966014.grid */; };
-		A9EC91CB18157089006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915C18157088006FF304 /* 966014.grid */; };
-		A9EC91CC18157089006FF304 /* 966014.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915C18157088006FF304 /* 966014.grid */; };
-		A9EC91CD18157089006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915D18157088006FF304 /* 9740794.grid */; };
-		A9EC91CE18157089006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915D18157088006FF304 /* 9740794.grid */; };
-		A9EC91CF18157089006FF304 /* 9740794.grid in Resources */ = {isa = PBXBuildFile; fileRef = A9EC915D18157088006FF304 /* 9740794.grid */; };
 		C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
 		EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
 /* End PBXBuildFile section */
@@ -409,47 +295,9 @@
 		A9E48F3218103CE900F2F1C9 /* BigScreens2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreensController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensControllerApp.cpp; path = ../src/BigScreensControllerApp.cpp; sourceTree = "<group>"; };
-		A9EC913718157088006FF304 /* 361030.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 361030.grid; sourceTree = "<group>"; };
-		A9EC913818157088006FF304 /* 581794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 581794.grid; sourceTree = "<group>"; };
-		A9EC913918157088006FF304 /* 742765.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 742765.grid; sourceTree = "<group>"; };
-		A9EC913A18157088006FF304 /* 777708.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 777708.grid; sourceTree = "<group>"; };
-		A9EC913B18157088006FF304 /* 966014.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 966014.grid; sourceTree = "<group>"; };
-		A9EC913C18157088006FF304 /* 1011131.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1011131.grid; sourceTree = "<group>"; };
-		A9EC913D18157088006FF304 /* 1014720.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1014720.grid; sourceTree = "<group>"; };
-		A9EC913E18157088006FF304 /* 1696198.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1696198.grid; sourceTree = "<group>"; };
-		A9EC913F18157088006FF304 /* 1758248.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1758248.grid; sourceTree = "<group>"; };
-		A9EC914018157088006FF304 /* 3281731.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3281731.grid; sourceTree = "<group>"; };
-		A9EC914118157088006FF304 /* 3997715.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3997715.grid; sourceTree = "<group>"; };
-		A9EC914218157088006FF304 /* 5022072.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 5022072.grid; sourceTree = "<group>"; };
-		A9EC914318157088006FF304 /* 6186955.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6186955.grid; sourceTree = "<group>"; };
-		A9EC914418157088006FF304 /* 6751237.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6751237.grid; sourceTree = "<group>"; };
-		A9EC914518157088006FF304 /* 7832294.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 7832294.grid; sourceTree = "<group>"; };
-		A9EC914618157088006FF304 /* 8556446.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8556446.grid; sourceTree = "<group>"; };
-		A9EC914718157088006FF304 /* 8606981.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8606981.grid; sourceTree = "<group>"; };
-		A9EC914818157088006FF304 /* 9386356.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9386356.grid; sourceTree = "<group>"; };
-		A9EC914918157088006FF304 /* 9740794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9740794.grid; sourceTree = "<group>"; };
-		A9EC914B18157088006FF304 /* 1011131.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1011131.grid; sourceTree = "<group>"; };
-		A9EC914C18157088006FF304 /* 1014720.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1014720.grid; sourceTree = "<group>"; };
-		A9EC914D18157088006FF304 /* 1696198.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1696198.grid; sourceTree = "<group>"; };
-		A9EC914E18157088006FF304 /* 1758248.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1758248.grid; sourceTree = "<group>"; };
-		A9EC914F18157088006FF304 /* 3281731.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3281731.grid; sourceTree = "<group>"; };
-		A9EC915018157088006FF304 /* 361030.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 361030.grid; sourceTree = "<group>"; };
-		A9EC915118157088006FF304 /* 3997715.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3997715.grid; sourceTree = "<group>"; };
-		A9EC915218157088006FF304 /* 5022072.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 5022072.grid; sourceTree = "<group>"; };
-		A9EC915318157088006FF304 /* 581794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 581794.grid; sourceTree = "<group>"; };
-		A9EC915418157088006FF304 /* 6186955.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6186955.grid; sourceTree = "<group>"; };
-		A9EC915518157088006FF304 /* 6751237.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6751237.grid; sourceTree = "<group>"; };
-		A9EC915618157088006FF304 /* 742765.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 742765.grid; sourceTree = "<group>"; };
-		A9EC915718157088006FF304 /* 777708.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 777708.grid; sourceTree = "<group>"; };
-		A9EC915818157088006FF304 /* 7832294.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 7832294.grid; sourceTree = "<group>"; };
-		A9EC915918157088006FF304 /* 8556446.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8556446.grid; sourceTree = "<group>"; };
-		A9EC915A18157088006FF304 /* 8606981.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 8606981.grid; sourceTree = "<group>"; };
-		A9EC915B18157088006FF304 /* 9386356.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9386356.grid; sourceTree = "<group>"; };
-		A9EC915C18157088006FF304 /* 966014.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 966014.grid; sourceTree = "<group>"; };
-		A9EC915D18157088006FF304 /* 9740794.grid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 9740794.grid; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
-		FD0988C7557F4CB6BF6DD313 /* BigScreensCompositeDev_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = BigScreensCompositeDev_Prefix.pch; sourceTree = "<group>"; };
+		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,7 +428,7 @@
 			children = (
 				A90D312E18118B260068E386 /* TankContent.h */,
 				F3377C32D0D444C0A417BAA5 /* Resources.h */,
-				FD0988C7557F4CB6BF6DD313 /* BigScreensCompositeDev_Prefix.pch */,
+				FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -757,32 +605,6 @@
 			path = ../assets;
 			sourceTree = "<group>";
 		};
-		A9EC914A18157088006FF304 /* backup */ = {
-			isa = PBXGroup;
-			children = (
-				A9EC914B18157088006FF304 /* 1011131.grid */,
-				A9EC914C18157088006FF304 /* 1014720.grid */,
-				A9EC914D18157088006FF304 /* 1696198.grid */,
-				A9EC914E18157088006FF304 /* 1758248.grid */,
-				A9EC914F18157088006FF304 /* 3281731.grid */,
-				A9EC915018157088006FF304 /* 361030.grid */,
-				A9EC915118157088006FF304 /* 3997715.grid */,
-				A9EC915218157088006FF304 /* 5022072.grid */,
-				A9EC915318157088006FF304 /* 581794.grid */,
-				A9EC915418157088006FF304 /* 6186955.grid */,
-				A9EC915518157088006FF304 /* 6751237.grid */,
-				A9EC915618157088006FF304 /* 742765.grid */,
-				A9EC915718157088006FF304 /* 777708.grid */,
-				A9EC915818157088006FF304 /* 7832294.grid */,
-				A9EC915918157088006FF304 /* 8556446.grid */,
-				A9EC915A18157088006FF304 /* 8606981.grid */,
-				A9EC915B18157088006FF304 /* 9386356.grid */,
-				A9EC915C18157088006FF304 /* 966014.grid */,
-				A9EC915D18157088006FF304 /* 9740794.grid */,
-			);
-			path = backup;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -865,7 +687,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensCompositeDev" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensComposite" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -898,15 +720,10 @@
 				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
 				A90D314C1811A0670068E386 /* 742765.grid in Resources */,
 				A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */,
-				A9EC91B518157089006FF304 /* 6751237.grid in Resources */,
-				A9EC917F18157088006FF304 /* 5022072.grid in Resources */,
 				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
 				A90D31731811A0670068E386 /* 8556446.grid in Resources */,
 				A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
-				A9EC917018157088006FF304 /* 1014720.grid in Resources */,
 				A9E48ED418103CA900F2F1C9 /* settings.1.IAC.xml in Resources */,
-				A9EC916718157088006FF304 /* 777708.grid in Resources */,
-				A9EC91A618157089006FF304 /* 361030.grid in Resources */,
 				A9E48EBF18103A8300F2F1C9 /* paused.png in Resources */,
 				A9E48ED518103CA900F2F1C9 /* settings.1.xml in Resources */,
 				A90D31671811A0670068E386 /* 5022072.grid in Resources */,
@@ -916,33 +733,15 @@
 				A90D316A1811A0670068E386 /* 6186955.grid in Resources */,
 				A90D316D1811A0670068E386 /* 6751237.grid in Resources */,
 				EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */,
-				A9EC91C418157089006FF304 /* 8606981.grid in Resources */,
-				A9EC919D18157088006FF304 /* 1696198.grid in Resources */,
 				A9E48ED718103CA900F2F1C9 /* settings.2.xml in Resources */,
 				A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A90D31611811A0670068E386 /* 3281731.grid in Resources */,
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
-				A9EC916D18157088006FF304 /* 1011131.grid in Resources */,
-				A9EC91A318157088006FF304 /* 3281731.grid in Resources */,
 				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
-				A9EC91AC18157089006FF304 /* 5022072.grid in Resources */,
 				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
-				A9EC919118157088006FF304 /* 9386356.grid in Resources */,
-				A9EC917618157088006FF304 /* 1758248.grid in Resources */,
-				A9EC916A18157088006FF304 /* 966014.grid in Resources */,
-				A9EC916418157088006FF304 /* 742765.grid in Resources */,
-				A9EC91CA18157089006FF304 /* 966014.grid in Resources */,
 				A97C8906181087BC00AE2AE2 /* outline.frag in Resources */,
-				A9EC919A18157088006FF304 /* 1014720.grid in Resources */,
-				A9EC91A018157088006FF304 /* 1758248.grid in Resources */,
 				A97C890A181087BC00AE2AE2 /* outline.vert in Resources */,
-				A9EC916118157088006FF304 /* 581794.grid in Resources */,
-				A9EC919418157088006FF304 /* 9740794.grid in Resources */,
-				A9EC917918157088006FF304 /* 3281731.grid in Resources */,
-				A9EC91A918157089006FF304 /* 3997715.grid in Resources */,
-				A9EC918218157088006FF304 /* 6186955.grid in Resources */,
-				A9EC91CD18157089006FF304 /* 9740794.grid in Resources */,
 				A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */,
 				A90D31761811A0670068E386 /* 8606981.grid in Resources */,
 				A9E48EC218103A8300F2F1C9 /* T72.obj in Resources */,
@@ -950,7 +749,6 @@
 				A90D31641811A0670068E386 /* 3997715.grid in Resources */,
 				A90D31581811A0670068E386 /* 1014720.grid in Resources */,
 				A9E48ED918103CA900F2F1C9 /* settings.555.xml in Resources */,
-				A9EC91AF18157089006FF304 /* 581794.grid in Resources */,
 				A9E48EBE18103A8300F2F1C9 /* Hyperspace.ttf in Resources */,
 				A90D31791811A0670068E386 /* 9386356.grid in Resources */,
 				A90D315E1811A0670068E386 /* 1758248.grid in Resources */,
@@ -971,15 +769,10 @@
 				A9E48EDD18103CE300F2F1C9 /* playing.png in Resources */,
 				A90D314D1811A0670068E386 /* 742765.grid in Resources */,
 				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
-				A9EC91B618157089006FF304 /* 6751237.grid in Resources */,
-				A9EC918018157088006FF304 /* 5022072.grid in Resources */,
 				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
 				A90D31741811A0670068E386 /* 8556446.grid in Resources */,
 				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
-				A9EC917118157088006FF304 /* 1014720.grid in Resources */,
 				A9E48EE118103CE300F2F1C9 /* settings.1.IAC.xml in Resources */,
-				A9EC916818157088006FF304 /* 777708.grid in Resources */,
-				A9EC91A718157089006FF304 /* 361030.grid in Resources */,
 				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
 				A9E48EE618103CE300F2F1C9 /* settings.1.xml in Resources */,
 				A90D31681811A0670068E386 /* 5022072.grid in Resources */,
@@ -989,33 +782,15 @@
 				A90D316B1811A0670068E386 /* 6186955.grid in Resources */,
 				A90D316E1811A0670068E386 /* 6751237.grid in Resources */,
 				A9E48EE818103CE300F2F1C9 /* CinderApp.icns in Resources */,
-				A9EC91C518157089006FF304 /* 8606981.grid in Resources */,
-				A9EC919E18157088006FF304 /* 1696198.grid in Resources */,
 				A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */,
 				A9E48EEA18103CE300F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48EEC18103CE300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A90D31621811A0670068E386 /* 3281731.grid in Resources */,
 				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
-				A9EC916E18157088006FF304 /* 1011131.grid in Resources */,
-				A9EC91A418157089006FF304 /* 3281731.grid in Resources */,
 				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
-				A9EC91AD18157089006FF304 /* 5022072.grid in Resources */,
 				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
-				A9EC919218157088006FF304 /* 9386356.grid in Resources */,
-				A9EC917718157088006FF304 /* 1758248.grid in Resources */,
-				A9EC916B18157088006FF304 /* 966014.grid in Resources */,
-				A9EC916518157088006FF304 /* 742765.grid in Resources */,
-				A9EC91CB18157089006FF304 /* 966014.grid in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
-				A9EC919B18157088006FF304 /* 1014720.grid in Resources */,
-				A9EC91A118157088006FF304 /* 1758248.grid in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
-				A9EC916218157088006FF304 /* 581794.grid in Resources */,
-				A9EC919518157088006FF304 /* 9740794.grid in Resources */,
-				A9EC917A18157088006FF304 /* 3281731.grid in Resources */,
-				A9EC91AA18157089006FF304 /* 3997715.grid in Resources */,
-				A9EC918318157088006FF304 /* 6186955.grid in Resources */,
-				A9EC91CE18157089006FF304 /* 9740794.grid in Resources */,
 				A97C8903181087BC00AE2AE2 /* basic.vert in Resources */,
 				A90D31771811A0670068E386 /* 8606981.grid in Resources */,
 				A97C8907181087BC00AE2AE2 /* outline.frag in Resources */,
@@ -1023,7 +798,6 @@
 				A90D31651811A0670068E386 /* 3997715.grid in Resources */,
 				A90D31591811A0670068E386 /* 1014720.grid in Resources */,
 				A97C890B181087BC00AE2AE2 /* outline.vert in Resources */,
-				A9EC91B018157089006FF304 /* 581794.grid in Resources */,
 				A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */,
 				A90D317A1811A0670068E386 /* 9386356.grid in Resources */,
 				A90D315F1811A0670068E386 /* 1758248.grid in Resources */,
@@ -1044,15 +818,10 @@
 				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
 				A90D314E1811A0670068E386 /* 742765.grid in Resources */,
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
-				A9EC91B718157089006FF304 /* 6751237.grid in Resources */,
-				A9EC918118157088006FF304 /* 5022072.grid in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
 				A90D31751811A0670068E386 /* 8556446.grid in Resources */,
 				A9E48F0D18103CE900F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
-				A9EC917218157088006FF304 /* 1014720.grid in Resources */,
 				A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */,
-				A9EC916918157088006FF304 /* 777708.grid in Resources */,
-				A9EC91A818157089006FF304 /* 361030.grid in Resources */,
 				A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */,
 				A9E48F1318103CE900F2F1C9 /* settings.1.xml in Resources */,
 				A90D31691811A0670068E386 /* 5022072.grid in Resources */,
@@ -1062,33 +831,15 @@
 				A90D316C1811A0670068E386 /* 6186955.grid in Resources */,
 				A90D316F1811A0670068E386 /* 6751237.grid in Resources */,
 				A9E48F1518103CE900F2F1C9 /* CinderApp.icns in Resources */,
-				A9EC91C618157089006FF304 /* 8606981.grid in Resources */,
-				A9EC919F18157088006FF304 /* 1696198.grid in Resources */,
 				A9E48F1618103CE900F2F1C9 /* settings.2.xml in Resources */,
 				A9E48F1718103CE900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48F1918103CE900F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A90D31631811A0670068E386 /* 3281731.grid in Resources */,
 				A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */,
-				A9EC916F18157088006FF304 /* 1011131.grid in Resources */,
-				A9EC91A518157089006FF304 /* 3281731.grid in Resources */,
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
-				A9EC91AE18157089006FF304 /* 5022072.grid in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
-				A9EC919318157088006FF304 /* 9386356.grid in Resources */,
-				A9EC917818157088006FF304 /* 1758248.grid in Resources */,
-				A9EC916C18157088006FF304 /* 966014.grid in Resources */,
-				A9EC916618157088006FF304 /* 742765.grid in Resources */,
-				A9EC91CC18157089006FF304 /* 966014.grid in Resources */,
 				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
-				A9EC919C18157088006FF304 /* 1014720.grid in Resources */,
-				A9EC91A218157088006FF304 /* 1758248.grid in Resources */,
 				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
-				A9EC916318157088006FF304 /* 581794.grid in Resources */,
-				A9EC919618157088006FF304 /* 9740794.grid in Resources */,
-				A9EC917B18157088006FF304 /* 3281731.grid in Resources */,
-				A9EC91AB18157089006FF304 /* 3997715.grid in Resources */,
-				A9EC918418157088006FF304 /* 6186955.grid in Resources */,
-				A9EC91CF18157089006FF304 /* 9740794.grid in Resources */,
 				A97C8908181087BC00AE2AE2 /* outline.frag in Resources */,
 				A90D31781811A0670068E386 /* 8606981.grid in Resources */,
 				A97C890C181087BC00AE2AE2 /* outline.vert in Resources */,
@@ -1096,7 +847,6 @@
 				A90D31661811A0670068E386 /* 3997715.grid in Resources */,
 				A90D315A1811A0670068E386 /* 1014720.grid in Resources */,
 				A97C8900181087BC00AE2AE2 /* basic.frag in Resources */,
-				A9EC91B118157089006FF304 /* 581794.grid in Resources */,
 				A9E48F1F18103CE900F2F1C9 /* Hyperspace.ttf in Resources */,
 				A90D317B1811A0670068E386 /* 9386356.grid in Resources */,
 				A90D31601811A0670068E386 /* 1758248.grid in Resources */,
@@ -1358,7 +1108,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BigScreensCompositeDev_Prefix.pch;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1385,7 +1135,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BigScreensCompositeDev_Prefix.pch;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=0";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -1471,7 +1221,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensCompositeDev" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BigScreensComposite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

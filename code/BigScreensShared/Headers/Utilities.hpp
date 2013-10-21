@@ -104,8 +104,9 @@ namespace bigscreens
     }
 
     static ci::fs::path SharedGridAssetPath(bool isLocalApp)
-
-    // NOTE: Shaders should always be resources, not assets
+    {
+        return SharedAssetPath(isLocalApp) / "grid";
+    }
 
     template <typename T>
     bool VectorFind(const std::vector<T> & vec, T item)
