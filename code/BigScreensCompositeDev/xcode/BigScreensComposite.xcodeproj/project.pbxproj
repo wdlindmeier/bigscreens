@@ -24,6 +24,18 @@
 		A971227C18196DCB006DD64E /* TextureContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A971227A18196DCB006DD64E /* TextureContent.cpp */; };
 		A971227D18196DCB006DD64E /* TextureContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A971227A18196DCB006DD64E /* TextureContent.cpp */; };
 		A971227E18196DCB006DD64E /* TextureContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A971227A18196DCB006DD64E /* TextureContent.cpp */; };
+		A971228118197C85006DD64E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A971228018197C85006DD64E /* grid.png */; };
+		A971228218197C85006DD64E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A971228018197C85006DD64E /* grid.png */; };
+		A971228318197C85006DD64E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A971228018197C85006DD64E /* grid.png */; };
+		A9712285181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
+		A9712286181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
+		A9712287181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
+		A971228A1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
+		A971228B1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
+		A971228C1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
+		A971228D1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
+		A971228E1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
+		A971228F1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
 		A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
@@ -185,6 +197,10 @@
 		A971227218196D60006DD64E /* blank_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blank_texture.png; path = ../resources/blank_texture.png; sourceTree = "<group>"; };
 		A971227A18196DCB006DD64E /* TextureContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextureContent.cpp; path = ../src/TextureContent.cpp; sourceTree = "<group>"; };
 		A971227F18196DDD006DD64E /* TextureContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureContent.h; path = ../include/TextureContent.h; sourceTree = "<group>"; };
+		A971228018197C85006DD64E /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grid.png; path = ../resources/grid.png; sourceTree = "<group>"; };
+		A9712284181986DA006DD64E /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = ../resources/test.png; sourceTree = "<group>"; };
+		A97122881819BD0E006DD64E /* offset_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = offset_texture.frag; sourceTree = "<group>"; };
+		A97122891819BD0E006DD64E /* offset_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = offset_texture.vert; sourceTree = "<group>"; };
 		A97C86CB1810440700AE2AE2 /* MPEApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEApp.hpp; sourceTree = "<group>"; };
 		A97C86CC1810440700AE2AE2 /* MPEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEClient.h; sourceTree = "<group>"; };
 		A97C86CD1810440700AE2AE2 /* MPEMessageHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEMessageHandler.hpp; sourceTree = "<group>"; };
@@ -368,8 +384,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9712284181986DA006DD64E /* test.png */,
 				A971227218196D60006DD64E /* blank_texture.png */,
 				159A1C61600B47B3B2BA11F8 /* CinderApp.icns */,
+				A971228018197C85006DD64E /* grid.png */,
 				AC0EE697804E47DF989DE276 /* Info.plist */,
 			);
 			name = Resources;
@@ -438,12 +456,14 @@
 		A97C88F9181087BC00AE2AE2 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				A97C890E1810AA7A00AE2AE2 /* texture.frag */,
-				A97C890F1810AA7A00AE2AE2 /* texture.vert */,
 				A97C88FA181087BC00AE2AE2 /* basic.frag */,
 				A97C88FB181087BC00AE2AE2 /* basic.vert */,
+				A97122881819BD0E006DD64E /* offset_texture.frag */,
+				A97122891819BD0E006DD64E /* offset_texture.vert */,
 				A97C88FC181087BC00AE2AE2 /* outline.frag */,
 				A97C88FD181087BC00AE2AE2 /* outline.vert */,
+				A97C890E1810AA7A00AE2AE2 /* texture.frag */,
+				A97C890F1810AA7A00AE2AE2 /* texture.vert */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -636,6 +656,7 @@
 				A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
 				A971227318196D60006DD64E /* blank_texture.png in Resources */,
+				A9712285181986DA006DD64E /* test.png in Resources */,
 				A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
 				A9E48ED418103CA900F2F1C9 /* settings.1.IAC.xml in Resources */,
 				A9E48EBF18103A8300F2F1C9 /* paused.png in Resources */,
@@ -647,6 +668,7 @@
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
 				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
+				A971228118197C85006DD64E /* grid.png in Resources */,
 				A97C8906181087BC00AE2AE2 /* outline.frag in Resources */,
 				A97C890A181087BC00AE2AE2 /* outline.vert in Resources */,
 				A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */,
@@ -654,6 +676,8 @@
 				A9E48ED918103CA900F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EBE18103A8300F2F1C9 /* Hyperspace.ttf in Resources */,
 				A97C89101810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A971228A1819BD0E006DD64E /* offset_texture.frag in Resources */,
+				A971228D1819BD0E006DD64E /* offset_texture.vert in Resources */,
 				A97C89141810AA7A00AE2AE2 /* texture.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -667,6 +691,7 @@
 				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
 				A971227418196D60006DD64E /* blank_texture.png in Resources */,
+				A9712286181986DA006DD64E /* test.png in Resources */,
 				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
 				A9E48EE118103CE300F2F1C9 /* settings.1.IAC.xml in Resources */,
 				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
@@ -678,6 +703,7 @@
 				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
 				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
+				A971228218197C85006DD64E /* grid.png in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
 				A97C8903181087BC00AE2AE2 /* basic.vert in Resources */,
@@ -685,6 +711,8 @@
 				A97C890B181087BC00AE2AE2 /* outline.vert in Resources */,
 				A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */,
 				A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */,
+				A971228B1819BD0E006DD64E /* offset_texture.frag in Resources */,
+				A971228E1819BD0E006DD64E /* offset_texture.vert in Resources */,
 				A97C88FF181087BC00AE2AE2 /* basic.frag in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,6 +726,7 @@
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
 				A971227518196D60006DD64E /* blank_texture.png in Resources */,
+				A9712287181986DA006DD64E /* test.png in Resources */,
 				A9E48F0D18103CE900F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
 				A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */,
 				A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */,
@@ -709,6 +738,7 @@
 				A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
+				A971228318197C85006DD64E /* grid.png in Resources */,
 				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
 				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
 				A97C8908181087BC00AE2AE2 /* outline.frag in Resources */,
@@ -716,6 +746,8 @@
 				A97C8900181087BC00AE2AE2 /* basic.frag in Resources */,
 				A9E48F1F18103CE900F2F1C9 /* Hyperspace.ttf in Resources */,
 				A97C89121810AA7A00AE2AE2 /* texture.frag in Resources */,
+				A971228C1819BD0E006DD64E /* offset_texture.frag in Resources */,
+				A971228F1819BD0E006DD64E /* offset_texture.vert in Resources */,
 				A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -85,8 +85,14 @@ public:
     
     RenderableContentRef mTextureContentBlank;
     OutLineBorderRef mOutLine;
-  
-//    gl::FboRef mFBO;
+    
+    // TMP
+    /*
+    void loadTextureTest();
+    void drawTextureTest();
+    gl::GlslProgRef mTextureShader;
+    gl::TextureRef mGridTexture;
+    */
 };
 
 #pragma mark - Setup
@@ -112,7 +118,74 @@ void BigScreensCompositeApp::setup()
 
     loadAssets();
     reload();
+    
+    
+    // TMP
+    //loadTextureTest();
 }
+/*
+void BigScreensCompositeApp::loadTextureTest()
+{
+    gl::Texture::Format texFormat;
+    texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
+    mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
+    
+    ci::gl::GlslProg::Format shaderFormat;
+    shaderFormat.vertex( ci::app::loadResource( "texture.vert" ) )
+    .fragment( ci::app::loadResource( "texture.frag" ) );
+    mTextureShader = ci::gl::GlslProg::create( shaderFormat ); //.texture(mGridTexture).color()
+}
+
+void BigScreensCompositeApp::drawTextureTest()
+{
+    mTextureShader->bind();
+    mGridTexture->bind();
+    gl::enableAlphaBlending();
+
+    // Draw rect
+    Rectf rect(0,0,128,128);
+
+	GLfloat data[12+8]; // both verts and texCoords
+	GLfloat *verts = data, *texCoords = data + 12;
+    
+    static float texOffset = 0.0f;
+    texOffset += 0.01f;
+	
+    float scale = 4.0f;
+	verts[0*3+0] = rect.getX2(); texCoords[0*2+0] = (mGridTexture->getRight() * scale) + texOffset;
+	verts[0*3+1] = rect.getY1(); texCoords[0*2+1] = (mGridTexture->getTop() * scale);
+    verts[0*3+2] = 1.0f;
+	verts[1*3+0] = rect.getX1(); texCoords[1*2+0] = (mGridTexture->getLeft() * scale) + texOffset;
+	verts[1*3+1] = rect.getY1(); texCoords[1*2+1] = (mGridTexture->getTop() * scale);
+    verts[1*3+2] = 1.0f;
+	verts[2*3+0] = rect.getX2(); texCoords[2*2+0] = (mGridTexture->getRight() * scale) + texOffset;
+	verts[2*3+1] = rect.getY2(); texCoords[2*2+1] = (mGridTexture->getBottom() * scale);
+    verts[2*3+2] = 1.0f;
+	verts[3*3+0] = rect.getX1(); texCoords[3*2+0] = (mGridTexture->getLeft() * scale) + texOffset;
+	verts[3*3+1] = rect.getY2(); texCoords[3*2+1] = (mGridTexture->getBottom() * scale);
+    verts[3*3+2] = 1.0f;
+    
+    gl::VaoRef vao = gl::Vao::create();
+    vao->bind();
+    gl::VboRef arrayVbo = gl::Vbo::create( GL_ARRAY_BUFFER, sizeof(data) );
+	arrayVbo->bind();
+	arrayVbo->bufferData( sizeof(data), data, GL_DYNAMIC_DRAW );
+    
+	int posLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::POSITION );
+    gl::enableVertexAttribArray( posLoc );
+    gl::vertexAttribPointer( posLoc, 3, GL_FLOAT, GL_FALSE, 0, (void*)0 );
+    
+	int texLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::TEX_COORD_0 );
+    gl::enableVertexAttribArray( texLoc );
+    gl::vertexAttribPointer( texLoc, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*12) );
+	
+    gl::setDefaultShaderVars();
+    gl::drawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+    mGridTexture->unbind();
+    mTextureShader->unbind();
+}
+*/
 
 void BigScreensCompositeApp::shutdown()
 {
@@ -356,6 +429,10 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     {
         renderControls();
     }
+
+    
+    // TMP / TEST
+    // drawTextureTest();
 }
 
 void BigScreensCompositeApp::renderControls()

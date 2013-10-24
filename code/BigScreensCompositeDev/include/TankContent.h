@@ -34,16 +34,41 @@ namespace bigscreens {
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }
         
+    protected:
+        
+        void loadGround();
+        void loadScreen();
+        void loadShaders();
+        void loadObj(const std::string & filename);
+        
+        void drawScreen();
+        void drawGround();
+        void drawTank();
+        
     private:
-        
-        ci::TriMeshRef		mMesh;
+
+        // Camera
         ci::CameraPersp		mCam;
-        ci::gl::VboRef		mVbo;
-        ci::gl::VboRef		mElementVbo;
-        ci::gl::VaoRef		mVao;
-        ci::gl::GlslProgRef mGlsl;
-        ci::gl::TextureRef  mScreenTexture;
-        float mCameraRotation;
+        float               mCameraRotation;
         
+        // Tank
+        ci::TriMeshRef		mTankMesh;
+        ci::gl::VboRef		mTankVbo;
+        ci::gl::VboRef		mTankElementVbo;
+        ci::gl::VaoRef		mTankVao;
+        ci::gl::GlslProgRef mTankShader;
+        
+        // NOTE: Maybe the screen texture should be up 1 level
+        // Screen
+        ci::gl::TextureRef  mScreenTexture;
+        ci::gl::VaoRef      mScreenVao;
+        ci::gl::VboRef      mScreenVbo;
+
+        // Ground plane
+        ci::gl::GlslProgRef mTextureShader;
+        ci::gl::TextureRef  mGridTexture;
+        ci::gl::VaoRef      mGroundVao;
+        ci::gl::VboRef      mGroundVbo;
+  
     };
 }
