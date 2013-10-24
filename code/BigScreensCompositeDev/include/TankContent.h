@@ -25,30 +25,30 @@ namespace bigscreens {
     public:
         
         TankContent();
-        ~TankContent(){};
+        virtual ~TankContent(){};
         
-        void load(const std::string & objFilename);
-        void update();
-        void update(std::function<void (ci::CameraPersp & cam)> update_func);
-        void render(const ci::Vec2i & screenOffset);
-        void reset();
+        virtual void load(const std::string & objFilename);
+        virtual void update();
+        virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
+        virtual void render(const ci::Vec2i & screenOffset);
+        virtual void reset();
         ci::CameraPersp& getCamera() { return mCam; }
         
     protected:
         
-        void loadGround();
-        void loadScreen();
-        void loadShaders();
+        virtual void loadGround();
+        virtual void loadScreen();
+        virtual void loadShaders();
         void loadObj(const std::string & filename);
         
-        void drawScreen();
-        void drawGround();
-        void drawTank();
+        virtual void drawScreen();
+        virtual void drawGround();
+        virtual void drawTank();
         
+        ci::CameraPersp		mCam;
+
     private:
 
-        // Camera
-        ci::CameraPersp		mCam;
         float               mCameraRotation;
         
         // Tank

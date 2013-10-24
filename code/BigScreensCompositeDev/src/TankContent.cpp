@@ -35,7 +35,7 @@ namespace bigscreens
         loadGround();
         
         // Cam
-        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 4000 );
+        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
         
         mCameraRotation = 0.0f;
@@ -117,7 +117,6 @@ namespace bigscreens
         ObjLoader loader( file );
         mTankMesh = TriMesh::create( loader );
         
-        std::cout << " my mesh is " << mTankMesh->getNumVertices() << " large " << std::endl;
         mTankVao = gl::Vao::create();
         mTankVao->bind();
         
