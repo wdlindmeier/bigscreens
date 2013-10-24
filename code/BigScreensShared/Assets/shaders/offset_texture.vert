@@ -1,6 +1,7 @@
 #version 150
 
 uniform mat4	uModelViewProjection;
+uniform vec2    uTexCoordOffset;
 
 in vec4         vPosition;
 in vec2         vTexCoord0;
@@ -12,5 +13,5 @@ void main( void )
 {
 	gl_Position	= uModelViewProjection * vPosition;
 	Color = vColor;
-	TexCoord	= vTexCoord0;
+	TexCoord	= vTexCoord0 + uTexCoordOffset;
 }
