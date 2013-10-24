@@ -29,6 +29,7 @@ namespace bigscreens {
         
         void load(const std::string & objFilename);
         void update();
+        void update(std::function<void (ci::CameraPersp & cam)> update_func);
         void render(const ci::Vec2i & screenOffset);
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }

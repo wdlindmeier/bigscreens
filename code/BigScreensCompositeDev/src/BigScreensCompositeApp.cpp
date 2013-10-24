@@ -6,6 +6,7 @@
 #include "Utilities.hpp"
 #include "SharedTypes.hpp"
 #include "TankContent.h"
+#include "TextureContent.h"
 #include "GridLayoutTimeline.h"
 #include "SceneWindow.hpp"
 #include "cinder/gl/GlslProg.h"
@@ -75,7 +76,14 @@ public:
     gl::TextureRef mTexturePlaying;
     gl::TextureRef mTexturePaused;
     
-    RenderableContentRef mTankContent;
+    // Content
+    RenderableContentRef mTankContent0;
+    float mTank0Rotation;
+    RenderableContentRef mTankContent1;
+    RenderableContentRef mTankContent2;
+
+    
+    RenderableContentRef mTextureContentBlank;
     OutLineBorderRef mOutLine;
   
 //    gl::FboRef mFBO;
@@ -86,7 +94,6 @@ public:
 void BigScreensCompositeApp::prepareSettings(Settings *settings)
 {
 #if IS_IAC
-//    settings->setBorderless();
     settings->setFullScreen();
 #endif
 }
@@ -97,14 +104,12 @@ void BigScreensCompositeApp::setup()
     mClient->setIsRendering3D(false);
     mClient->setIsScissorEnabled(false);
     
-    GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(IS_IAC), kScreenScale);
+    GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC), kScreenScale);
 
     mTimeline = std::shared_ptr<GridLayoutTimeline>(t);
     
     mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());
-    
-//    mFBO = gl::Fbo::create( getWindowWidth(), getWindowHeight() );
-    
+
     loadAssets();
     reload();
 }
@@ -119,14 +124,32 @@ void BigScreensCompositeApp::reload()
 {
     mTimeline->reload();
     mTimeline->restart();
-    static_pointer_cast<TankContent>(mTankContent)->reset();
+    
+    static_pointer_cast<TankContent>(mTankContent0)->reset();
+    static_pointer_cast<TankContent>(mTankContent1)->reset();
+    static_pointer_cast<TankContent>(mTankContent2)->reset();
+    mTank0Rotation = 0;
 }
 
 void BigScreensCompositeApp::loadAssets()
 {
-    TankContent *tank = new TankContent();
-    tank->load("T72.obj");
-    mTankContent = RenderableContentRef(tank);
+    // NOTE / TODO
+    // These should share OBJs
+    TankContent *tank0 = new TankContent();
+    tank0->load("T72.obj");
+    mTankContent0 = RenderableContentRef(tank0);
+
+    TankContent *tank1 = new TankContent();
+    tank1->load("T72.obj");
+    mTankContent1 = RenderableContentRef(tank1);
+
+    TankContent *tank2 = new TankContent();
+    tank2->load("T72.obj");
+    mTankContent2 = RenderableContentRef(tank2);
+
+    TextureContent *texBlank = new TextureContent();
+    texBlank->load("blank_texture.png");
+    mTextureContentBlank = RenderableContentRef(texBlank);
     
     // Is there a more elegant way of doing this?    
     mTexturePlaying = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("playing.png"))));
@@ -155,10 +178,23 @@ void BigScreensCompositeApp::mpeReset()
 
 RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & contentName)
 {
-    // TMP: We'll always return the tank for now, since there's nothing else to return.
-    // This could be a map, but we don't necessarily want to keep all of the content in memory...
-    // We'll wait and see.
-    return mTankContent;
+    // It would be nice to only keep the content in memory when it's being used.
+    // Perhaps this can lazy-load content...
+    if (contentName == "tank")
+    {
+        return mTankContent0;
+    }
+    else if (contentName == "tank0")
+    {
+        return mTankContent1;
+    }
+    else if (contentName == "tank1")
+    {
+        return mTankContent2;
+    }
+
+    return mTextureContentBlank;
+
 }
 
 #pragma mark - Input events
@@ -241,8 +277,33 @@ void BigScreensCompositeApp::update()
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
-    static_pointer_cast<TankContent>(mTankContent)->update();
     mTimeline->update();
+    
+    mTank0Rotation += 0.01;
+    static_pointer_cast<TankContent>(mTankContent0)->update([=](CameraPersp & cam)
+    {
+        float camX = cosf(mTank0Rotation) * 1000;
+        float camZ = sinf(mTank0Rotation) * 1000;
+        cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+    });
+
+    float tank1Distance = sinf(mClient->getCurrentRenderFrame() * 0.0025);
+    static_pointer_cast<TankContent>(mTankContent1)->update([=](CameraPersp & cam)
+    {
+        // Zoom in and out
+        float camZ = tank1Distance * 500;
+        cam.lookAt(Vec3f( 100, 500, camZ ),
+                   Vec3f( 0, 100, 0 ) );
+    });
+    
+    float tank2Bounce = cosf((mClient->getCurrentRenderFrame() + ((arc4random() % 8) - 4)) * 0.5);
+    static_pointer_cast<TankContent>(mTankContent2)->update([=](CameraPersp & cam)
+    {
+        // Bouncy shot
+        cam.lookAt(Vec3f( 0, 800 + (tank2Bounce * 10), -1000 ),
+                   Vec3f( 0, 100, 0 ) );
+    });
+
 }
 
 #pragma mark - Render

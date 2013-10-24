@@ -67,21 +67,21 @@ namespace bigscreens
     
     void TankContent::reset()
     {
-        //mRotation.setToIdentity();
         mCameraRotation = 0.0f;
     }
     
     void TankContent::update()
     {
-        //mRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
-        //mCam.lookAt(<#const Vec3f &aEyePoint#>, <#const Vec3f &target#>)
-        
-        // Rather than changing the matrix, change the camera position
-        // eye, target
-        mCameraRotation += 0.01;
-        float camX = cosf(mCameraRotation) * 1000;
-        float camZ = sinf(mCameraRotation) * 1000;
-        mCam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+         mCameraRotation += 0.01;
+         float camX = cosf(mCameraRotation) * 1000;
+         float camZ = sinf(mCameraRotation) * 1000;
+         mCam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+    }
+
+    // Let's the app take control of the cam
+    void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
+    {
+        update_func(mCam);
     }
     
     void TankContent::render(const ci::Vec2i & screenOffset)

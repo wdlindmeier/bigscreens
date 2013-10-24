@@ -52,7 +52,7 @@ GridLayout GridLayout::load(const fs::path & filePath,
         while (getline (inFile, line))
         {
             vector<string> tokens = ci::split(line, ",");
-            
+
             if (tokens.size() > 0) // ignore blank lines
             {
                 if (lineCount == 0)
