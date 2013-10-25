@@ -43,3 +43,6 @@ const static float kPosColumn1 = 3.5f * kPxPerFoot;
 const static float kPosColumn2 = (3.5f + 33.166f) * kPxPerFoot;
 const static float kPosColumn3 = (3.5f + 33.166f + 31.8333f) * kPxPerFoot;
 const static float kPosColumn4 = (3.5f + 33.166f + 31.8333f + 33.33333f) * kPxPerFoot;
+
+// Audio
+const static int kNumFFTChannels = 64;

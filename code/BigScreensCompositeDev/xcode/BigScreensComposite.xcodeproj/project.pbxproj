@@ -52,6 +52,15 @@
 		A97122B4181AB8DC006DD64E /* show_columns.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B2181AB8DC006DD64E /* show_columns.png */; };
 		A97122B7181ABABA006DD64E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B5181ABABA006DD64E /* pause.png */; };
 		A97122B8181ABABA006DD64E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B6181ABABA006DD64E /* play.png */; };
+		A97122BB181AF13B006DD64E /* PerlinContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97122B9181AF13B006DD64E /* PerlinContent.cpp */; };
+		A97122BC181AF13B006DD64E /* PerlinContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97122B9181AF13B006DD64E /* PerlinContent.cpp */; };
+		A97122BD181AF13B006DD64E /* PerlinContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97122B9181AF13B006DD64E /* PerlinContent.cpp */; };
+		A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A97122C0181B1555006DD64E /* escape_from_ny_theme.mp3 */; };
+		A97122C2181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A97122C0181B1555006DD64E /* escape_from_ny_theme.mp3 */; };
+		A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A97122C0181B1555006DD64E /* escape_from_ny_theme.mp3 */; };
+		A97122C5181B18B8006DD64E /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97122C4181B18B8006DD64E /* QuickTime.framework */; };
+		A97122C6181B18BE006DD64E /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97122C4181B18B8006DD64E /* QuickTime.framework */; };
+		A97122C7181B18C3006DD64E /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97122C4181B18B8006DD64E /* QuickTime.framework */; };
 		A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
@@ -213,6 +222,10 @@
 		A97122B2181AB8DC006DD64E /* show_columns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = show_columns.png; path = ../resources/show_columns.png; sourceTree = "<group>"; };
 		A97122B5181ABABA006DD64E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = ../resources/pause.png; sourceTree = "<group>"; };
 		A97122B6181ABABA006DD64E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../resources/play.png; sourceTree = "<group>"; };
+		A97122B9181AF13B006DD64E /* PerlinContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerlinContent.cpp; path = ../src/PerlinContent.cpp; sourceTree = "<group>"; };
+		A97122BE181AF14F006DD64E /* PerlinContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerlinContent.h; path = ../include/PerlinContent.h; sourceTree = "<group>"; };
+		A97122C0181B1555006DD64E /* escape_from_ny_theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = escape_from_ny_theme.mp3; sourceTree = "<group>"; };
+		A97122C4181B18B8006DD64E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		A97C86CB1810440700AE2AE2 /* MPEApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEApp.hpp; sourceTree = "<group>"; };
 		A97C86CC1810440700AE2AE2 /* MPEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEClient.h; sourceTree = "<group>"; };
 		A97C86CD1810440700AE2AE2 /* MPEMessageHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEMessageHandler.hpp; sourceTree = "<group>"; };
@@ -266,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97122C5181B18B8006DD64E /* QuickTime.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
 				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
@@ -281,6 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97122C6181B18BE006DD64E /* QuickTime.framework in Frameworks */,
 				A9E48EFA18103CE300F2F1C9 /* Cocoa.framework in Frameworks */,
 				A9E48EFB18103CE300F2F1C9 /* OpenGL.framework in Frameworks */,
 				A9E48EFC18103CE300F2F1C9 /* CoreVideo.framework in Frameworks */,
@@ -296,6 +311,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97122C7181B18C3006DD64E /* QuickTime.framework in Frameworks */,
 				A9E48F2718103CE900F2F1C9 /* Cocoa.framework in Frameworks */,
 				A9E48F2818103CE900F2F1C9 /* OpenGL.framework in Frameworks */,
 				A9E48F2918103CE900F2F1C9 /* CoreVideo.framework in Frameworks */,
@@ -414,6 +430,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A97122C4181B18B8006DD64E /* QuickTime.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -423,6 +440,8 @@
 		A971227918196D8D006DD64E /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
+				A97122BE181AF14F006DD64E /* PerlinContent.h */,
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A97122901819C877006DD64E /* TankHeightmapContent.cpp */,
@@ -431,6 +450,15 @@
 				A971227F18196DDD006DD64E /* TextureContent.h */,
 			);
 			name = Content;
+			sourceTree = "<group>";
+		};
+		A97122BF181B1555006DD64E /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				A97122C0181B1555006DD64E /* escape_from_ny_theme.mp3 */,
+			);
+			name = audio;
+			path = Assets/audio;
 			sourceTree = "<group>";
 		};
 		A97C86C11810440700AE2AE2 /* Blocks */ = {
@@ -493,6 +521,7 @@
 		A9E48E9718103A8300F2F1C9 /* BigScreensShared */ = {
 			isa = PBXGroup;
 			children = (
+				A97122BF181B1555006DD64E /* audio */,
 				A97C86C11810440700AE2AE2 /* Blocks */,
 				A9E48E9818103A8300F2F1C9 /* Assets */,
 				A9E48EA518103A8300F2F1C9 /* Headers */,
@@ -691,6 +720,7 @@
 				A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
 				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
 				A971228118197C85006DD64E /* grid.png in Resources */,
@@ -729,6 +759,7 @@
 				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
 				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
+				A97122C2181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228218197C85006DD64E /* grid.png in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
@@ -767,6 +798,7 @@
 				A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
+				A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228318197C85006DD64E /* grid.png in Resources */,
 				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
 				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
@@ -813,6 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A97122BB181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
@@ -829,6 +862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A97122BC181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
@@ -845,6 +879,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A97122BD181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
@@ -882,7 +917,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"CLIENT_ID=1",
 				);
@@ -908,7 +942,10 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=1",
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -932,7 +969,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"CLIENT_ID=2",
 				);
@@ -958,7 +994,10 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=2";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=2",
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -982,7 +1021,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"CLIENT_ID=555",
 				);
@@ -1008,7 +1046,10 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=555";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=555",
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1032,7 +1073,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"CLIENT_ID=0",
 				);
@@ -1058,7 +1098,10 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "CLIENT_ID=0";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CLIENT_ID=0",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1078,6 +1121,10 @@
 				CINDER_PATH = ../../../cinder_dev;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SRC_PATH=\"$(SRCROOT)/..\"",
+					"DEBUG=1",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
@@ -1095,6 +1142,7 @@
 				CINDER_PATH = ../../../cinder_dev;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = "SRC_PATH=\"$(SRCROOT)/..\"";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";

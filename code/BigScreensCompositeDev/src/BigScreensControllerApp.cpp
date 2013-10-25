@@ -31,6 +31,7 @@ public:
     void mpeMessageReceived(const std::string &message, const int fromClientID);
     
     void mouseUp(MouseEvent event);
+    void keyUp(KeyEvent event);
     
     MPEClientRef mClient;
     
@@ -75,7 +76,12 @@ void BigScreensControllerApp::setup()
 
 ci::DataSourceRef BigScreensControllerApp::mpeSettingsFile()
 {
-    return ci::app::loadResource("settings."+to_string(CLIENT_ID)+".xml");
+# if IS_IAC
+    string settingsFilename = "settings."+to_string(CLIENT_ID)+".IAC.xml";
+#else
+    string settingsFilename = "settings."+to_string(CLIENT_ID)+".xml";
+#endif
+    return ci::app::loadResource(settingsFilename);
 }
 
 void BigScreensControllerApp::mpeReset()
@@ -204,6 +210,39 @@ void BigScreensControllerApp::mpeMessageReceived(const std::string &message, con
 }
 
 #pragma mark - Input
+
+void BigScreensControllerApp::keyUp(cinder::app::KeyEvent event)
+{
+    // Copied from composite app
+    char key = event.getChar();
+    if (key == ' ') // start / stop
+    {
+        if (mIsPlaying)
+        {
+            mClient->sendMessage(kMPEMessagePause);
+        }
+        else
+        {
+            mClient->sendMessage(kMPEMessagePlay);
+        }
+    }
+    else if (event.getCode() == KeyEvent::KEY_RIGHT)
+    {
+        mClient->sendMessage(kMPEMessageNext);
+    }
+    else if (event.getCode() == KeyEvent::KEY_LEFT)
+    {
+        mClient->sendMessage(kMPEMessagePrev);
+    }
+    else if (key == 'r')
+    {
+        mClient->sendMessage(kMPEMessageRestart);
+    }
+    else if (key == 'l')
+    {
+        mClient->sendMessage(kMPEMessageLoad);
+    }
+}
 
 void BigScreensControllerApp::mouseUp(cinder::app::MouseEvent event)
 {

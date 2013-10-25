@@ -39,6 +39,7 @@ namespace bigscreens
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
         
         mCameraRotation = 0.0f;
+        mGroundOffset = 0.0f;
     }
     
     void TankContent::loadShaders()
@@ -223,10 +224,7 @@ namespace bigscreens
         mGridTexture->bind();
         gl::enableAlphaBlending();
         
-        // NOTE: This is the speed of the ground.
-        static float texOffset = 0.0f;
-        texOffset += 0.01f;
-        mTextureShader->uniform("uTexCoordOffset", Vec2f(texOffset,0));
+        mTextureShader->uniform("uTexCoordOffset", Vec2f(mGroundOffset,0));
         
         mGroundVao->bind();
         mGroundVbo->bind();
@@ -246,19 +244,22 @@ namespace bigscreens
     void TankContent::reset()
     {
         mCameraRotation = 0.0f;
+        mGroundOffset = 0.0f;
     }
     
     void TankContent::update()
     {
-         mCameraRotation += 0.01;
-         float camX = cosf(mCameraRotation) * 1000;
-         float camZ = sinf(mCameraRotation) * 1000;
-         mCam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+        mGroundOffset += 0.05f;
+        mCameraRotation += 0.01;
+        float camX = cosf(mCameraRotation) * 1000;
+        float camZ = sinf(mCameraRotation) * 1000;
+        mCam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
     }
 
     // Lets the app take control of the cam
     void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
     {
+        mGroundOffset += 0.05f;
         update_func(mCam);
     }
     

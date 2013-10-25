@@ -13,6 +13,9 @@
 #include "cinder/gl/Shader.h"
 #include "OutLineBorder.hpp"
 #include "TankHeightmapContent.h"
+#include "PerlinContent.h"
+#include "cinder/Rand.h"
+#include "cinder/qtime/QuickTimeGl.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,14 +28,16 @@ class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentPr
     
 public:
     
-    // Setup / Load
+    // Setup
     void prepareSettings(Settings *settings);
 	void setup();
     void shutdown();
     
+    // Load
     void reload();
     void loadAssets();
     void loadGrid();
+    void loadAudio();
     
     ci::DataSourceRef mpeSettingsFile();
     void mpeReset();
@@ -50,6 +55,7 @@ public:
     // Update
 	void update();
     void mpeFrameUpdate(long serverFrameNumber);
+    void updatePlaybackState();
 	
     // Draw
     void draw();
@@ -71,12 +77,16 @@ public:
     bool mIsDrawingColumns;
     int mLastFrameNum;
     
+    // Audio
+    qtime::MovieGlRef    mSoundtrack;
+    
     // Content
     RenderableContentRef mTankContent0;
     float mTank0Rotation;
     RenderableContentRef mTankContent1;
     RenderableContentRef mTankContent2;
     RenderableContentRef mTankContentHeightmap;
+    RenderableContentRef mPerlinContent;
     
     RenderableContentRef mTextureContentBlank;
     OutLineBorderRef mOutLine;
@@ -98,6 +108,7 @@ void BigScreensCompositeApp::setup()
     mClient->setIsRendering3D(false);
     mClient->setIsScissorEnabled(false);
     
+    console() << "IS_IAC ? " << IS_IAC << "\n";
     GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC), kScreenScale);
 
     mTimeline = std::shared_ptr<GridLayoutTimeline>(t);
@@ -106,6 +117,7 @@ void BigScreensCompositeApp::setup()
     
     mIsDrawingColumns = false;
 
+    loadAudio();
     loadAssets();
     reload();
 }
@@ -121,11 +133,14 @@ void BigScreensCompositeApp::reload()
     mLastFrameNum = -1;
     mTimeline->reload();
     mTimeline->restart();
+    mSoundtrack->seekToStart();
     
     static_pointer_cast<TankContent>(mTankContent0)->reset();
     static_pointer_cast<TankContent>(mTankContent1)->reset();
     static_pointer_cast<TankContent>(mTankContent2)->reset();
     static_pointer_cast<TankContent>(mTankContentHeightmap)->reset();
+    static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
+    
     mTank0Rotation = 0;
 }
 
@@ -148,10 +163,38 @@ void BigScreensCompositeApp::loadAssets()
     TankHeightmapContent *tankHeightmap = new TankHeightmapContent();
     tankHeightmap->load("T72.obj");
     mTankContentHeightmap = RenderableContentRef(tankHeightmap);
+    
+    PerlinContent *perlinContent = new PerlinContent();
+    mPerlinContent = RenderableContentRef(perlinContent);
 
     TextureContent *texBlank = new TextureContent();
     texBlank->load("blank_texture.png");
     mTextureContentBlank = RenderableContentRef(texBlank);
+}
+
+void BigScreensCompositeApp::loadAudio()
+{
+    fs::path audioPath = SharedAssetPath(!IS_IAC) / "audio" / "escape_from_ny_theme.mp3"; //getResourcePath("escape_from_ny_theme.mp3");
+    if (!fs::exists(audioPath))
+    {
+        console() << "ERROR: No audio path found\n";
+    }
+    else
+    {
+        console() << "Audio path: " << audioPath << endl;
+    }
+    mSoundtrack = qtime::MovieGl::create(audioPath);
+    console() << "mSoundtrack: " << mSoundtrack << endl;
+    mSoundtrack->setLoop(!IS_IAC);
+    try
+    {
+        mSoundtrack->setupMonoFft( kNumFFTChannels );
+    }
+    catch( qtime::QuickTimeExcFft & )
+    {
+        console() << "Unable to setup FFT" << std::endl;
+    }
+    console() << "FFT Channels: " << mSoundtrack->getNumFftChannels() << std::endl;
 }
 
 ci::DataSourceRef BigScreensCompositeApp::mpeSettingsFile()
@@ -188,8 +231,11 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     }
     else if (contentName == "tank1")
     {
-        //return mTankContent2;
         return mTankContentHeightmap;
+    }
+    else if (contentName == "perlin")
+    {
+        return mPerlinContent;
     }
 
     return mTextureContentBlank;
@@ -234,26 +280,38 @@ void BigScreensCompositeApp::keyUp(KeyEvent event)
 
 void BigScreensCompositeApp::restart()
 {
+    console() << "restart\n";
     mTimeline->restart();
+    mSoundtrack->seekToStart();
+    if (mTimeline->isPlaying())
+    {
+        mSoundtrack->play();
+    }
 }
 
 void BigScreensCompositeApp::play()
 {
+    console() << "play\n";
     mTimeline->play();
+    mSoundtrack->play();
 }
 
 void BigScreensCompositeApp::pause()
 {
+    console() << "pause\n";
     mTimeline->pause();
+    mSoundtrack->stop();
 }
 
 void BigScreensCompositeApp::advance()
 {
+    console() << "advance\n";
     mTimeline->stepToNextLayout();
 }
 
 void BigScreensCompositeApp::reverse()
 {
+    console() << "reverse\n";
     mTimeline->stepToPreviousLayout();
 }
 
@@ -265,11 +323,15 @@ void BigScreensCompositeApp::update()
     {
         mClient->start();
     }
+    //updatePlaybackState();
 }
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
     mTimeline->update();
+    
+    // FFT Data
+    // float *fftData = mSoundtrack->getFftData();
     
     // Send the controller the current frame if it's changed
     if (mLastFrameNum != mTimeline->getCurrentFrame())
@@ -301,6 +363,9 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         cam.lookAt(Vec3f( 0, 600, -1000 ),
                    Vec3f( 0, 100, 0 ) );
     });
+    
+    // Move up 1 px. Maybe this is too fast
+    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0, 1));
 }
 
 #pragma mark - Render
@@ -389,6 +454,7 @@ void BigScreensCompositeApp::renderColumns()
 
 void BigScreensCompositeApp::mpeMessageReceived(const std::string &message, const int fromClientID)
 {
+    // NOTE: These should always happen on the main thread
     if (message == kMPEMessagePlay)
     {
         play();
