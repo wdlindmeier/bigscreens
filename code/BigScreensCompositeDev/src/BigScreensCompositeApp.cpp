@@ -363,9 +363,12 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         cam.lookAt(Vec3f( 0, 600, -1000 ),
                    Vec3f( 0, 100, 0 ) );
     });
+
+    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0.2, 0.0));
     
-    // Move up 1 px. Maybe this is too fast
-    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0, 1));
+    // Work?
+    static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->setHeightTexture(
+       static_pointer_cast<PerlinContent>(mPerlinContent)->getTexture());
 }
 
 #pragma mark - Render

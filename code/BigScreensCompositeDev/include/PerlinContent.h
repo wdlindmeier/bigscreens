@@ -28,6 +28,7 @@ namespace bigscreens
         void render(const ci::Vec2i & screenOffset);
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }
+        ci::gl::TextureRef getTexture(){ return mTexture; };
         
     private:
         

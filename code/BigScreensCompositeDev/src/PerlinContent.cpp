@@ -45,19 +45,13 @@ namespace bigscreens
         {
             while( iter.pixel() )
             {
-                float v = mPerlin.noise(((iter.x() + mPosition.x) * mFrequency) + 1,
-                                        ((iter.y() + mPosition.y) * mFrequency) + 1);
-                // v *= v * v;
-                //uint8_t val = v;// * 255;
-                float val = v * 5;
-                iter.r() = iter.g() = iter.b() = val;
+                // Values are -0.5 .. 0.5
+                float v = mPerlin.noise(((iter.x() + mPosition.x) * mFrequency),
+                                        ((iter.y() + mPosition.y) * mFrequency));
+                float val = 0.5 + v;
+                iter.r() = iter.g() = iter.b() = ci::math<int>::clamp(val * 255, 0, 255);
             }
         }
-        /*
-        float v = mPerlin.noise((float)mPosition.x, (float)mPosition.y);
-        v *= 1000;
-        ci::app::console() << "up " << v << "\n";
-        */
     }
     
     void PerlinContent::render(const ci::Vec2i & screenOffset)

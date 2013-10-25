@@ -24,6 +24,9 @@ namespace bigscreens
         // virtual void render(const ci::Vec2i & screenOffset);
         // virtual void reset();
         
+        // Allow passing in a height map
+        void setHeightTexture(const ci::gl::TextureRef & texRef){ mHeightmapTexture = texRef; }
+        
     protected:
         
         virtual void loadGround();
