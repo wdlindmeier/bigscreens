@@ -542,16 +542,6 @@ void GridMakerApp::draw()
                      mTankContent);
     }
     
-    gl::color(Color::white());
-    if (mIsPlaying)
-    {
-        gl::draw(mTexturePlaying, Rectf(15,15,35,35));
-    }
-    else
-    {
-        gl::draw(mTexturePaused, Rectf(15,15,35,35));
-    }
-    
     // Screen bounds
     gl::lineWidth(1.0f);
     gl::color(ColorAf(0.3f, 0.0f, 0.9f, 1.0f));
@@ -562,9 +552,6 @@ void GridMakerApp::draw()
         gl::drawLine(Vec2f(0, y),
                      Vec2f(getWindowWidth(), y));
     }
-
-    // Draw the current frame num
-    gl::drawString("Frame " + to_string(mIdxCurrentLayout), Vec2f(42, 25));
 
     float height = getWindowHeight();
     float width = getWindowWidth();
@@ -600,14 +587,30 @@ void GridMakerApp::draw()
                        to_string((int)mDrawingRect.getHeight()),
                        mMousePosition);
     }
+
+    if (mDrawPillars)
+    {
+        drawMargins();
+        drawPillars();
+    }
+
+    gl::color(Color::white());
+    if (mIsPlaying)
+    {
+        gl::draw(mTexturePlaying, Rectf(30, getWindowHeight() - 25, 50, getWindowHeight() - 5));
+    }
+    else
+    {
+        gl::draw(mTexturePaused, Rectf(30, getWindowHeight() - 25, 50, getWindowHeight() - 5));
+    }
+    
+    // Draw the current frame num
+    gl::drawString("Frame " + to_string(mIdxCurrentLayout),
+                   Vec2f(60, getWindowHeight() - 15),
+                   mDrawPillars ? Color::black() : Color::white());
     
     if (!mIsAdding && !mIsJoining && !mIsRemoving)
     {
-        if (mDrawPillars)
-        {
-            drawMargins();
-            drawPillars();
-        }
         mParams->draw();
     }
     
@@ -987,12 +990,13 @@ void GridMakerApp::insertLayout(GridLayout newLayout)
 
 void GridMakerApp::deleteCurrentLayout()
 {
+    GridLayout & layoutRemove = mGridLayouts[mIdxCurrentLayout];
+    
     int nextIdx = mIdxCurrentLayout + 1;
     // Ddjust the time of all past the current index
     if (mGridLayouts.size() > nextIdx)
     {
         // We'll need to adjust the time
-        GridLayout & layoutRemove = mGridLayouts[mIdxCurrentLayout];
         GridLayout & layoutNext = mGridLayouts[nextIdx];
         long long adjustTime = (layoutNext.getTimestamp() - layoutRemove.getTimestamp()) * -1;
         adjustLayoutTimestamps(nextIdx, adjustTime);
@@ -1001,6 +1005,9 @@ void GridMakerApp::deleteCurrentLayout()
     // Delete the current index
     assert(mGridLayouts.size() > 0);
     mGridLayouts.erase(mGridLayouts.begin() + mIdxCurrentLayout);
+    
+    // Delete the flat file
+    layoutRemove.remove();
     
     // Then roll back one if the current index is greater than the grid count
     if (mIdxCurrentLayout >= mGridLayouts.size())

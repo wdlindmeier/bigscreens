@@ -50,6 +50,7 @@ namespace bigscreens
         void loadAllGrids();
         
         bool isPlaying();
+        int getCurrentFrame(){ return mIdxCurrentLayout; };
         
     private:
         

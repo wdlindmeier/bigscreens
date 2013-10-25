@@ -10,6 +10,7 @@
 #include "GridLayoutTimeline.h"
 #include "SceneWindow.hpp"
 #include "cinder/gl/GlslProg.h"
+#include "cinder/gl/Shader.h"
 #include "OutLineBorder.hpp"
 #include "TankHeightmapContent.h"
 
@@ -18,14 +19,6 @@ using namespace ci::app;
 using namespace std;
 using namespace mpe;
 using namespace bigscreens;
-
-#define IS_IAC  0
-
-#if IS_IAC
-const static float kScreenScale = 1.0f;
-#else
-const static float kScreenScale = 0.25f;
-#endif
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentProvider
 {
@@ -61,10 +54,11 @@ public:
     // Draw
     void draw();
     void mpeFrameRender(bool isNewFrame);
-    void renderControls();
+    void renderColumns();
     
     // Messages
     void mpeMessageReceived(const std::string &message, const int fromClientID);
+    void broadcastCurrentLayout();
     
     // Content Provider
     RenderableContentRef contentForKey(const std::string & contentName);
@@ -72,10 +66,10 @@ public:
     // Vars
     MPEClientRef mClient;
     
-    GridLayoutTimelineRef   mTimeline;
+    GridLayoutTimelineRef mTimeline;
     
-    gl::TextureRef mTexturePlaying;
-    gl::TextureRef mTexturePaused;
+    bool mIsDrawingColumns;
+    int mLastFrameNum;
     
     // Content
     RenderableContentRef mTankContent0;
@@ -109,6 +103,8 @@ void BigScreensCompositeApp::setup()
     mTimeline = std::shared_ptr<GridLayoutTimeline>(t);
     
     mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());
+    
+    mIsDrawingColumns = false;
 
     loadAssets();
     reload();
@@ -122,6 +118,7 @@ void BigScreensCompositeApp::shutdown()
 
 void BigScreensCompositeApp::reload()
 {
+    mLastFrameNum = -1;
     mTimeline->reload();
     mTimeline->restart();
     
@@ -155,11 +152,6 @@ void BigScreensCompositeApp::loadAssets()
     TextureContent *texBlank = new TextureContent();
     texBlank->load("blank_texture.png");
     mTextureContentBlank = RenderableContentRef(texBlank);
-    
-    // Is there a more elegant way of doing this?    
-    mTexturePlaying = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("playing.png"))));
-    mTexturePaused = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("paused.png"))));
-    
 }
 
 ci::DataSourceRef BigScreensCompositeApp::mpeSettingsFile()
@@ -174,8 +166,9 @@ ci::DataSourceRef BigScreensCompositeApp::mpeSettingsFile()
 
 void BigScreensCompositeApp::mpeReset()
 {
-    // Reset the state of your app.
-    // This will be called when any client connects.
+    // IMPORTANT: Keep this state in-sync with the controller
+    mTimeline->pause();
+    mIsDrawingColumns = false;
     reload();
 }
 
@@ -204,13 +197,6 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
 }
 
 #pragma mark - Input events
-
-const static std::string kMPEMessagePlay = "play";
-const static std::string kMPEMessagePause = "pause";
-const static std::string kMPEMessagePrev = "prev";
-const static std::string kMPEMessageNext = "next";
-const static std::string kMPEMessageLoad = "load";
-const static std::string kMPEMessageRestart = "restart";
 
 void BigScreensCompositeApp::keyUp(KeyEvent event)
 {
@@ -285,6 +271,13 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
     mTimeline->update();
     
+    // Send the controller the current frame if it's changed
+    if (mLastFrameNum != mTimeline->getCurrentFrame())
+    {
+        broadcastCurrentLayout();
+        mLastFrameNum = mTimeline->getCurrentFrame();
+    }
+    
     mTank0Rotation += 0.01;
     static_pointer_cast<TankContent>(mTankContent0)->update([=](CameraPersp & cam)
     {
@@ -301,17 +294,7 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         cam.lookAt(Vec3f( 100, 500, camZ ),
                    Vec3f( 0, 100, 0 ) );
     });
-    
-    /*
-    float tank2Bounce = cosf((mClient->getCurrentRenderFrame() + ((arc4random() % 8) - 4)) * 0.5);
-    static_pointer_cast<TankContent>(mTankContent2)->update([=](CameraPersp & cam)
-    {
-        // Bouncy shot
-        cam.lookAt(Vec3f( 0, 800 + (tank2Bounce * 10), -1000 ),
-                   Vec3f( 0, 100, 0 ) );
-    });
-    */
-    
+
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->update([=](CameraPersp & cam)
     {
         // Steady shot
@@ -358,38 +341,48 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             mOutLine->render();
         }
     }
-
-    if (CLIENT_ID == 0)
+    
+    if (mIsDrawingColumns)
     {
-        renderControls();
+        renderColumns();
     }
-
 }
 
-void BigScreensCompositeApp::renderControls()
+void BigScreensCompositeApp::renderColumns()
 {
-    // Draw the controls
-
-    // NOTE: This breaks the rendering of screens 2 & 3, so only draw controls on screen 1
-    
     gl::viewport(0, 0, getWindowWidth(), getWindowHeight());
     gl::setMatricesWindow( getWindowSize() );
-    Vec2i offset = mClient->getVisibleRect().getUpperLeft();
-    gl::translate(offset);
-    
-    gl::enableAlphaBlending();
-    gl::color(Color::white());
-    if (mTimeline->isPlaying())
-    {
-        gl::draw(mTexturePlaying, Rectf(15,15,35,35));
-    }
-    else
-    {
-        gl::draw(mTexturePaused, Rectf(15,15,35,35));
-    }
-    
-    gl::disableAlphaBlending();
+    gl::translate(mClient->getVisibleRect().getUpperLeft() * -1);
 
+    gl::bindStockShader(gl::ShaderDef().color());
+    gl::color(ColorAf(0.95,0.95,0.9));
+    
+    // Column 1
+    float columnHeight = getWindowHeight();
+    float x = kPosColumn1 * kScreenScale;
+    float x1 = x - (kColumnWidth * 0.5f * kScreenScale);
+    float x2 = x + (kColumnWidth * 0.5f * kScreenScale);
+    float y1 = 0;
+    float y2 = columnHeight;
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+    
+    // Column 2
+    x = kPosColumn2 * kScreenScale;
+    x1 = x - (kColumnWidth * 0.5f * kScreenScale);
+    x2 = x + (kColumnWidth * 0.5f * kScreenScale);
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+    
+    // Column 3
+    x = kPosColumn3 * kScreenScale;
+    x1 = x - (kColumnWidth * 0.5f * kScreenScale);
+    x2 = x + (kColumnWidth * 0.5f * kScreenScale);
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
+    
+    // Column 4
+    x = kPosColumn4 * kScreenScale;
+    x1 = x - (kColumnWidth * 0.5f * kScreenScale);
+    x2 = x + (kColumnWidth * 0.5f * kScreenScale);
+    gl::drawSolidRect(Rectf(x1,y1,x2,y2));
 }
 
 #pragma mark - Messages
@@ -419,6 +412,30 @@ void BigScreensCompositeApp::mpeMessageReceived(const std::string &message, cons
     else if (message == kMPEMessageLoad)
     {
         reload();
+    }
+    else if (message == kMPEMessageShowColumns)
+    {
+        mIsDrawingColumns = true;
+    }
+    else if (message == kMPEMessageHideColumns)
+    {
+        mIsDrawingColumns = false;
+    }
+}
+
+void BigScreensCompositeApp::broadcastCurrentLayout()
+{
+    // We want the frame to be sent even if there's only 1 client connected.
+    // That means it will be sent more than once when more than 1 are rendering.
+    // if (CLIENT_ID == 1)
+    {
+        // Send the current frame to the controller
+        vector<int> toClients;
+        toClients.push_back(555);
+        mClient->sendMessage(kMPEMessageCurrentLayout +
+                             kMPEMessageDelimeter +
+                             std::to_string(mTimeline->getCurrentFrame()),
+                             toClients);
     }
 }
 

@@ -36,6 +36,7 @@ namespace bigscreens
     
     void GridLayoutTimeline::loadAllGrids()
     {
+        ci::app::console() << "Reloading grids from file\n";
         mGridLayouts = GridLayout::loadAllFromPath(mLoadPath, mScale);
         int numLayouts = mGridLayouts.size();
         if (numLayouts > 0)

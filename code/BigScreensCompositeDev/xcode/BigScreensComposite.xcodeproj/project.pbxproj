@@ -48,6 +48,10 @@
 		A971229F1819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
 		A97122A01819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
 		A97122A11819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
+		A97122B3181AB8DC006DD64E /* hide_columns.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B1181AB8DC006DD64E /* hide_columns.png */; };
+		A97122B4181AB8DC006DD64E /* show_columns.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B2181AB8DC006DD64E /* show_columns.png */; };
+		A97122B7181ABABA006DD64E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B5181ABABA006DD64E /* pause.png */; };
+		A97122B8181ABABA006DD64E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = A97122B6181ABABA006DD64E /* play.png */; };
 		A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
 		A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C87591810440800AE2AE2 /* MPEClient.cpp */; };
@@ -204,6 +208,11 @@
 		A97122961819C9E6006DD64E /* heightmap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = heightmap.frag; sourceTree = "<group>"; };
 		A97122971819C9E6006DD64E /* heightmap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = heightmap.vert; sourceTree = "<group>"; };
 		A971229E1819E369006DD64E /* height_sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = height_sample.png; path = ../resources/height_sample.png; sourceTree = "<group>"; };
+		A97122B0181AB443006DD64E /* BigScreensConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BigScreensConstants.h; path = ../include/BigScreensConstants.h; sourceTree = "<group>"; };
+		A97122B1181AB8DC006DD64E /* hide_columns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hide_columns.png; path = ../resources/hide_columns.png; sourceTree = "<group>"; };
+		A97122B2181AB8DC006DD64E /* show_columns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = show_columns.png; path = ../resources/show_columns.png; sourceTree = "<group>"; };
+		A97122B5181ABABA006DD64E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = ../resources/pause.png; sourceTree = "<group>"; };
+		A97122B6181ABABA006DD64E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../resources/play.png; sourceTree = "<group>"; };
 		A97C86CB1810440700AE2AE2 /* MPEApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEApp.hpp; sourceTree = "<group>"; };
 		A97C86CC1810440700AE2AE2 /* MPEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEClient.h; sourceTree = "<group>"; };
 		A97C86CD1810440700AE2AE2 /* MPEMessageHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPEMessageHandler.hpp; sourceTree = "<group>"; };
@@ -378,8 +387,9 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				F3377C32D0D444C0A417BAA5 /* Resources.h */,
 				FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */,
+				A97122B0181AB443006DD64E /* BigScreensConstants.h */,
+				F3377C32D0D444C0A417BAA5 /* Resources.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -387,12 +397,16 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A971229E1819E369006DD64E /* height_sample.png */,
-				A9712284181986DA006DD64E /* test.png */,
+				A97122B5181ABABA006DD64E /* pause.png */,
+				A97122B6181ABABA006DD64E /* play.png */,
 				A971227218196D60006DD64E /* blank_texture.png */,
 				159A1C61600B47B3B2BA11F8 /* CinderApp.icns */,
 				A971228018197C85006DD64E /* grid.png */,
+				A971229E1819E369006DD64E /* height_sample.png */,
+				A97122B1181AB8DC006DD64E /* hide_columns.png */,
 				AC0EE697804E47DF989DE276 /* Info.plist */,
+				A97122B2181AB8DC006DD64E /* show_columns.png */,
+				A9712284181986DA006DD64E /* test.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -779,9 +793,13 @@
 				A9E48F3B18103CF500F2F1C9 /* settings.1.IAC.xml in Resources */,
 				A9E48F3C18103CF500F2F1C9 /* paused.png in Resources */,
 				A9E48F4018103CF500F2F1C9 /* settings.1.xml in Resources */,
+				A97122B4181AB8DC006DD64E /* show_columns.png in Resources */,
 				A9E48F4218103CF500F2F1C9 /* CinderApp.icns in Resources */,
 				A9E48F4318103CF500F2F1C9 /* settings.2.xml in Resources */,
 				A9E48F4418103CF500F2F1C9 /* settings.2.IAC.xml in Resources */,
+				A97122B7181ABABA006DD64E /* pause.png in Resources */,
+				A97122B8181ABABA006DD64E /* play.png in Resources */,
+				A97122B3181AB8DC006DD64E /* hide_columns.png in Resources */,
 				A9E48F4918103CF500F2F1C9 /* settings.0.xml in Resources */,
 				A9E48F4B18103CF500F2F1C9 /* settings.555.xml in Resources */,
 			);
