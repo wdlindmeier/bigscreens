@@ -21,7 +21,7 @@ namespace bigscreens
     // This can/should change depending upon the texture.
     const float kGroundPlaneUnitScale = 1.0f/32.0f;//64.0f;
     const float kGroundPlaneScale = 10000.0f;
-    const float kGroundDepthScale = 0.15f;
+    const float kGroundDepthScale = 0.075f;
     const float kGroundPlaneUnit = kGroundPlaneDimension * kGroundPlaneUnitScale;
     const int   kNumGroundUnitsWide = kGroundPlaneDimension / kGroundPlaneUnit;
     const int   kNumGroundUnitsHigh = kGroundPlaneDimension / kGroundPlaneUnit;
@@ -115,9 +115,11 @@ namespace bigscreens
                   kGroundPlaneScale * kGroundDepthScale);
 
         mHeightmapShader->bind();
+                
         // Set the height texture
         mHeightmapTexture->bind(0);
         mHeightmapShader->uniform("uTex0", 0);
+        
 
         mGroundVao->bind();
         mGroundVbo->bind();

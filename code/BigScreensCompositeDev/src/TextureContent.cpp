@@ -13,6 +13,7 @@
 #include "cinder/app/App.h"
 #include "cinder/Utilities.h"
 #include "cinder/Camera.h"
+#include "cinder/gl/Shader.h"
 #include "Utilities.hpp"
 
 using namespace ci;
@@ -33,6 +34,8 @@ namespace bigscreens
     
     void TextureContent::render(const ci::Vec2i & screenOffset)
     {
+        gl::bindStockShader(gl::ShaderDef().color());
+        
         // clear out both of the attachments of the FBO with black
         gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
         

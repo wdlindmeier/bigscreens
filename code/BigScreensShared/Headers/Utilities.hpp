@@ -16,6 +16,9 @@
 #include <time.h>
 #include <sys/timeb.h>
 
+#define QUOTE(str) #str
+#define EXPAND_AND_QUOTE(str) QUOTE(str)
+
 namespace bigscreens
 {
     template<typename T>
@@ -95,7 +98,9 @@ namespace bigscreens
     {
         if (isLocalApp)
         {
-            return cinder::app::getAssetPath(".") / ".." / ".." / "BigScreensShared" / "Assets";
+            // NOTE: SRC_PATH is a preprocessor alias to $SRCROOT.
+            // Is there a Cinder way to do this?
+            return ci::fs::path(EXPAND_AND_QUOTE(SRC_PATH)) / ".." / "BigScreensShared" / "Assets";
         }
         else
         {
