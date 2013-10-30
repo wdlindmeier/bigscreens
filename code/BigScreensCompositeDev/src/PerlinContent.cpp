@@ -40,23 +40,40 @@ namespace bigscreens
     void PerlinContent::update(const ci::Vec2f & move)
     {
         mPosition += move;
+        generateNoiseForPosition(mPosition);
+    }
+
+    void PerlinContent::generateNoiseForPosition(const ci::Vec2f & position)
+    {
         Surface::Iter iter = mNoiseSurface.getIter();
         while( iter.line() )
         {
             while( iter.pixel() )
             {
                 // Values are -0.5 .. 0.5
-                float v = mPerlin.noise(((iter.x() + mPosition.x) * mFrequency),
-                                        ((iter.y() + mPosition.y) * mFrequency));
+                float v = mPerlin.noise(((iter.x() + position.x) * mFrequency),
+                                        ((iter.y() + position.y) * mFrequency));
                 float val = 0.5 + v;
                 iter.r() = iter.g() = iter.b() = ci::math<int>::clamp(val * 255, 0, 255);
             }
         }
     }
     
-    void PerlinContent::render(const ci::Vec2i & screenOffset)
+    ci::gl::TextureRef PerlinContent::getTextureRef()
+    {
+        gl::Texture *tex = new gl::Texture(mNoiseSurface.getWidth(), mNoiseSurface.getHeight());
+        tex->update(mNoiseSurface);
+        return gl::TextureRef(tex);
+    }
+
+    void PerlinContent::preRender()
     {
         mTexture->update(mNoiseSurface);
+    }
+    
+    void PerlinContent::render(const ci::Vec2i & screenOffset)
+    {
+        preRender();
         gl::bindStockShader(gl::ShaderDef().color());
         gl::clear( ColorAf( 1.0f, 0.0f, 0.0f, 0.0f ) );
         Rectf screenRect(0, 0, getWindowWidth(), getWindowHeight());

@@ -47,7 +47,6 @@ namespace bigscreens {
         
         ci::CameraPersp		mCam;
 
-    private:
 
         float               mCameraRotation;
         
