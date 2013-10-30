@@ -69,6 +69,7 @@ namespace bigscreens {
         ci::gl::TextureRef  mGridTexture;
         ci::gl::VaoRef      mGroundVao;
         ci::gl::VboRef      mGroundVbo;
+        float               mGroundOffset;
   
     };
 }
