@@ -24,7 +24,7 @@ namespace bigscreens
         // This is to manipulate the aspect ratio
 		// so that we can use different windows
 		// for our content.
-		virtual ci::CameraPersp& getCamera() = 0;
+		virtual ci::Camera& getCamera() = 0;
     };
 
     typedef std::shared_ptr<class RenderableContent> RenderableContentRef;
