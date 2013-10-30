@@ -9,6 +9,7 @@
 #pragma once
 
 #include "TankContent.h"
+#include "PerlinContent.h"
 
 namespace bigscreens
 {
@@ -20,27 +21,30 @@ namespace bigscreens
         TankHeightmapContent() : TankContent() {};
         virtual ~TankHeightmapContent(){};
         
-        // virtual void load(const std::string & objFilename);
-        // virtual void render(const ci::Vec2i & screenOffset);
-        // virtual void reset();
-        
-        // Allow passing in a height map
-        void setHeightTexture(const ci::gl::TextureRef & texRef){ mHeightmapTexture = texRef; }
+        virtual void load(const std::string & objFilename);
+        virtual void update(const ci::Vec3f & tankMovement);
         
     protected:
         
         virtual void loadGround();
         virtual void loadShaders();
 
+        void generateGroundMaps();
         virtual void drawGround();
+        void drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
+        virtual void drawTank();
 
     private:
 
         // Ground plane
         ci::gl::GlslProgRef mHeightmapShader;
-        ci::gl::TextureRef  mHeightmapTexture;
         ci::gl::VaoRef      mGroundVao;
         ci::gl::VboRef      mGroundVbo;
-  
+        ci::Vec3f           mTankMovement;
+        
+        PerlinContent       mPerlinContent;
+        ci::Vec3i           mPlotCoords;
+        std::vector<ci::gl::TextureRef> mGroundMaps;
+
     };
 }

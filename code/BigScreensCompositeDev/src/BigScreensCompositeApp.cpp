@@ -357,18 +357,22 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
                    Vec3f( 0, 100, 0 ) );
     });
 
+    /*
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->update([=](CameraPersp & cam)
     {
         // Steady shot
         cam.lookAt(Vec3f( 0, 600, -1000 ),
                    Vec3f( 0, 100, 0 ) );
     });
-
-    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0.2, 0.0));
+    */
     
-    // Work?
-    static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->setHeightTexture(
-       static_pointer_cast<PerlinContent>(mPerlinContent)->getTexture());
+    // Perlin
+    // NOTE: The movement here doesn't map to PX
+    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0.0, -0.2));
+    
+    // Heightmap
+    shared_ptr<TankHeightmapContent> t = static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap);
+    t->update(Vec3f(0, 0, 20));
 }
 
 #pragma mark - Render
