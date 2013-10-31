@@ -20,7 +20,7 @@ using namespace bigscreens;
 namespace bigscreens
 {
     
-    TankContent::TankContent()
+    TankContent::TankContent() : mGroundContent(10000.0)
     {
     }
     
@@ -38,19 +38,22 @@ namespace bigscreens
         mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
         
-        mCameraRotation = 0.0f;
-        mGroundOffset = 0.0f;
+        mGroundOffset = Vec2f::zero();
     }
     
     void TankContent::loadShaders()
     {
-        gl::GlslProg::Format shaderFormat;
-        shaderFormat.vertex( ci::app::loadResource( "offset_texture.vert" ) )
+        gl::GlslProg::Format screenShaderFormat;
+        screenShaderFormat.vertex( ci::app::loadResource( "offset_texture.vert" ) )
         .fragment( ci::app::loadResource( "offset_texture.frag" ) );
-        mTextureShader = ci::gl::GlslProg::create( shaderFormat );
+        mTextureShader = ci::gl::GlslProg::create( screenShaderFormat );
+        
+        gl::GlslProg::Format groundShaderFormat;
+        groundShaderFormat.vertex( ci::app::loadResource( "ground_texture.vert" ) )
+        .fragment( ci::app::loadResource( "ground_texture.frag" ) );
+        mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
 
         gl::GlslProg::Format mFormat;
-        // NOTE: These must be resorces, not assets
         mFormat.vertex( loadResource( "basic.vert" ) )
         .fragment( loadResource( "basic.frag" ) );
         mTankShader = gl::GlslProg::create( mFormat );
@@ -125,12 +128,12 @@ namespace bigscreens
                                    mTankMesh->getVertices<3>(), GL_STATIC_DRAW );
         mTankVbo->bind();
         
-        GLint pos = mTankShader->getAttribLocation( "position" );
+        GLint pos = mTankShader->getAttribLocation( "vPosition" );
         gl::enableVertexAttribArray( pos );
         gl::vertexAttribPointer( pos, 3, GL_FLOAT, GL_FALSE, 0, 0);
         
         mTankElementVbo = gl::Vbo::create(GL_ELEMENT_ARRAY_BUFFER,
-                                          mTankMesh->getNumIndices(),
+                                          mTankMesh->getNumIndices() * 4,
                                           mTankMesh->getIndices().data());
         mTankElementVbo->bind();
         mTankElementVbo->unbind();
@@ -145,64 +148,8 @@ namespace bigscreens
         gl::Texture::Format texFormat;
         texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
         mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
-
-        GLfloat data[12+8+16]; // verts, texCoords, colors
-        GLfloat *verts = data, *texCoords = data + 12, *color = data + 20;
         
-        const float kGroundPlaneDimension = 10000.0f;
-        const float kGridScale = kGroundPlaneDimension * 0.005f;
-        const float kGroundZ = 1.0f;
-        const float r = 0.7f, g = 0.7f, b = 0.7f, a = 1.0f;
-        for (int i = 0; i < 4; ++i)
-        {
-            color[i*4+0] = r;
-            color[i*4+1] = g;
-            color[i*4+2] = b;
-            color[i*4+3] = a;
-        }
-        verts[0*3+0] = kGroundPlaneDimension*0.5f;
-        verts[0*3+1] = kGroundPlaneDimension*-0.5f;
-        verts[0*3+2] = kGroundZ;
-        texCoords[0*2+0] = (mGridTexture->getRight() * kGridScale);
-        texCoords[0*2+1] = (mGridTexture->getTop() * kGridScale);
-
-        verts[1*3+0] = kGroundPlaneDimension*-0.5f;
-        verts[1*3+1] = kGroundPlaneDimension*-0.5f;
-        verts[1*3+2] = kGroundZ;
-        texCoords[1*2+0] = (mGridTexture->getLeft() * kGridScale);
-        texCoords[1*2+1] = (mGridTexture->getTop() * kGridScale);
-
-        verts[2*3+0] = kGroundPlaneDimension*0.5f;
-        verts[2*3+1] = kGroundPlaneDimension*0.5f;
-        verts[2*3+2] = kGroundZ;
-        texCoords[2*2+0] = (mGridTexture->getRight() * kGridScale);
-        texCoords[2*2+1] = (mGridTexture->getBottom() * kGridScale);
-
-        verts[3*3+0] = kGroundPlaneDimension*-0.5f;
-        verts[3*3+1] = kGroundPlaneDimension*0.5f;
-        verts[3*3+2] = kGroundZ;
-        texCoords[3*2+0] = (mGridTexture->getLeft() * kGridScale);
-        texCoords[3*2+1] = (mGridTexture->getBottom() * kGridScale);
-
-        mGroundVao = gl::Vao::create();
-        mGroundVao->bind();
-        mGroundVbo = gl::Vbo::create( GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW );
-        mGroundVbo->bind();
-        
-        int posLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::POSITION );
-        gl::enableVertexAttribArray( posLoc );
-        gl::vertexAttribPointer( posLoc, 3, GL_FLOAT, GL_FALSE, 0, (void*)0 );
-        
-        int texLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::TEX_COORD_0 );
-        gl::enableVertexAttribArray( texLoc );
-        gl::vertexAttribPointer( texLoc, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*12) );
-        
-        int colorLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::COLOR );
-        gl::enableVertexAttribArray( colorLoc );
-        gl::vertexAttribPointer( colorLoc, 4, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*20) );
-        
-        mGroundVbo->unbind();
-        mGroundVao->unbind();
+        mGroundContent.load(mGroundShader);
     }
     
     void TankContent::drawGround()
@@ -210,22 +157,26 @@ namespace bigscreens
         gl::pushMatrices();
 
         gl::setMatrices( mCam );
-        gl::rotate(90, 1, 0, 0);
-        gl::rotate(90, 0, 0, 1);
-        
-        // QUESTION:
-        // I tried getting the projection and model mat from the cam
-        // and passing it into the shader like this:
-        // mTextureShader->uniform( "uModelViewProjection", mvpMat);
-        // But it had different results than setting the matrix with the
-        // camera.
-        
-        mTextureShader->bind();
+
+        mGroundShader->bind();
         mGridTexture->bind();
+        
+        // Probably not necessary
         gl::enableAlphaBlending();
         
-        mTextureShader->uniform("uTexCoordOffset", Vec2f(mGroundOffset,0));
+        mGroundShader->uniform("uTexCoordOffset", mGroundOffset);
+        mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75,1.0f));
+        mGroundShader->uniform("uTexScale", 50.f);
         
+        // Get the current plot
+        float groundScale = mGroundContent.getScale();
+        Vec3f groundOffset((-0.5f * groundScale),
+                           0,
+                           (-0.5f * groundScale));
+
+        mGroundContent.render(GL_TRIANGLE_STRIP, groundOffset);
+        
+        /*
         mGroundVao->bind();
         mGroundVbo->bind();
 
@@ -234,7 +185,8 @@ namespace bigscreens
         
         mGroundVao->unbind();
         mGroundVbo->unbind();
-
+        */
+        
         mGridTexture->unbind();
         mTextureShader->unbind();
         
@@ -243,23 +195,17 @@ namespace bigscreens
     
     void TankContent::reset()
     {
-        mCameraRotation = 0.0f;
-        mGroundOffset = 0.0f;
+        mGroundOffset = Vec2f::zero();
     }
     
-    void TankContent::update()
+    void TankContent::setGroundOffset(const Vec2f offset)
     {
-        mGroundOffset += 0.05f;
-        mCameraRotation += 0.01;
-        float camX = cosf(mCameraRotation) * 1000;
-        float camZ = sinf(mCameraRotation) * 1000;
-        mCam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+        mGroundOffset = offset;
     }
 
     // Lets the app take control of the cam
     void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
     {
-        mGroundOffset += 0.05f;
         update_func(mCam);
     }
     
@@ -299,16 +245,18 @@ namespace bigscreens
         gl::pushMatrices();
         gl::setMatrices( mCam );
         
-        mTankShader->uniform( "projection", gl::getProjection() );
-        mTankShader->uniform( "modelView", gl::getModelView() );
+        mTankElementVbo->bind();
         
-        gl::drawArrays( GL_LINES, 0, mTankMesh->getNumVertices() );
-        //gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+        mTankShader->uniform("uColor", ColorAf(1,1,1,1));
+        
+        gl::setDefaultShaderVars();
+        //gl::drawArrays( GL_LINES, 0, mTankMesh->getNumVertices() );
+        gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
         gl::popMatrices();
         
+        mTankElementVbo->unbind();
         mTankVao->unbind();
         mTankShader->unbind();
-        //mTankElementVbo->unbind();
     }
     
     void TankContent::render(const ci::Vec2i & screenOffset)

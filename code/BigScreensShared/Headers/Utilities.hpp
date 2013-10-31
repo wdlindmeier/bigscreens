@@ -53,6 +53,9 @@ namespace bigscreens
     
     static bool rectsOverlap(ci::Rectf rectA, ci::Rectf rectB)
     {
+        return (rectA.x1 < rectB.x2 && rectA.x2 > rectB.x1 &&
+                rectA.y1 < rectB.y2 && rectA.y2 > rectB.y1);
+        /*
         return rectA.contains(rectB.getUpperLeft()) ||
         rectA.contains(rectB.getUpperRight()) ||
         rectA.contains(rectB.getLowerLeft()) ||
@@ -61,6 +64,7 @@ namespace bigscreens
         rectB.contains(rectA.getUpperRight()) ||
         rectB.contains(rectA.getLowerLeft()) ||
         rectB.contains(rectA.getLowerRight());
+        */
     };
     
     static bool rectIsValid(const ci::Rectf & rect,

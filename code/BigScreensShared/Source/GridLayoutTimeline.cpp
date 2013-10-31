@@ -43,6 +43,51 @@ namespace bigscreens
         {
             mIdxCurrentLayout = 0;
         }
+        assignTimelineIDs();
+    }
+
+    // This looks at each screen region and assigns it a contiguous timeline ID so
+    // we can track the content across layouts.
+    void GridLayoutTimeline::assignTimelineIDs()
+    {
+        int regionID = 0;
+        for (int i = 0; i < mGridLayouts.size(); ++i)
+        {
+            GridLayout & layout = mGridLayouts[i];
+            vector<ScreenRegion> newRegions;
+            vector<ScreenRegion> prevRegions;
+            if (i > 0)
+            {
+                prevRegions = mGridLayouts[i-1].getRegions();
+            }
+            for (ScreenRegion & region : layout.getRegions() )
+            {
+                // Check if the layout is zero or if this region
+                // existed in the previous layout.
+                // If so, use the previous ID.
+                int newRegionID = -1;
+                if (i != 0)
+                {
+                    // Compare against prev regions
+                    for (ScreenRegion & prevReg : prevRegions)
+                    {
+                        if (rectCompare(prevReg.rect, region.rect))
+                        {
+                            newRegionID = prevReg.timelineID;
+                            break;
+                        }
+                    }
+                }
+                if (newRegionID == -1)
+                {
+                    newRegionID = ++regionID;
+                }
+                region.timelineID = newRegionID;
+                newRegions.push_back(region);
+            }
+            // re-set
+            layout.setRegions(newRegions);
+        }
     }
     
     void GridLayoutTimeline::reload()
@@ -170,9 +215,9 @@ namespace bigscreens
         }
     }
     
-    std::vector< std::pair<ci::Rectf, RenderableContentRef> > GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider)
+    std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider)
     {
-        std::vector< std::pair<ci::Rectf, RenderableContentRef> > returnContent;
+        std::map< int, TimelineContentInfo > returnContent;
         
         vector<ScreenRegion> transitionRegions;
         vector<ScreenRegion> compareRegions;
@@ -233,19 +278,23 @@ namespace bigscreens
                 }
             }
             
-            std::pair<ci::Rectf, RenderableContentRef> returnItem;
+            //std::pair<ci::Rectf, RenderableContentRef> returnItem;
+            TimelineContentInfo returnItem;
             
             // Now, create the new rect.
             Vec2f rectCenter = rA.getCenter();
             Vec2f rectHalfSize = rA.getSize() * 0.5f * rectScale;
             Rectf transitionRect(rectCenter - rectHalfSize,
                                  rectCenter + rectHalfSize);
-            returnItem.first = transitionRect;
+            // returnItem.first = transitionRect;
+            returnItem.rect = transitionRect;
             
             // Append content.
-            returnItem.second = contentProvider->contentForKey(transitionReg.contentKey);
+            // returnItem.second = contentProvider->contentForKey(transitionReg.contentKey);
+            returnItem.contentKey = transitionReg.contentKey;
+            returnItem.contentRef = contentProvider->contentForKey(transitionReg.contentKey);
             
-            returnContent.push_back(returnItem);
+            returnContent[transitionReg.timelineID] = returnItem;
         }
         
         return returnContent;
