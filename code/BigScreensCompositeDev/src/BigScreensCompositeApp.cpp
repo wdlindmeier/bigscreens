@@ -29,6 +29,7 @@ static const std::string kContentKeyTankSpin = "tankSpin";
 static const std::string kContentKeyTankOverhead = "tankOverhead";
 static const std::string kContentKeyTankHeightmap = "tankHeightmap";
 static const std::string kContentKeyTankWide = "tankWide";
+static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeyPerlin = "perlin";
 
@@ -224,7 +225,8 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     // TODO: Give these more descriptive names
     if (contentName == kContentKeyTankSpin ||
         contentName == kContentKeyTankOverhead ||
-        contentName == kContentKeyTankWide)
+        contentName == kContentKeyTankWide ||
+        contentName == kContentKeyTankHorizon)
     {
         return mTankContent;
     }
@@ -249,33 +251,36 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
 
 void BigScreensCompositeApp::keyUp(KeyEvent event)
 {
-    char key = event.getChar();
-    if (key == ' ') // start / stop
+    if (mClient->isConnected())
     {
-        if (mTimeline->isPlaying())
+        char key = event.getChar();
+        if (key == ' ') // start / stop
         {
-            mClient->sendMessage(kMPEMessagePause);
+            if (mTimeline->isPlaying())
+            {
+                mClient->sendMessage(kMPEMessagePause);
+            }
+            else
+            {
+                mClient->sendMessage(kMPEMessagePlay);
+            }
         }
-        else
+        else if (event.getCode() == KeyEvent::KEY_RIGHT)
         {
-            mClient->sendMessage(kMPEMessagePlay);
+            mClient->sendMessage(kMPEMessageNext);
         }
-    }
-    else if (event.getCode() == KeyEvent::KEY_RIGHT)
-    {
-        mClient->sendMessage(kMPEMessageNext);
-    }
-    else if (event.getCode() == KeyEvent::KEY_LEFT)
-    {
-        mClient->sendMessage(kMPEMessagePrev);
-    }
-    else if (key == 'r')
-    {
-        mClient->sendMessage(kMPEMessageRestart);
-    }
-    else if (key == 'l')
-    {
-        mClient->sendMessage(kMPEMessageLoad);
+        else if (event.getCode() == KeyEvent::KEY_LEFT)
+        {
+            mClient->sendMessage(kMPEMessagePrev);
+        }
+        else if (key == 'r')
+        {
+            mClient->sendMessage(kMPEMessageRestart);
+        }
+        else if (key == 'l')
+        {
+            mClient->sendMessage(kMPEMessageLoad);
+        }
     }
 }
 
@@ -358,6 +363,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
         tank->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
             cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
@@ -370,6 +376,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(tankGroundOffset);
         tank->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             // Zoom in and out
             float camZ = tankDistance * 500;
             cam.lookAt(Vec3f( 100, 500, camZ ),
@@ -382,27 +389,59 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(tankGroundOffset);
         tank->update([=](CameraPersp & cam){
-            // float camX = -2000;
-            float camY = 100;
-            // Gets progressively closer
-            float camZ = (contentElapsedFrames * 1.9) - 3000;
-            cam.lookAt(Vec3f( -1000 + camZ, camY, camZ ),
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            float camX, camY, camZ;
+            switch (CLIENT_ID)
+            {
+                case 0:
+                    camY = 100;
+                    camZ = (contentElapsedFrames * 2.9) - 3000;
+                    camX = -1000 + camZ;
+                    break;
+                case 1:
+                    camY = 100;
+                    camZ = 3000 - (contentElapsedFrames * 4);
+                    camX = 500;// + camZ;
+                    break;
+                case 2:
+                    camY = 100;
+                    camZ = 3000 - (contentElapsedFrames * 2.9);
+                    camX = -1000 + -camZ;
+                    break;
+            }
+            
+            cam.lookAt(Vec3f(camX, camY, camZ),
                       Vec3f( 0, 100, 0 ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyTankHorizon)
+    {
+        // Tank content horizon shot
+        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
+        tank->setGroundOffset(tankGroundOffset);
+        tank->update([=](CameraPersp & cam){
+            cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
+            float camX = -65000;
+            float camY = 100;
+            float camZ = 36000 - (tankGroundOffset.y * -200.0f);
+            cam.lookAt(Vec3f( camX, camY, camZ ),
+                       Vec3f( 0, camY, camZ ) );
         });
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
         float scalarProgress = 1.0 - std::min<float>((float)contentElapsedFrames / 1000.0f, 1.0f);
         float finalOffset = scalarProgress * scalarProgress;
-        float camDist = 5000 + (5000 * finalOffset);
+        float camDist = 4000 + (6000 * finalOffset);
         
         shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mTankContentConverge);
         tanks->update([=](CameraPersp & cam){
-            float camY = camDist;
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            float camY = camDist * 0.25;
             float camZ = camDist;
             float camX = camDist;
             cam.lookAt(Vec3f( camX, camY, camZ ),
-                       Vec3f( 0, -1000, 0 ) );
+                       Vec3f( 0, -1750, 0 ) );
         });
     }
     else if (contentInfo.contentKey == kContentKeyPerlin)
@@ -417,6 +456,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Heightmap
         shared_ptr<TankHeightmapContent> tank = static_pointer_cast<TankHeightmapContent>(content);
+        tank->getCamera().setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         tank->update(Vec3f(0, 0, 20));
     }
 }

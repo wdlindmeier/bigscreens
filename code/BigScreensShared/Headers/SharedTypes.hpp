@@ -25,7 +25,7 @@ namespace bigscreens
         // This is to manipulate the aspect ratio
 		// so that we can use different windows
 		// for our content.
-		virtual ci::Camera& getCamera() = 0;
+		virtual ci::Camera & getCamera() = 0;
         
     protected:
         long long mNumFramesRendered;

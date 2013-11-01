@@ -25,7 +25,7 @@ namespace bigscreens {
         
     public:
         
-        TankConvergenceContent() : TankContent() {};
+        TankConvergenceContent();
         virtual ~TankConvergenceContent(){};
         
     protected:

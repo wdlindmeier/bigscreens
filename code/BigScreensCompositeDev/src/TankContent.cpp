@@ -147,6 +147,7 @@ namespace bigscreens
     {
         gl::Texture::Format texFormat;
         texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
+        texFormat.mipMap(true);
         mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
         
         mGroundContent.load(mGroundShader);
@@ -175,17 +176,6 @@ namespace bigscreens
                            (-0.5f * groundScale));
 
         mGroundContent.render(GL_TRIANGLE_STRIP, groundOffset);
-        
-        /*
-        mGroundVao->bind();
-        mGroundVbo->bind();
-
-        gl::setDefaultShaderVars();
-        gl::drawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-        
-        mGroundVao->unbind();
-        mGroundVbo->unbind();
-        */
         
         mGridTexture->unbind();
         mTextureShader->unbind();

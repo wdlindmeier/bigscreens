@@ -13,6 +13,12 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
+
+TankConvergenceContent::TankConvergenceContent() : TankContent()
+{
+    mGroundContent = GroundContent(20000.0);
+};
+
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
@@ -26,13 +32,19 @@ void TankConvergenceContent::drawTank()
     
     mTankShader->uniform("uColor", ColorAf(1,1,1,1));
     
+    float scalarProgress = 1.0 - std::min<float>(1.0, (float)mNumFramesRendered / 1000.0f);
+    float weightedProgress = scalarProgress * scalarProgress;
+
     static const int kNumTanks = 20;
     for (int i = 0; i < kNumTanks; ++i)
     {
         float scalarOffset = (float)i / (float)kNumTanks;
         float rads = M_PI * 2 * scalarOffset;
-        // TODO: Determine distance
-        float tankDist = 4000;
+
+        // A simple distance based on sin that looks somewhat staggered
+        float iDist = fabs(sin(i)) * 5000;
+        
+        float tankDist = 5000 + (iDist * weightedProgress);
         float x = cos(rads) * tankDist;
         float y = 0;
         float z = sin(rads) * tankDist;
