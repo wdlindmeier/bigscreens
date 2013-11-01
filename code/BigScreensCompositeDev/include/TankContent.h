@@ -16,6 +16,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "SharedTypes.hpp"
 #include "cinder/TriMesh.h"
+#include "GroundContent.h"
 
 namespace bigscreens {
     
@@ -28,18 +29,18 @@ namespace bigscreens {
         virtual ~TankContent(){};
         
         virtual void load(const std::string & objFilename);
-        virtual void update();
+        virtual void setGroundOffset(const ci::Vec2f offset);
         virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
         virtual void render(const ci::Vec2i & screenOffset);
         virtual void reset();
-        ci::CameraPersp& getCamera() { return mCam; }
+        virtual ci::CameraPersp& getCamera() { return mCam; }
         
     protected:
         
         virtual void loadGround();
         virtual void loadScreen();
         virtual void loadShaders();
-        void loadObj(const std::string & filename);
+                void loadObj(const std::string & filename);
         
         virtual void drawScreen();
         virtual void drawGround();
@@ -47,10 +48,6 @@ namespace bigscreens {
         
         ci::CameraPersp		mCam;
 
-    private:
-
-        float               mCameraRotation;
-        
         // Tank
         ci::TriMeshRef		mTankMesh;
         ci::gl::VboRef		mTankVbo;
@@ -60,16 +57,20 @@ namespace bigscreens {
         
         // NOTE: Maybe the screen texture should be up 1 level
         // Screen
+        ci::gl::GlslProgRef mTextureShader;
         ci::gl::TextureRef  mScreenTexture;
         ci::gl::VaoRef      mScreenVao;
         ci::gl::VboRef      mScreenVbo;
 
         // Ground plane
-        ci::gl::GlslProgRef mTextureShader;
+        ci::gl::GlslProgRef mGroundShader;
         ci::gl::TextureRef  mGridTexture;
+        /*
         ci::gl::VaoRef      mGroundVao;
         ci::gl::VboRef      mGroundVbo;
-        float               mGroundOffset;
+        */
+        GroundContent       mGroundContent;
+        ci::Vec2f           mGroundOffset;
   
     };
 }

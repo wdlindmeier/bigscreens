@@ -6,6 +6,8 @@
 //
 //
 
+#pragma once
+
 #include "cinder/Cinder.h"
 #include "cinder/Camera.h"
 #include "cinder/gl/Texture.h"
@@ -25,7 +27,10 @@ namespace bigscreens
         ~PerlinContent(){};
         
         void update(const ci::Vec2f & move);
+        void generateNoiseForPosition(const ci::Vec2f & position);
         void render(const ci::Vec2i & screenOffset);
+        void preRender();
+        ci::gl::TextureRef getTextureRef();
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }
         ci::gl::TextureRef getTexture(){ return mTexture; };

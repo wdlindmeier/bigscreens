@@ -16,12 +16,22 @@
 #include "PerlinContent.h"
 #include "cinder/Rand.h"
 #include "cinder/qtime/QuickTimeGl.h"
+#include "TankBlinkingContent.h"
+#include "TankConvergenceContent.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 using namespace mpe;
 using namespace bigscreens;
+
+static const std::string kContentKeyTankSpin = "tankSpin";
+static const std::string kContentKeyTankOverhead = "tankOverhead";
+static const std::string kContentKeyTankHeightmap = "tankHeightmap";
+static const std::string kContentKeyTankWide = "tankWide";
+static const std::string kContentKeyTankHorizon = "tankHorizon";
+static const std::string kContentKeyTanksConverge = "tanksConverge";
+static const std::string kContentKeyPerlin = "perlin";
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentProvider
 {
@@ -56,7 +66,8 @@ public:
 	void update();
     void mpeFrameUpdate(long serverFrameNumber);
     void updatePlaybackState();
-	
+	void updateContentForRender(const TimelineContentInfo & contentInfo);
+    
     // Draw
     void draw();
     void mpeFrameRender(bool isNewFrame);
@@ -81,16 +92,15 @@ public:
     qtime::MovieGlRef    mSoundtrack;
     
     // Content
-    RenderableContentRef mTankContent0;
-    float mTank0Rotation;
-    RenderableContentRef mTankContent1;
-    RenderableContentRef mTankContent2;
+    RenderableContentRef mTankContent;
     RenderableContentRef mTankContentHeightmap;
     RenderableContentRef mPerlinContent;
-    
+    RenderableContentRef mTankContentConverge;
     RenderableContentRef mTextureContentBlank;
+    
     OutLineBorderRef mOutLine;
-
+    
+    map<int, TimelineContentInfo>  mCurrentContentInfo;
 };
 
 #pragma mark - Setup
@@ -131,38 +141,31 @@ void BigScreensCompositeApp::shutdown()
 void BigScreensCompositeApp::reload()
 {
     mLastFrameNum = -1;
+    mCurrentContentInfo.clear();
     mTimeline->reload();
     mTimeline->restart();
     mSoundtrack->seekToStart();
     
-    static_pointer_cast<TankContent>(mTankContent0)->reset();
-    static_pointer_cast<TankContent>(mTankContent1)->reset();
-    static_pointer_cast<TankContent>(mTankContent2)->reset();
-    static_pointer_cast<TankContent>(mTankContentHeightmap)->reset();
+    static_pointer_cast<TankContent>(mTankContent)->reset();
+    static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
-    
-    mTank0Rotation = 0;
+    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
 }
 
 void BigScreensCompositeApp::loadAssets()
 {
-    // NOTE / TODO
-    // These should share OBJs
-    TankContent *tank0 = new TankContent();
-    tank0->load("T72.obj");
-    mTankContent0 = RenderableContentRef(tank0);
-
-    TankContent *tank1 = new TankContent();
-    tank1->load("T72.obj");
-    mTankContent1 = RenderableContentRef(tank1);
-
-    TankContent *tank2 = new TankContent();
-    tank2->load("T72.obj");
-    mTankContent2 = RenderableContentRef(tank2);
+    TankContent *tank = new TankContent();
+    tank->load("T72.obj");
+    mTankContent = RenderableContentRef(tank);
     
     TankHeightmapContent *tankHeightmap = new TankHeightmapContent();
     tankHeightmap->load("T72.obj");
     mTankContentHeightmap = RenderableContentRef(tankHeightmap);
+
+    TankConvergenceContent *tanksConverge = new TankConvergenceContent();
+    tanksConverge->load("T72.obj");
+    mTankContentConverge = RenderableContentRef(tanksConverge);
+    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
     
     PerlinContent *perlinContent = new PerlinContent();
     mPerlinContent = RenderableContentRef(perlinContent);
@@ -219,60 +222,65 @@ void BigScreensCompositeApp::mpeReset()
 
 RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & contentName)
 {
-    // It would be nice to only keep the content in memory when it's being used.
-    // Perhaps this can lazy-load content...
-    if (contentName == "tank")
+    // TODO: Give these more descriptive names
+    if (contentName == kContentKeyTankSpin ||
+        contentName == kContentKeyTankOverhead ||
+        contentName == kContentKeyTankWide ||
+        contentName == kContentKeyTankHorizon)
     {
-        return mTankContent0;
+        return mTankContent;
     }
-    else if (contentName == "tank0")
-    {
-        return mTankContent1;
-    }
-    else if (contentName == "tank1")
+    else if( contentName == kContentKeyTankHeightmap)
     {
         return mTankContentHeightmap;
     }
-    else if (contentName == "perlin")
+    else if (contentName == kContentKeyTanksConverge)
+    {
+        return mTankContentConverge;
+    }
+    else if (contentName == kContentKeyPerlin)
     {
         return mPerlinContent;
     }
 
+    // Default is a blank texture
     return mTextureContentBlank;
-
 }
 
 #pragma mark - Input events
 
 void BigScreensCompositeApp::keyUp(KeyEvent event)
 {
-    char key = event.getChar();
-    if (key == ' ') // start / stop
+    if (mClient->isConnected())
     {
-        if (mTimeline->isPlaying())
+        char key = event.getChar();
+        if (key == ' ') // start / stop
         {
-            mClient->sendMessage(kMPEMessagePause);
+            if (mTimeline->isPlaying())
+            {
+                mClient->sendMessage(kMPEMessagePause);
+            }
+            else
+            {
+                mClient->sendMessage(kMPEMessagePlay);
+            }
         }
-        else
+        else if (event.getCode() == KeyEvent::KEY_RIGHT)
         {
-            mClient->sendMessage(kMPEMessagePlay);
+            mClient->sendMessage(kMPEMessageNext);
         }
-    }
-    else if (event.getCode() == KeyEvent::KEY_RIGHT)
-    {
-        mClient->sendMessage(kMPEMessageNext);
-    }
-    else if (event.getCode() == KeyEvent::KEY_LEFT)
-    {
-        mClient->sendMessage(kMPEMessagePrev);
-    }
-    else if (key == 'r')
-    {
-        mClient->sendMessage(kMPEMessageRestart);
-    }
-    else if (key == 'l')
-    {
-        mClient->sendMessage(kMPEMessageLoad);
+        else if (event.getCode() == KeyEvent::KEY_LEFT)
+        {
+            mClient->sendMessage(kMPEMessagePrev);
+        }
+        else if (key == 'r')
+        {
+            mClient->sendMessage(kMPEMessageRestart);
+        }
+        else if (key == 'l')
+        {
+            mClient->sendMessage(kMPEMessageLoad);
+        }
     }
 }
 
@@ -339,36 +347,118 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         broadcastCurrentLayout();
         mLastFrameNum = mTimeline->getCurrentFrame();
     }
+}
+
+void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
+{
+    long long contentElapsedFrames = contentInfo.numRenderFrames;
+    Vec2f tankGroundOffset(0, contentElapsedFrames * -0.05f);
+    RenderableContentRef content = contentInfo.contentRef;
+    content->setFramesRendered(contentElapsedFrames);
     
-    mTank0Rotation += 0.01;
-    static_pointer_cast<TankContent>(mTankContent0)->update([=](CameraPersp & cam)
+    if (contentInfo.contentKey == kContentKeyTankSpin)
     {
-        float camX = cosf(mTank0Rotation) * 1000;
-        float camZ = sinf(mTank0Rotation) * 1000;
-        cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
-    });
-
-    float tank1Distance = sinf(mClient->getCurrentRenderFrame() * 0.0025);
-    static_pointer_cast<TankContent>(mTankContent1)->update([=](CameraPersp & cam)
+        // Blinking tank rotation
+        float tankRotation = contentElapsedFrames * 0.01;
+        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
+        tank->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
+        tank->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            float camX = cosf(tankRotation) * 1000;
+            float camZ = sinf(tankRotation) * 1000;
+            cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyTankOverhead)
     {
-        // Zoom in and out
-        float camZ = tank1Distance * 500;
-        cam.lookAt(Vec3f( 100, 500, camZ ),
-                   Vec3f( 0, 100, 0 ) );
-    });
-
-    static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->update([=](CameraPersp & cam)
+        // Flat texture ground
+        float tankDistance = sinf(contentElapsedFrames * 0.0025);
+        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
+        tank->setGroundOffset(tankGroundOffset);
+        tank->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            // Zoom in and out
+            float camZ = tankDistance * 500;
+            cam.lookAt(Vec3f( 100, 500, camZ ),
+                       Vec3f( 0, 100, 0 ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyTankWide)
     {
-        // Steady shot
-        cam.lookAt(Vec3f( 0, 600, -1000 ),
-                   Vec3f( 0, 100, 0 ) );
-    });
-
-    static_pointer_cast<PerlinContent>(mPerlinContent)->update(Vec2f(0.2, 0.0));
-    
-    // Work?
-    static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->setHeightTexture(
-       static_pointer_cast<PerlinContent>(mPerlinContent)->getTexture());
+        // Tank content wide shot
+        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
+        tank->setGroundOffset(tankGroundOffset);
+        tank->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            float camX, camY, camZ;
+            switch (CLIENT_ID)
+            {
+                case 0:
+                    camY = 100;
+                    camZ = (contentElapsedFrames * 2.9) - 3000;
+                    camX = -1000 + camZ;
+                    break;
+                case 1:
+                    camY = 100;
+                    camZ = 3000 - (contentElapsedFrames * 4);
+                    camX = 500;// + camZ;
+                    break;
+                case 2:
+                    camY = 100;
+                    camZ = 3000 - (contentElapsedFrames * 2.9);
+                    camX = -1000 + -camZ;
+                    break;
+            }
+            
+            cam.lookAt(Vec3f(camX, camY, camZ),
+                      Vec3f( 0, 100, 0 ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyTankHorizon)
+    {
+        // Tank content horizon shot
+        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
+        tank->setGroundOffset(tankGroundOffset);
+        tank->update([=](CameraPersp & cam){
+            cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
+            float camX = -65000;
+            float camY = 100;
+            float camZ = 36000 - (tankGroundOffset.y * -200.0f);
+            cam.lookAt(Vec3f( camX, camY, camZ ),
+                       Vec3f( 0, camY, camZ ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyTanksConverge)
+    {
+        float scalarProgress = 1.0 - std::min<float>((float)contentElapsedFrames / 1000.0f, 1.0f);
+        float finalOffset = scalarProgress * scalarProgress;
+        float camDist = 4000 + (6000 * finalOffset);
+        
+        shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mTankContentConverge);
+        tanks->update([=](CameraPersp & cam){
+            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            float camY = camDist * 0.25;
+            float camZ = camDist;
+            float camX = camDist;
+            cam.lookAt(Vec3f( camX, camY, camZ ),
+                       Vec3f( 0, -1750, 0 ) );
+        });
+    }
+    else if (contentInfo.contentKey == kContentKeyPerlin)
+    {
+        // Perlin
+        // NOTE: The movement here doesn't map to PX.
+        // The image /should/ shift 1px per frame...
+        shared_ptr<PerlinContent> perlin = static_pointer_cast<PerlinContent>(content);
+        perlin->update(Vec2f(0.0, -0.2));
+    }
+    else if (contentInfo.contentKey == kContentKeyTankHeightmap)
+    {
+        // Heightmap
+        shared_ptr<TankHeightmapContent> tank = static_pointer_cast<TankHeightmapContent>(content);
+        tank->getCamera().setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+        tank->update(Vec3f(0, 0, 20));
+    }
 }
 
 #pragma mark - Render
@@ -382,26 +472,45 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
 {
     gl::clear( Color( 0, 0, 0 ), true );
     
-    std::vector<std::pair<Rectf, RenderableContentRef> > renderContent =
-        mTimeline->getRenderContent(this);
+    // Create a new map of render times.
+    // The old one will be replaced.
+    map<int, TimelineContentInfo>  newContentInfo;
+    
+    std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this);
     
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
 
-    for (int i = 0; i < renderContent.size(); ++i)
+    for (auto & kv : renderContent)
     {
-        // NOTE: Maybe we should load up the scene windows whenever the layout
-        // changes and just update their rects in update().
-        // We could avoid allocating new memory for each scene every frame.
-        std::pair<Rectf, RenderableContentRef> & renderMe = renderContent[i];
+        int contentID = kv.first;
+        TimelineContentInfo renderMe = kv.second;
+        
+        // Update the content info even when it's not being drawn
+        if (mCurrentContentInfo.count(contentID))
+        {
+            TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
+            renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+        }
+        else
+        {
+            renderMe.numRenderFrames = 1;
+        }
+        newContentInfo[contentID] = renderMe;
         
         // Check if this should be rendered at all.
-        // Maybe this should happen in SceneWindow?
-        if (rectsOverlap(renderMe.first, mClient->getVisibleRect()))
+        if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))
         {
-            SceneWindow scene(renderMe.second,
-                              renderMe.first,
+            // NOTE: Do the updates >>> here <<<
+            // Some module won't be rendered (and therefor shouldn't be updated)
+            // and other modules will be rendered (and updated) more than once.
+            
+            updateContentForRender(renderMe);
+
+            SceneWindow scene(renderMe.contentRef,
+                              renderMe.rect,
                               windowSize);
+            
             scene.render(offset);
 
             // NOTE:
@@ -414,6 +523,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     {
         renderColumns();
     }
+    
+    mCurrentContentInfo = newContentInfo;
 }
 
 void BigScreensCompositeApp::renderColumns()

@@ -32,10 +32,7 @@ namespace bigscreens
         // requires a knowledge of the current time. Transitions are absolute milliseconds.
         void update();
         
-        // We're passing back the region and the content as a pair.
-        // No need to copy/send the whole layout.
-        // TODO: Make a shared content provider.
-        std::vector< std::pair<ci::Rectf, RenderableContentRef> > getRenderContent(ContentProvider *contentProvider);
+        std::map<int, TimelineContentInfo> getRenderContent(ContentProvider *contentProvider);
         
         std::vector<GridLayout> & getGridLayouts(){ return mGridLayouts; };
         
@@ -48,6 +45,7 @@ namespace bigscreens
         void newLayoutWasSet();
         void reload();
         void loadAllGrids();
+        void assignTimelineIDs();
         
         bool isPlaying();
         int getCurrentFrame(){ return mIdxCurrentLayout; };
