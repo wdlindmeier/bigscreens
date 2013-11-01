@@ -10,6 +10,7 @@
 
 #include "TankContent.h"
 #include "PerlinContent.h"
+#include "GroundContent.h"
 
 namespace bigscreens
 {
@@ -18,7 +19,7 @@ namespace bigscreens
         
     public:
         
-        TankHeightmapContent() : TankContent() {};
+        TankHeightmapContent();
         virtual ~TankHeightmapContent(){};
         
         virtual void load(const std::string & objFilename);
@@ -34,12 +35,10 @@ namespace bigscreens
         void drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
         virtual void drawTank();
 
-    private:
+        //GroundContent       mGroundContent;
 
         // Ground plane
         ci::gl::GlslProgRef mHeightmapShader;
-        ci::gl::VaoRef      mGroundVao;
-        ci::gl::VboRef      mGroundVbo;
         ci::Vec3f           mTankMovement;
         
         PerlinContent       mPerlinContent;

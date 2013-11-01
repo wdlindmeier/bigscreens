@@ -1,12 +1,13 @@
 #version 150 core
 #extension all : warn
 
-layout (location = 0) in vec3 position;
-
-uniform mat4 projection;
-uniform mat4 modelView;
+uniform mat4        uModelViewProjection;
+uniform vec4        uColor;
+in vec4             vPosition;
+out lowp vec4       Color;
 
 void main()
 {
-	gl_Position = projection * modelView * vec4( position, 1.0 );
+	gl_Position	= uModelViewProjection * vPosition;
+    Color = uColor;
 }
