@@ -1,6 +1,7 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
+#include "cinder/gl/Fbo.h"
 #include "MPEApp.hpp"
 #include "MPEClient.h"
 #include "Utilities.hpp"
@@ -18,6 +19,7 @@
 #include "cinder/qtime/QuickTimeGl.h"
 #include "TankBlinkingContent.h"
 #include "TankConvergenceContent.h"
+#include "FinalBillboard.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -101,6 +103,9 @@ public:
     OutLineBorderRef mOutLine;
     
     map<int, TimelineContentInfo>  mCurrentContentInfo;
+	
+	FinalBillboardRef mFinalBillboard;
+	gl::FboRef		  mFbo;
 };
 
 #pragma mark - Setup
@@ -121,10 +126,22 @@ void BigScreensCompositeApp::setup()
     console() << "IS_IAC ? " << IS_IAC << "\n";
     GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC), kScreenScale);
 
-    mTimeline = std::shared_ptr<GridLayoutTimeline>(t);
+    mTimeline = GridLayoutTimelineRef(t);
     
-    mOutLine = std::shared_ptr<OutLineBorder>(new OutLineBorder());
+    mOutLine = OutLineBorderRef(new OutLineBorder());
+	
+	mFinalBillboard = FinalBillboardRef( new FinalBillboard() );
+	
+	gl::Fbo::Format mFboFormat;
+	mFboFormat.colorTexture().depthBuffer().samples( 16 );
+	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
     
+	mFbo->bindFramebuffer();
+	gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	mFbo->unbindFramebuffer();
+	
+	cout << mFbo->getSize() << " " << getWindowSize();
+	
     mIsDrawingColumns = false;
 
     loadAudio();
@@ -481,6 +498,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
 
+	mFbo->bindFramebuffer();
     for (auto & kv : renderContent)
     {
         int contentID = kv.first;
@@ -518,7 +536,10 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             mOutLine->render();
         }
     }
-    
+    mFbo->unbindFramebuffer();
+	
+	mFinalBillboard->draw( mFbo->getTexture() );
+	
     if (mIsDrawingColumns)
     {
         renderColumns();

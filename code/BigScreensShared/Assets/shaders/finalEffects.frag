@@ -36,7 +36,7 @@ void main()
     {
         if ( texture( fboTexture, texCoord).r < 0.5 )
         {
-            color = sum*sum*0.019 + texture( fboTexture, texCoord );
+            color = sum*sum*0.009 + texture( fboTexture, texCoord );
         }
         else
         {
@@ -56,8 +56,6 @@ void main()
     col.g = texture( fboTexture, vec2( texCoord.x + 0.000, texCoord.y ) ).y;
     col.b = texture( fboTexture, vec2( texCoord.x - 0.003, texCoord.y ) ).z;
 	
-//	color = vec4( col, 1.0 );
-	
 	// contrast curve
     col = clamp( col * 0.5 + 0.5 * col * col * 1.2, 0.0, 1.0 );
 	
@@ -73,10 +71,6 @@ void main()
 	
 	//flickering (semi-randomized)
     col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );
-	
-	//smoothen
-//    float comp = smoothstep( 0.2, 0.7, sin(time) );
-//    col = mix( col, oricol, clamp( -2.0 + 2.0 * texCoord.x + 3.0 * comp, 0.0, 1.0 ) );
 	
 	color = (vec4(col,1.0) * color);
 }

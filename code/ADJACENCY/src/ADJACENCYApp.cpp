@@ -23,6 +23,8 @@ class ADJACENCYApp : public AppNative {
 	void draw();
     void loadShaders();
 	void createQuad();
+	void prepareSettings( Settings * settings ) { /*settings->setWindowSize( 1600, 1600 ); */ }
+	void keyDown( KeyEvent event );
     
 	// terrain
     gl::VaoRef		mVao;
@@ -39,7 +41,22 @@ class ADJACENCYApp : public AppNative {
 	gl::VaoRef		mBillboardVao;
 	gl::VboRef		mBillboardVbo, mBillboardElementVbo;
 	gl::GlslProgRef	mEffectsGlsl;
+	gl::Fbo::Format mFboFormat;
 };
+
+void ADJACENCYApp::keyDown( KeyEvent event )
+{
+	if( event.getChar() == 'f') {
+		setFullScreen(true);
+		gl::viewport( Vec2i( 0, 0 ), getWindowSize() );
+		mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
+	}
+	else if( event.getCode() == KeyEvent::KEY_ESCAPE ) {
+		setFullScreen( false );
+		gl::viewport( Vec2i(), getWindowSize() );
+		mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
+	}
+}
 
 void ADJACENCYApp::setup()
 {
@@ -47,8 +64,8 @@ void ADJACENCYApp::setup()
 	
 	mTexture = gl::Texture::create( loadImage( loadAsset( "noise_map.png" ) ) );
 	
-	gl::Fbo::Format mFboFormat;
-	mFboFormat.colorTexture().depthBuffer().samples(16);
+	
+	mFboFormat.colorTexture().depthBuffer();
 	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
 	
     TriMesh::Format mTriFormat;
@@ -158,7 +175,7 @@ void ADJACENCYApp::createQuad()
 
 void ADJACENCYApp::mouseDown( MouseEvent event )
 {
-    loadShaders();
+//    loadShaders();
 	chooseColor = !chooseColor;
 	
 }
@@ -180,7 +197,7 @@ void ADJACENCYApp::draw()
     gl::pushMatrices();
     gl::setMatrices( mCam );
     // simple centering
-    gl::multModelView( Matrix44f::createTranslation( Vec3f( -((xCount-1)*quadSize) / 2, -((yCount-1)*quadSize) / 4, -((xCount-1) * quadSize) / 8 )  ) );
+    gl::multModelView( Matrix44f::createTranslation( Vec3f( -((xCount-1)*quadSize) / 2, -((yCount-1)*quadSize) / 4, (-((xCount-1) * quadSize) / 8) - 10 )   ) );
 	gl::multModelView( Matrix44f::createRotation( Vec3f( 1, 0, 0 ), toRadians( -80.0f ) ) );
 //	gl::multModelView( Matrix44f::createScale( Vec3f( .05, 0, 0 ) ) );
     mVao->bind();
@@ -221,7 +238,7 @@ void ADJACENCYApp::draw()
         mQuadOutlineGlsl->uniform( "modelView", gl::getModelView() );
 		mQuadOutlineGlsl->uniform( "colorOffset", index++ );
 		mQuadOutlineGlsl->uniform( "heightMap", 0 );
-		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+//		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
 	
             gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
     
@@ -231,10 +248,10 @@ void ADJACENCYApp::draw()
     mLineElementVbo->unbind();
     mVao->unbind();
 	
-	if( divideNum >  5.0f )
-		divideNum =	0.01f;
-	else
-		divideNum+= 0.01f;
+//	if( divideNum >  5.0f )
+//		divideNum =	0.01f;
+//	else
+//		divideNum+= 0.01f;
 	
     gl::popMatrices();
     
@@ -255,6 +272,7 @@ void ADJACENCYApp::draw()
 	gl::drawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 	
 	mEffectsGlsl->unbind();
+	
 	mFbo->unbindTexture();
 	mBillboardElementVbo->bind();
 	mBillboardVao->bind();

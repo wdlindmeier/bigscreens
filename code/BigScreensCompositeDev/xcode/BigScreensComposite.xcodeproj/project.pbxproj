@@ -200,6 +200,12 @@
 		A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */; };
+		B3052DAB1823DD64006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
+		B3052DAC1823DD64006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
+		B3052DAD1823DD64006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
+		B3052DAE1823DD64006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
+		B3052DAF1823DD64006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
+		B3052DB01823DD64006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
 		C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
 		EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
 /* End PBXBuildFile section */
@@ -293,6 +299,9 @@
 		A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreensController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensControllerApp.cpp; path = ../src/BigScreensControllerApp.cpp; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3052DA91823DD64006D91DD /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.frag; sourceTree = "<group>"; };
+		B3052DAA1823DD64006D91DD /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.vert; sourceTree = "<group>"; };
+		B3052DB11823DE2E006D91DD /* FinalBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../include/FinalBillboard.h; sourceTree = "<group>"; };
 		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -477,6 +486,7 @@
 				A97122951819C8AA006DD64E /* TankHeightmapContent.h */,
 				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 				A971227F18196DDD006DD64E /* TextureContent.h */,
+				B3052DB11823DE2E006D91DD /* FinalBillboard.h */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -533,6 +543,8 @@
 		A97C88F9181087BC00AE2AE2 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B3052DA91823DD64006D91DD /* finalEffects.frag */,
+				B3052DAA1823DD64006D91DD /* finalEffects.vert */,
 				A97C88FA181087BC00AE2AE2 /* basic.frag */,
 				A97C88FB181087BC00AE2AE2 /* basic.vert */,
 				A9B50B0118230A1100C077BD /* ground_texture.frag */,
@@ -892,8 +904,10 @@
 				A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				B3052DAE1823DD64006D91DD /* finalEffects.vert in Sources */,
 				A9B50AF21822B7A900C077BD /* TankBlinkingContent.cpp in Sources */,
 				A971227C18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B3052DAB1823DD64006D91DD /* finalEffects.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,8 +926,10 @@
 				A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				B3052DAF1823DD64006D91DD /* finalEffects.vert in Sources */,
 				A9B50AF31822B7A900C077BD /* TankBlinkingContent.cpp in Sources */,
 				A971227D18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B3052DAC1823DD64006D91DD /* finalEffects.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,8 +948,10 @@
 				A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				B3052DB01823DD64006D91DD /* finalEffects.vert in Sources */,
 				A9B50AF41822B7A900C077BD /* TankBlinkingContent.cpp in Sources */,
 				A971227E18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B3052DAD1823DD64006D91DD /* finalEffects.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,6 +1128,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1135,6 +1154,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
