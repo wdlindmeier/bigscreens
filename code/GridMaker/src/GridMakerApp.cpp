@@ -683,10 +683,12 @@ void GridMakerApp::drawMargins()
                             kScreenWidth * kScreenScale,
                             kScreenHeight * 3 * kScreenScale));
 
+    /*
     gl::drawSolidRect(Rectf((kScreenWidth - kScreenMarginRight) * kScreenScale,
                             kScreenHeight * 2 * kScreenScale,
                             kScreenWidth * kScreenScale,
                             kScreenHeight * 3 * kScreenScale));
+    */
 }
 
 void GridMakerApp::renderLayout(const GridLayout & layout,

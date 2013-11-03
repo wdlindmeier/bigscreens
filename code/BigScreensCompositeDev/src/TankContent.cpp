@@ -20,8 +20,26 @@ using namespace bigscreens;
 namespace bigscreens
 {
     
-    TankContent::TankContent() : mGroundContent(10000.0)
+    TankContent::TankContent() :
+    mGroundContent(10000.0),
+    mTankPosition(0,0,0),
+    mIsGroundVisible(true)
     {
+    }
+    
+    void TankContent::setTankPosition(const ci::Vec3f tankPosition)
+    {
+        mTankPosition = tankPosition;
+    }
+    
+    ci::Vec3f TankContent::getTankPosition()
+    {
+        return mTankPosition;
+    }
+    
+    void TankContent::setGroundIsVisible(bool isVisible)
+    {
+        mIsGroundVisible = isVisible;
     }
     
     void TankContent::load(const std::string & objFilename)
@@ -35,7 +53,6 @@ namespace bigscreens
         loadGround();
         
         // Cam
-        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
         
         mGroundOffset = Vec2f::zero();
@@ -155,6 +172,8 @@ namespace bigscreens
     
     void TankContent::drawGround()
     {
+        if (!mIsGroundVisible) return;
+        
         gl::pushMatrices();
 
         gl::setMatrices( mCam );
@@ -186,6 +205,13 @@ namespace bigscreens
     void TankContent::reset()
     {
         mGroundOffset = Vec2f::zero();
+        resetPositions();
+    }
+    
+    void TankContent::resetPositions()
+    {
+        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
+        mTankPosition = Vec3f::zero();
     }
     
     void TankContent::setGroundOffset(const Vec2f offset)
@@ -231,16 +257,17 @@ namespace bigscreens
     {
         mTankShader->bind();
         mTankVao->bind();
+        mTankElementVbo->bind();
         
         gl::pushMatrices();
-        gl::setMatrices( mCam );
         
-        mTankElementVbo->bind();
+        gl::setMatrices( mCam );
+        gl::translate(mTankPosition);
+        
+        gl::setDefaultShaderVars();
         
         mTankShader->uniform("uColor", ColorAf(1,1,1,1));
         
-        gl::setDefaultShaderVars();
-        //gl::drawArrays( GL_LINES, 0, mTankMesh->getNumVertices() );
         gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
         gl::popMatrices();
         
