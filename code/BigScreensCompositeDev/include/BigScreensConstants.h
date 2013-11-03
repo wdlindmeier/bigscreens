@@ -27,8 +27,6 @@ const static int kScreenHeight = 1080;
 const static int kScreenMarginBottom = 133;
 const static int kScreenMarginRight = 147; // Estimate
 
-#define IS_IAC  0
-
 #if IS_IAC
 const static float kScreenScale = 1.0f;
 #else
