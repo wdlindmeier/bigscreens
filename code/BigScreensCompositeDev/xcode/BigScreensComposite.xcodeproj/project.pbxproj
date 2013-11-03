@@ -301,7 +301,7 @@
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3052DA91823DD64006D91DD /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.frag; sourceTree = "<group>"; };
 		B3052DAA1823DD64006D91DD /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.vert; sourceTree = "<group>"; };
-		B3052DB11823DE2E006D91DD /* FinalBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../include/FinalBillboard.h; sourceTree = "<group>"; };
+		B3052DB11823DE2E006D91DD /* FinalBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/FinalBillboard.h; sourceTree = "<group>"; };
 		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -486,7 +486,6 @@
 				A97122951819C8AA006DD64E /* TankHeightmapContent.h */,
 				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 				A971227F18196DDD006DD64E /* TextureContent.h */,
-				B3052DB11823DE2E006D91DD /* FinalBillboard.h */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -590,6 +589,7 @@
 		A9E48EA518103A8300F2F1C9 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				B3052DB11823DE2E006D91DD /* FinalBillboard.h */,
 				A97C88E718107B3000AE2AE2 /* GridLayout.h */,
 				A97C88E218107A8900AE2AE2 /* GridLayoutTimeline.h */,
 				A97C89181810B24D00AE2AE2 /* OutLineBorder.hpp */,
@@ -1128,7 +1128,6 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1154,7 +1153,6 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

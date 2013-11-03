@@ -71,7 +71,8 @@ namespace bigscreens
                     // Compare against prev regions
                     for (ScreenRegion & prevReg : prevRegions)
                     {
-                        if (rectCompare(prevReg.rect, region.rect))
+                        if (rectCompare(prevReg.rect, region.rect) &&
+                            prevReg.contentKey == region.contentKey)
                         {
                             newRegionID = prevReg.timelineID;
                             break;
@@ -123,7 +124,7 @@ namespace bigscreens
     
     void GridLayoutTimeline::newLayoutWasSet()
     {
-        mTransitionAmt = mIsPlaying ? 0.0f : 1.0f;
+        mTransitionAmt = (mIsPlaying && mIdxCurrentLayout != 0) ? 0.0f : 1.0f;
         
         // Always reset the playhead so if we fwd/bck while playing it
         // continues from the current frame.
