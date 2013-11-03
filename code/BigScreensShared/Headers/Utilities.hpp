@@ -112,6 +112,11 @@ namespace bigscreens
         }
     }
 
+    static ci::fs::path SharedShaderAssetPath(const std::string & shaderName, bool isLocalApp = false)
+    {
+        return SharedAssetPath(isLocalApp) / "shaders" / shaderName;
+    }
+
     static ci::fs::path SharedGridAssetPath(bool isLocalApp)
     {
         return SharedAssetPath(isLocalApp) / "grid";
