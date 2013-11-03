@@ -113,7 +113,14 @@ void BigScreensControllerApp::renderCurrentFrameTexture()
     fs::path assetPath = SharedAssetPath(!IS_IAC) / "Hyperspace.ttf";
     if (fs::exists(assetPath))
     {
-        Font font(loadFile(assetPath), 24);
+        // Font font(loadFile(assetPath), 24);
+        // NOTE: Hyperspace must be installed on the host machine.
+        // Load font is currently borked on Cinder/Mavericks
+        Font font("Hyperspace", 24);
+        if (!font)
+        {
+            font = Font("Helvetica", 24);
+        }
         Surface frameSurf = renderString("Layout: " + std::to_string(mCurrentLayoutIndex),
                                          font,
                                          Color::black());

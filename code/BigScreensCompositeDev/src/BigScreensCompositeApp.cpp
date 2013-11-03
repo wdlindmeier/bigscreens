@@ -194,7 +194,7 @@ void BigScreensCompositeApp::loadAssets()
 
 void BigScreensCompositeApp::loadAudio()
 {
-    fs::path audioPath = SharedAssetPath(!IS_IAC) / "audio" / "escape_from_ny_theme.mp3"; //getResourcePath("escape_from_ny_theme.mp3");
+    fs::path audioPath = SharedAssetPath(!IS_IAC) / "audio" / "intriguing_possibilities_clipped_fade.aiff";
     if (!fs::exists(audioPath))
     {
         console() << "ERROR: No audio path found\n";
@@ -505,16 +505,20 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         TimelineContentInfo renderMe = kv.second;
         
         // Update the content info even when it's not being drawn
-        if (mCurrentContentInfo.count(contentID))
+        if (mClient->isConnected() &&
+            mTimeline->isPlaying())
         {
-            TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
-            renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+            if (mCurrentContentInfo.count(contentID))
+            {
+                TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
+                renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+            }
+            else
+            {
+                renderMe.numRenderFrames = 1;
+            }
+            newContentInfo[contentID] = renderMe;
         }
-        else
-        {
-            renderMe.numRenderFrames = 1;
-        }
-        newContentInfo[contentID] = renderMe;
         
         // Check if this should be rendered at all.
         if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))
