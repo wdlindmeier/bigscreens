@@ -14,6 +14,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "cinder/TriMesh.h"
 #include "ObjModel.h"
+#include "TankShot.h"
 
 #pragma once
 
@@ -24,12 +25,12 @@ namespace bigscreens
         
     public:
         
-        AdvancedTank() : mProgress(0) {};
+        AdvancedTank() {};
         virtual ~AdvancedTank(){};
         
         void load();
-        void update();
-        virtual void render(const ci::Vec2f & screenOffset);
+        void fire();
+        virtual void render(long progressCounter);
         
     protected:
         
@@ -42,8 +43,11 @@ namespace bigscreens
         ObjModel    mGearWheelModel;
         ObjModel    mWheelModel;
         
+        std::vector<TankShot>  mShotsFired;
+        float       mBarrelAngle;
+        float       mShotProgress;
+        
         ci::gl::GlslProgRef mTankShader;
         
-        long        mProgress;
     };
 }

@@ -9,6 +9,7 @@
 #include "AdvancedTank.h"
 
 using namespace ci;
+using std::vector;
 using namespace ci::app;
 using namespace bigscreens;
 
@@ -36,12 +37,14 @@ void AdvancedTank::loadModels()
     mWheelModel.load("tank_wheel_centered.obj", mTankShader);
 }
 
-void AdvancedTank::update()
+void AdvancedTank::fire()
 {
-    mProgress += 1;
+    float targetVelocity = 200.0f;
+    console() << "Firing w/ velocity " << targetVelocity << " degrees: " << toDegrees(mBarrelAngle) << std::endl;
+    mShotsFired.push_back(TankShot(mBarrelAngle, targetVelocity));
 }
 
-void AdvancedTank::render(const ci::Vec2f & screenOffset)
+void AdvancedTank::render(long progressCounter)
 {
     gl::enableAdditiveBlending();
     
@@ -49,19 +52,23 @@ void AdvancedTank::render(const ci::Vec2f & screenOffset)
 
     gl::setDefaultShaderVars();
     
-    mTankShader->uniform("uColor", ColorAf(1,1,1,1));
+    mTankShader->uniform("uColor", ColorAf(1,1,1,0.25f));
     
-    float wheelRotation = fmod(mProgress * 1, 360.0f);
-    float gearRotation = wheelRotation * 1.5f; // gear is smaller
+    float wheelRotation = fmod(progressCounter * 1, 360.0f);
+    float gearRotation = wheelRotation * 1.5f; // gear is smaller / faster
 
-    float barrelAngle = ((1.0 + sin(mProgress * 0.025)) * 0.5) * -35.0f;
+    // TMP: FPO
+    float barrelAngle = ((1.0 + sin(progressCounter * 0.01)) * 0.5) * -35.0f;
+    mBarrelAngle = barrelAngle * -1; // ci::toRadians(barrelAngle) * -1;
     
     mBodyModel.render();
     mHeadModel.render();
     
     // Barrel
     gl::pushMatrices();
-    gl::translate(Vec3f(0.0f, 170.0f, 0.0f));
+    const static float kBarrelOffsetY = 170.0f;
+    const static float kBarrelLength = 461.0f;
+    gl::translate(Vec3f(0.0f, kBarrelOffsetY, 0.0f));
     gl::rotate(barrelAngle, 1, 0, 0);
     mBarrelModel.render();
     gl::popMatrices();
@@ -121,6 +128,35 @@ void AdvancedTank::render(const ci::Vec2f & screenOffset)
     gl::rotate(wheelRotation, 1, 0, 0);
     mWheelModel.render();
     gl::popMatrices();
+    
+    // Draw the tip of the barrel for reference.
+    // This can be the shot bloom.
+    float offX = cos(toRadians(mBarrelAngle)) * kBarrelLength;
+    float offY = sin(toRadians(mBarrelAngle)) * kBarrelLength;
+    Vec3f barrelHead(0, kBarrelOffsetY + offY, 0 + offX);
+    
+    gl::enableAdditiveBlending();
+    mTankShader->uniform("uColor", ColorAf(1,1,0,1));
+    gl::drawCube(barrelHead, Vec3f(50,50,50));
+
+    vector<TankShot> keepTanks;
+    for (TankShot & shot : mShotsFired)
+    {
+        shot.update(0.2f);
+
+        float shotTheta = toRadians(shot.getTheta());
+        offX = cos(shotTheta) * kBarrelLength;
+        offY = sin(shotTheta) * kBarrelLength;
+        Vec3f exitPoint(0, kBarrelOffsetY + offY, 0 + offX);
+        
+        mTankShader->uniform("uColor", ColorAf(1,0,0,1));
+        shot.render(exitPoint);
+        if (!shot.isDead())
+        {
+            keepTanks.push_back(shot);
+        }
+    }
+    mShotsFired = keepTanks;
 
     mTankShader->unbind();
 }

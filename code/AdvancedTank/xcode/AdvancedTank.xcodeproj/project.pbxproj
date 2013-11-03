@@ -30,6 +30,7 @@
 		A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */; };
 		A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */; };
 		A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */; };
+		A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B451826C28C00C077BD /* TankShot.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel_centered.obj; path = ../resources/tank_barrel_centered.obj; sourceTree = "<group>"; };
 		A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel_centered.obj; path = ../resources/tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
 		A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
+		A9B50B451826C28C00C077BD /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankShot.cpp; path = ../src/TankShot.cpp; sourceTree = "<group>"; };
+		A9B50B481826C2A600C077BD /* TankShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankShot.h; path = ../include/TankShot.h; sourceTree = "<group>"; };
 		BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTankApp.cpp; path = ../src/AdvancedTankApp.cpp; sourceTree = "<group>"; };
 		FFAC57DCF4BA4FE4B5F63345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +101,7 @@
 				A9B50B371826B18500C077BD /* AdvancedTank.cpp */,
 				BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */,
 				A9B50B3B1826B41100C077BD /* ObjModel.cpp */,
+				A9B50B451826C28C00C077BD /* TankShot.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -137,6 +141,7 @@
 		29B97314FDCFA39411CA2CEA /* OBJTest */ = {
 			isa = PBXGroup;
 			children = (
+				A9B50B491826D5E200C077BD /* Shared */,
 				01B97315FEAEA392516A2CEA /* Blocks */,
 				29B97315FDCFA39411CA2CEA /* Headers */,
 				080E96DDFE201D6D7F000001 /* Source */,
@@ -154,6 +159,7 @@
 				496B53A514954BBE9D08A489 /* AdvancedTank_Prefix.pch */,
 				A9B50B3E1826B42400C077BD /* ObjModel.h */,
 				9AEFCB8143DF40D4B268B75E /* Resources.h */,
+				A9B50B481826C2A600C077BD /* TankShot.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -185,6 +191,13 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9B50B491826D5E200C077BD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +276,7 @@
 			files = (
 				A9B50B3D1826B41100C077BD /* ObjModel.cpp in Sources */,
 				62492195C3174C98A3123D8F /* AdvancedTankApp.cpp in Sources */,
+				A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */,
 				A9B50B391826B18500C077BD /* AdvancedTank.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
