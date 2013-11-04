@@ -31,6 +31,7 @@
 		A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */; };
 		A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */; };
 		A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B451826C28C00C077BD /* TankShot.cpp */; };
+		A9CF4D051827F6BF000A350A /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CF4D041827F6BF000A350A /* explosion.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
 		A9B50B451826C28C00C077BD /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankShot.cpp; path = ../src/TankShot.cpp; sourceTree = "<group>"; };
 		A9B50B481826C2A600C077BD /* TankShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankShot.h; path = ../include/TankShot.h; sourceTree = "<group>"; };
+		A9CF4D041827F6BF000A350A /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = explosion.png; path = ../../BigScreensShared/Resources/explosion.png; sourceTree = "<group>"; };
 		BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTankApp.cpp; path = ../src/AdvancedTankApp.cpp; sourceTree = "<group>"; };
 		FFAC57DCF4BA4FE4B5F63345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +198,7 @@
 		A9B50B491826D5E200C077BD /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				A9CF4D041827F6BF000A350A /* explosion.png */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				A9B50B361826B12600C077BD /* tank_wheel.obj in Resources */,
 				A9B50AEA18229D6E00C077BD /* basic.frag in Resources */,
 				A9B50B351826B12600C077BD /* tank_head.obj in Resources */,
+				A9CF4D051827F6BF000A350A /* explosion.png in Resources */,
 				A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */,
 				A9B50AEB18229D6E00C077BD /* basic.vert in Resources */,
 				A9B50B331826B12600C077BD /* tank_body.obj in Resources */,
