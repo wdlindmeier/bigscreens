@@ -30,7 +30,8 @@ namespace bigscreens
         
         void load();
         void fire();
-        virtual void render(long progressCounter);
+        virtual void update(long progressCounter);
+        virtual void render(ci::CameraPersp & cam);
         
     protected:
         
@@ -45,6 +46,8 @@ namespace bigscreens
         
         std::vector<TankShot>  mShotsFired;
         float       mBarrelAngle;
+        float       mWheelRotation;
+        float       mGearRotation;
         float       mShotProgress;
         
         ci::gl::GlslProgRef mTankShader;

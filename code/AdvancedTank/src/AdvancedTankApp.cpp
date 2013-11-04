@@ -15,10 +15,13 @@ using namespace ci::app;
 using namespace std;
 using namespace bigscreens;
 
-class OBJTestApp : public AppNative {
+class OBJTestApp : public AppNative
+{
   public:
+    
 	void setup();
-	void mouseDown( MouseEvent event );	
+	void mouseDown( MouseEvent event );
+    void keyUp(KeyEvent event);
 	void update();
 	void draw();
     
@@ -27,6 +30,7 @@ class OBJTestApp : public AppNative {
     CameraPersp         mCam;
     float               mCameraRotation;
     
+    bool                mRotate;
 };
 
 void OBJTestApp::setup()
@@ -37,6 +41,7 @@ void OBJTestApp::setup()
     mCam.setPerspective( 15.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
     mCam.lookAt( Vec3f( 0, 0, 0 ), Vec3f( 0, 0, 0 ) );
     
+    mRotate = true;
     mCameraRotation = 0.0f;
 }
 
@@ -45,9 +50,20 @@ void OBJTestApp::mouseDown( MouseEvent event )
     mTank.fire();
 }
 
+void OBJTestApp::keyUp(KeyEvent event)
+{
+    if (event.getChar() == ' ')
+    {
+        mRotate = !mRotate;
+    }
+}
+
 void OBJTestApp::update()
 {
-    mCameraRotation -= 0.005f;
+    if (mRotate)
+    {
+        mCameraRotation -= 0.005f;
+    }
     
     float camX = cosf(mCameraRotation) * 100;
     float camZ = sinf(mCameraRotation) * 100;
@@ -61,6 +77,8 @@ void OBJTestApp::update()
     lookAt.y = 100;
 
     mCam.lookAt( Vec3f( camX, camY, camZ ), lookAt );
+    
+    mTank.update(getElapsedFrames());
 }
 
 void OBJTestApp::draw()
@@ -71,7 +89,7 @@ void OBJTestApp::draw()
     gl::pushMatrices();
     gl::setMatrices( mCam );
 
-    mTank.render(getElapsedFrames());
+    mTank.render(mCam);
     
     gl::popMatrices();
 }
