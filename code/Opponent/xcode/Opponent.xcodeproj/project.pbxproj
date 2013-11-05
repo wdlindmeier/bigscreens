@@ -21,6 +21,9 @@
 		B3052DB718256881006D91DD /* triangle.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB618256881006D91DD /* triangle.geom */; };
 		B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBA182572B7006D91DD /* finalEffects.frag */; };
 		B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBB182572B7006D91DD /* finalEffects.vert */; };
+		B3052DC61826DFA1006D91DD /* opponentParticle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* opponentParticle.vert */; };
+		B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* opponentParticle.frag */; };
+		B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3968B0918287F5300BE5A87 /* Opponent.cpp */; };
 		C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +50,11 @@
 		B3052DC11825A19C006D91DD /* SphericalGeometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SphericalGeometry.hpp; path = ../src/SphericalGeometry.hpp; sourceTree = "<group>"; };
 		B3052DC21825B038006D91DD /* Utilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = ../../BigScreensShared/Headers/Utilities.hpp; sourceTree = "<group>"; };
 		B3052DC31825B057006D91DD /* FinalBillboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/FinalBillboard.h; sourceTree = "<group>"; };
+		B3052DC41826CECD006D91DD /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SmokeEffect.hpp; path = ../src/SmokeEffect.hpp; sourceTree = "<group>"; };
+		B3052DC51826DFA1006D91DD /* opponentParticle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.vert; path = ../assets/opponentParticle.vert; sourceTree = "<group>"; };
+		B3052DC71826DFBA006D91DD /* opponentParticle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.frag; path = ../assets/opponentParticle.frag; sourceTree = "<group>"; };
+		B3968B0918287F5300BE5A87 /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Opponent.cpp; path = ../src/Opponent.cpp; sourceTree = "<group>"; };
+		B3968B0A18287F5300BE5A87 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Opponent.h; path = ../src/Opponent.h; sourceTree = "<group>"; };
 		C29591E3A9D344F9BCFAEA5F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = OpponentApp.cpp; path = ../src/OpponentApp.cpp; sourceTree = "<group>"; };
 		ECBFAE34556F4BB2966D215B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +92,9 @@
 				C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */,
 				B3052DBF182597F1006D91DD /* PyramidalGeometry.hpp */,
 				B3052DC11825A19C006D91DD /* SphericalGeometry.hpp */,
+				B3052DC41826CECD006D91DD /* SmokeEffect.hpp */,
+				B3968B0918287F5300BE5A87 /* Opponent.cpp */,
+				B3968B0A18287F5300BE5A87 /* Opponent.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -154,6 +165,8 @@
 				B3052DB418242344006D91DD /* triangle.frag */,
 				B3052DBB182572B7006D91DD /* finalEffects.vert */,
 				B3052DBA182572B7006D91DD /* finalEffects.frag */,
+				B3052DC51826DFA1006D91DD /* opponentParticle.vert */,
+				B3052DC71826DFBA006D91DD /* opponentParticle.frag */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -230,7 +243,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3052DC61826DFA1006D91DD /* opponentParticle.vert in Sources */,
+				B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */,
 				B3052DB318242336006D91DD /* triangle.vert in Sources */,
+				B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */,
 				B3052DB718256881006D91DD /* triangle.geom in Sources */,
 				B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */,
 				B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */,

@@ -79,6 +79,7 @@ void main()
 //    col = mix( col, oricol, clamp( -2.0 + 2.0 * texCoord.x + 3.0 * comp, 0.0, 1.0 ) );
 	
 	color = (vec4(col,1.0) * color);
+//	color = vec4(1.0);
 }
 
 

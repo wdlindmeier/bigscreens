@@ -22,7 +22,7 @@ public:
 	PyramidalGeometry()
 	{
 		ci::TriMesh::Format mPyramidalTrimeshFormat;
-		mPyramidalTrimeshFormat.vertices(3).normals();
+		mPyramidalTrimeshFormat.positions(3).normals();
 		mPyramidalTrimesh = ci::TriMesh::create( mPyramidalTrimeshFormat );
 		
 		calcGeometry();

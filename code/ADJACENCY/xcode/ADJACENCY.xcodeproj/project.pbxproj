@@ -25,6 +25,7 @@
 		B3052D8418202D24006D91DD /* quadTriangle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052D8318202D24006D91DD /* quadTriangle.frag */; };
 		B3052DA618234894006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DA518234894006D91DD /* finalEffects.vert */; };
 		B3052DA8182348AF006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DA7182348AF006D91DD /* finalEffects.frag */; };
+		B3052DD8182840C9006D91DD /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3052DD6182840C9006D91DD /* FloorPlane.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,8 @@
 		B3052D8318202D24006D91DD /* quadTriangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.frag; path = ../assets/quadTriangle.frag; sourceTree = "<group>"; };
 		B3052DA518234894006D91DD /* finalEffects.vert */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = finalEffects.vert; path = ../assets/finalEffects.vert; sourceTree = "<group>"; };
 		B3052DA7182348AF006D91DD /* finalEffects.frag */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = finalEffects.frag; path = ../assets/finalEffects.frag; sourceTree = "<group>"; };
+		B3052DD6182840C9006D91DD /* FloorPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FloorPlane.cpp; path = ../src/FloorPlane.cpp; sourceTree = "<group>"; };
+		B3052DD7182840C9006D91DD /* FloorPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorPlane.h; path = ../src/FloorPlane.h; sourceTree = "<group>"; };
 		D201C9A851544CC284ED841B /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +95,8 @@
 				B3052D8318202D24006D91DD /* quadTriangle.frag */,
 				B3052DA518234894006D91DD /* finalEffects.vert */,
 				B3052DA7182348AF006D91DD /* finalEffects.frag */,
+				B3052DD7182840C9006D91DD /* FloorPlane.h */,
+				B3052DD6182840C9006D91DD /* FloorPlane.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				B3052D8218202CE9006D91DD /* quadTriangle.geom in Sources */,
 				B3052D7A182022B7006D91DD /* quadOutline.geom in Sources */,
 				B3052D7C182022CD006D91DD /* quadOutline.frag in Sources */,
+				B3052DD8182840C9006D91DD /* FloorPlane.cpp in Sources */,
 				B3052D78182022A4006D91DD /* quadOutline.vert in Sources */,
 				B3052DA8182348AF006D91DD /* finalEffects.frag in Sources */,
 			);

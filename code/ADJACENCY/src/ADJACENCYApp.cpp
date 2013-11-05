@@ -5,8 +5,10 @@
 #include "cinder/TriMesh.h"
 #include "cinder/Camera.h"
 #include "cinder/gl/GlslProg.h"
+#include "cinder/gl/Shader.h"
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
+#include "FloorPlane.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,23 +27,17 @@ class ADJACENCYApp : public AppNative {
 	void createQuad();
 	void prepareSettings( Settings * settings ) { /*settings->setWindowSize( 1600, 1600 ); */ }
 	void keyDown( KeyEvent event );
-    
-	// terrain
-    gl::VaoRef		mVao;
-    gl::VboRef		mVbo, mLineElementVbo;
-    gl::GlslProgRef mQuadOutlineGlsl, mQuadTriangleGlsl;
-    TriMeshRef		mTrimesh;
+
     CameraPersp		mCam;
-	bool			chooseColor;
-	gl::TextureRef  mTexture;
-	gl::FboRef			mFbo;
-	
+	gl::FboRef		mFbo;
 	
 	// fbo effects
 	gl::VaoRef		mBillboardVao;
 	gl::VboRef		mBillboardVbo, mBillboardElementVbo;
 	gl::GlslProgRef	mEffectsGlsl;
 	gl::Fbo::Format mFboFormat;
+	
+	bigscreens::FloorPlaneRef mFloorPlane;
 };
 
 void ADJACENCYApp::keyDown( KeyEvent event )
@@ -60,60 +56,8 @@ void ADJACENCYApp::keyDown( KeyEvent event )
 
 void ADJACENCYApp::setup()
 {
-	chooseColor = false;
 	
-	mTexture = gl::Texture::create( loadImage( loadAsset( "noise_map.png" ) ) );
-	
-	
-	mFboFormat.colorTexture().depthBuffer();
-	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
-	
-    TriMesh::Format mTriFormat;
-    mTriFormat.vertices(3);
-    mTrimesh = TriMesh::create( mTriFormat );
-    
-    // this creates the points across x and y notice that we don't subtract 1 from each
-    for( int y = 0; y < yCount; y++ ) {
-        for( int x = 0; x < xCount; x++ ) {
-            mTrimesh->appendVertex( Vec3f( x*quadSize, y*quadSize, 0 ) );
-        }
-    }
-    
-    // this creates the index and this was the hardest part,
-    // it starts at one quadsize above which is the total xCount,
-    // then goes one quadsize below which would be the current x coordinate
-    // then goes one quadsize to the right, and then one quadsize up from that
-    //            index0          index3
-    //                  |         |
-    //  quadsize        |         |
-    //                  |         |
-    //                  |_________|
-    //            index1          index2
-    //                   quadsize
-    // we use up to xcount - 1 because we skip the last point to create the last quad
-    //
-    uint32_t * lineIndex = new uint32_t[indexNum];
-    int index = 0;
-    for( int i = 0; index < indexNum; i+=xCount ) {
-        for( int j = 0; j < xCount-1; j++ ) {
-            lineIndex[index+0] = i+j+xCount;
-            lineIndex[index+1] = i+j+0;
-            lineIndex[index+2] = i+j+1;
-            lineIndex[index+3] = i+j+xCount+1;
-            index+=4;
-        }
-    }
-    
-    mVao = gl::Vao::create();
-    mVao->bind();
-    
-    mVbo = gl::Vbo::create( GL_ARRAY_BUFFER, mTrimesh->getNumVertices() * sizeof( Vec3f ), mTrimesh->getVertices<3>(), GL_STATIC_DRAW );
-    mVbo->bind();
-    
-    gl::enableVertexAttribArray(0);
-    gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-    
-    mLineElementVbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, indexNum * sizeof(uint32_t), lineIndex, GL_STATIC_DRAW );
+	mFloorPlane = bigscreens::FloorPlaneRef( new bigscreens::FloorPlane() );
     
     mCam.setPerspective( 60, getWindowWidth() / getWindowHeight(), .1, 10000 );
     mCam.lookAt( Vec3f( 0, 0, 1 ), Vec3f( 0, 0, 0 ) );
@@ -124,19 +68,6 @@ void ADJACENCYApp::setup()
 
 void ADJACENCYApp::loadShaders()
 {
-	// Terrain stuff
-    gl::GlslProg::Format mQuadOutlineFormat;
-    mQuadOutlineFormat.vertex( loadAsset( "quadOutline.vert" ) )
-    .geometry( loadAsset( "quadOutline.geom") )
-    .fragment( loadAsset( "quadOutline.frag" ) );
-    mQuadOutlineGlsl = gl::GlslProg::create( mQuadOutlineFormat );
-    
-    gl::GlslProg::Format mQuadTriangleFormat;
-    mQuadTriangleFormat.vertex( loadAsset( "quadTriangle.vert" ) )
-    .geometry( loadAsset( "quadTriangle.geom") )
-    .fragment( loadAsset( "quadTriangle.frag" ) );
-    mQuadTriangleGlsl = gl::GlslProg::create( mQuadTriangleFormat );
-	
 	// Scanline Stuff
 	gl::GlslProg::Format mEffectsFormat;
 	mEffectsFormat.vertex( loadAsset( "finalEffects.vert" ) )
@@ -175,8 +106,6 @@ void ADJACENCYApp::createQuad()
 
 void ADJACENCYApp::mouseDown( MouseEvent event )
 {
-//    loadShaders();
-	chooseColor = !chooseColor;
 	
 }
 
@@ -197,61 +126,14 @@ void ADJACENCYApp::draw()
     gl::pushMatrices();
     gl::setMatrices( mCam );
     // simple centering
-    gl::multModelView( Matrix44f::createTranslation( Vec3f( -((xCount-1)*quadSize) / 2, -((yCount-1)*quadSize) / 4, (-((xCount-1) * quadSize) / 8) - 10 )   ) );
-	gl::multModelView( Matrix44f::createRotation( Vec3f( 1, 0, 0 ), toRadians( -80.0f ) ) );
+    gl::multModelView( Matrix44f::createTranslation( Vec3f( -((xCount-1)*quadSize) / 2, -((yCount-1)*quadSize) / 4, (-((xCount-1) * quadSize) / 8) )   ) );
+	gl::multModelView( Matrix44f::createRotation( Vec3f( 1, 0, 0 ), toRadians( -(float)(index++) ) ) );
 //	gl::multModelView( Matrix44f::createScale( Vec3f( .05, 0, 0 ) ) );
-    mVao->bind();
-    mLineElementVbo->bind();
-    mTexture->bind();
+    
+//	cout << "modelview in app: " << gl::getModelView() << endl;
 	
-    // This shader draws the colored quads
-        mQuadTriangleGlsl->bind();
-    
-        mQuadTriangleGlsl->uniform( "projection", gl::getProjection() );
-        mQuadTriangleGlsl->uniform( "modelView", gl::getModelView() );
-		mQuadTriangleGlsl->uniform( "chooseColor", chooseColor );
-		mQuadTriangleGlsl->uniform( "colorOffset", index++ );
-		mQuadTriangleGlsl->uniform( "heightMap", 0 );
-		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
-    // lines adjacency gives the geometry shader two points on either side of the line
-    // this was the problem with the indexing, you have to give two other points when
-    // using it. basically from above
-    //
-    // index0 - - - - index1 ------------ index2 - - - - index3
-    //
-    // if I just drew GL_LINES it wouldn't use index0 or index3 in one geometry shader
-    // instance. basically you get the four points of a quad and can make the triangle_strip
-    // or line_strip like i do with the shaders
-    // instead it would be...
-    //
-    // index0 --------- index1 // one geometry shader instance
-    // index1 --------- index2 // another geometry shader instance
-    // etc.
-            gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
-    
-        mQuadTriangleGlsl->unbind();
-    
-    // This draws the wireframe
-        mQuadOutlineGlsl->bind();
-    
-        mQuadOutlineGlsl->uniform( "projection", gl::getProjection() );
-        mQuadOutlineGlsl->uniform( "modelView", gl::getModelView() );
-		mQuadOutlineGlsl->uniform( "colorOffset", index++ );
-		mQuadOutlineGlsl->uniform( "heightMap", 0 );
-//		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+	mFloorPlane->draw();
 	
-            gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
-    
-        mQuadOutlineGlsl->unbind();
-    
-	mTexture->unbind();
-    mLineElementVbo->unbind();
-    mVao->unbind();
-	
-//	if( divideNum >  5.0f )
-//		divideNum =	0.01f;
-//	else
-//		divideNum+= 0.01f;
 	
     gl::popMatrices();
     
@@ -278,6 +160,9 @@ void ADJACENCYApp::draw()
 	mBillboardVao->bind();
 	
 	gl::popMatrices();
+//
+//	gl::bindStockShader( gl::ShaderDef().color().texture() );
+//	gl::draw(mFbo->getTexture(), Vec2i(0, 0));
 }
 
 CINDER_APP_NATIVE( ADJACENCYApp, RendererGl )

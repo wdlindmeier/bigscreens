@@ -21,5 +21,6 @@ void main(void)
 		
 		color = mix(c1, c2, fs_in.uv.y);
 //	}
+	
     
 }

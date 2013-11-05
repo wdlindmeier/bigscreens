@@ -21,7 +21,7 @@ public:
 	SphericalGeometry()
 	{
 		ci::TriMesh::Format mSphericalTrimeshFormat;
-		mSphericalTrimeshFormat.vertices(3).normals();
+		mSphericalTrimeshFormat.positions(3).normals();
 		mSphericalTrimesh = ci::TriMesh::create( mSphericalTrimeshFormat );
 		
 		calcGeometry( 1, 20, 20 );
