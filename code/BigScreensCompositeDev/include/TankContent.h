@@ -28,12 +28,17 @@ namespace bigscreens {
         TankContent();
         virtual ~TankContent(){};
         
+        void setGroundIsVisible(bool isVisible);
+        void setGroundOffset(const ci::Vec2f offset);
+        void setTankPosition(const ci::Vec3f tankPosition);
+        ci::Vec3f getTankPosition();
+        ci::CameraPersp& getCamera() { return mCam; }
+        
         virtual void load(const std::string & objFilename);
-        virtual void setGroundOffset(const ci::Vec2f offset);
         virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
+        virtual void resetPositions();
         virtual void render(const ci::Vec2i & screenOffset);
         virtual void reset();
-        virtual ci::CameraPersp& getCamera() { return mCam; }
         
     protected:
         
@@ -47,6 +52,8 @@ namespace bigscreens {
         virtual void drawTank();
         
         ci::CameraPersp		mCam;
+
+        ci::Vec3f           mTankPosition;
 
         // Tank
         ci::TriMeshRef		mTankMesh;
@@ -65,12 +72,9 @@ namespace bigscreens {
         // Ground plane
         ci::gl::GlslProgRef mGroundShader;
         ci::gl::TextureRef  mGridTexture;
-        /*
-        ci::gl::VaoRef      mGroundVao;
-        ci::gl::VboRef      mGroundVbo;
-        */
         GroundContent       mGroundContent;
         ci::Vec2f           mGroundOffset;
+        bool                mIsGroundVisible;
   
     };
 }

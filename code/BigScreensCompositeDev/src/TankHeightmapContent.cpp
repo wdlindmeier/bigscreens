@@ -39,39 +39,6 @@ namespace bigscreens
         TankContent::load(objFilename);
         mPerlinContent.reset();
     }
-
-    void TankHeightmapContent::update(const ci::Vec3f & tankMovement)
-    {
-        // Update the tank position
-        mTankMovement += tankMovement;
-        
-        // Move the camera with it
-        mCam.lookAt(Vec3f( 0, 600, -1000 ) + mTankMovement,
-                    Vec3f( 0, 100, 0 ) + mTankMovement);
-    }
-    
-    void TankHeightmapContent::drawTank()
-    {
-        mTankShader->bind();
-        mTankVao->bind();
-        mTankElementVbo->bind();
-
-        gl::pushMatrices();
-        
-        gl::setMatrices( mCam );
-        gl::translate(mTankMovement);
-        
-        gl::setDefaultShaderVars();
-        
-        mTankShader->uniform("uColor", ColorAf(1,1,1,1));
-
-        gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
-        gl::popMatrices();
-        
-        mTankElementVbo->unbind();
-        mTankVao->unbind();
-        mTankShader->unbind();
-    }
     
     void TankHeightmapContent::generateGroundMaps()
     {
@@ -99,8 +66,8 @@ namespace bigscreens
     {
         // Get the current plot
         float groundScale = mGroundContent.getScale();
-        int plotX = (mTankMovement.x + (groundScale * 0.5f)) / groundScale;
-        int plotZ = (mTankMovement.z + (groundScale * 0.5f)) / groundScale;
+        int plotX = (mTankPosition.x + (groundScale * 0.5f)) / groundScale;
+        int plotZ = (mTankPosition.z + (groundScale * 0.5f)) / groundScale;
         
         if (mPlotCoords.x != plotX || mPlotCoords.z != plotZ || mGroundMaps.size() == 0)
         {

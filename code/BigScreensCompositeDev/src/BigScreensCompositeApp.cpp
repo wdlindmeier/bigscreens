@@ -100,12 +100,12 @@ public:
     RenderableContentRef mTankContentConverge;
     RenderableContentRef mTextureContentBlank;
     
-    OutLineBorderRef mOutLine;
+    OutLineBorderRef     mOutLine;
     
     map<int, TimelineContentInfo>  mCurrentContentInfo;
 	
-	FinalBillboardRef mFinalBillboard;
-	gl::FboRef		  mFbo;
+	FinalBillboardRef    mFinalBillboard;
+	gl::FboRef           mFbo;
 };
 
 #pragma mark - Setup
@@ -161,6 +161,10 @@ void BigScreensCompositeApp::reload()
     mCurrentContentInfo.clear();
     mTimeline->reload();
     mTimeline->restart();
+    if (!mTimeline->isPlaying())
+    {
+        mSoundtrack->stop();
+    }
     mSoundtrack->seekToStart();
     
     static_pointer_cast<TankContent>(mTankContent)->reset();
@@ -194,7 +198,7 @@ void BigScreensCompositeApp::loadAssets()
 
 void BigScreensCompositeApp::loadAudio()
 {
-    fs::path audioPath = SharedAssetPath(!IS_IAC) / "audio" / "escape_from_ny_theme.mp3"; //getResourcePath("escape_from_ny_theme.mp3");
+    fs::path audioPath = SharedAssetPath(!IS_IAC) / "audio" / "intriguing_possibilities_clipped_fade.aiff";
     if (!fs::exists(audioPath))
     {
         console() << "ERROR: No audio path found\n";
@@ -379,8 +383,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         float tankRotation = contentElapsedFrames * 0.01;
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
+        tank->setGroundIsVisible(true);
+        tank->resetPositions();
         tank->update([=](CameraPersp & cam){
-            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
             cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
@@ -392,8 +398,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         float tankDistance = sinf(contentElapsedFrames * 0.0025);
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(tankGroundOffset);
+        tank->setGroundIsVisible(true);
+        tank->resetPositions();
         tank->update([=](CameraPersp & cam){
-            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             // Zoom in and out
             float camZ = tankDistance * 500;
             cam.lookAt(Vec3f( 100, 500, camZ ),
@@ -405,8 +413,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Tank content wide shot
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
         tank->setGroundOffset(tankGroundOffset);
+        tank->setGroundIsVisible(true);
+        tank->resetPositions();
         tank->update([=](CameraPersp & cam){
-            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camX, camY, camZ;
             switch (CLIENT_ID)
             {
@@ -435,12 +445,15 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Tank content horizon shot
         shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
-        tank->setGroundOffset(tankGroundOffset);
-        tank->update([=](CameraPersp & cam){
+        tank->setTankPosition(Vec3f(0, 0, -45000 * (1.0-(contentElapsedFrames/4000.0))));
+        tank->setGroundIsVisible(false);
+        tank->update([=](CameraPersp & cam)
+        {
+            // Nearly flat
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
-            float camX = -65000;
+            float camX = -80000;
             float camY = 100;
-            float camZ = 36000 - (tankGroundOffset.y * -200.0f);
+            float camZ = 0;
             cam.lookAt(Vec3f( camX, camY, camZ ),
                        Vec3f( 0, camY, camZ ) );
         });
@@ -453,7 +466,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         
         shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mTankContentConverge);
         tanks->update([=](CameraPersp & cam){
-            cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camY = camDist * 0.25;
             float camZ = camDist;
             float camX = camDist;
@@ -473,8 +486,16 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Heightmap
         shared_ptr<TankHeightmapContent> tank = static_pointer_cast<TankHeightmapContent>(content);
-        tank->getCamera().setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
-        tank->update(Vec3f(0, 0, 20));
+        // tank->getCamera().setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+
+        Vec3f tankPosition = tank->getTankPosition() + Vec3f(0, 0, 20);
+        tank->setTankPosition(tankPosition);
+        tank->update([=](CameraPersp & cam)
+        {
+            cam.lookAt(Vec3f( 0, 600, -1000 ) + tankPosition,
+                       Vec3f( 0, 100, 0 ) + tankPosition);
+        });
+
     }
 }
 
@@ -498,23 +519,28 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
 
-	mFbo->bindFramebuffer();
+	// mFbo->bindFramebuffer();
+    
     for (auto & kv : renderContent)
     {
         int contentID = kv.first;
         TimelineContentInfo renderMe = kv.second;
         
         // Update the content info even when it's not being drawn
-        if (mCurrentContentInfo.count(contentID))
+        if (mClient->isConnected() &&
+            mTimeline->isPlaying())
         {
-            TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
-            renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+            if (mCurrentContentInfo.count(contentID))
+            {
+                TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
+                renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+            }
+            else
+            {
+                renderMe.numRenderFrames = 1;
+            }
+            newContentInfo[contentID] = renderMe;
         }
-        else
-        {
-            renderMe.numRenderFrames = 1;
-        }
-        newContentInfo[contentID] = renderMe;
         
         // Check if this should be rendered at all.
         if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))
@@ -536,9 +562,10 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             mOutLine->render();
         }
     }
-    mFbo->unbindFramebuffer();
+    
+    // mFbo->unbindFramebuffer();
 	
-	mFinalBillboard->draw( mFbo->getTexture() );
+	// mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {

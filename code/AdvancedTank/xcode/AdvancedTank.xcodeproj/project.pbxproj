@@ -1,0 +1,397 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		424741BB6E194287B6589A9C /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 62D59EC250E04FA8B6D6613C /* CinderApp.icns */; };
+		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		62492195C3174C98A3123D8F /* AdvancedTankApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A9B50AEA18229D6E00C077BD /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AE818229D6E00C077BD /* basic.frag */; };
+		A9B50AEB18229D6E00C077BD /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AE918229D6E00C077BD /* basic.vert */; };
+		A9B50AEF1822B67300C077BD /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AEE1822B67300C077BD /* tank.obj */; };
+		A9B50B321826B12600C077BD /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2D1826B12600C077BD /* tank_barrel.obj */; };
+		A9B50B331826B12600C077BD /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2E1826B12600C077BD /* tank_body.obj */; };
+		A9B50B341826B12600C077BD /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */; };
+		A9B50B351826B12600C077BD /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B301826B12600C077BD /* tank_head.obj */; };
+		A9B50B361826B12600C077BD /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B311826B12600C077BD /* tank_wheel.obj */; };
+		A9B50B391826B18500C077BD /* AdvancedTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B371826B18500C077BD /* AdvancedTank.cpp */; };
+		A9B50B3D1826B41100C077BD /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B3B1826B41100C077BD /* ObjModel.cpp */; };
+		A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */; };
+		A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */; };
+		A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */; };
+		A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B451826C28C00C077BD /* TankShot.cpp */; };
+		A9CF4D051827F6BF000A350A /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CF4D041827F6BF000A350A /* explosion.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0091D8F80E81B9330029341E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		00B784AF0FF439BC000DE1D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		496B53A514954BBE9D08A489 /* AdvancedTank_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdvancedTank_Prefix.pch; sourceTree = "<group>"; };
+		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
+		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		62D59EC250E04FA8B6D6613C /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* AdvancedTank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvancedTank.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AEFCB8143DF40D4B268B75E /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		A9B50AE818229D6E00C077BD /* basic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.frag; path = ../resources/basic.frag; sourceTree = "<group>"; };
+		A9B50AE918229D6E00C077BD /* basic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.vert; path = ../resources/basic.vert; sourceTree = "<group>"; };
+		A9B50AEE1822B67300C077BD /* tank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank.obj; path = ../resources/tank.obj; sourceTree = "<group>"; };
+		A9B50B2D1826B12600C077BD /* tank_barrel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel.obj; path = ../resources/tank_barrel.obj; sourceTree = "<group>"; };
+		A9B50B2E1826B12600C077BD /* tank_body.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_body.obj; path = ../resources/tank_body.obj; sourceTree = "<group>"; };
+		A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel.obj; path = ../resources/tank_gear_wheel.obj; sourceTree = "<group>"; };
+		A9B50B301826B12600C077BD /* tank_head.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_head.obj; path = ../resources/tank_head.obj; sourceTree = "<group>"; };
+		A9B50B311826B12600C077BD /* tank_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel.obj; path = ../resources/tank_wheel.obj; sourceTree = "<group>"; };
+		A9B50B371826B18500C077BD /* AdvancedTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTank.cpp; path = ../src/AdvancedTank.cpp; sourceTree = "<group>"; };
+		A9B50B3A1826B19A00C077BD /* AdvancedTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvancedTank.h; path = ../include/AdvancedTank.h; sourceTree = "<group>"; };
+		A9B50B3B1826B41100C077BD /* ObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjModel.cpp; path = ../src/ObjModel.cpp; sourceTree = "<group>"; };
+		A9B50B3E1826B42400C077BD /* ObjModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjModel.h; path = ../include/ObjModel.h; sourceTree = "<group>"; };
+		A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel_centered.obj; path = ../resources/tank_barrel_centered.obj; sourceTree = "<group>"; };
+		A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel_centered.obj; path = ../resources/tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
+		A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
+		A9B50B451826C28C00C077BD /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankShot.cpp; path = ../src/TankShot.cpp; sourceTree = "<group>"; };
+		A9B50B481826C2A600C077BD /* TankShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankShot.h; path = ../include/TankShot.h; sourceTree = "<group>"; };
+		A9CF4D041827F6BF000A350A /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = explosion.png; path = ../../BigScreensShared/Resources/explosion.png; sourceTree = "<group>"; };
+		BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTankApp.cpp; path = ../src/AdvancedTankApp.cpp; sourceTree = "<group>"; };
+		FFAC57DCF4BA4FE4B5F63345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
+				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
+				5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */,
+				00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */,
+				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
+				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
+				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01B97315FEAEA392516A2CEA /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Blocks;
+			sourceTree = "<group>";
+		};
+		080E96DDFE201D6D7F000001 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A9B50B371826B18500C077BD /* AdvancedTank.cpp */,
+				BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */,
+				A9B50B3B1826B41100C077BD /* ObjModel.cpp */,
+				A9B50B451826C28C00C077BD /* TankShot.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00B784AF0FF439BC000DE1D7 /* Accelerate.framework */,
+				00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */,
+				00B784B10FF439BC000DE1D7 /* AudioUnit.framework */,
+				00B784B20FF439BC000DE1D7 /* CoreAudio.framework */,
+				5323E6B50EAFCA7E003A9687 /* QTKit.framework */,
+				5323E6B10EAFCA74003A9687 /* CoreVideo.framework */,
+				0091D8F80E81B9330029341E /* OpenGL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* AdvancedTank.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* OBJTest */ = {
+			isa = PBXGroup;
+			children = (
+				A9B50B491826D5E200C077BD /* Shared */,
+				01B97315FEAEA392516A2CEA /* Blocks */,
+				29B97315FDCFA39411CA2CEA /* Headers */,
+				080E96DDFE201D6D7F000001 /* Source */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = OBJTest;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A9B50B3A1826B19A00C077BD /* AdvancedTank.h */,
+				496B53A514954BBE9D08A489 /* AdvancedTank_Prefix.pch */,
+				A9B50B3E1826B42400C077BD /* ObjModel.h */,
+				9AEFCB8143DF40D4B268B75E /* Resources.h */,
+				A9B50B481826C2A600C077BD /* TankShot.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A9B50AE818229D6E00C077BD /* basic.frag */,
+				A9B50AE918229D6E00C077BD /* basic.vert */,
+				62D59EC250E04FA8B6D6613C /* CinderApp.icns */,
+				FFAC57DCF4BA4FE4B5F63345 /* Info.plist */,
+				A9B50AEE1822B67300C077BD /* tank.obj */,
+				A9B50B2D1826B12600C077BD /* tank_barrel.obj */,
+				A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */,
+				A9B50B2E1826B12600C077BD /* tank_body.obj */,
+				A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */,
+				A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */,
+				A9B50B301826B12600C077BD /* tank_head.obj */,
+				A9B50B311826B12600C077BD /* tank_wheel.obj */,
+				A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9B50B491826D5E200C077BD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A9CF4D041827F6BF000A350A /* explosion.png */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* AdvancedTank */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "AdvancedTank" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdvancedTank;
+			productInstallPath = "$(HOME)/Applications";
+			productName = OBJTest;
+			productReference = 8D1107320486CEB800E47090 /* AdvancedTank.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AdvancedTank" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* OBJTest */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* AdvancedTank */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				424741BB6E194287B6589A9C /* CinderApp.icns in Resources */,
+				A9B50B321826B12600C077BD /* tank_barrel.obj in Resources */,
+				A9B50AEF1822B67300C077BD /* tank.obj in Resources */,
+				A9B50B341826B12600C077BD /* tank_gear_wheel.obj in Resources */,
+				A9B50B361826B12600C077BD /* tank_wheel.obj in Resources */,
+				A9B50AEA18229D6E00C077BD /* basic.frag in Resources */,
+				A9B50B351826B12600C077BD /* tank_head.obj in Resources */,
+				A9CF4D051827F6BF000A350A /* explosion.png in Resources */,
+				A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */,
+				A9B50AEB18229D6E00C077BD /* basic.vert in Resources */,
+				A9B50B331826B12600C077BD /* tank_body.obj in Resources */,
+				A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */,
+				A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9B50B3D1826B41100C077BD /* ObjModel.cpp in Sources */,
+				62492195C3174C98A3123D8F /* AdvancedTankApp.cpp in Sources */,
+				A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */,
+				A9B50B391826B18500C077BD /* AdvancedTank.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AdvancedTank_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = AdvancedTank;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AdvancedTank_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = AdvancedTank;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "AdvancedTank" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AdvancedTank" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
