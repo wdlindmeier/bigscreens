@@ -87,4 +87,10 @@ namespace bigscreens
         RenderableContentRef contentRef;
     };
     
+    struct CameraOrigin
+    {
+        ci::Vec3f eye;
+        ci::Vec3f target;
+    };
+    
 }

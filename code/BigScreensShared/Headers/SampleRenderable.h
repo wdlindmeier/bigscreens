@@ -12,8 +12,6 @@
 #include "GroundContent.h"
 #include "cinder/gl/GlslProg.h"
 
-const static int kFramesFullTransition = 500;
-
 namespace bigscreens {
 
 class SampleRenderable : public RenderableContent

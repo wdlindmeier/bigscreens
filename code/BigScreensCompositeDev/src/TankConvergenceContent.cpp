@@ -19,6 +19,40 @@ TankConvergenceContent::TankConvergenceContent() : TankContent()
     mGroundContent = GroundContent(20000.0);
 };
 
+TankOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long frameProgress)
+{
+    float scalarProgress = 1.0 - std::min<float>(1.0, (float)frameProgress / (float)kNumFramesTanksConverge);
+    float weightedProgress = scalarProgress * scalarProgress;
+    
+    float scalarOffset = (float)tankNum / (float)kNumTanksConverging;
+    float rads = M_PI * 2 * scalarOffset;
+    
+    // A simple distance based on sin that looks somewhat staggered
+    float iDist = fabs(sin(tankNum)) * 5000;
+    
+    float tankDist = 5000 + (iDist * weightedProgress);
+    float x = cos(rads) * tankDist;
+    float y = 0;
+    float z = sin(rads) * tankDist;
+    TankOrientation orientation;
+    orientation.position = Vec3f(x,y,z);
+    // NOTE: THis is always a circle
+    orientation.directionDegrees = 270.0 - ci::toDegrees(rads);
+    return orientation;
+}
+
+void TankConvergenceContent::render(const ci::Vec2i & screenOffset)
+{
+    mRenderAlpha = 1.0f;
+    TankContent::render(screenOffset);
+}
+
+void TankConvergenceContent::render(const ci::Vec2i & screenOffset, const float alpha)
+{
+    mRenderAlpha = alpha;
+    TankContent::render(screenOffset);
+}
+
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
@@ -30,25 +64,13 @@ void TankConvergenceContent::drawTank()
     gl::pushMatrices();
     gl::setMatrices( mCam );
     
-    mTankShader->uniform("uColor", ColorAf(1,1,1,1));
+    mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
     
-    float scalarProgress = 1.0 - std::min<float>(1.0, (float)mNumFramesRendered / 1000.0f);
-    float weightedProgress = scalarProgress * scalarProgress;
-
-    static const int kNumTanks = 20;
-    for (int i = 0; i < kNumTanks; ++i)
+    for (int i = 0; i < kNumTanksConverging; ++i)
     {
-        float scalarOffset = (float)i / (float)kNumTanks;
-        float rads = M_PI * 2 * scalarOffset;
-
-        // A simple distance based on sin that looks somewhat staggered
-        float iDist = fabs(sin(i)) * 5000;
-        
-        float tankDist = 5000 + (iDist * weightedProgress);
-        float x = cos(rads) * tankDist;
-        float y = 0;
-        float z = sin(rads) * tankDist;
-        drawSingleTankAtPosition(Vec3f(x, y, z), rads);
+        TankOrientation tankOrient = positionForTankWithProgress(i, mNumFramesRendered);
+        drawSingleTankAtPosition(tankOrient.position,
+                                 tankOrient.directionDegrees);
     }
     
     gl::popMatrices();
@@ -57,11 +79,11 @@ void TankConvergenceContent::drawTank()
     mTankShader->unbind();
 }
 
-void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float radianRotation)
+void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float rotationDegrees)
 {
     gl::pushMatrices();
     gl::translate(position);
-    gl::rotate(270.0 - ci::toDegrees(radianRotation), 0, 1, 0);
+    gl::rotate(rotationDegrees, 0, 1, 0);
     
     gl::setDefaultShaderVars();
 

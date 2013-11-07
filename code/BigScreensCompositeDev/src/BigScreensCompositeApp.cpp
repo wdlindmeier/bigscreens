@@ -18,8 +18,9 @@
 #include "cinder/Rand.h"
 #include "cinder/qtime/QuickTimeGl.h"
 #include "TankBlinkingContent.h"
-#include "TankConvergenceContent.h"
+//#include "TankConvergenceContent.h"
 #include "FinalBillboard.h"
+#include "ConvergenceContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -97,8 +98,9 @@ public:
     RenderableContentRef mTankContent;
     RenderableContentRef mTankContentHeightmap;
     RenderableContentRef mPerlinContent;
-    RenderableContentRef mTankContentConverge;
+//    RenderableContentRef mTankContentConverge;
     RenderableContentRef mTextureContentBlank;
+    RenderableContentRef mConvergenceContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -123,10 +125,11 @@ void BigScreensCompositeApp::setup()
     mClient->setIsRendering3D(false);
     mClient->setIsScissorEnabled(false);
     
-    console() << "IS_IAC ? " << IS_IAC << "\n";
-    GridLayoutTimeline *t = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC), kScreenScale);
-
-    mTimeline = GridLayoutTimelineRef(t);
+    // console() << "IS_IAC ? " << IS_IAC << "\n";
+    
+    GridLayoutTimeline *timeline = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC),
+                                                          kScreenScale);
+    mTimeline = GridLayoutTimelineRef(timeline);
     
     mOutLine = OutLineBorderRef(new OutLineBorder());
 	
@@ -170,7 +173,13 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankContent>(mTankContent)->reset();
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
-    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
+//    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
+    
+    // NOTE: This assumes the last layout is convergence and the second to last
+    // is the grid that is merged
+    std::vector<GridLayout> & layouts = mTimeline->getGridLayouts();
+    GridLayout & penultimateLayout = layouts[layouts.size() - 2];
+    static_pointer_cast<ConvergenceContent>(mConvergenceContent)->reset(penultimateLayout);
 }
 
 void BigScreensCompositeApp::loadAssets()
@@ -183,10 +192,18 @@ void BigScreensCompositeApp::loadAssets()
     tankHeightmap->load("T72.obj");
     mTankContentHeightmap = RenderableContentRef(tankHeightmap);
 
+    /*
     TankConvergenceContent *tanksConverge = new TankConvergenceContent();
     tanksConverge->load("T72.obj");
     mTankContentConverge = RenderableContentRef(tanksConverge);
     static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
+    */
+    
+    ConvergenceContent *converge = new ConvergenceContent();
+    converge->load(TRANSITION_FADE);
+    Vec2i masterSize = mClient->getMasterSize();
+    converge->setContentRect(Rectf(0,0,masterSize.x, masterSize.y));
+    mConvergenceContent = RenderableContentRef(converge);
     
     PerlinContent *perlinContent = new PerlinContent();
     mPerlinContent = RenderableContentRef(perlinContent);
@@ -194,6 +211,7 @@ void BigScreensCompositeApp::loadAssets()
     TextureContent *texBlank = new TextureContent();
     texBlank->load("blank_texture.png");
     mTextureContentBlank = RenderableContentRef(texBlank);
+    
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -243,7 +261,6 @@ void BigScreensCompositeApp::mpeReset()
 
 RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & contentName)
 {
-    // TODO: Give these more descriptive names
     if (contentName == kContentKeyTankSpin ||
         contentName == kContentKeyTankOverhead ||
         contentName == kContentKeyTankWide ||
@@ -257,7 +274,8 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     }
     else if (contentName == kContentKeyTanksConverge)
     {
-        return mTankContentConverge;
+        //return mTankContentConverge;
+        return mConvergenceContent;
     }
     else if (contentName == kContentKeyPerlin)
     {
@@ -460,6 +478,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
+        /*
         float scalarProgress = 1.0 - std::min<float>((float)contentElapsedFrames / 1000.0f, 1.0f);
         float finalOffset = scalarProgress * scalarProgress;
         float camDist = 4000 + (6000 * finalOffset);
@@ -472,7 +491,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             float camX = camDist;
             cam.lookAt(Vec3f( camX, camY, camZ ),
                        Vec3f( 0, -1750, 0 ) );
-        });
+        });*/
     }
     else if (contentInfo.contentKey == kContentKeyPerlin)
     {
@@ -557,9 +576,11 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             
             scene.render(offset);
 
-            // NOTE:
-            // How exactly does this work?
-            mOutLine->render();
+            // NOTE: Convergence takes care of this
+            if (renderMe.contentKey != kContentKeyTanksConverge)
+            {
+                mOutLine->render();
+            }
         }
     }
     

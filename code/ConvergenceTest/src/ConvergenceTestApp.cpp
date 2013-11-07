@@ -23,12 +23,6 @@ enum TransitionStyle
     TRANSITION_FADE
 };
 
-struct CameraOrigin
-{
-    ci::Vec3f eye;
-    ci::Vec3f target;
-};
-
 class ConvergenceTestApp : public AppNative {
   public:
     void prepareSettings(Settings *settings);

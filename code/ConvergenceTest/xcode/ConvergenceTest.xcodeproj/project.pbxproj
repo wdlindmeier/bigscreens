@@ -60,8 +60,8 @@
 		A9B52A92182AACF9009B0D71 /* T72.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B529FE182AACF9009B0D71 /* T72.obj */; };
 		A9B52A93182AACF9009B0D71 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52A00182AACF9009B0D71 /* GridLayout.cpp */; };
 		A9B52A94182AACF9009B0D71 /* GridLayoutTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52A01182AACF9009B0D71 /* GridLayoutTimeline.cpp */; };
-		A9B52ABB182AAD87009B0D71 /* SampleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52AB9182AAD87009B0D71 /* SampleRenderable.cpp */; };
 		A9B52AC4182AB134009B0D71 /* GroundContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52AC3182AB134009B0D71 /* GroundContent.cpp */; };
+		A9B52B42182C1DA5009B0D71 /* SampleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B41182C1DA5009B0D71 /* SampleRenderable.cpp */; };
 		BC5AFFA6FEE24A689E62AA61 /* ConvergenceTestApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9361ED282B41A7BCDF2141 /* ConvergenceTestApp.cpp */; };
 /* End PBXBuildFile section */
 
@@ -128,10 +128,10 @@
 		A9B529FE182AACF9009B0D71 /* T72.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = T72.obj; sourceTree = "<group>"; };
 		A9B52A00182AACF9009B0D71 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
 		A9B52A01182AACF9009B0D71 /* GridLayoutTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayoutTimeline.cpp; sourceTree = "<group>"; };
-		A9B52AB9182AAD87009B0D71 /* SampleRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SampleRenderable.cpp; path = ../src/SampleRenderable.cpp; sourceTree = "<group>"; };
-		A9B52ABA182AAD87009B0D71 /* SampleRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleRenderable.h; path = ../src/SampleRenderable.h; sourceTree = "<group>"; };
 		A9B52AC2182AB12E009B0D71 /* GroundContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroundContent.h; sourceTree = "<group>"; };
 		A9B52AC3182AB134009B0D71 /* GroundContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GroundContent.cpp; sourceTree = "<group>"; };
+		A9B52B41182C1DA5009B0D71 /* SampleRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRenderable.cpp; sourceTree = "<group>"; };
+		A9B52B43182C1DAF009B0D71 /* SampleRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleRenderable.h; sourceTree = "<group>"; };
 		AF6AD062AFBB46AE81191254 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		CDCB867A4AF94A85A74CB894 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAE1F9EDB57D4B39AC4D886B /* ConvergenceTest_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = ConvergenceTest_Prefix.pch; sourceTree = "<group>"; };
@@ -168,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				4A9361ED282B41A7BCDF2141 /* ConvergenceTestApp.cpp */,
-				A9B52AB9182AAD87009B0D71 /* SampleRenderable.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -223,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				FBB64E0D23D248BC867F6F32 /* Resources.h */,
-				A9B52ABA182AAD87009B0D71 /* SampleRenderable.h */,
 				EAE1F9EDB57D4B39AC4D886B /* ConvergenceTest_Prefix.pch */,
 			);
 			name = Headers;
@@ -333,6 +331,7 @@
 				A9B529F3182AACF9009B0D71 /* GridLayoutTimeline.h */,
 				A9B52AC2182AB12E009B0D71 /* GroundContent.h */,
 				A9B529F4182AACF9009B0D71 /* OutLineBorder.hpp */,
+				A9B52B43182C1DAF009B0D71 /* SampleRenderable.h */,
 				A9B529F5182AACF9009B0D71 /* SceneWindow.hpp */,
 				A9B529F6182AACF9009B0D71 /* SharedTypes.hpp */,
 				A9B529F7182AACF9009B0D71 /* Utilities.hpp */,
@@ -359,6 +358,7 @@
 				A9B52A00182AACF9009B0D71 /* GridLayout.cpp */,
 				A9B52A01182AACF9009B0D71 /* GridLayoutTimeline.cpp */,
 				A9B52AC3182AB134009B0D71 /* GroundContent.cpp */,
+				A9B52B41182C1DA5009B0D71 /* SampleRenderable.cpp */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -468,8 +468,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9B52B42182C1DA5009B0D71 /* SampleRenderable.cpp in Sources */,
 				A9B52A94182AACF9009B0D71 /* GridLayoutTimeline.cpp in Sources */,
-				A9B52ABB182AAD87009B0D71 /* SampleRenderable.cpp in Sources */,
 				A9B52A93182AACF9009B0D71 /* GridLayout.cpp in Sources */,
 				A9B52AC4182AB134009B0D71 /* GroundContent.cpp in Sources */,
 				BC5AFFA6FEE24A689E62AA61 /* ConvergenceTestApp.cpp in Sources */,
