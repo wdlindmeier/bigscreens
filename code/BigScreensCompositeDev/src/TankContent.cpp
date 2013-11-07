@@ -210,7 +210,7 @@ namespace bigscreens
     
     void TankContent::resetPositions()
     {
-        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
+        mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         mTankPosition = Vec3f::zero();
     }
     
