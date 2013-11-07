@@ -33,7 +33,12 @@ void SampleRenderable::load()
 
 void SampleRenderable::render(const ci::Vec2i & screenOffset)
 {
-    gl::clear( Color( 0, 0, 0 ) );
+    render(screenOffset, 1.0f);
+}
+
+void SampleRenderable::render(const ci::Vec2i & screenOffset, const float alpha)
+{
+//    gl::clear( ColorAf( 0, 0, 0, 0.5f) );
     
     // Bind shader
     mShader->bind();
@@ -42,10 +47,11 @@ void SampleRenderable::render(const ci::Vec2i & screenOffset)
     // Draw ground
     gl::pushMatrices();
 
-    gl::enableAlphaBlending();
+//    gl::enableAlphaBlending();
     
     gl::setDefaultShaderVars();
-    mShader->uniform("uColor", ColorAf(0.75,0.75,0.75,1.0f));
+    // float linearProgress = std::min<float>((float)mNumFramesRendered / (kFramesFullTransition*10.0f), 1.0f);
+    mShader->uniform("uColor", ColorAf(0.75,0.75,0.75, alpha));
     
     // Get the current plot
     float groundScale = mGroundContent.getScale();

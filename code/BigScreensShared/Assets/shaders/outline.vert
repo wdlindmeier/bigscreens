@@ -1,6 +1,7 @@
 #version 150 core
 
-in vec2		position;
+in vec2         position;
+uniform vec4    uColor;
 
 void main( void )
 {
