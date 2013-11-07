@@ -161,7 +161,8 @@ void ConvergenceTestApp::draw()
     
     mContent->setFramesRendered(mProgressFrames);
 
-    if (progress >= 1.0 && mTransitionStyle == TRANSITION_FADE)
+    const float minFinalAlpha = 0.75;
+    if (progress >= minFinalAlpha && mTransitionStyle == TRANSITION_FADE)
     {
         static_pointer_cast<SampleRenderable>(mContent)->update([=](CameraPersp & cam)
         {
@@ -170,7 +171,7 @@ void ConvergenceTestApp::draw()
         });
 
         Rectf rect(0, 0, getWindowWidth(), getWindowHeight());
-        renderWithFadeTransition(rect, (progress*progress*progress*progress) - 1.0);
+        renderWithFadeTransition(rect, (progress*progress*progress*progress) - minFinalAlpha);
     }
 
     for (int i = 0; i < regionCount; ++i)
