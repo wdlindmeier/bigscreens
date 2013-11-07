@@ -35,19 +35,21 @@ namespace bigscreens {
     public:
         
         TankConvergenceContent();
-        virtual ~TankConvergenceContent(){};
+        ~TankConvergenceContent(){};
         TankOrientation positionForTankWithProgress(const int tankNum,
                                                     long frameProgress);
         
-        void render(const ci::Vec2i & screenOffset);
-        void render(const ci::Vec2i & screenOffset, const float alpha);
+        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
+        void drawGround();
+        void drawScreen(const ci::Rectf & contentRect);
 
     protected:
 
-        virtual void drawTank();
-        virtual void drawSingleTankAtPosition(const ci::Vec3f & position, const float rotationDegrees);
+        void drawTank();
+        void drawSingleTankAtPosition(const ci::Vec3f & position, const float rotationDegrees);
         
         float mRenderAlpha;
-
+        float mScreenAlpha;
     };
 }

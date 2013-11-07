@@ -27,7 +27,7 @@ namespace bigscreens
         ~TextureContent(){};
         
         void load(const std::string & textureName);
-        void render(const ci::Vec2i & screenOffset);
+        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         ci::CameraPersp& getCamera() { return mCam; }
         
     private:

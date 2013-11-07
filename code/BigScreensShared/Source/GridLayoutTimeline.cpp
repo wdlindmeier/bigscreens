@@ -216,7 +216,8 @@ namespace bigscreens
         }
     }
     
-    std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider)
+    std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider,
+                                                                            bool shouldTransition)
     {
         std::map< int, TimelineContentInfo > returnContent;
         
@@ -224,9 +225,9 @@ namespace bigscreens
         vector<ScreenRegion> compareRegions;
         vector<ScreenRegion> returnRegions;
         
-        float curTransitionScale = mTransitionAmt;
+        float curTransitionScale = shouldTransition ? mTransitionAmt : 1.0f;
         
-        if (mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
+        if (shouldTransition && mTransitionAmt < 1.0 && mIdxPrevLayout != -1)
         {
             // If there's a previous region, they each get 1/2 of the
             // allotted transition time.

@@ -39,16 +39,20 @@ namespace bigscreens
         ~ConvergenceContent(){}
         
         void load(const TransitionStyle style);
-        void render(const ci::Vec2i & screenOffset);
+        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();
         void setContentRect(const ci::Rectf & rect);
         
     protected:
         
-        void renderWithAlphaTransition(const ci::Vec2i screenOffset, const ci::Rectf & rect);
-        void renderWithExpandTransition(const ci::Vec2i screenOffset, const ci::Rectf & rect);
-        void renderWithFadeTransition(const ci::Vec2i screenOffset, const ci::Rectf & rect, const float alpha);
+        void renderWithAlphaTransition(const ci::Vec2i screenOffset,
+                                       const ci::Rectf & rect);
+        void renderWithExpandTransition(const ci::Vec2i screenOffset,
+                                        const ci::Rectf & rect);
+        void renderWithFadeTransition(const ci::Vec2i screenOffset,
+                                      const ci::Rectf & rect,
+                                      const float alpha);
 
     private:
         

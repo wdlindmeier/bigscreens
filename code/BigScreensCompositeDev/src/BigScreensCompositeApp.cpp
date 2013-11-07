@@ -18,7 +18,6 @@
 #include "cinder/Rand.h"
 #include "cinder/qtime/QuickTimeGl.h"
 #include "TankBlinkingContent.h"
-//#include "TankConvergenceContent.h"
 #include "FinalBillboard.h"
 #include "ConvergenceContent.h"
 
@@ -173,8 +172,7 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankContent>(mTankContent)->reset();
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
-//    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
-    
+
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
     std::vector<GridLayout> & layouts = mTimeline->getGridLayouts();
@@ -192,13 +190,6 @@ void BigScreensCompositeApp::loadAssets()
     tankHeightmap->load("T72.obj");
     mTankContentHeightmap = RenderableContentRef(tankHeightmap);
 
-    /*
-    TankConvergenceContent *tanksConverge = new TankConvergenceContent();
-    tanksConverge->load("T72.obj");
-    mTankContentConverge = RenderableContentRef(tanksConverge);
-    static_pointer_cast<TankConvergenceContent>(mTankContentConverge)->reset();
-    */
-    
     ConvergenceContent *converge = new ConvergenceContent();
     converge->load(TRANSITION_FADE);
     Vec2i masterSize = mClient->getMasterSize();
@@ -274,7 +265,6 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     }
     else if (contentName == kContentKeyTanksConverge)
     {
-        //return mTankContentConverge;
         return mConvergenceContent;
     }
     else if (contentName == kContentKeyPerlin)
@@ -478,20 +468,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
-        /*
-        float scalarProgress = 1.0 - std::min<float>((float)contentElapsedFrames / 1000.0f, 1.0f);
-        float finalOffset = scalarProgress * scalarProgress;
-        float camDist = 4000 + (6000 * finalOffset);
-        
-        shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mTankContentConverge);
-        tanks->update([=](CameraPersp & cam){
-            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
-            float camY = camDist * 0.25;
-            float camZ = camDist;
-            float camX = camDist;
-            cam.lookAt(Vec3f( camX, camY, camZ ),
-                       Vec3f( 0, -1750, 0 ) );
-        });*/
+        // Nothing to see here
     }
     else if (contentInfo.contentKey == kContentKeyPerlin)
     {
@@ -533,7 +510,13 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     // The old one will be replaced.
     map<int, TimelineContentInfo>  newContentInfo;
     
-    std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this);
+    // NOTE: DON'T transition on the last layout (this is the convergence scene)
+    int layoutSize = mTimeline->getGridLayouts().size();
+    const int convergenceLayoutIndex = layoutSize - 1;
+    bool shouldTransition = mTimeline->getCurrentFrame() != convergenceLayoutIndex;
+    
+    std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this,
+                                                                                    shouldTransition);
     
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
@@ -576,7 +559,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             
             scene.render(offset);
 
-            // NOTE: Convergence takes care of this
+            // NOTE: Convergence takes care of it's own frames
             if (renderMe.contentKey != kContentKeyTanksConverge)
             {
                 mOutLine->render();

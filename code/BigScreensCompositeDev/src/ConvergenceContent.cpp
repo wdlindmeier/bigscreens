@@ -19,6 +19,11 @@ ConvergenceContent::ConvergenceContent()
 {
 }
 
+void ConvergenceContent::setContentRect(const ci::Rectf & rect)
+{
+    mContentRect = rect;
+}
+
 void ConvergenceContent::load(const TransitionStyle style)
 {
     TankConvergenceContent *content = new TankConvergenceContent();
@@ -63,13 +68,10 @@ ci::Camera & ConvergenceContent::getCamera()
     return mCam;
 }
 
-void ConvergenceContent::setContentRect(const ci::Rectf & rect)
+void ConvergenceContent::render(const ci::Vec2i & screenOffset,
+                                const ci::Rectf & contentRect)
 {
-    mContentRect = rect;
-}
 
-void ConvergenceContent::render(const ci::Vec2i & screenOffset)
-{
     gl::clear( Color( 0.0, 0.0, 0.0 ) );
     
     gl::enableAlphaBlending();
@@ -83,7 +85,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset)
     amtRemaining *= amtRemaining;
     
     // Create the target cam position
-    float scalarProgress = std::min<float>(progress, 1.0f);
+    float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
     float finalOffset = scalarProgress * scalarProgress;
     float camDist = 4000 + (6000 * finalOffset);
     float camY = camDist * 0.25;
@@ -158,7 +160,6 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset)
 
 void ConvergenceContent::renderWithAlphaTransition(const ci::Vec2i screenOffset, const Rectf & rect)
 {
-    Vec2i windowSize = getWindowSize();
     Vec2i contentSize = mContentRect.getSize();
 
     ci::gl::scissor(-screenOffset.x,//-screenOffset.x,
@@ -174,13 +175,12 @@ void ConvergenceContent::renderWithAlphaTransition(const ci::Vec2i screenOffset,
     //Vec2i offset(0,0);
     
     float alpha = (float)mNumFramesRendered / (kFramesFullTransition*6.0f);
-    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, alpha);
+    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
 
 }
 
 void ConvergenceContent::renderWithExpandTransition(const ci::Vec2i screenOffset, const Rectf & rect)
 {
-    Vec2i windowSize = getWindowSize();
     Vec2i contentSize = mContentRect.getSize();
 
     ci::gl::viewport(-screenOffset.x,
@@ -211,7 +211,7 @@ void ConvergenceContent::renderWithExpandTransition(const ci::Vec2i screenOffset
     float minAlpha = 1;//0.15;
     float alphaTravel = 1.0 - minAlpha;
     float alpha = minAlpha + ((1.0-linearProgress) * alphaTravel);
-    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, alpha);
+    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
     
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;
@@ -225,10 +225,11 @@ void ConvergenceContent::renderWithExpandTransition(const ci::Vec2i screenOffset
     mOutLine->render();
 }
 
-void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset, const Rectf & rect, const float alpha)
+void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
+                                                  const Rectf & rect,
+                                                  const float alpha)
 {
     // Clip the viewport, similar to SceneWindow
-    Vec2i windowSize = getWindowSize();
     Vec2i contentSize = mContentRect.getSize();
 
     float linearProgress = std::min<float>(1.0, (float)mNumFramesRendered / (float)kFramesFullTransition);
@@ -243,7 +244,7 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset, 
                     rect.getWidth(),
                     rect.getHeight());
 
-    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, alpha);
+    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
 
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;

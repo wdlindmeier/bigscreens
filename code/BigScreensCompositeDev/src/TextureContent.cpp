@@ -32,7 +32,7 @@ namespace bigscreens
         mTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource(textureName))));
     }
     
-    void TextureContent::render(const ci::Vec2i & screenOffset)
+    void TextureContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::bindStockShader(gl::ShaderDef().color());
         

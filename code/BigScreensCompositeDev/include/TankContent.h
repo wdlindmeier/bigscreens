@@ -37,7 +37,7 @@ namespace bigscreens {
         virtual void load(const std::string & objFilename);
         virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
         virtual void resetPositions();
-        virtual void render(const ci::Vec2i & screenOffset);
+        virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         virtual void reset();
         
     protected:
@@ -47,7 +47,7 @@ namespace bigscreens {
         virtual void loadShaders();
                 void loadObj(const std::string & filename);
         
-        virtual void drawScreen();
+        virtual void drawScreen(const ci::Rectf & contentRect);
         virtual void drawGround();
         virtual void drawTank();
         

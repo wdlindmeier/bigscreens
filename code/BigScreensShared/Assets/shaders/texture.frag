@@ -9,5 +9,3 @@ void main( void )
 {
 	oColor = texture( uTex0, TexCoord.st ) * Color;
 }
-
-//vColor==1vPosition==0vTexCoord0==2
