@@ -20,7 +20,7 @@ namespace bigscreens
     {
     public:
         virtual ~RenderableContent(){};
-        virtual void render(const ci::Vec2i & screenOffset) = 0;
+        virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect) = 0;
         virtual void setFramesRendered(const long long numFramesRendered){ mNumFramesRendered = numFramesRendered; };
         // This is to manipulate the aspect ratio
 		// so that we can use different windows
@@ -85,6 +85,12 @@ namespace bigscreens
         std::string contentKey = "";
         ci::Rectf rect = ci::Rectf(0,0,0,0);
         RenderableContentRef contentRef;
+    };
+    
+    struct CameraOrigin
+    {
+        ci::Vec3f eye;
+        ci::Vec3f target;
     };
     
 }

@@ -6,6 +6,8 @@
 //
 //
 
+#pragma once
+
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/Vao.h"
@@ -65,6 +67,8 @@ public:
 		mVao->unbind();
 		mVbo->unbind();
 		mElementVbo->unbind();
+        
+        mColor = ci::Color::white();
 	}
 	
 	~OutLineBorder() {}
@@ -72,6 +76,7 @@ public:
 	void render()
 	{
 		mGlsl->bind();
+            mGlsl->uniform("uColor", mColor);
 			mVao->bind();
 				mElementVbo->bind();
 					ci::gl::drawElements( GL_LINES, 24, GL_UNSIGNED_INT, 0 );
@@ -79,11 +84,14 @@ public:
 			mVao->unbind();
 		mGlsl->unbind();
 	}
+    
+    void setColor(const ci::ColorAf & color){ mColor = color; }
 	
 private:
 	ci::gl::VaoRef		mVao;
 	ci::gl::VboRef		mVbo, mElementVbo;
 	ci::gl::GlslProgRef mGlsl;
+    ci::ColorAf         mColor;
 };
 	
 }

@@ -64,11 +64,13 @@ namespace bigscreens
         screenShaderFormat.vertex( ci::app::loadResource( "offset_texture.vert" ) )
         .fragment( ci::app::loadResource( "offset_texture.frag" ) );
         mTextureShader = ci::gl::GlslProg::create( screenShaderFormat );
+        mTextureShader->uniform("uColor", Color::white());
         
         gl::GlslProg::Format groundShaderFormat;
         groundShaderFormat.vertex( ci::app::loadResource( "ground_texture.vert" ) )
         .fragment( ci::app::loadResource( "ground_texture.frag" ) );
         mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
+        mGroundShader->uniform("uColor", Color::white());
 
         gl::GlslProg::Format mFormat;
         mFormat.vertex( loadResource( "basic.vert" ) )
@@ -81,16 +83,9 @@ namespace bigscreens
     {
         mScreenTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("screen.png"))));
         
-        GLfloat data[8+8+16]; // verts, texCoords, colors
-        GLfloat *verts = data, *texCoords = data + 8, *color = data + 16;
-        const float r = 1.f, g = 1.f, b = 1.f, a = 1.f;
-        for (int i = 0; i < 4; ++i)
-        {
-            color[i*4+0] = r;
-            color[i*4+1] = g;
-            color[i*4+2] = b;
-            color[i*4+3] = a;
-        }
+        GLfloat data[8+8]; // verts, texCoords
+        GLfloat *verts = data, *texCoords = data + 8;
+
         verts[0*2+0] = 1.0f;
         verts[0*2+1] = 0.0f;
         texCoords[0*2+0] = mScreenTexture->getRight();
@@ -123,11 +118,7 @@ namespace bigscreens
         int texLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::TEX_COORD_0 );
         gl::enableVertexAttribArray( texLoc );
         gl::vertexAttribPointer( texLoc, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*8) );
-        
-        int colorLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::COLOR );
-        gl::enableVertexAttribArray( colorLoc );
-        gl::vertexAttribPointer( colorLoc, 4, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*16) );
-        
+
         mScreenVao->unbind();
         mScreenVbo->unbind();
     }
@@ -197,7 +188,7 @@ namespace bigscreens
         mGroundContent.render(GL_TRIANGLE_STRIP, groundOffset);
         
         mGridTexture->unbind();
-        mTextureShader->unbind();
+        mGroundShader->unbind();
         
         gl::popMatrices();
     }
@@ -210,7 +201,7 @@ namespace bigscreens
     
     void TankContent::resetPositions()
     {
-        mCam.setPerspective( 45.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
+        mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         mTankPosition = Vec3f::zero();
     }
     
@@ -225,23 +216,25 @@ namespace bigscreens
         update_func(mCam);
     }
     
-    void TankContent::drawScreen()
+    void TankContent::drawScreen(const ci::Rectf & contentRect)
     {
         gl::pushMatrices();
         
-        gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
-        gl::scale(getWindowWidth(), getWindowHeight());
+        gl::setMatricesWindow(contentRect.getWidth(), contentRect.getHeight());
+        gl::scale(contentRect.getWidth(), contentRect.getHeight());
         
         mTextureShader->bind();
         mScreenTexture->bind();
 
+        gl::setDefaultShaderVars();
+        
         // No offset
         mTextureShader->uniform("uTexCoordOffset", Vec2f(0,0));
-        
+        mTextureShader->uniform("uColor", ColorAf(1,1,1,1));
+
         mScreenVao->bind();
         mScreenVbo->bind();
         
-        gl::setDefaultShaderVars();
         gl::drawArrays( GL_TRIANGLE_STRIP, 0, 4 );
         
         mScreenVao->unbind();
@@ -276,12 +269,12 @@ namespace bigscreens
         mTankShader->unbind();
     }
     
-    void TankContent::render(const ci::Vec2i & screenOffset)
+    void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         // clear out both of the attachments of the FBO with black
         gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
         
-        drawScreen();
+        drawScreen(contentRect);
         
         drawGround();
 
