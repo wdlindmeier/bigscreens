@@ -36,8 +36,10 @@ TankOrientation TankConvergenceContent::positionForTankWithProgress(const int ta
     float z = sin(rads) * tankDist;
     TankOrientation orientation;
     orientation.position = Vec3f(x,y,z);
-    // NOTE: This is always a circle
+
+    // This is always a circle
     orientation.directionDegrees = 270.0 - ci::toDegrees(rads);
+    
     return orientation;
 }
 
@@ -142,7 +144,6 @@ void TankConvergenceContent::drawGround()
     // NOTE: Not using the ground shader since it's a texture shader
     mTankShader->bind();
 
-    // Probably not necessary
     gl::enableAlphaBlending();
     
     mTankShader->uniform("uColor", ColorAf(0.75,0.75,0.75, mRenderAlpha));

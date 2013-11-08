@@ -83,17 +83,9 @@ namespace bigscreens
     {
         mScreenTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("screen.png"))));
         
-        GLfloat data[8+8]; // verts, texCoords, colors
-        GLfloat *verts = data, *texCoords = data + 8;//, *color = data + 16;
-        /*
-        const float r = 1.f, g = 1.f, b = 1.f, a = 1.f;
-        for (int i = 0; i < 4; ++i)
-        {
-            color[i*4+0] = r;
-            color[i*4+1] = g;
-            color[i*4+2] = b;
-            color[i*4+3] = a;
-        }*/
+        GLfloat data[8+8]; // verts, texCoords
+        GLfloat *verts = data, *texCoords = data + 8;
+
         verts[0*2+0] = 1.0f;
         verts[0*2+1] = 0.0f;
         texCoords[0*2+0] = mScreenTexture->getRight();
@@ -126,11 +118,7 @@ namespace bigscreens
         int texLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::TEX_COORD_0 );
         gl::enableVertexAttribArray( texLoc );
         gl::vertexAttribPointer( texLoc, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*8) );
-        /*
-        int colorLoc = mTextureShader->getAttribSemanticLocation( geom::Attrib::COLOR );
-        gl::enableVertexAttribArray( colorLoc );
-        gl::vertexAttribPointer( colorLoc, 4, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*16) );
-        */
+
         mScreenVao->unbind();
         mScreenVbo->unbind();
     }
