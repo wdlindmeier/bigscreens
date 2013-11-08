@@ -282,6 +282,7 @@ namespace bigscreens
             
             //std::pair<ci::Rectf, RenderableContentRef> returnItem;
             TimelineContentInfo returnItem;
+            returnItem.layoutIndex = i;
             
             // Now, create the new rect.
             Vec2f rectCenter = rA.getCenter();

@@ -360,7 +360,7 @@ void GridMakerApp::keyUp(KeyEvent event)
         // Don't allow playback while editing
         pause();
     }
-    
+    /*
     if (event.getCode() == KeyEvent::KEY_RIGHT)
     {
         advance();
@@ -368,7 +368,7 @@ void GridMakerApp::keyUp(KeyEvent event)
     else if (event.getCode() == KeyEvent::KEY_LEFT)
     {
         reverse();
-    }
+    }*/
 }
 
 #pragma mark - Button Input
@@ -487,7 +487,7 @@ void GridMakerApp::update()
 
 void GridMakerApp::draw()
 {
-    mTankContent->render(Vec2i::zero());
+    mTankContent->render(Vec2i::zero(), Rectf(0,0,512,512)); // params are stubs
     
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );

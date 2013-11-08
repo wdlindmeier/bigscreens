@@ -18,9 +18,14 @@
 #include "TankContent.h"
 #include "cinder/TriMesh.h"
 
-namespace bigscreens {
-    
-    const static long kNumFramesTanksConverge = 1000;
+namespace bigscreens
+{
+    // This must be synchronized w/ the timeline.
+    const static long kFramesFullConvergence = 4000;
+    const static long kNumFramesCamerasConverge = kFramesFullConvergence / 4;
+    const static long kNumFramesConvergeBeforeCameraMerge = kFramesFullConvergence - kNumFramesCamerasConverge;
+    // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
+
     static const int kNumTanksConverging = 20;
     
     struct TankOrientation

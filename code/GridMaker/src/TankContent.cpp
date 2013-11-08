@@ -43,7 +43,7 @@ void TankContent::update()
     mRotation.rotate( Vec3f( 0, 1, 0 ), 0.006f );
 }
 
-void TankContent::render(const ci::Vec2i & screenOffset)
+void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
 {
     // bind the framebuffer - now everything we draw will go there
 	mFBO.bindFramebuffer();

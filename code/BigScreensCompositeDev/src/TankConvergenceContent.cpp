@@ -21,16 +21,20 @@ TankConvergenceContent::TankConvergenceContent() : TankContent()
 
 TankOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long frameProgress)
 {
-    float scalarProgress = 1.0 - std::min<float>(1.0, (float)frameProgress / (float)kNumFramesTanksConverge);
+    float scalarProgress = 1.0 - std::min<float>(1.0, (float)frameProgress / (float)kFramesFullConvergence);
     float weightedProgress = scalarProgress * scalarProgress;
     
     float scalarOffset = (float)tankNum / (float)kNumTanksConverging;
     float rads = M_PI * 2 * scalarOffset;
     
-    // A simple distance based on sin that looks somewhat staggered
-    float iDist = fabs(sin(tankNum)) * 5000;
+    const static float kMaxTankDist = 22000.0f;
+    const static float kMinTankDist = 3000.0f;
+    const static float kTankTravelDist = kMaxTankDist - kMinTankDist;
     
-    float tankDist = 5000 + (iDist * weightedProgress);
+    // A simple distance based on sin that looks somewhat staggered
+    float iDist = fabs(sin(tankNum)) * kTankTravelDist;
+    
+    float tankDist = kMinTankDist + (iDist * weightedProgress);
     float x = cos(rads) * tankDist;
     float y = 0;
     float z = sin(rads) * tankDist;
@@ -54,8 +58,10 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const float alpha)
 {
     mRenderAlpha = alpha;
-    
-    mScreenAlpha = 1.0f - (((float)mNumFramesRendered / (float)kNumFramesTanksConverge) * 2.0f);
+
+    // TODO; Make sure this is only fading on the final scene
+    mScreenAlpha = 1.0f - (((float)(mNumFramesRendered - kNumFramesConvergeBeforeCameraMerge) /
+                            (float)kNumFramesCamerasConverge) * 2.0f);
     
     // NOTE: Don't clear
     

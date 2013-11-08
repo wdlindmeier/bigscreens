@@ -23,7 +23,7 @@ public:
     
     void load(const std::string & objFilename);
     void update();
-    void render(const ci::Vec2i & screenOffset);
+    void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     ci::CameraPersp& getCamera(){ return mCam; };
     ci::gl::Texture getTexture();
     ci::Vec2i getSize();

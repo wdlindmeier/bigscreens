@@ -21,8 +21,7 @@
 
 namespace bigscreens
 {
-    const static int kFramesFullTransition = 500;
-    
+
     enum TransitionStyle
     {
         TRANSITION_ALPHA = 0,

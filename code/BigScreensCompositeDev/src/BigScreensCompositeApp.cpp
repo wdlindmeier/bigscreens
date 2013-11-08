@@ -9,7 +9,7 @@
 #include "TankContent.h"
 #include "TextureContent.h"
 #include "GridLayoutTimeline.h"
-#include "SceneWindow.hpp"
+//#include "SceneWindow.hpp"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Shader.h"
 #include "OutLineBorder.hpp"
@@ -18,6 +18,7 @@
 #include "cinder/Rand.h"
 #include "cinder/qtime/QuickTimeGl.h"
 #include "TankBlinkingContent.h"
+#include "TankConvergenceContent.h"
 #include "FinalBillboard.h"
 #include "ConvergenceContent.h"
 
@@ -33,6 +34,7 @@ static const std::string kContentKeyTankHeightmap = "tankHeightmap";
 static const std::string kContentKeyTankWide = "tankWide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
+static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentProvider
@@ -97,7 +99,7 @@ public:
     RenderableContentRef mTankContent;
     RenderableContentRef mTankContentHeightmap;
     RenderableContentRef mPerlinContent;
-//    RenderableContentRef mTankContentConverge;
+    RenderableContentRef mSingleTankConvergeContent;
     RenderableContentRef mTextureContentBlank;
     RenderableContentRef mConvergenceContent;
     
@@ -152,7 +154,7 @@ void BigScreensCompositeApp::setup()
 }
 
 void BigScreensCompositeApp::shutdown()
-{
+{    
 }
 
 #pragma mark - Load
@@ -172,7 +174,7 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankContent>(mTankContent)->reset();
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
-
+    static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
     std::vector<GridLayout> & layouts = mTimeline->getGridLayouts();
@@ -203,6 +205,9 @@ void BigScreensCompositeApp::loadAssets()
     texBlank->load("blank_texture.png");
     mTextureContentBlank = RenderableContentRef(texBlank);
     
+    TankConvergenceContent *tankConverge = new TankConvergenceContent();
+    tankConverge->load("T72.obj");
+    mSingleTankConvergeContent = RenderableContentRef(tankConverge);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -249,7 +254,7 @@ void BigScreensCompositeApp::mpeReset()
 }
 
 #pragma mark - Content
-
+// Content (Scene) Provider
 RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & contentName)
 {
     if (contentName == kContentKeyTankSpin ||
@@ -266,6 +271,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyTanksConverge)
     {
         return mConvergenceContent;
+    }
+    else if (contentName == kContentKeySingleTankConverge)
+    {
+        return mSingleTankConvergeContent;
     }
     else if (contentName == kContentKeyPerlin)
     {
@@ -377,6 +386,8 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         mLastFrameNum = mTimeline->getCurrentFrame();
     }
 }
+// TMP
+static bool didLogHere2 = false;
 
 void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
 {
@@ -468,7 +479,53 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
+    }
+    else if (contentInfo.contentKey == kContentKeySingleTankConverge)
+    {
+        shared_ptr<TankConvergenceContent> tank = static_pointer_cast<TankConvergenceContent>(content);
+        //mSingleTankConvergeContent
         // Nothing to see here
+
+        int i = contentInfo.layoutIndex;
+        CameraOrigin orig;
+        
+        // TODO: This needs to be consistent between ConvergenceContent and here
+        
+        // NOTE: This may be more interesting if we're not picking linearly
+        TankOrientation orient = tank->positionForTankWithProgress(i, contentElapsedFrames);
+        Vec3f tankPos = orient.position;
+        
+        if (!didLogHere2)
+        {
+            console() << "tankPos " << i << ": " << tankPos << "\n";
+        }
+
+        
+        // TMP: Hard-coding the positions for now
+        orig.eye = Vec3f(tankPos.x + ((200 * i) - 2000), //((int)(arc4random() % 4000) - 2000.0f),
+                         tankPos.y + 800, //(int)(arc4random() % 1000),
+                         tankPos.z + ((200 * i) - 2000)); //(int)(arc4random() % 4000) - 2000.0f);
+        
+        // Look at the tank
+        orig.target = Vec3f(tankPos.x, 100, tankPos.z);
+        
+        Vec2f masterSize = mClient->getMasterSize();
+        Vec2f viewCenter(masterSize.x * 0.5, masterSize.y * 0.5);
+        Vec2f regCenter = contentInfo.rect.getCenter();
+        float horizShift = 1.0 - (regCenter.x / viewCenter.x);
+        float vertShift = 1.0 - (regCenter.y / viewCenter.y);
+        
+        // TMP: Hard-coding for test
+        orig.camShift = Vec2f(horizShift, vertShift);
+
+        float fullAspectRatio = masterSize.x / masterSize.y;
+        
+        tank->update([=](CameraPersp & cam)
+                      {
+                          cam.setAspectRatio(fullAspectRatio);
+                          cam.lookAt( orig.eye, orig.target );
+                          cam.setLensShift(orig.camShift);
+                      });
     }
     else if (contentInfo.contentKey == kContentKeyPerlin)
     {
@@ -518,11 +575,12 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this,
                                                                                     shouldTransition);
     
-    Vec2i windowSize = mClient->getVisibleRect().getSize();
-    Vec2i offset = mClient->getVisibleRect().getUpperLeft();
-
-	// mFbo->bindFramebuffer();
+    Rectf clientRect = mClient->getVisibleRect();
+    Vec2i screenOffset = clientRect.getUpperLeft();
+    Vec2f masterSize = mClient->getMasterSize();
     
+	// mFbo->bindFramebuffer();
+
     for (auto & kv : renderContent)
     {
         int contentID = kv.first;
@@ -547,26 +605,76 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         // Check if this should be rendered at all.
         if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))
         {
+            ci::gl::enable( GL_SCISSOR_TEST );
+
             // NOTE: Do the updates >>> here <<<
             // Some module won't be rendered (and therefor shouldn't be updated)
             // and other modules will be rendered (and updated) more than once.
             
             updateContentForRender(renderMe);
-
-            SceneWindow scene(renderMe.contentRef,
-                              renderMe.rect,
-                              windowSize);
             
-            scene.render(offset);
+            // NOTE: I removed SceneWindow for 2 reasons:
+            // 1) We can pull the same behavior into the app w/out having to allocate memory for each render.
+            // 2) Not all content behaves the same way (esp. convergence) w.r.t. viewport/scissor/aspect.
+            
+            Rectf contentRect = renderMe.rect;
+            OriginAndDimension contentOrigAndDim = OriginAndDimensionFromRectf(contentRect, masterSize.y);
+            RenderableContentRef content = renderMe.contentRef;
 
-            // NOTE: Convergence takes care of it's own frames
+            if (renderMe.contentKey != kContentKeySingleTankConverge)
+            {
+                // Ported from SceneWindow
+                content->getCamera().setAspectRatio( (float)contentRect.getWidth() / contentRect.getHeight() );
+
+                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
+                                 contentOrigAndDim.first.y - screenOffset.y,
+                                 contentOrigAndDim.second.x,
+                                 contentOrigAndDim.second.y );
+                
+                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
+                                contentOrigAndDim.first.y - screenOffset.y,
+                                contentOrigAndDim.second.x,
+                                contentOrigAndDim.second.y );
+                
+                content->render(screenOffset, renderMe.rect);
+            }
+            else
+            {
+                // The SingleTankConverge needs to be handled differently since the viewport
+                // extends beyond the box.
+                content->getCamera().setAspectRatio( (float)masterSize.x / masterSize.y );
+
+                // The viewport is the entire screen (e.g. all screens combined)
+                ci::gl::viewport(-screenOffset.x,
+                                 -screenOffset.y,
+                                 masterSize.x,
+                                 masterSize.y);
+
+                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
+                                contentOrigAndDim.first.y - screenOffset.y,
+                                contentOrigAndDim.second.x,
+                                contentOrigAndDim.second.y );
+
+                content->render(screenOffset, renderMe.rect);
+
+                // Reset the viewport for the outline
+                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
+                                 contentOrigAndDim.first.y - screenOffset.y,
+                                 contentOrigAndDim.second.x,
+                                 contentOrigAndDim.second.y);
+
+            }
+
+            // NOTE: Convergence takes care of it's own outlines
             if (renderMe.contentKey != kContentKeyTanksConverge)
             {
                 mOutLine->render();
             }
+            
+            ci::gl::disable( GL_SCISSOR_TEST );
         }
     }
-    
+
     // mFbo->unbindFramebuffer();
 	
 	// mFinalBillboard->draw( mFbo->getTexture() );
@@ -577,6 +685,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mCurrentContentInfo = newContentInfo;
+    
+    if (mTimeline->getCurrentFrame() == (convergenceLayoutIndex-1)) didLogHere2 = true;
 }
 
 void BigScreensCompositeApp::renderColumns()
