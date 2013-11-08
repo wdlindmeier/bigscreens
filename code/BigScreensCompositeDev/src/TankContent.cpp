@@ -12,6 +12,7 @@
 #include "cinder/Utilities.h"
 #include "cinder/Camera.h"
 #include "Utilities.hpp"
+#include "ContentProvider.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -23,7 +24,9 @@ namespace bigscreens
     TankContent::TankContent() :
     mGroundContent(10000.0),
     mTankPosition(0,0,0),
-    mIsGroundVisible(true)
+    mIsGroundVisible(true),
+	mTank( ContentProviderNew::ActorContent::getAdvancedTank() ),
+	mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     {
     }
     
@@ -190,6 +193,8 @@ namespace bigscreens
         mGridTexture->unbind();
         mGroundShader->unbind();
         
+//		mGroundPlane->draw();
+		
         gl::popMatrices();
     }
     
@@ -267,6 +272,8 @@ namespace bigscreens
         mTankElementVbo->unbind();
         mTankVao->unbind();
         mTankShader->unbind();
+		
+//		mTank->render( mCam );
     }
     
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)

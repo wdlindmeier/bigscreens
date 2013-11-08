@@ -39,14 +39,14 @@ class OpponentApp : public AppNative {
 	gl::TextureRef  mFboTexture;
 	
 	bigscreens::OpponentRef			mOpponent;
-	bigscreens::FinalBillboardRef mFinalBillboard;
+//	bigscreens::FinalBillboardRef mFinalBillboard;
 };
 
 void OpponentApp::setup()
 {
 	mOpponent = bigscreens::OpponentRef( new bigscreens::Opponent() );
 	
-	mFinalBillboard = bigscreens::FinalBillboardRef( new bigscreens::FinalBillboard() );
+//	mFinalBillboard = bigscreens::FinalBillboardRef( new bigscreens::FinalBillboard() );
 	
 	gl::Fbo::Format mFboFormat;
 	mFboFormat.colorTexture().stencilBuffer().
@@ -62,7 +62,7 @@ void OpponentApp::setup()
 
 void OpponentApp::mouseDown( MouseEvent event )
 {
-	mFinalBillboard->loadShaders();
+//	mFinalBillboard->loadShaders();
 }
 
 void OpponentApp::update()
@@ -86,8 +86,8 @@ void OpponentApp::draw()
 	
 	// clear out the window with black
 	gl::clear();
-	
-	mFinalBillboard->draw( mFboTexture );
+	gl::draw( mFboTexture );
+//	mFinalBillboard->draw( mFboTexture );
 }
 
 CINDER_APP_NATIVE( OpponentApp, RendererGl )

@@ -17,6 +17,7 @@
 #include "cinder/CinderMath.h"
 #include "cinder/Rand.h"
 #include "cinder/gl/Texture.h"
+#include "Utilities.hpp"
 
 
 namespace bigscreens {
@@ -170,8 +171,8 @@ private:
 			};
 			
 			ci::gl::GlslProg::Format mParticleGlslFormat;
-			mParticleGlslFormat.vertex( ci::app::loadAsset( "oppSmoke.vert" ) )
-			.fragment( ci::app::loadAsset( "oppSmoke.frag" ) )
+			mParticleGlslFormat.vertex( ci::app::loadAsset( /*"oppSmoke.vert"*/ SharedShaderAssetPath("oppSmoke.vert", !IS_IAC) ) )
+			.fragment( ci::app::loadAsset( /*"oppSmoke.frag"*/ SharedShaderAssetPath("oppSmoke.geom", !IS_IAC) ) )
 			.transformFeedback().feedbackFormat( GL_SEPARATE_ATTRIBS )
 			.feedbackVaryings( outputNames, 3 );
 			

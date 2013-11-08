@@ -20,6 +20,7 @@
 #include "TankBlinkingContent.h"
 #include "FinalBillboard.h"
 #include "ConvergenceContent.h"
+#include "ContentProvider.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -106,7 +107,9 @@ public:
     map<int, TimelineContentInfo>  mCurrentContentInfo;
 	
 	FinalBillboardRef    mFinalBillboard;
-	gl::FboRef           mFbo;
+//	gl::FboRef           mFbo;
+	
+	
 };
 
 #pragma mark - Setup
@@ -132,17 +135,15 @@ void BigScreensCompositeApp::setup()
     
     mOutLine = OutLineBorderRef(new OutLineBorder());
 	
-	mFinalBillboard = FinalBillboardRef( new FinalBillboard() );
+	mFinalBillboard = ContentProviderNew::ActorContent::getFinalBillboard();
 	
-	gl::Fbo::Format mFboFormat;
-	mFboFormat.colorTexture().depthBuffer().samples( 16 );
-	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
+//	gl::Fbo::Format mFboFormat;
+//	mFboFormat.colorTexture().depthBuffer().samples( 16 );
+//	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
     
-	mFbo->bindFramebuffer();
-	gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-	mFbo->unbindFramebuffer();
-	
-	cout << mFbo->getSize() << " " << getWindowSize();
+//	mFbo->bindFramebuffer();
+//	gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+//	mFbo->unbindFramebuffer();
 	
     mIsDrawingColumns = false;
 
@@ -521,7 +522,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i windowSize = mClient->getVisibleRect().getSize();
     Vec2i offset = mClient->getVisibleRect().getUpperLeft();
 
-	// mFbo->bindFramebuffer();
+//	mFbo->bindFramebuffer();
     
     for (auto & kv : renderContent)
     {
@@ -567,9 +568,9 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         }
     }
     
-    // mFbo->unbindFramebuffer();
+//    mFbo->unbindFramebuffer();
 	
-	// mFinalBillboard->draw( mFbo->getTexture() );
+//	mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {

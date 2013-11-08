@@ -16,13 +16,13 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		B3052DB318242336006D91DD /* triangle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB218242336006D91DD /* triangle.vert */; };
-		B3052DB518242344006D91DD /* triangle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB418242344006D91DD /* triangle.frag */; };
-		B3052DB718256881006D91DD /* triangle.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB618256881006D91DD /* triangle.geom */; };
+		B3052DB318242336006D91DD /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB218242336006D91DD /* oppBasic.vert */; };
+		B3052DB518242344006D91DD /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB418242344006D91DD /* oppBasic.frag */; };
+		B3052DB718256881006D91DD /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB618256881006D91DD /* oppBasic.geom */; };
 		B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBA182572B7006D91DD /* finalEffects.frag */; };
 		B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBB182572B7006D91DD /* finalEffects.vert */; };
-		B3052DC61826DFA1006D91DD /* opponentParticle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* opponentParticle.vert */; };
-		B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* opponentParticle.frag */; };
+		B3052DC61826DFA1006D91DD /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* oppSmoke.vert */; };
+		B3052DC81826DFBA006D91DD /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* oppSmoke.frag */; };
 		B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */; };
 		B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */; };
 		B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */; };
@@ -44,21 +44,21 @@
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		6541DBDC1F91461CA9545D57 /* Opponent_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = Opponent_Prefix.pch; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Opponent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Opponent.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3052DB218242336006D91DD /* triangle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = triangle.vert; path = ../assets/triangle.vert; sourceTree = "<group>"; };
-		B3052DB418242344006D91DD /* triangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = triangle.frag; path = ../assets/triangle.frag; sourceTree = "<group>"; };
-		B3052DB618256881006D91DD /* triangle.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = triangle.geom; path = ../assets/triangle.geom; sourceTree = "<group>"; };
+		B3052DB218242336006D91DD /* oppBasic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.vert; path = ../assets/oppBasic.vert; sourceTree = "<group>"; };
+		B3052DB418242344006D91DD /* oppBasic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.frag; path = ../assets/oppBasic.frag; sourceTree = "<group>"; };
+		B3052DB618256881006D91DD /* oppBasic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.geom; path = ../assets/oppBasic.geom; sourceTree = "<group>"; };
 		B3052DBA182572B7006D91DD /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.frag; path = ../assets/finalEffects.frag; sourceTree = "<group>"; };
 		B3052DBB182572B7006D91DD /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.vert; path = ../assets/finalEffects.vert; sourceTree = "<group>"; };
 		B3052DBF182597F1006D91DD /* PyramidalGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PyramidalGeometry.hpp; path = ../src/PyramidalGeometry.hpp; sourceTree = "<group>"; };
 		B3052DC11825A19C006D91DD /* SphericalGeometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SphericalGeometry.hpp; path = ../src/SphericalGeometry.hpp; sourceTree = "<group>"; };
 		B3052DC21825B038006D91DD /* Utilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = ../../BigScreensShared/Headers/Utilities.hpp; sourceTree = "<group>"; };
-		B3052DC31825B057006D91DD /* FinalBillboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/FinalBillboard.h; sourceTree = "<group>"; };
 		B3052DC41826CECD006D91DD /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SmokeEffect.hpp; path = ../src/SmokeEffect.hpp; sourceTree = "<group>"; };
-		B3052DC51826DFA1006D91DD /* opponentParticle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.vert; path = ../assets/opponentParticle.vert; sourceTree = "<group>"; };
-		B3052DC71826DFBA006D91DD /* opponentParticle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.frag; path = ../assets/opponentParticle.frag; sourceTree = "<group>"; };
+		B3052DC51826DFA1006D91DD /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.vert; path = ../assets/oppSmoke.vert; sourceTree = "<group>"; };
+		B3052DC71826DFBA006D91DD /* oppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.frag; path = ../assets/oppSmoke.frag; sourceTree = "<group>"; };
 		B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.vert; path = ../assets/oppDynamic.vert; sourceTree = "<group>"; };
 		B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.geom; path = ../assets/oppDynamic.geom; sourceTree = "<group>"; };
 		B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.frag; path = ../assets/oppDynamic.frag; sourceTree = "<group>"; };
+		B3115C6A182D5D2800FB7D2F /* FinalBillboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/Actors/FinalBillboard.h; sourceTree = "<group>"; };
 		B3968B0918287F5300BE5A87 /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Opponent.cpp; path = ../src/Opponent.cpp; sourceTree = "<group>"; };
 		B3968B0A18287F5300BE5A87 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Opponent.h; path = ../src/Opponent.h; sourceTree = "<group>"; };
 		B3968B22182A130D00BE5A87 /* OppDynamicGeom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = OppDynamicGeom.hpp; path = ../src/OppDynamicGeom.hpp; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				B3052DC31825B057006D91DD /* FinalBillboard.h */,
+				B3115C6A182D5D2800FB7D2F /* FinalBillboard.h */,
 				B3052DC21825B038006D91DD /* Utilities.hpp */,
 				C29591E3A9D344F9BCFAEA5F /* Resources.h */,
 				6541DBDC1F91461CA9545D57 /* Opponent_Prefix.pch */,
@@ -168,13 +168,13 @@
 			children = (
 				1E2B86946D4143C2BEA853B6 /* CinderApp.icns */,
 				ECBFAE34556F4BB2966D215B /* Info.plist */,
-				B3052DB218242336006D91DD /* triangle.vert */,
-				B3052DB618256881006D91DD /* triangle.geom */,
-				B3052DB418242344006D91DD /* triangle.frag */,
+				B3052DB218242336006D91DD /* oppBasic.vert */,
+				B3052DB618256881006D91DD /* oppBasic.geom */,
+				B3052DB418242344006D91DD /* oppBasic.frag */,
 				B3052DBB182572B7006D91DD /* finalEffects.vert */,
 				B3052DBA182572B7006D91DD /* finalEffects.frag */,
-				B3052DC51826DFA1006D91DD /* opponentParticle.vert */,
-				B3052DC71826DFBA006D91DD /* opponentParticle.frag */,
+				B3052DC51826DFA1006D91DD /* oppSmoke.vert */,
+				B3052DC71826DFBA006D91DD /* oppSmoke.frag */,
 				B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */,
 				B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */,
 				B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */,
@@ -254,16 +254,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3052DC61826DFA1006D91DD /* opponentParticle.vert in Sources */,
+				B3052DC61826DFA1006D91DD /* oppSmoke.vert in Sources */,
 				B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */,
-				B3052DB318242336006D91DD /* triangle.vert in Sources */,
-				B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */,
-				B3052DB718256881006D91DD /* triangle.geom in Sources */,
+				B3052DB318242336006D91DD /* oppBasic.vert in Sources */,
+				B3052DC81826DFBA006D91DD /* oppSmoke.frag in Sources */,
+				B3052DB718256881006D91DD /* oppBasic.geom in Sources */,
 				B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */,
 				B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */,
 				B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */,
 				B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */,
-				B3052DB518242344006D91DD /* triangle.frag in Sources */,
+				B3052DB518242344006D91DD /* oppBasic.frag in Sources */,
 				B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */,
 				C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */,
 			);
