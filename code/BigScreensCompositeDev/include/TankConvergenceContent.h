@@ -18,10 +18,9 @@
 #include "TankContent.h"
 #include "cinder/TriMesh.h"
 
-namespace bigscreens {
-    
-    const static long kNumFramesTanksConverge = 1000;
-    static const int kNumTanksConverging = 20;
+namespace bigscreens
+{
+   static const int kNumTanksConverging = 20;
     
     struct TankOrientation
     {
@@ -36,13 +35,19 @@ namespace bigscreens {
         
         TankConvergenceContent();
         ~TankConvergenceContent(){};
-        TankOrientation positionForTankWithProgress(const int tankNum,
-                                                    long frameProgress);
+        static TankOrientation positionForTankWithProgress(const int tankNum,
+                                                           long msOffset);
+        static CameraOrigin cameraForTankConvergence(int regionIndex,
+                                                     int regionCount,
+                                                     long msOffset,
+                                                     const ci::Vec2i & masterSize,
+                                                     const ci::Rectf & regionRect);
         
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
         void drawGround();
         void drawScreen(const ci::Rectf & contentRect);
+        void setMSElapsed(const long msElapsedConvergence);
 
     protected:
 
@@ -51,5 +56,6 @@ namespace bigscreens {
         
         float mRenderAlpha;
         float mScreenAlpha;
+        long mMSElapsedConvergence;
     };
 }

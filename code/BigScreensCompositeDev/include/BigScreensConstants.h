@@ -38,9 +38,18 @@ const static float kScreenWidthFeet = 120.0f;
 const static float kPxPerFoot = (float)((kScreenWidth * kNumScreens) - kScreenMarginRight) / kScreenWidthFeet;
 const static float kColumnWidth = 3.0f * kPxPerFoot;
 const static float kPosColumn1 = 3.5f * kPxPerFoot;
-const static float kPosColumn2 = (3.5f + 33.166f) * kPxPerFoot;
-const static float kPosColumn3 = (3.5f + 33.166f + 31.8333f) * kPxPerFoot;
-const static float kPosColumn4 = (3.5f + 33.166f + 31.8333f + 33.33333f) * kPxPerFoot;
+const static float kPosColumn2 = (3.5f + 34.166f) * kPxPerFoot;
+const static float kPosColumn3 = (3.5f + 34.166f + 32.8333f) * kPxPerFoot;
+const static float kPosColumn4 = (3.5f + 34.166f + 32.8333f + 34.33333f) * kPxPerFoot;
 
 // Audio
 const static int kNumFFTChannels = 64;
+
+// TIMING
+// This should be synchronized w/ the timeline.
+const long kMSFullConvergence = 20000; // 20 sec
+extern long MSCamerasConverge;// = 1000; // TBD: Determined by the layout timeline
+extern long MSConvergeBeforeCameraMerge;// = 1000;// TBD: Determined by the layout timeline
+// ... was kMSFullConvergence - kMSCamerasConverge;
+// The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
+

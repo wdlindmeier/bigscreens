@@ -85,12 +85,14 @@ namespace bigscreens
         std::string contentKey = "";
         ci::Rectf rect = ci::Rectf(0,0,0,0);
         RenderableContentRef contentRef;
+        int layoutIndex;
     };
     
     struct CameraOrigin
     {
         ci::Vec3f eye;
         ci::Vec3f target;
+        ci::Vec2f camShift;
     };
     
 }
