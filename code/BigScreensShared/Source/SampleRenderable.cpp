@@ -31,12 +31,12 @@ void SampleRenderable::load()
     mGroundContent.load(mShader);
 }
 
-void SampleRenderable::render(const ci::Vec2i & screenOffset)
+void SampleRenderable::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
 {
-    render(screenOffset, 1.0f);
+    render(screenOffset, contentRect, 1.0f);
 }
 
-void SampleRenderable::render(const ci::Vec2i & screenOffset, const float alpha)
+void SampleRenderable::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha)
 {
 //    gl::clear( ColorAf( 0, 0, 0, 0.5f) );
     

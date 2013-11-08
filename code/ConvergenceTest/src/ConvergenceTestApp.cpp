@@ -16,6 +16,8 @@ using namespace ci::app;
 using namespace std;
 using namespace bigscreens;
 
+const static long kFramesFullTransition = 500;
+
 enum TransitionStyle
 {
     TRANSITION_ALPHA = 0,
@@ -218,7 +220,7 @@ void ConvergenceTestApp::renderWithAlphaTransition(Rectf & rect)
     Vec2i offset(0,0);
     
     float alpha = (float)mProgressFrames / (kFramesFullTransition*6.0f);
-    static_pointer_cast<SampleRenderable>(mContent)->render(offset, alpha);
+    static_pointer_cast<SampleRenderable>(mContent)->render(offset, rect, alpha);
 }
 
 void ConvergenceTestApp::renderWithExpandTransition(Rectf & rect)
@@ -252,7 +254,7 @@ void ConvergenceTestApp::renderWithExpandTransition(Rectf & rect)
     float minAlpha = 1;//0.15;
     float alphaTravel = 1.0 - minAlpha;
     float alpha = minAlpha + ((1.0-linearProgress) * alphaTravel);
-    static_pointer_cast<SampleRenderable>(mContent)->render(offset, alpha);
+    static_pointer_cast<SampleRenderable>(mContent)->render(offset, rect, alpha);
     ci::gl::disable( GL_SCISSOR_TEST );
     
     float outlineAlpha = 1.0 - linearProgress;
@@ -288,7 +290,7 @@ void ConvergenceTestApp::renderWithFadeTransition(Rectf & rect, float alpha)
     */
     // gl::clear(ColorAf(linearProgress,linearProgress,linearProgress,1));
     //mContent->render(offset);
-    static_pointer_cast<SampleRenderable>(mContent)->render(offset, alpha);
+    static_pointer_cast<SampleRenderable>(mContent)->render(offset, rect, alpha);
 
     ci::gl::disable( GL_SCISSOR_TEST );
 }

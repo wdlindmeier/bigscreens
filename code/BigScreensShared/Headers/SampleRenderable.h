@@ -23,8 +23,8 @@ public:
     ~SampleRenderable(){};
     
     void load();
-    void render(const ci::Vec2i & screenOffset);
-    void render(const ci::Vec2i & screenOffset, const float alpha);
+    void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+    void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
     void update(std::function<void (ci::CameraPersp & cam)> update_func);
     ci::Camera & getCamera();
     
