@@ -25,12 +25,10 @@ namespace bigscreens
         SceneWindow(RenderableContentRef content,
                     const ci::Rectf & screenRegion,
                     const ci::Vec2i & screenSize) :
-        //ci::gl::FboRef fbo) :
+        mContentRect( screenRegion ),
         mContent( content ),
         mLastAspect( mContent->getCamera().getAspectRatio() ),
 		mOrigAndDim( OriginAndDimensionFromRectf(screenRegion, screenSize.y) )
-        //mOrigAndDim( OriginAndDimensionFromRectf(screenRegion, fbo->getHeight()) ),
-        //mFBO(fbo)
         {
         }
         
@@ -50,7 +48,8 @@ namespace bigscreens
             // It feels more semantically appropriate here, and in practice
             // it's called at the same time, but leaves us the option of caching a scene window.
             
-            mLastAspect = mContent->getCamera().getAspectRatio();
+            // mLastAspect = mContent->getCamera().getAspectRatio();
+            
             mContent->getCamera().setAspectRatio( (float)mOrigAndDim.second.x / mOrigAndDim.second.y );
             // Only render exactly what we have to
             
@@ -59,7 +58,7 @@ namespace bigscreens
             ci::gl::enable( GL_SCISSOR_TEST );
             //mFBO->bindFramebuffer();
             
-            mContent->render(offset);
+            mContent->render(offset, mContentRect);
 
             //mFBO->unbindFramebuffer();
             ci::gl::disable( GL_SCISSOR_TEST );
@@ -72,7 +71,7 @@ namespace bigscreens
             
             // Reset the aspect ratio.
             // NOTE: Moved this from the destructor.
-            mContent->getCamera().setAspectRatio( mLastAspect );
+            // mContent->getCamera().setAspectRatio( mLastAspect );
             
         }
 
@@ -91,8 +90,6 @@ namespace bigscreens
                             mOrigAndDim.second.y );
         }
         
-        // We may want to remove the FBO
-        // This currently just adds overhead.
         /*
          void blitToScreen()
          {
@@ -107,10 +104,10 @@ namespace bigscreens
 
     private:
         
+        ci::Rectf               mContentRect;
         RenderableContentRef    mContent;
         OriginAndDimension      mOrigAndDim;
         float                   mLastAspect;
-        //ci::gl::FboRef          mFBO;
     };
     
 }

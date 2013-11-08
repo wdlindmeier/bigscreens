@@ -6,6 +6,8 @@
 //
 //
 
+#pragma once
+
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/Vao.h"

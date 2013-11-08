@@ -32,7 +32,8 @@ namespace bigscreens
         // requires a knowledge of the current time. Transitions are absolute milliseconds.
         void update();
         
-        std::map<int, TimelineContentInfo> getRenderContent(ContentProvider *contentProvider);
+        std::map<int, TimelineContentInfo> getRenderContent(ContentProvider *contentProvider,
+                                                            bool shouldTransition=true);
         
         std::vector<GridLayout> & getGridLayouts(){ return mGridLayouts; };
         

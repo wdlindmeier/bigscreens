@@ -71,7 +71,7 @@ namespace bigscreens
         mTexture->update(mNoiseSurface);
     }
     
-    void PerlinContent::render(const ci::Vec2i & screenOffset)
+    void PerlinContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         preRender();
         gl::bindStockShader(gl::ShaderDef().color());
