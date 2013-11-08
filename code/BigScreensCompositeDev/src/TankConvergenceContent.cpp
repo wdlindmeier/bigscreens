@@ -13,24 +13,67 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
-
-TankConvergenceContent::TankConvergenceContent() : TankContent()
+TankConvergenceContent::TankConvergenceContent() : TankContent(), mMSElapsedConvergence(0)
 {
     mGroundContent = GroundContent(20000.0);
 };
 
-TankOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long frameProgress)
+void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
 {
-    float scalarProgress = 1.0 - std::min<float>(1.0, (float)frameProgress / (float)kNumFramesTanksConverge);
+    mMSElapsedConvergence = msElapsedConvergence;
+}
+
+CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
+                                                              int regionCount,
+                                                              long msOffset,
+                                                              const Vec2i & masterSize,
+                                                              const Rectf & regionRect)
+{
+    // These are arbitrary numbers
+    float camXOffsetInterval = 4000.0f / regionCount;
+    float camYOffsetInterval = 500.0f / regionCount;
+    float camZOffsetInterval = camXOffsetInterval;
+    
+    TankOrientation tankOrient = TankConvergenceContent::positionForTankWithProgress(regionIndex, msOffset);
+    Vec3f tankPos = tankOrient.position;
+    
+    CameraOrigin orig;
+    
+    // TODO: Make this more interesting
+    orig.eye = Vec3f(tankPos.x + ((camXOffsetInterval * regionIndex) - 2000.0f), // 
+                     tankPos.y + 500 + (((camYOffsetInterval * regionIndex) - 250.0f)),
+                     tankPos.z + ((camZOffsetInterval * regionIndex) - 2000.0f));
+    
+    // Look at the tank
+    orig.target = Vec3f(tankPos.x, 100, tankPos.z);
+    
+    // A horizontal lens shift of 1 (-1) will shift the view right (left) by half the width of the viewport.
+    // A vertical lens shift of 1 (-1) will shift the view up (down) by half the height of the viewport.
+    Vec2f viewCenter(masterSize.x * 0.5, masterSize.y * 0.5);
+    Vec2f regCenter = regionRect.getCenter();
+    float horizShift = 1.0 - (regCenter.x / viewCenter.x);
+    float vertShift = 1.0 - (regCenter.y / viewCenter.y);
+    orig.camShift = Vec2f(horizShift, vertShift);
+    
+    return orig;
+}
+
+TankOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long msOffset)
+{
+    float scalarProgress = 1.0 - std::min<float>(1.0, (float)msOffset / (float)kMSFullConvergence);
     float weightedProgress = scalarProgress * scalarProgress;
     
     float scalarOffset = (float)tankNum / (float)kNumTanksConverging;
     float rads = M_PI * 2 * scalarOffset;
     
-    // A simple distance based on sin that looks somewhat staggered
-    float iDist = fabs(sin(tankNum)) * 5000;
+    const static float kMaxTankDist = 22000.0f;
+    const static float kMinTankDist = 3000.0f;
+    const static float kTankTravelDist = kMaxTankDist - kMinTankDist;
     
-    float tankDist = 5000 + (iDist * weightedProgress);
+    // A simple distance based on sin that looks somewhat staggered
+    float iDist = fabs(sin(tankNum)) * kTankTravelDist;
+    
+    float tankDist = kMinTankDist + (iDist * weightedProgress);
     float x = cos(rads) * tankDist;
     float y = 0;
     float z = sin(rads) * tankDist;
@@ -54,8 +97,9 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const float alpha)
 {
     mRenderAlpha = alpha;
-    
-    mScreenAlpha = 1.0f - (((float)mNumFramesRendered / (float)kNumFramesTanksConverge) * 2.0f);
+
+    // TODO; Make sure this is only fading on the final scene
+    mScreenAlpha = mRenderAlpha;
     
     // NOTE: Don't clear
     
@@ -83,7 +127,7 @@ void TankConvergenceContent::drawTank()
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
-        TankOrientation tankOrient = positionForTankWithProgress(i, mNumFramesRendered);
+        TankOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
         drawSingleTankAtPosition(tankOrient.position,
                                  tankOrient.directionDegrees);
     }

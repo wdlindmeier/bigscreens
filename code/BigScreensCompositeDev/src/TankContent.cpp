@@ -159,6 +159,7 @@ namespace bigscreens
         gl::Texture::Format texFormat;
         texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
         texFormat.mipMap(true);
+        texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
         mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
         
         mGroundContent.load(mGroundShader);

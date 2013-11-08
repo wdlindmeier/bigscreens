@@ -9,7 +9,7 @@
 #include "TankContent.h"
 #include "TextureContent.h"
 #include "GridLayoutTimeline.h"
-#include "SceneWindow.hpp"
+//#include "SceneWindow.hpp"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Shader.h"
 #include "OutLineBorder.hpp"
@@ -18,6 +18,7 @@
 #include "cinder/Rand.h"
 #include "cinder/qtime/QuickTimeGl.h"
 #include "TankBlinkingContent.h"
+#include "TankConvergenceContent.h"
 #include "FinalBillboard.h"
 #include "ConvergenceContent.h"
 #include "ContentProvider.h"
@@ -34,6 +35,7 @@ static const std::string kContentKeyTankHeightmap = "tankHeightmap";
 static const std::string kContentKeyTankWide = "tankWide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
+static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentProvider
@@ -89,7 +91,7 @@ public:
     GridLayoutTimelineRef mTimeline;
     
     bool mIsDrawingColumns;
-    int mLastFrameNum;
+    int mLayoutIndex;
     
     // Audio
     qtime::MovieGlRef    mSoundtrack;
@@ -98,7 +100,7 @@ public:
     RenderableContentRef mTankContent;
     RenderableContentRef mTankContentHeightmap;
     RenderableContentRef mPerlinContent;
-//    RenderableContentRef mTankContentConverge;
+    RenderableContentRef mSingleTankConvergeContent;
     RenderableContentRef mTextureContentBlank;
     RenderableContentRef mConvergenceContent;
     
@@ -107,9 +109,12 @@ public:
     map<int, TimelineContentInfo>  mCurrentContentInfo;
 	
 	FinalBillboardRef    mFinalBillboard;
-//	gl::FboRef           mFbo;
-	
-	
+	gl::FboRef           mFbo;
+    
+    int                  mConvergenceLayoutIndex;
+    int                  mPreConvergenceLayoutIndex;
+    long long            mMSElapsedConvergence;
+    long long            mMSConvergenceBegan;
 };
 
 #pragma mark - Setup
@@ -153,17 +158,21 @@ void BigScreensCompositeApp::setup()
 }
 
 void BigScreensCompositeApp::shutdown()
-{
+{    
 }
 
 #pragma mark - Load
 
+extern long MSConvergeBeforeCameraMerge;
+extern long MSCamerasConverge;
+
 void BigScreensCompositeApp::reload()
 {
-    mLastFrameNum = -1;
+    mLayoutIndex = -1;
     mCurrentContentInfo.clear();
     mTimeline->reload();
     mTimeline->restart();
+    
     if (!mTimeline->isPlaying())
     {
         mSoundtrack->stop();
@@ -173,11 +182,33 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankContent>(mTankContent)->reset();
     static_pointer_cast<TankHeightmapContent>(mTankContentHeightmap)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
-
+    static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
-    std::vector<GridLayout> & layouts = mTimeline->getGridLayouts();
-    GridLayout & penultimateLayout = layouts[layouts.size() - 2];
+    
+    
+    vector<GridLayout> & layouts = mTimeline->getGridLayouts();
+    int layoutSize = layouts.size();
+    mConvergenceLayoutIndex = layoutSize - 1;
+    mPreConvergenceLayoutIndex = mConvergenceLayoutIndex - 1;
+    
+    mMSElapsedConvergence = 0;
+    mMSConvergenceBegan = 0;
+
+    GridLayout & convergenceLayout = layouts[mConvergenceLayoutIndex];
+    GridLayout & penultimateLayout = layouts[mPreConvergenceLayoutIndex];
+
+    long long convergeTimestamp = convergenceLayout.getTimestamp();
+    long long preConvergeTimestamp = penultimateLayout.getTimestamp();
+    long long durationPreConverge = convergeTimestamp - preConvergeTimestamp;
+    
+    MSConvergeBeforeCameraMerge = durationPreConverge;
+    MSCamerasConverge = kMSFullConvergence - MSConvergeBeforeCameraMerge;
+    
+    console() << "kMSFullConvergence: " << kMSFullConvergence <<
+                 " MSConvergeBeforeCameraMerge: " << MSConvergeBeforeCameraMerge <<
+                 " MSCamerasConverge: " << MSCamerasConverge << endl;
+    
     static_pointer_cast<ConvergenceContent>(mConvergenceContent)->reset(penultimateLayout);
 }
 
@@ -204,6 +235,9 @@ void BigScreensCompositeApp::loadAssets()
     texBlank->load("blank_texture.png");
     mTextureContentBlank = RenderableContentRef(texBlank);
     
+    TankConvergenceContent *tankConverge = new TankConvergenceContent();
+    tankConverge->load("T72.obj");
+    mSingleTankConvergeContent = RenderableContentRef(tankConverge);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -250,7 +284,7 @@ void BigScreensCompositeApp::mpeReset()
 }
 
 #pragma mark - Content
-
+// Content (Scene) Provider
 RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & contentName)
 {
     if (contentName == kContentKeyTankSpin ||
@@ -267,6 +301,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyTanksConverge)
     {
         return mConvergenceContent;
+    }
+    else if (contentName == kContentKeySingleTankConverge)
+    {
+        return mSingleTankConvergeContent;
     }
     else if (contentName == kContentKeyPerlin)
     {
@@ -366,16 +404,32 @@ void BigScreensCompositeApp::update()
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
-    mTimeline->update();
+    long long timelineMS = mTimeline->update();
     
     // FFT Data
     // float *fftData = mSoundtrack->getFftData();
     
     // Send the controller the current frame if it's changed
-    if (mLastFrameNum != mTimeline->getCurrentFrame())
+    if (mLayoutIndex != mTimeline->getCurrentFrame())
     {
         broadcastCurrentLayout();
-        mLastFrameNum = mTimeline->getCurrentFrame();
+        mLayoutIndex = mTimeline->getCurrentFrame();
+        
+        // If this is the layout that starts the convergence,
+        // make a note of the time.
+        if (mLayoutIndex == mPreConvergenceLayoutIndex)
+        {
+            // reset
+            console() << "STARTING CONVERGENCE CLOCK\n";
+            mMSElapsedConvergence = 0;
+            mMSConvergenceBegan = timelineMS;
+        }
+    }
+    
+    // Update the convergence duration
+    if (mMSConvergenceBegan > 0)
+    {
+        mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
     }
 }
 
@@ -469,7 +523,33 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
+        shared_ptr<ConvergenceContent> merge = static_pointer_cast<ConvergenceContent>(content);
+        merge->setMSElapsed(mMSElapsedConvergence);
+    }
+    else if (contentInfo.contentKey == kContentKeySingleTankConverge)
+    {
+        shared_ptr<TankConvergenceContent> tank = static_pointer_cast<TankConvergenceContent>(content);
+        tank->setMSElapsed(mMSElapsedConvergence);
+        //mSingleTankConvergeContent
         // Nothing to see here
+
+        int i = contentInfo.layoutIndex;
+        int regionCount = mTimeline->getCurrentRegionCount();
+        Vec2f masterSize = mClient->getMasterSize();
+
+        CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
+                                                                             regionCount,
+                                                                             mMSElapsedConvergence,
+                                                                             masterSize,
+                                                                             contentInfo.rect);
+        float fullAspectRatio = masterSize.x / masterSize.y;
+        
+        tank->update([=](CameraPersp & cam)
+                      {
+                          cam.setAspectRatio(fullAspectRatio);
+                          cam.lookAt( orig.eye, orig.target );
+                          cam.setLensShift(orig.camShift);
+                      });
     }
     else if (contentInfo.contentKey == kContentKeyPerlin)
     {
@@ -512,18 +592,17 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     map<int, TimelineContentInfo>  newContentInfo;
     
     // NOTE: DON'T transition on the last layout (this is the convergence scene)
-    int layoutSize = mTimeline->getGridLayouts().size();
-    const int convergenceLayoutIndex = layoutSize - 1;
-    bool shouldTransition = mTimeline->getCurrentFrame() != convergenceLayoutIndex;
+    bool shouldTransition = mTimeline->getCurrentFrame() != mConvergenceLayoutIndex;
     
     std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this,
                                                                                     shouldTransition);
     
-    Vec2i windowSize = mClient->getVisibleRect().getSize();
-    Vec2i offset = mClient->getVisibleRect().getUpperLeft();
-
-//	mFbo->bindFramebuffer();
+    Rectf clientRect = mClient->getVisibleRect();
+    Vec2i screenOffset = clientRect.getUpperLeft();
+    Vec2f masterSize = mClient->getMasterSize();
     
+	// mFbo->bindFramebuffer();
+
     for (auto & kv : renderContent)
     {
         int contentID = kv.first;
@@ -548,23 +627,73 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         // Check if this should be rendered at all.
         if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))
         {
+            ci::gl::enable( GL_SCISSOR_TEST );
+
             // NOTE: Do the updates >>> here <<<
             // Some module won't be rendered (and therefor shouldn't be updated)
             // and other modules will be rendered (and updated) more than once.
             
             updateContentForRender(renderMe);
-
-            SceneWindow scene(renderMe.contentRef,
-                              renderMe.rect,
-                              windowSize);
             
-            scene.render(offset);
+            // NOTE: I removed SceneWindow for 2 reasons:
+            // 1) We can pull the same behavior into the app w/out having to allocate memory for each render.
+            // 2) Not all content behaves the same way (esp. convergence) w.r.t. viewport/scissor/aspect.
+            
+            Rectf contentRect = renderMe.rect;
+            OriginAndDimension contentOrigAndDim = OriginAndDimensionFromRectf(contentRect, masterSize.y);
+            RenderableContentRef content = renderMe.contentRef;
 
-            // NOTE: Convergence takes care of it's own frames
+            if (renderMe.contentKey != kContentKeySingleTankConverge)
+            {
+                // Ported from SceneWindow
+                content->getCamera().setAspectRatio( (float)contentRect.getWidth() / contentRect.getHeight() );
+
+                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
+                                 contentOrigAndDim.first.y - screenOffset.y,
+                                 contentOrigAndDim.second.x,
+                                 contentOrigAndDim.second.y );
+                
+                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
+                                contentOrigAndDim.first.y - screenOffset.y,
+                                contentOrigAndDim.second.x,
+                                contentOrigAndDim.second.y );
+                
+                content->render(screenOffset, renderMe.rect);
+            }
+            else
+            {
+                // The SingleTankConverge needs to be handled differently since the viewport
+                // extends beyond the box.
+                content->getCamera().setAspectRatio( (float)masterSize.x / masterSize.y );
+
+                // The viewport is the entire screen (e.g. all screens combined)
+                ci::gl::viewport(-screenOffset.x,
+                                 -screenOffset.y,
+                                 masterSize.x,
+                                 masterSize.y);
+
+                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
+                                contentOrigAndDim.first.y - screenOffset.y,
+                                contentOrigAndDim.second.x,
+                                contentOrigAndDim.second.y );
+
+                content->render(screenOffset, renderMe.rect);
+
+                // Reset the viewport for the outline
+                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
+                                 contentOrigAndDim.first.y - screenOffset.y,
+                                 contentOrigAndDim.second.x,
+                                 contentOrigAndDim.second.y);
+
+            }
+
+            // NOTE: Convergence takes care of it's own outlines
             if (renderMe.contentKey != kContentKeyTanksConverge)
             {
                 mOutLine->render();
             }
+            
+            ci::gl::disable( GL_SCISSOR_TEST );
         }
     }
     
@@ -578,6 +707,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mCurrentContentInfo = newContentInfo;
+    
 }
 
 void BigScreensCompositeApp::renderColumns()
