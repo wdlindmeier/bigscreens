@@ -10,9 +10,8 @@
 
 #include "cinder/gl/gl.h"
 #include "cinder/gl/GlslProg.h"
-#include "PyramidalGeometry.hpp"
-#include "SphericalGeometry.hpp"
 #include "SmokeEffect.hpp"
+#include "OppDynamicGeom.hpp"
 
 namespace bigscreens {
 	
@@ -39,6 +38,7 @@ public:
 		
 		mGlsl->uniform( "projection", ci::gl::getProjection() );
 		mGlsl->uniform( "modelView", ci::gl::getModelView() );
+		
 		
 		glPointSize(10.0f);
 		

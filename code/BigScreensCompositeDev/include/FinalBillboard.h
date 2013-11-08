@@ -60,8 +60,8 @@ public:
 	void loadShaders()
 	{
 		ci::gl::GlslProg::Format mEffectsFormat;
-		mEffectsFormat.vertex( ci::app::loadAsset( SharedShaderAssetPath("finalEffects.vert", !IS_IAC) ) )
-		.fragment( ci::app::loadAsset( SharedShaderAssetPath("finalEffects.frag", !IS_IAC) ) );
+		mEffectsFormat.vertex( ci::app::loadAsset( "finalEffects.vert"/*SharedShaderAssetPath("finalEffects.vert", !IS_IAC)*/ ) )
+		.fragment( ci::app::loadAsset( "finalEffects.frag"/*SharedShaderAssetPath("finalEffects.frag", !IS_IAC)*/ ) );
 		mEffectsGlsl = ci::gl::GlslProg::create( mEffectsFormat );
 	}
 	

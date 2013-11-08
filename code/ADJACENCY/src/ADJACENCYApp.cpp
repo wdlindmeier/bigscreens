@@ -59,6 +59,9 @@ void ADJACENCYApp::setup()
 	
 	mFloorPlane = bigscreens::FloorPlaneRef( new bigscreens::FloorPlane() );
     
+	mFboFormat.colorTexture().depthBuffer();
+	mFbo = gl::Fbo::create( getWindowWidth(), getWindowHeight(), mFboFormat );
+	
     mCam.setPerspective( 60, getWindowWidth() / getWindowHeight(), .1, 10000 );
     mCam.lookAt( Vec3f( 0, 0, 1 ), Vec3f( 0, 0, 0 ) );
     
@@ -111,6 +114,7 @@ void ADJACENCYApp::mouseDown( MouseEvent event )
 
 void ADJACENCYApp::update()
 {
+	
 }
 
 void ADJACENCYApp::draw()
@@ -127,7 +131,7 @@ void ADJACENCYApp::draw()
     gl::setMatrices( mCam );
     // simple centering
     gl::multModelView( Matrix44f::createTranslation( Vec3f( -((xCount-1)*quadSize) / 2, -((yCount-1)*quadSize) / 4, (-((xCount-1) * quadSize) / 8) )   ) );
-	gl::multModelView( Matrix44f::createRotation( Vec3f( 1, 0, 0 ), toRadians( -(float)(index++) ) ) );
+	gl::multModelView( Matrix44f::createRotation( Vec3f( 1, 0, 0 ), toRadians( -80.0f ) ) );
 //	gl::multModelView( Matrix44f::createScale( Vec3f( .05, 0, 0 ) ) );
     
 //	cout << "modelview in app: " << gl::getModelView() << endl;

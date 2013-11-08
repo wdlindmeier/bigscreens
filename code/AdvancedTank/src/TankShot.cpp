@@ -72,7 +72,7 @@ const static float kLineProgressInterval = 0.5;
 
 void TankShot::generateLine(const gl::GlslProgRef & shader)
 {
-    TriMesh::Format meshFormat = TriMesh::Format().vertices();
+    TriMesh::Format meshFormat = TriMesh::Format().positions();
     TriMesh lineMesh(meshFormat);
     
     bool didHitGround = false;

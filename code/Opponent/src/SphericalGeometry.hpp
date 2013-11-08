@@ -34,9 +34,21 @@ public:
 		mSphericalElementVbo->bind();
 		
 //		ci::gl::drawElements( GL_TRIANGLES, mSphericalTrimesh->getNumIndices(), GL_UNSIGNED_INT, 0);
-		ci::gl::drawArrays( GL_TRIANGLE_STRIP, 0, mSphericalTrimesh->getNumVertices() );
+		ci::gl::drawArrays( GL_TRIANGLES, 0, mSphericalTrimesh->getNumVertices() );
 		mSphericalElementVbo->unbind();
 		mSphericalVao->unbind();
+	}
+	
+	void bindTexBuffer()
+	{
+		glActiveTexture( GL_TEXTURE1 );
+		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
+	}
+	
+	void unbindTexBuffer()
+	{
+		glActiveTexture( GL_TEXTURE1 );
+		glBindTexture( GL_TEXTURE_BUFFER, 0 );
 	}
 	
 private:
@@ -58,6 +70,10 @@ private:
 		
 		mSphericalElementVbo = ci::gl::Vbo::create( GL_ARRAY_BUFFER, mSphericalTrimesh->getNumIndices() * sizeof( uint32_t ), GL_STATIC_DRAW );
 		mSphericalVao->unbind();
+		
+		glGenTextures( 1, &mTexBuffer );
+		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
+		glTexBuffer( GL_TEXTURE_BUFFER, GL_RGBA32F, mSphericalVbo->getId() );
 	}
 	
 	void calcGeometry( float radius, unsigned int rings, unsigned int sectors )
@@ -100,8 +116,9 @@ private:
 private:
 	// PRIVATE MEMBERS
 	
-	ci::gl::VboRef mSphericalVbo, mSphericalNormalVbo, mSphericalElementVbo;
-	ci::gl::VaoRef mSphericalVao;
-	ci::TriMeshRef mSphericalTrimesh;
+	ci::gl::VboRef	mSphericalVbo, mSphericalNormalVbo, mSphericalElementVbo;
+	ci::gl::VaoRef	mSphericalVao;
+	ci::TriMeshRef	mSphericalTrimesh;
+	GLuint			mTexBuffer;
 };
 }

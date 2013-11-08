@@ -40,6 +40,18 @@ public:
 		mPyramidalVao->unbind();
 	}
 	
+	void bindTexBuffer()
+	{
+		glActiveTexture( GL_TEXTURE0 );
+		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
+	}
+	
+	void unbindTexBuffer()
+	{
+		glActiveTexture( GL_TEXTURE0 );
+		glBindTexture( GL_TEXTURE_BUFFER, 0 );
+	}
+	
 private:
 	
 	// SETUP FUNCTIONS
@@ -61,6 +73,10 @@ private:
 		mPyramidalElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mPyramidalTrimesh->getNumIndices() * sizeof( uint32_t ), mPyramidalTrimesh->getIndices().data(), GL_STATIC_DRAW );
 		
 		mPyramidalVao->unbind();
+		
+		glGenTextures( 1, &mTexBuffer );
+		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
+		glTexBuffer( GL_TEXTURE_BUFFER, GL_RGBA32F, mPyramidalVbo->getId() );
 	}
 	void calcGeometry()
 	{
@@ -111,6 +127,7 @@ private:
 	ci::gl::VaoRef mPyramidalVao;
 	ci::gl::VboRef mPyramidalVbo, mPyramidalNormalVbo, mPyramidalElementVbo;
 	ci::TriMeshRef mPyramidalTrimesh;
+	GLuint			mTexBuffer;
 };
 	
 }

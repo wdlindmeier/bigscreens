@@ -23,6 +23,9 @@
 		B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBB182572B7006D91DD /* finalEffects.vert */; };
 		B3052DC61826DFA1006D91DD /* opponentParticle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* opponentParticle.vert */; };
 		B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* opponentParticle.frag */; };
+		B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */; };
+		B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */; };
+		B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */; };
 		B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3968B0918287F5300BE5A87 /* Opponent.cpp */; };
 		C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */; };
 /* End PBXBuildFile section */
@@ -53,8 +56,12 @@
 		B3052DC41826CECD006D91DD /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SmokeEffect.hpp; path = ../src/SmokeEffect.hpp; sourceTree = "<group>"; };
 		B3052DC51826DFA1006D91DD /* opponentParticle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.vert; path = ../assets/opponentParticle.vert; sourceTree = "<group>"; };
 		B3052DC71826DFBA006D91DD /* opponentParticle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = opponentParticle.frag; path = ../assets/opponentParticle.frag; sourceTree = "<group>"; };
+		B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.vert; path = ../assets/oppDynamic.vert; sourceTree = "<group>"; };
+		B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.geom; path = ../assets/oppDynamic.geom; sourceTree = "<group>"; };
+		B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.frag; path = ../assets/oppDynamic.frag; sourceTree = "<group>"; };
 		B3968B0918287F5300BE5A87 /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Opponent.cpp; path = ../src/Opponent.cpp; sourceTree = "<group>"; };
 		B3968B0A18287F5300BE5A87 /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Opponent.h; path = ../src/Opponent.h; sourceTree = "<group>"; };
+		B3968B22182A130D00BE5A87 /* OppDynamicGeom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = OppDynamicGeom.hpp; path = ../src/OppDynamicGeom.hpp; sourceTree = "<group>"; };
 		C29591E3A9D344F9BCFAEA5F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = OpponentApp.cpp; path = ../src/OpponentApp.cpp; sourceTree = "<group>"; };
 		ECBFAE34556F4BB2966D215B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,6 +102,7 @@
 				B3052DC41826CECD006D91DD /* SmokeEffect.hpp */,
 				B3968B0918287F5300BE5A87 /* Opponent.cpp */,
 				B3968B0A18287F5300BE5A87 /* Opponent.h */,
+				B3968B22182A130D00BE5A87 /* OppDynamicGeom.hpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -167,6 +175,9 @@
 				B3052DBA182572B7006D91DD /* finalEffects.frag */,
 				B3052DC51826DFA1006D91DD /* opponentParticle.vert */,
 				B3052DC71826DFBA006D91DD /* opponentParticle.frag */,
+				B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */,
+				B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */,
+				B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -248,9 +259,12 @@
 				B3052DB318242336006D91DD /* triangle.vert in Sources */,
 				B3052DC81826DFBA006D91DD /* opponentParticle.frag in Sources */,
 				B3052DB718256881006D91DD /* triangle.geom in Sources */,
+				B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */,
+				B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */,
 				B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */,
 				B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */,
 				B3052DB518242344006D91DD /* triangle.frag in Sources */,
+				B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */,
 				C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,7 +275,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../cinder_dev;
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -287,7 +301,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../cinder_dev;
+				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
