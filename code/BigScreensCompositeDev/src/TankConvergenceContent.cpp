@@ -104,7 +104,7 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     // NOTE: Don't clear
     
     std::pair<Vec2i,Vec2i> viewport = gl::getViewport();
-    drawScreen(contentRect);
+    drawScreen(screenOffset, contentRect);
     gl::viewport(viewport.first, viewport.second);
     
     drawGround();
@@ -138,14 +138,14 @@ void TankConvergenceContent::drawTank()
     mTankShader->unbind();
 }
 
-void TankConvergenceContent::drawScreen(const ci::Rectf & contentRect)
+void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
 {
     gl::pushMatrices();
     
     // Temporarily resetting the viewport.
     // It's set back in draw().
-    gl::viewport(contentRect.x1,
-                 getWindowHeight() - contentRect.y2,
+    gl::viewport(contentRect.x1 - screenOffset.x,
+                 getWindowHeight() - contentRect.y2 - screenOffset.y,
                  contentRect.getWidth(),
                  contentRect.getHeight());
     
