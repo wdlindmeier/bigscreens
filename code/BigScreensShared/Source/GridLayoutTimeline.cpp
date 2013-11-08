@@ -178,7 +178,7 @@ namespace bigscreens
     
 #pragma mark - App Loop
     
-    void GridLayoutTimeline::update()
+    long long GridLayoutTimeline::update()
     {
         if (mIsPlaying)
         {
@@ -213,7 +213,17 @@ namespace bigscreens
             {
                 mTransitionAmt = (float)std::min<double>((double)timeIntoLayout / (double)transitionDuration, 1.0);
             }
+            
+            return mPlayheadTime;
         }
+        
+        return 0;
+        
+    }
+    
+    int GridLayoutTimeline::getCurrentRegionCount()
+    {
+        return mGridLayouts[mIdxCurrentLayout].getRegions().size();
     }
     
     std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider,

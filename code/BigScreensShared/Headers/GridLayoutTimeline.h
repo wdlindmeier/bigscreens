@@ -30,7 +30,7 @@ namespace bigscreens
         // Neé "tick"
         // NOTE: We don't actually want to use "future" since the transition amount
         // requires a knowledge of the current time. Transitions are absolute milliseconds.
-        void update();
+        long long update();
         
         std::map<int, TimelineContentInfo> getRenderContent(ContentProvider *contentProvider,
                                                             bool shouldTransition=true);
@@ -50,6 +50,7 @@ namespace bigscreens
         
         bool isPlaying();
         int getCurrentFrame(){ return mIdxCurrentLayout; };
+        int getCurrentRegionCount();
         
     private:
         

@@ -20,13 +20,7 @@
 
 namespace bigscreens
 {
-    // This must be synchronized w/ the timeline.
-    const static long kFramesFullConvergence = 4000;
-    const static long kNumFramesCamerasConverge = kFramesFullConvergence / 4;
-    const static long kNumFramesConvergeBeforeCameraMerge = kFramesFullConvergence - kNumFramesCamerasConverge;
-    // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
-
-    static const int kNumTanksConverging = 20;
+   static const int kNumTanksConverging = 20;
     
     struct TankOrientation
     {
@@ -41,13 +35,19 @@ namespace bigscreens
         
         TankConvergenceContent();
         ~TankConvergenceContent(){};
-        TankOrientation positionForTankWithProgress(const int tankNum,
-                                                    long frameProgress);
+        static TankOrientation positionForTankWithProgress(const int tankNum,
+                                                           long msOffset);
+        static CameraOrigin cameraForTankConvergence(int regionIndex,
+                                                     int regionCount,
+                                                     long msOffset,
+                                                     const ci::Vec2i & masterSize,
+                                                     const ci::Rectf & regionRect);
         
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
         void drawGround();
         void drawScreen(const ci::Rectf & contentRect);
+        void setMSElapsed(const long msElapsedConvergence);
 
     protected:
 
@@ -56,5 +56,6 @@ namespace bigscreens
         
         float mRenderAlpha;
         float mScreenAlpha;
+        long mMSElapsedConvergence;
     };
 }

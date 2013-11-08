@@ -38,12 +38,15 @@ namespace bigscreens
         ~ConvergenceContent(){}
         
         void load(const TransitionStyle style);
+        void setMSElapsed(const long msElapsedConvergence);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();
         void setContentRect(const ci::Rectf & rect);
         
     protected:
+        
+        float getScalarMergeProgress();
         
         void renderWithAlphaTransition(const ci::Vec2i screenOffset,
                                        const ci::Rectf & rect);
@@ -62,6 +65,7 @@ namespace bigscreens
         ci::Rectf mContentRect;
         std::vector<CameraOrigin> mCameraOrigins;
         OutLineBorderRef mOutLine;
+        long mMSElapsedConvergence;
 
     };
 

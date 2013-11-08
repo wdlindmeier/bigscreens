@@ -90,7 +90,7 @@ public:
     GridLayoutTimelineRef mTimeline;
     
     bool mIsDrawingColumns;
-    int mLastFrameNum;
+    int mLayoutIndex;
     
     // Audio
     qtime::MovieGlRef    mSoundtrack;
@@ -109,6 +109,11 @@ public:
 	
 	FinalBillboardRef    mFinalBillboard;
 	gl::FboRef           mFbo;
+    
+    int                  mConvergenceLayoutIndex;
+    int                  mPreConvergenceLayoutIndex;
+    long long            mMSElapsedConvergence;
+    long long            mMSConvergenceBegan;
 };
 
 #pragma mark - Setup
@@ -159,12 +164,16 @@ void BigScreensCompositeApp::shutdown()
 
 #pragma mark - Load
 
+extern long MSConvergeBeforeCameraMerge;
+extern long MSCamerasConverge;
+
 void BigScreensCompositeApp::reload()
 {
-    mLastFrameNum = -1;
+    mLayoutIndex = -1;
     mCurrentContentInfo.clear();
     mTimeline->reload();
     mTimeline->restart();
+    
     if (!mTimeline->isPlaying())
     {
         mSoundtrack->stop();
@@ -177,8 +186,30 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
-    std::vector<GridLayout> & layouts = mTimeline->getGridLayouts();
-    GridLayout & penultimateLayout = layouts[layouts.size() - 2];
+    
+    
+    vector<GridLayout> & layouts = mTimeline->getGridLayouts();
+    int layoutSize = layouts.size();
+    mConvergenceLayoutIndex = layoutSize - 1;
+    mPreConvergenceLayoutIndex = mConvergenceLayoutIndex - 1;
+    
+    mMSElapsedConvergence = 0;
+    mMSConvergenceBegan = 0;
+
+    GridLayout & convergenceLayout = layouts[mConvergenceLayoutIndex];
+    GridLayout & penultimateLayout = layouts[mPreConvergenceLayoutIndex];
+
+    long long convergeTimestamp = convergenceLayout.getTimestamp();
+    long long preConvergeTimestamp = penultimateLayout.getTimestamp();
+    long long durationPreConverge = convergeTimestamp - preConvergeTimestamp;
+    
+    MSConvergeBeforeCameraMerge = durationPreConverge;
+    MSCamerasConverge = kMSFullConvergence - MSConvergeBeforeCameraMerge;
+    
+    console() << "kMSFullConvergence: " << kMSFullConvergence <<
+                 " MSConvergeBeforeCameraMerge: " << MSConvergeBeforeCameraMerge <<
+                 " MSCamerasConverge: " << MSCamerasConverge << endl;
+    
     static_pointer_cast<ConvergenceContent>(mConvergenceContent)->reset(penultimateLayout);
 }
 
@@ -374,20 +405,34 @@ void BigScreensCompositeApp::update()
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
-    mTimeline->update();
+    long long timelineMS = mTimeline->update();
     
     // FFT Data
     // float *fftData = mSoundtrack->getFftData();
     
     // Send the controller the current frame if it's changed
-    if (mLastFrameNum != mTimeline->getCurrentFrame())
+    if (mLayoutIndex != mTimeline->getCurrentFrame())
     {
         broadcastCurrentLayout();
-        mLastFrameNum = mTimeline->getCurrentFrame();
+        mLayoutIndex = mTimeline->getCurrentFrame();
+        
+        // If this is the layout that starts the convergence,
+        // make a note of the time.
+        if (mLayoutIndex == mPreConvergenceLayoutIndex)
+        {
+            // reset
+            console() << "STARTING CONVERGENCE CLOCK\n";
+            mMSElapsedConvergence = 0;
+            mMSConvergenceBegan = timelineMS;
+        }
+    }
+    
+    // Update the convergence duration
+    if (mMSConvergenceBegan > 0)
+    {
+        mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
     }
 }
-// TMP
-static bool didLogHere2 = false;
 
 void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
 {
@@ -479,45 +524,25 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
+        shared_ptr<ConvergenceContent> merge = static_pointer_cast<ConvergenceContent>(content);
+        merge->setMSElapsed(mMSElapsedConvergence);
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
         shared_ptr<TankConvergenceContent> tank = static_pointer_cast<TankConvergenceContent>(content);
+        tank->setMSElapsed(mMSElapsedConvergence);
         //mSingleTankConvergeContent
         // Nothing to see here
 
         int i = contentInfo.layoutIndex;
-        CameraOrigin orig;
-        
-        // TODO: This needs to be consistent between ConvergenceContent and here
-        
-        // NOTE: This may be more interesting if we're not picking linearly
-        TankOrientation orient = tank->positionForTankWithProgress(i, contentElapsedFrames);
-        Vec3f tankPos = orient.position;
-        
-        if (!didLogHere2)
-        {
-            console() << "tankPos " << i << ": " << tankPos << "\n";
-        }
-
-        
-        // TMP: Hard-coding the positions for now
-        orig.eye = Vec3f(tankPos.x + ((200 * i) - 2000), //((int)(arc4random() % 4000) - 2000.0f),
-                         tankPos.y + 800, //(int)(arc4random() % 1000),
-                         tankPos.z + ((200 * i) - 2000)); //(int)(arc4random() % 4000) - 2000.0f);
-        
-        // Look at the tank
-        orig.target = Vec3f(tankPos.x, 100, tankPos.z);
-        
+        int regionCount = mTimeline->getCurrentRegionCount();
         Vec2f masterSize = mClient->getMasterSize();
-        Vec2f viewCenter(masterSize.x * 0.5, masterSize.y * 0.5);
-        Vec2f regCenter = contentInfo.rect.getCenter();
-        float horizShift = 1.0 - (regCenter.x / viewCenter.x);
-        float vertShift = 1.0 - (regCenter.y / viewCenter.y);
-        
-        // TMP: Hard-coding for test
-        orig.camShift = Vec2f(horizShift, vertShift);
 
+        CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
+                                                                             regionCount,
+                                                                             mMSElapsedConvergence,
+                                                                             masterSize,
+                                                                             contentInfo.rect);
         float fullAspectRatio = masterSize.x / masterSize.y;
         
         tank->update([=](CameraPersp & cam)
@@ -568,9 +593,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     map<int, TimelineContentInfo>  newContentInfo;
     
     // NOTE: DON'T transition on the last layout (this is the convergence scene)
-    int layoutSize = mTimeline->getGridLayouts().size();
-    const int convergenceLayoutIndex = layoutSize - 1;
-    bool shouldTransition = mTimeline->getCurrentFrame() != convergenceLayoutIndex;
+    bool shouldTransition = mTimeline->getCurrentFrame() != mConvergenceLayoutIndex;
     
     std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this,
                                                                                     shouldTransition);
@@ -686,7 +709,6 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     
     mCurrentContentInfo = newContentInfo;
     
-    if (mTimeline->getCurrentFrame() == (convergenceLayoutIndex-1)) didLogHere2 = true;
 }
 
 void BigScreensCompositeApp::renderColumns()

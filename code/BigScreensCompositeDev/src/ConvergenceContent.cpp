@@ -8,6 +8,7 @@
 
 #include "ConvergenceContent.h"
 #include "TankConvergenceContent.h"
+#include "BigScreensConstants.h"
 
 using namespace std;
 using namespace ci;
@@ -15,7 +16,10 @@ using namespace ci::gl;
 using namespace ci::app;
 using namespace bigscreens;
 
-ConvergenceContent::ConvergenceContent()
+extern long MSCamerasConverge = 1000;
+extern long MSConvergeBeforeCameraMerge = 1000;
+
+ConvergenceContent::ConvergenceContent() : mMSElapsedConvergence(0)
 {
 }
 
@@ -34,6 +38,11 @@ void ConvergenceContent::load(const TransitionStyle style)
     mOutLine = OutLineBorderRef(new OutLineBorder());
 }
 
+void ConvergenceContent::setMSElapsed(const long msElapsedConvergence)
+{
+    mMSElapsedConvergence = msElapsedConvergence;
+}
+
 void ConvergenceContent::reset(const GridLayout & previousLayout)
 {
     shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
@@ -42,48 +51,28 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     mLayout = previousLayout;
     mCameraOrigins.clear();
     int i = 0;
-    
+    int regionCount = mLayout.getRegions().size();
     for (ScreenRegion region : mLayout.getRegions())
     {
-        CameraOrigin orig;
-        
-        TankOrientation orient = content->positionForTankWithProgress(i, kNumFramesConvergeBeforeCameraMerge);
-        Vec3f tankPos = orient.position;
-
-        // TMP: Hard-coding the positions for now
-        orig.eye = Vec3f(tankPos.x + ((200 * i) - 2000), //((int)(arc4random() % 4000) - 2000.0f),
-                         tankPos.y + 800, //(int)(arc4random() % 1000),
-                         tankPos.z + ((200 * i) - 2000)); //(int)(arc4random() % 4000) - 2000.0f);
-
-        /*
-        // Randomly oreient the eye around the tank
-        orig.eye = Vec3f(tankPos.x + ((int)(arc4random() % 4000) - 2000.0f),
-                         tankPos.y + (int)(arc4random() % 1000),
-                         tankPos.z + (int)(arc4random() % 4000) - 2000.0f);
-        */
-        
-        // Look at the tank
-        orig.target = Vec3f(tankPos.x, 100, tankPos.z);
-        
-        // A horizontal lens shift of 1 (-1) will shift the view right (left) by half the width of the viewport.
-        // A vertical lens shift of 1 (-1) will shift the view up (down) by half the height of the viewport.
-        Vec2f viewCenter = mContentRect.getCenter();
-        Vec2f regCenter = region.rect.getCenter();
-        float horizShift = 1.0 - (regCenter.x / viewCenter.x);
-        float vertShift = 1.0 - (regCenter.y / viewCenter.y);
-        // TMP: Hard-coding for test
-        orig.camShift = Vec2f(horizShift, vertShift);
-        
+        CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
+                                                                             regionCount,
+                                                                             MSConvergeBeforeCameraMerge,
+                                                                             mContentRect.getSize(),
+                                                                             region.rect);
         mCameraOrigins.push_back(orig);
         
         ++i;
     }
-
 }
 
 ci::Camera & ConvergenceContent::getCamera()
 {
     return mCam;
+}
+
+float ConvergenceContent::getScalarMergeProgress()
+{
+    return (float)(mMSElapsedConvergence - MSConvergeBeforeCameraMerge) / (float)MSCamerasConverge;
 }
 
 void ConvergenceContent::render(const ci::Vec2i & screenOffset,
@@ -97,9 +86,19 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     vector<ScreenRegion> regions = mLayout.getRegions();
     int regionCount = regions.size();
     
-    float progress = (float)mNumFramesRendered / (float)kNumFramesCamerasConverge;
+    // Time based
+    float progress = getScalarMergeProgress();
+    /*
+    console() << "rendering convergence with progress: " << progress <<
+                 " mMSElapsedConvergence: " << mMSElapsedConvergence <<
+                 " MSConvergeBeforeCameraMerge: " << MSConvergeBeforeCameraMerge <<
+                 " MSCamerasConverge: " << MSCamerasConverge <<
+                 std::endl;
+    */
     float amtRemaining = 1.0 - std::min<float>(progress, 1.0f);
     // Weigh
+    
+    // TODO: Use an ease-in ease-out function
     amtRemaining *= amtRemaining;
     
     // Create the target cam position
@@ -116,9 +115,10 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     finalOrigin.camShift = Vec2f(0,0);
 
     // NOTE: This content starts in the previous layout so we're adding render frames
-    mContent->setFramesRendered(kNumFramesConvergeBeforeCameraMerge + mNumFramesRendered);
+    // mContent->setFramesRendered(kNumFramesConvergeBeforeCameraMerge + mNumFramesRendered);
     
     shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mContent);
+    tanks->setMSElapsed(mMSElapsedConvergence);
     
     float fullAspectRatio = mContentRect.getWidth() / mContentRect.getHeight();
     mCam.setPerspective( 45.0f, fullAspectRatio, .01, 40000 );
@@ -199,7 +199,8 @@ void ConvergenceContent::renderWithAlphaTransition(const ci::Vec2i screenOffset,
     
     //Vec2i offset(0,0);
     
-    float alpha = (float)mNumFramesRendered / (kNumFramesCamerasConverge * 6.0f);
+    float progress = getScalarMergeProgress();
+    float alpha = pow(progress, 6); //(float)mNumFramesRendered / (kNumFramesCamerasConverge * 6.0f);
     static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
 
 }
@@ -213,7 +214,8 @@ void ConvergenceContent::renderWithExpandTransition(const ci::Vec2i screenOffset
                      contentSize.x,
                      contentSize.y);
 
-    float linearProgress = std::min<float>(1.0, (float)mNumFramesRendered / (float)kNumFramesCamerasConverge);
+    float progress = getScalarMergeProgress();
+    float linearProgress = std::min<float>(1.0, progress);
     
     float x = rect.x1 * (1.0 - linearProgress);
     x -= screenOffset.x;
@@ -257,7 +259,8 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
     // Clip the viewport, similar to SceneWindow
     Vec2i contentSize = mContentRect.getSize();
 
-    float linearProgress = std::min<float>(1.0, (float)mNumFramesRendered / (float)kNumFramesCamerasConverge);
+    float progress = getScalarMergeProgress();
+    float linearProgress = std::min<float>(1.0, progress);
     
     ci::gl::viewport(-screenOffset.x,
                      -screenOffset.y,

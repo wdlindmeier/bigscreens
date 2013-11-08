@@ -44,3 +44,12 @@ const static float kPosColumn4 = (3.5f + 33.166f + 31.8333f + 33.33333f) * kPxPe
 
 // Audio
 const static int kNumFFTChannels = 64;
+
+// TIMING
+// This should be synchronized w/ the timeline.
+const long kMSFullConvergence = 20000; // 20 sec
+extern long MSCamerasConverge;// = 1000; // TBD: Determined by the layout timeline
+extern long MSConvergeBeforeCameraMerge;// = 1000;// TBD: Determined by the layout timeline
+// ... was kMSFullConvergence - kMSCamerasConverge;
+// The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
+
