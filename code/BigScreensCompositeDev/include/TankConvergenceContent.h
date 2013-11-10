@@ -48,6 +48,7 @@ namespace bigscreens
         void drawGround();
         void setMSElapsed(const long msElapsedConvergence);
         void drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+        virtual void loadShaders();
 
     protected:
 

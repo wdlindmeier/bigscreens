@@ -48,9 +48,9 @@ private:
 		};
 		
 		ci::gl::GlslProg::Format mGlslFormat;
-		mGlslFormat.vertex( ci::app::loadAsset( "oppDynamic.vert" ) )
-			.geometry( ci::app::loadAsset( "oppDynamic.geom" ) )
-			.fragment( ci::app::loadAsset( "oppDynamic.geom" ) )
+		mGlslFormat.vertex( ci::app::loadResource("oppDynamic.vert" ))
+			.geometry( ci::app::loadResource("oppDynamic.geom"))
+			.fragment( ci::app::loadResource("oppDynamic.frag"))
 			.transformFeedback().feedbackVaryings( varyings, 1 )
 			.feedbackFormat( GL_SEPARATE_ATTRIBS );
 		

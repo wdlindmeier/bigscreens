@@ -16,16 +16,18 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		B3052DB318242336006D91DD /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB218242336006D91DD /* oppBasic.vert */; };
-		B3052DB518242344006D91DD /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB418242344006D91DD /* oppBasic.frag */; };
-		B3052DB718256881006D91DD /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3052DB618256881006D91DD /* oppBasic.geom */; };
-		B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBA182572B7006D91DD /* finalEffects.frag */; };
-		B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DBB182572B7006D91DD /* finalEffects.vert */; };
-		B3052DC61826DFA1006D91DD /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* oppSmoke.vert */; };
-		B3052DC81826DFBA006D91DD /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* oppSmoke.frag */; };
-		B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */; };
-		B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */; };
-		B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */; };
+		A9B3063E182DA58900DEB3D7 /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B3063C182DA58900DEB3D7 /* smoke_blur.png */; };
+		A9B3063F182DA58900DEB3D7 /* smoke_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B3063D182DA58900DEB3D7 /* smoke_particle.png */; };
+		B3052DB318242336006D91DD /* oppBasic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DB218242336006D91DD /* oppBasic.vert */; };
+		B3052DB518242344006D91DD /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DB418242344006D91DD /* oppBasic.frag */; };
+		B3052DB718256881006D91DD /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3052DB618256881006D91DD /* oppBasic.geom */; };
+		B3052DBC182572B7006D91DD /* finalEffects.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DBA182572B7006D91DD /* finalEffects.frag */; };
+		B3052DBD182572B7006D91DD /* finalEffects.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DBB182572B7006D91DD /* finalEffects.vert */; };
+		B3052DC61826DFA1006D91DD /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DC51826DFA1006D91DD /* oppSmoke.vert */; };
+		B3052DC81826DFBA006D91DD /* oppSmoke.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DC71826DFBA006D91DD /* oppSmoke.frag */; };
+		B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C36182B4B2E00FB7D2F /* oppDynamic.vert */; };
+		B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C38182B4B5C00FB7D2F /* oppDynamic.geom */; };
+		B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C3A182B4B6B00FB7D2F /* oppDynamic.frag */; };
 		B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3968B0918287F5300BE5A87 /* Opponent.cpp */; };
 		C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8103F09D3384C6BB0427E97 /* OpponentApp.cpp */; };
 /* End PBXBuildFile section */
@@ -44,6 +46,8 @@
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		6541DBDC1F91461CA9545D57 /* Opponent_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = Opponent_Prefix.pch; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Opponent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Opponent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9B3063C182DA58900DEB3D7 /* smoke_blur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smoke_blur.png; path = ../assets/smoke_blur.png; sourceTree = "<group>"; };
+		A9B3063D182DA58900DEB3D7 /* smoke_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smoke_particle.png; path = ../assets/smoke_particle.png; sourceTree = "<group>"; };
 		B3052DB218242336006D91DD /* oppBasic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.vert; path = ../assets/oppBasic.vert; sourceTree = "<group>"; };
 		B3052DB418242344006D91DD /* oppBasic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.frag; path = ../assets/oppBasic.frag; sourceTree = "<group>"; };
 		B3052DB618256881006D91DD /* oppBasic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.geom; path = ../assets/oppBasic.geom; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9B3063C182DA58900DEB3D7 /* smoke_blur.png */,
+				A9B3063D182DA58900DEB3D7 /* smoke_particle.png */,
 				1E2B86946D4143C2BEA853B6 /* CinderApp.icns */,
 				ECBFAE34556F4BB2966D215B /* Info.plist */,
 				B3052DB218242336006D91DD /* oppBasic.vert */,
@@ -243,7 +249,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9B3063E182DA58900DEB3D7 /* smoke_blur.png in Resources */,
 				2C0CC4E67DBA4B40A40A6371 /* CinderApp.icns in Resources */,
+				B3052DC61826DFA1006D91DD /* oppSmoke.vert in Resources */,
+				B3052DB318242336006D91DD /* oppBasic.vert in Resources */,
+				A9B3063F182DA58900DEB3D7 /* smoke_particle.png in Resources */,
+				B3052DC81826DFBA006D91DD /* oppSmoke.frag in Resources */,
+				B3052DB718256881006D91DD /* oppBasic.geom in Resources */,
+				B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Resources */,
+				B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Resources */,
+				B3052DBD182572B7006D91DD /* finalEffects.vert in Resources */,
+				B3052DBC182572B7006D91DD /* finalEffects.frag in Resources */,
+				B3052DB518242344006D91DD /* oppBasic.frag in Resources */,
+				B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,17 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3052DC61826DFA1006D91DD /* oppSmoke.vert in Sources */,
 				B3968B0B18287F5300BE5A87 /* Opponent.cpp in Sources */,
-				B3052DB318242336006D91DD /* oppBasic.vert in Sources */,
-				B3052DC81826DFBA006D91DD /* oppSmoke.frag in Sources */,
-				B3052DB718256881006D91DD /* oppBasic.geom in Sources */,
-				B3115C3B182B4B6B00FB7D2F /* oppDynamic.frag in Sources */,
-				B3115C39182B4B5C00FB7D2F /* oppDynamic.geom in Sources */,
-				B3052DBD182572B7006D91DD /* finalEffects.vert in Sources */,
-				B3052DBC182572B7006D91DD /* finalEffects.frag in Sources */,
-				B3052DB518242344006D91DD /* oppBasic.frag in Sources */,
-				B3115C37182B4B2E00FB7D2F /* oppDynamic.vert in Sources */,
 				C802E1BFF53C45B1986513D4 /* OpponentApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +283,6 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -301,7 +308,6 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../../../../../cinder_dev;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -327,7 +333,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../cinder_dev;
+				CINDER_PATH = ../../../cinder_dev;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -348,7 +354,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../cinder_dev;
+				CINDER_PATH = ../../../cinder_dev;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (

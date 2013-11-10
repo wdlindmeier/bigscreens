@@ -50,7 +50,7 @@ protected:
     virtual void loadGround();
     virtual void loadScreen();
     virtual void loadShaders();
-            void loadObj(const std::string & filename);
+            // void loadObj(const std::string & filename);
     
     virtual void drawScreen(const ci::Rectf & contentRect);
     virtual void drawGround();
@@ -60,13 +60,6 @@ protected:
 
     ci::Vec3f           mTankPosition;
 
-    // Tank
-    ci::TriMeshRef		mTankMesh;
-    ci::gl::VboRef		mTankVbo;
-    ci::gl::VboRef		mTankElementVbo;
-    ci::gl::VaoRef		mTankVao;
-    ci::gl::GlslProgRef mTankShader;
-	
 	AdvancedTankRef		mTank;
     
     // NOTE: Maybe the screen texture should be up 1 level
@@ -82,7 +75,7 @@ protected:
     GroundContent       mGroundContent;
     ci::Vec2f           mGroundOffset;
     bool                mIsGroundVisible;
-	
-	FloorPlaneRef		mGroundPlane;
+	    
+	// FloorPlaneRef		mGroundPlane;
 };
 }

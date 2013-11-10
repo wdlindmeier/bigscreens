@@ -8,13 +8,35 @@
 
 #include "FloorPlane.h"
 
+using namespace ci;
+
 namespace bigscreens {
 
-void FloorPlane::draw()
+void FloorPlane::draw(const long framesRendered)
 {
-	static int index = 0;
-	static float divideNum = 0.0f;
-	
+/*
+    gl::pushMatrices();
+    gl::translate(offset);
+    // 0..1 -> 0..5000
+    gl::scale(mGroundPlaneScale,
+              mGroundPlaneScale * mGroundDepthScale,
+              mGroundPlaneScale);
+    
+    mGroundVao->bind();
+    mGroundVbo->bind();
+    
+    gl::setDefaultShaderVars();
+    
+    gl::drawArrays(drawMode, 0, mNumVerts);
+    
+    mGroundVao->unbind();
+    mGroundVbo->unbind();
+    gl::popMatrices();
+*/
+    
+//	static int index = 0;
+//	static float divideNum = 0.0f;
+    
 	mVao->bind();
 	mLineElementVbo->bind();
 	mNoiseTexture->bind();
@@ -25,9 +47,9 @@ void FloorPlane::draw()
 	mQuadTriangleGlsl->uniform( "projection", ci::gl::getProjection() );
 	mQuadTriangleGlsl->uniform( "modelView", ci::gl::getModelView() );
 	mQuadTriangleGlsl->uniform( "chooseColor", mChooseColor );
-	mQuadTriangleGlsl->uniform( "colorOffset", index++ );
+	mQuadTriangleGlsl->uniform( "colorOffset", (int)framesRendered );
 	mQuadTriangleGlsl->uniform( "heightMap", 0 );
-	mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+//	mQuadTriangleGlsl->uniform( "divideNum", divideNum );
 	// lines adjacency gives the geometry shader two points on either side of the line
 	// this was the problem with the indexing, you have to give two other points when
 	// using it. basically from above
@@ -51,7 +73,7 @@ void FloorPlane::draw()
 	
 	mQuadOutlineGlsl->uniform( "projection", ci::gl::getProjection() );
 	mQuadOutlineGlsl->uniform( "modelView", ci::gl::getModelView() );
-	mQuadOutlineGlsl->uniform( "colorOffset", index++ );
+	mQuadOutlineGlsl->uniform( "colorOffset", (int)framesRendered );
 	mQuadOutlineGlsl->uniform( "heightMap", 0 );
 	//		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
 	
@@ -82,7 +104,7 @@ void FloorPlane::loadShaders()
 	ci::gl::GlslProg::Format mQuadTriangleFormat;
 	mQuadTriangleFormat.vertex( ci::app::loadAsset( /*"quadTriangle.vert"*/ SharedShaderAssetPath("quadTriangle.vert", !IS_IAC) ) )
 	.geometry( ci::app::loadAsset( /*"quadTriangle.geom"*/ SharedShaderAssetPath("quadTriangle.geom", !IS_IAC) ) )
-	.fragment( ci::app::loadAsset( /*"quadTriangle.frag"*/ SharedShaderAssetPath("quadOutline.frag", !IS_IAC) ) );
+	.fragment( ci::app::loadAsset( /*"quadTriangle.frag"*/ SharedShaderAssetPath("quadTriangle.frag", !IS_IAC) ) );
 	mQuadTriangleGlsl = ci::gl::GlslProg::create( mQuadTriangleFormat );
 	
 }
@@ -90,9 +112,9 @@ void FloorPlane::loadShaders()
 void FloorPlane::createAndLoadGeometry()
 {
 	// this creates the points across x and y notice that we don't subtract 1 from each
-	for( int y = 0; y < yCount; y++ ) {
+	for( int z = 0; z < zCount; z++ ) {
 		for( int x = 0; x < xCount; x++ ) {
-			mTrimesh->appendVertex( ci::Vec3f( x*quadSize, y*quadSize, 0 ) );
+			mTrimesh->appendVertex( ci::Vec3f( x*quadSize, 0, z*quadSize ) );
 		}
 	}
 	// this creates the index and this was the hardest part,

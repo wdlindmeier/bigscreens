@@ -74,7 +74,7 @@ void AdvancedTank::update(long progressCounter)
     mShotsFired = keepTanks;
 }
 
-void AdvancedTank::render(ci::CameraPersp & cam)
+void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
 {
     gl::enableAdditiveBlending();
     
@@ -82,7 +82,8 @@ void AdvancedTank::render(ci::CameraPersp & cam)
 
     gl::setDefaultShaderVars();
     
-    mTankShader->uniform("uColor", ColorAf(1,1,1,0.25f));
+    // NOTE: There are so many lines, we throttle the alpha to 0.25 max
+    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, alpha*0.25f ));
 
     mBodyModel.render();
     mHeadModel.render();
@@ -159,10 +160,9 @@ void AdvancedTank::render(ci::CameraPersp & cam)
     float offY = sin(toRadians(mBarrelAngle)) * kBarrelLength;
     Vec3f barrelHead(0, kBarrelOffsetY + offY, 0 + offX);
     
-    mTankShader->uniform("uColor", ColorAf(1,1,0,1));
-
     // Draw the shot lines
-    mTankShader->uniform("uColor", ColorAf(0.8,1,1,0.5f));
+    mTankShader->uniform("uColor", ColorAf(0.8, 1, 1, 0.5f * alpha));
+    
     for (TankShot & shot : mShotsFired)
     {
         shot.renderLine();
@@ -170,13 +170,15 @@ void AdvancedTank::render(ci::CameraPersp & cam)
     
     // Draw the shot projectiles
     /*
-    mTankShader->uniform("uColor", ColorAf(1,0,0,1));
+    mTankShader->uniform("uColor", ColorAf(1, 0, 0, alpha));
     for (TankShot & shot : mShotsFired)
     {
         shot.render();
     }
     */
 
+    mTankShader->uniform("uColor", ColorAf(1, 1, 1, alpha));
+    
     // Draw the muzzle flare
     for (TankShot & shot : mShotsFired)
     {
