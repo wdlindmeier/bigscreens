@@ -115,6 +115,9 @@
 		A9B52B46182C1DDA009B0D71 /* SampleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B45182C1DDA009B0D71 /* SampleRenderable.cpp */; };
 		A9B52B47182C1DDA009B0D71 /* SampleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B45182C1DDA009B0D71 /* SampleRenderable.cpp */; };
 		A9B52B48182C1DDA009B0D71 /* SampleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B45182C1DDA009B0D71 /* SampleRenderable.cpp */; };
+		A9C3E31D183034C0003C3DA5 /* DumbTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */; };
+		A9C3E31E183034C0003C3DA5 /* DumbTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */; };
+		A9C3E31F183034C0003C3DA5 /* DumbTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */; };
 		A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
 		A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
 		A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
@@ -224,12 +227,8 @@
 		B3115C62182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
 		B3115C63182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
 		B3115C64182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
-		B3115C67182D5C5400FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C66182D5C5400FB7D2F /* noise_map.png */; };
-		B3115C68182D5C5400FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C66182D5C5400FB7D2F /* noise_map.png */; };
 		B3115C69182D5C5400FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C66182D5C5400FB7D2F /* noise_map.png */; };
-		B3115C6C182D60F100FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6B182D60F100FB7D2F /* smoke_blur.png */; };
 		B3115C6D182D60F100FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6B182D60F100FB7D2F /* smoke_blur.png */; };
-		B3115C6E182D60F100FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6B182D60F100FB7D2F /* smoke_blur.png */; };
 		B3115C78182D613100FB7D2F /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6F182D613100FB7D2F /* oppBasic.frag */; };
 		B3115C79182D613100FB7D2F /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6F182D613100FB7D2F /* oppBasic.frag */; };
 		B3115C7B182D613100FB7D2F /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C70182D613100FB7D2F /* oppBasic.geom */; };
@@ -280,9 +279,7 @@
 		B3115CC6182D823600FB7D2F /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C94182D614700FB7D2F /* quadTriangle.vert */; };
 		B3115CC9182D889600FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
 		B3115CCA182D889600FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
-		B3115CCB182D889600FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
 		B3115CCC182D889600FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC8182D889600FB7D2F /* smoke_blur.png */; };
-		B3115CCD182D889600FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC8182D889600FB7D2F /* smoke_blur.png */; };
 		B3115CCE182D889600FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC8182D889600FB7D2F /* smoke_blur.png */; };
 		B3115CD8182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */; };
 		B3115CD9182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */; };
@@ -382,6 +379,8 @@
 		A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvergenceContent.h; path = ../include/ConvergenceContent.h; sourceTree = "<group>"; };
 		A9B52B44182C1DD0009B0D71 /* SampleRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleRenderable.h; sourceTree = "<group>"; };
 		A9B52B45182C1DDA009B0D71 /* SampleRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRenderable.cpp; sourceTree = "<group>"; };
+		A9C3E318183034A8003C3DA5 /* DumbTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumbTank.h; sourceTree = "<group>"; };
+		A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DumbTank.cpp; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
 		A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold.ttf"; sourceTree = "<group>"; };
 		A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Italic.ttf"; sourceTree = "<group>"; };
@@ -809,6 +808,7 @@
 			isa = PBXGroup;
 			children = (
 				B3115C4E182D524200FB7D2F /* AdvancedTank.h */,
+				A9C3E318183034A8003C3DA5 /* DumbTank.h */,
 				B3115C4F182D524200FB7D2F /* FinalBillboard.h */,
 				B3115C65182D562400FB7D2F /* FloorPlane.h */,
 				B3115C50182D524200FB7D2F /* ObjModel.h */,
@@ -852,8 +852,9 @@
 		B3115C54182D527100FB7D2F /* Actors */ = {
 			isa = PBXGroup;
 			children = (
-				B3115C61182D560F00FB7D2F /* FloorPlane.cpp */,
 				B3115C55182D527100FB7D2F /* AdvancedTank.cpp */,
+				A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */,
+				B3115C61182D560F00FB7D2F /* FloorPlane.cpp */,
 				B3115C56182D527100FB7D2F /* ObjModel.cpp */,
 				B3115CAC182D61A400FB7D2F /* Opponent.cpp */,
 				B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */,
@@ -985,7 +986,6 @@
 				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
 				A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				B3115CE1182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
-				B3115C6C182D60F100FB7D2F /* smoke_blur.png in Resources */,
 				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
 				A971227318196D60006DD64E /* blank_texture.png in Resources */,
 				A9712285181986DA006DD64E /* test.png in Resources */,
@@ -1000,7 +1000,6 @@
 				A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
-				B3115C67182D5C5400FB7D2F /* noise_map.png in Resources */,
 				A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
 				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
@@ -1056,7 +1055,6 @@
 				B3115CE2182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
 				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
 				A9E48EE618103CE300F2F1C9 /* settings.1.xml in Resources */,
-				B3115CCD182D889600FB7D2F /* smoke_blur.png in Resources */,
 				A9E48EE818103CE300F2F1C9 /* CinderApp.icns in Resources */,
 				A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */,
 				A9E48EEA18103CE300F2F1C9 /* settings.2.IAC.xml in Resources */,
@@ -1064,7 +1062,6 @@
 				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
 				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
-				B3115C68182D5C5400FB7D2F /* noise_map.png in Resources */,
 				B3115CD9182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */,
 				A97122C2181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				B3115CEE182D99C300FB7D2F /* tank_wheel.obj in Resources */,
@@ -1119,7 +1116,6 @@
 				A97122A11819E369006DD64E /* height_sample.png in Resources */,
 				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
-				B3115C6E182D60F100FB7D2F /* smoke_blur.png in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
 				A971227518196D60006DD64E /* blank_texture.png in Resources */,
 				A9712287181986DA006DD64E /* test.png in Resources */,
@@ -1139,7 +1135,6 @@
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
 				B3115CEF182D99C300FB7D2F /* tank_wheel.obj in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
-				B3115CCB182D889600FB7D2F /* noise_map.png in Resources */,
 				B3115CDD182D99C300FB7D2F /* tank_barrel.obj in Resources */,
 				A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228318197C85006DD64E /* grid.png in Resources */,
@@ -1210,6 +1205,7 @@
 				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				B3115C5E182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB6182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
+				A9C3E31D183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3D182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BB181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
@@ -1238,6 +1234,7 @@
 				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				B3115C5F182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB7182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
+				A9C3E31E183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3E182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BC181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
@@ -1266,6 +1263,7 @@
 				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				B3115C60182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB8182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
+				A9C3E31F183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3F182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BD181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,

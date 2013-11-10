@@ -13,7 +13,10 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
-TankConvergenceContent::TankConvergenceContent() : TankContent(), mMSElapsedConvergence(0)
+TankConvergenceContent::TankConvergenceContent() :
+TankContent()
+, mMSElapsedConvergence(0)
+, mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
 {
     mGroundContent = GroundContent(20000.0);
 };
@@ -131,18 +134,19 @@ void TankConvergenceContent::drawTank()
     // NOTE: This seems considerable slower than the non-advanced version.
     // Leaving this code here for now in case we decide to revert.
     
-/*
     // Make the tanks ease into position
-    mTankShader->bind();
-    mTankVao->bind();
-    mTankElementVbo->bind();
+    mGroundShader->bind();
+    //mTankVao->bind();
+    gl::VaoRef & vao = mDumbTank->getModel().getVao();
+    vao->bind();
+    //mTankElementVbo->bind();
+    gl::VboRef & vbo = mDumbTank->getModel().getElementVbo();
+    vbo->bind();
 
     gl::pushMatrices();
     gl::setMatrices( mCam );
  
-    mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
- 
-*/
+    mGroundShader->uniform("uColor", ColorAf(1,1,1,0.25f*mRenderAlpha));
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
@@ -150,13 +154,11 @@ void TankConvergenceContent::drawTank()
         drawSingleTankAtPosition(tankOrient.position,
                                  tankOrient.directionDegrees);
     }
-/*
+
     gl::popMatrices();
-    mTankElementVbo->unbind();
-    mTankVao->unbind();
-    mTankShader->unbind();
-*/
-    gl::popMatrices();
+    vbo->unbind();
+    vao->unbind();
+    mGroundShader->unbind();
 }
 
 void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
@@ -232,10 +234,13 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
     gl::translate(position);
     gl::rotate(rotationDegrees, 0, 1, 0);
     
-    mTank->render(mCam, mRenderAlpha);
+    // mTank->render(mCam, mRenderAlpha);
 
-    // gl::setDefaultShaderVars();
-    // gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+    gl::setDefaultShaderVars();
+    gl::drawElements(GL_LINES,
+                     mDumbTank->getModel().getMesh()->getNumIndices(),
+                     //mTankMesh->getNumIndices(),
+                     GL_UNSIGNED_INT, 0 );
     
     gl::popMatrices();
 }

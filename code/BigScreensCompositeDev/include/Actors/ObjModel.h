@@ -29,6 +29,11 @@ namespace bigscreens
         void load(const std::string & objName, ci::gl::GlslProgRef & shader);
         virtual void render();
         
+        ci::TriMeshRef &	getMesh();
+        ci::gl::VboRef &	getVbo();
+        ci::gl::VboRef &	getElementVbo();
+        ci::gl::VaoRef &	getVao();
+        
     protected:
         
         ci::TriMeshRef		mMesh;

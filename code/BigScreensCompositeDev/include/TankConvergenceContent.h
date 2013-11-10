@@ -17,6 +17,7 @@
 #include "SharedTypes.hpp"
 #include "TankContent.h"
 #include "cinder/TriMesh.h"
+#include "ContentProvider.h"
 
 namespace bigscreens
 {
@@ -58,5 +59,7 @@ namespace bigscreens
         float mRenderAlpha;
         float mScreenAlpha;
         long mMSElapsedConvergence;
+        
+        DumbTankRef mDumbTank;
     };
 }

@@ -15,6 +15,7 @@
 #include "Opponent.h"
 #include "TankContent.h"
 #include "GroundContent.h"
+#include "DumbTank.h"
 
 namespace bigscreens {
 
@@ -87,7 +88,17 @@ namespace ActorContent {
 		}
         return masterGround;
 	}
-
+    
+    static DumbTankRef getDumbTank()
+	{
+		static DumbTankRef masterDumbTank;
+		if( !masterDumbTank )
+        {
+            ci::app::console() << "Initting Dumb Tank Content\n";
+			masterDumbTank = DumbTankRef( new DumbTank() );
+		}
+        return masterDumbTank;
+	}
 }
 	
 namespace SceneContent {
