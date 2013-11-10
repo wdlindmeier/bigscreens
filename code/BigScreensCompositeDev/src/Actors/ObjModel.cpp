@@ -12,6 +12,26 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
+ci::TriMeshRef & ObjModel::getMesh()
+{
+    return mMesh;
+}
+
+ci::gl::VboRef & ObjModel::getVbo()
+{
+    return mVbo;
+}
+
+ci::gl::VboRef & ObjModel::getElementVbo()
+{
+    return mElementVbo;
+}
+
+ci::gl::VaoRef & ObjModel::getVao()
+{
+    return mVao;
+}
+
 void ObjModel::load(const std::string & objName, ci::gl::GlslProgRef & shader)
 {
     DataSourceRef file = loadResource( objName );

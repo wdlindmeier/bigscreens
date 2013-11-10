@@ -94,14 +94,8 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     
     // Time based
     float progress = getScalarMergeProgress();
-    /*
-    console() << "rendering convergence with progress: " << progress <<
-                 " mMSElapsedConvergence: " << mMSElapsedConvergence <<
-                 " MSConvergeBeforeCameraMerge: " << MSConvergeBeforeCameraMerge <<
-                 " MSCamerasConverge: " << MSCamerasConverge <<
-                 std::endl;
-    */
     float amtRemaining = 1.0 - std::min<float>(progress, 1.0f);
+
     // Weigh
     
     // TODO: Use an ease-in ease-out function
@@ -110,14 +104,14 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     // Create the target cam position
     float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
     float finalOffset = scalarProgress * scalarProgress;
-    float camDist = 4000 + (6000 * finalOffset);
-    float camY = camDist * 0.25;
+    float camDist = 3000 + (6000 * finalOffset);
+    float camY = camDist * 0.5;
     float camZ = camDist;
     float camX = camDist;
     
     CameraOrigin finalOrigin;
     finalOrigin.eye = Vec3f( camX, camY, camZ );
-    finalOrigin.target = Vec3f( 0.f, -1750.f, 0.f );
+    finalOrigin.target = Vec3f( 0.f, -1000.f, 0.f );
     finalOrigin.camShift = Vec2f(0,0);
 
     // NOTE: This content starts in the previous layout so we're adding render frames
@@ -148,46 +142,53 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                                  mContentRect,
                                  finalSceneAlpha);
     }
-    
-    // Draw each sub-region that converge
-    for (int i = 0; i < regionCount; ++i)
+
+    float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
+    bool shouldDrawRegions = mTransitionStyle != TRANSITION_FADE || fadeAlpha > 0.01;
+
+    // If we're using the FADE style, the sub-regions shouldn't be drawn if they're invisible
+    if (shouldDrawRegions)
     {
-        ScreenRegion & region = regions[i];
-        
-        if (rectsOverlap(region.rect, mContentRect))
+        // Draw each sub-region that converge
+        for (int i = 0; i < regionCount; ++i)
         {
-            CameraOrigin orig = mCameraOrigins[i];
+            ScreenRegion & region = regions[i];
             
-            // Lerp the region cam with the final cam
-            Vec3f eyeOffset = orig.eye - finalOrigin.eye;
-            Vec3f currentEye = finalOrigin.eye + (eyeOffset * amtRemaining);
-            
-            Vec3f targetOffset = orig.target - finalOrigin.target;
-            Vec3f currentTarget = finalOrigin.target + (targetOffset * amtRemaining);
-            
-            Vec2f camShiftOffset = orig.camShift - finalOrigin.camShift;
-            Vec2f currentCamShift = finalOrigin.camShift + (camShiftOffset * amtRemaining);
-            
-            tanks->update([=](CameraPersp & cam)
+            if (rectsOverlap(region.rect, mContentRect))
             {
-                cam.setAspectRatio(fullAspectRatio);
-                cam.lookAt( currentEye, currentTarget );
-                cam.setLensShift(currentCamShift);
-            });
-            
-            switch (mTransitionStyle)
-            {
-                case TRANSITION_ALPHA:
-                    renderWithAlphaTransition(screenOffset, region.rect);
-                    break;
-                case TRANSITION_EXPAND:
-                    renderWithExpandTransition(screenOffset, region.rect);
-                    break;
-                case TRANSITION_FADE:
-                    renderWithFadeTransition(screenOffset,
-                                             region.rect,
-                                             1.0 + std::max<float>(1.0f-progress, -1.0));
-                    break;
+                CameraOrigin orig = mCameraOrigins[i];
+                
+                // Lerp the region cam with the final cam
+                Vec3f eyeOffset = orig.eye - finalOrigin.eye;
+                Vec3f currentEye = finalOrigin.eye + (eyeOffset * amtRemaining);
+                
+                Vec3f targetOffset = orig.target - finalOrigin.target;
+                Vec3f currentTarget = finalOrigin.target + (targetOffset * amtRemaining);
+                
+                Vec2f camShiftOffset = orig.camShift - finalOrigin.camShift;
+                Vec2f currentCamShift = finalOrigin.camShift + (camShiftOffset * amtRemaining);
+                
+                tanks->update([=](CameraPersp & cam)
+                {
+                    cam.setAspectRatio(fullAspectRatio);
+                    cam.lookAt( currentEye, currentTarget );
+                    cam.setLensShift(currentCamShift);
+                });
+                
+                switch (mTransitionStyle)
+                {
+                    case TRANSITION_ALPHA:
+                        renderWithAlphaTransition(screenOffset, region.rect);
+                        break;
+                    case TRANSITION_EXPAND:
+                        renderWithExpandTransition(screenOffset, region.rect);
+                        break;
+                    case TRANSITION_FADE:
+                        renderWithFadeTransition(screenOffset,
+                                                 region.rect,
+                                                 fadeAlpha);
+                        break;
+                }
             }
         }
     }
