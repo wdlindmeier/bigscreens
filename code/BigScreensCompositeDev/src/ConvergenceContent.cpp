@@ -65,6 +65,12 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     }
 }
 
+void ConvergenceContent::update()
+{
+    shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
+    content->setFramesRendered(mNumFramesRendered);
+}
+
 ci::Camera & ConvergenceContent::getCamera()
 {
     return mCam;
@@ -126,8 +132,9 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     ci::gl::enable( GL_SCISSOR_TEST );
     
     // Draw the "background" image that fades in at the end.
-    const static float kMinFinalAlpha = 0.75;
-    if (progress >= kMinFinalAlpha && mTransitionStyle == TRANSITION_FADE)
+    const static float kFinalSceneProgressBegin = 0.75;
+    if (progress >= kFinalSceneProgressBegin &&
+        mTransitionStyle == TRANSITION_FADE)
     {
         // This uses the final cam
         tanks->update([=](CameraPersp & cam)
@@ -135,8 +142,11 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
             cam.setAspectRatio(fullAspectRatio);
             cam.lookAt( finalOrigin.eye, finalOrigin.target );
         });
-        
-        renderWithFadeTransition(screenOffset, mContentRect, (progress*progress*progress*progress) - kMinFinalAlpha);
+        // Subtracting the progress begin so the alpha is 0 when it comes in.
+        float finalSceneAlpha = std::min<float>(1.0, (progress*progress*progress*progress) - kFinalSceneProgressBegin);
+        renderWithFadeTransition(screenOffset,
+                                 mContentRect,
+                                 finalSceneAlpha);
     }
     
     // Draw each sub-region that converge
@@ -174,7 +184,9 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                     renderWithExpandTransition(screenOffset, region.rect);
                     break;
                 case TRANSITION_FADE:
-                    renderWithFadeTransition(screenOffset, region.rect, 1.0 + std::max<float>(1.0-progress, 0.0));
+                    renderWithFadeTransition(screenOffset,
+                                             region.rect,
+                                             1.0 + std::max<float>(1.0f-progress, -1.0));
                     break;
             }
         }

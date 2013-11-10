@@ -23,6 +23,17 @@ void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
     mMSElapsedConvergence = msElapsedConvergence;
 }
 
+void TankConvergenceContent::loadShaders()
+{
+    TankContent::loadShaders();
+    
+    gl::GlslProg::Format groundShaderFormat;
+    groundShaderFormat.vertex( ci::app::loadResource( "basic.vert" ) )
+    .fragment( ci::app::loadResource( "basic.frag" ) );
+    mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
+    mGroundShader->uniform("uColor", Color::white());
+}
+
 CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
                                                               int regionCount,
                                                               long msOffset,
@@ -98,13 +109,12 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
 {
     mRenderAlpha = alpha;
 
-    // TODO; Make sure this is only fading on the final scene
-    mScreenAlpha = mRenderAlpha;
+    mScreenAlpha = mRenderAlpha*mRenderAlpha*mRenderAlpha;
     
     // NOTE: Don't clear
     
     std::pair<Vec2i,Vec2i> viewport = gl::getViewport();
-    drawScreen(contentRect);
+    drawScreen(screenOffset, contentRect);
     gl::viewport(viewport.first, viewport.second);
     
     drawGround();
@@ -115,6 +125,13 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
+    gl::pushMatrices();
+    gl::setMatrices( mCam );
+    
+    // NOTE: This seems considerable slower than the non-advanced version.
+    // Leaving this code here for now in case we decide to revert.
+    
+/*
     // Make the tanks ease into position
     mTankShader->bind();
     mTankVao->bind();
@@ -122,8 +139,10 @@ void TankConvergenceContent::drawTank()
 
     gl::pushMatrices();
     gl::setMatrices( mCam );
-    
+ 
     mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
+ 
+*/
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
@@ -131,21 +150,23 @@ void TankConvergenceContent::drawTank()
         drawSingleTankAtPosition(tankOrient.position,
                                  tankOrient.directionDegrees);
     }
-    
+/*
     gl::popMatrices();
     mTankElementVbo->unbind();
     mTankVao->unbind();
     mTankShader->unbind();
+*/
+    gl::popMatrices();
 }
 
-void TankConvergenceContent::drawScreen(const ci::Rectf & contentRect)
+void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
 {
     gl::pushMatrices();
     
     // Temporarily resetting the viewport.
     // It's set back in draw().
-    gl::viewport(contentRect.x1,
-                 getWindowHeight() - contentRect.y2,
+    gl::viewport(contentRect.x1 - screenOffset.x,
+                 getWindowHeight() - contentRect.y2 - screenOffset.y,
                  contentRect.getWidth(),
                  contentRect.getHeight());
     
@@ -186,11 +207,11 @@ void TankConvergenceContent::drawGround()
     gl::setMatrices( mCam );
     
     // NOTE: Not using the ground shader since it's a texture shader
-    mTankShader->bind();
+    mGroundShader->bind();
 
     gl::enableAlphaBlending();
     
-    mTankShader->uniform("uColor", ColorAf(0.75,0.75,0.75, mRenderAlpha));
+    mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75, mRenderAlpha));
     
     // Get the current plot
     float groundScale = mGroundContent.getScale();
@@ -200,11 +221,10 @@ void TankConvergenceContent::drawGround()
     
     mGroundContent.render(GL_LINE_STRIP, groundOffset);
 
-    mTankShader->unbind();
+    mGroundShader->unbind();
     
     gl::popMatrices();
 }
-
 
 void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float rotationDegrees)
 {
@@ -212,8 +232,10 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
     gl::translate(position);
     gl::rotate(rotationDegrees, 0, 1, 0);
     
-    gl::setDefaultShaderVars();
+    mTank->render(mCam, mRenderAlpha);
 
-    gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+    // gl::setDefaultShaderVars();
+    // gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+    
     gl::popMatrices();
 }

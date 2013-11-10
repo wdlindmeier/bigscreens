@@ -23,6 +23,8 @@
 namespace bigscreens
 {
     
+    typedef std::shared_ptr<class GroundContent> GroundContentRef;
+    
     class GroundContent
     {
         

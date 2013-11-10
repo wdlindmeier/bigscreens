@@ -525,6 +525,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<ConvergenceContent> merge = static_pointer_cast<ConvergenceContent>(content);
         merge->setMSElapsed(mMSElapsedConvergence);
+        merge->update();
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {

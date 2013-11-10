@@ -15,7 +15,7 @@ namespace bigscreens
         
     public:
         
-        virtual void drawTank();
+        // virtual void drawTank();
         
     };
 }

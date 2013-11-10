@@ -61,7 +61,7 @@ private:
 	void loadShaders()
 	{
 		ci::gl::GlslProg::Format mFormat;
-		mFormat.vertex( ci::app::loadAsset( "oppBasic.vert" ) ).fragment( ci::app::loadAsset( "oppBasic.frag" ) );
+		mFormat.vertex( ci::app::loadResource("oppBasic.vert") ).fragment( ci::app::loadResource("oppBasic.frag" ) );
 		mGlsl = ci::gl::GlslProg::create( mFormat );
 	}
 	

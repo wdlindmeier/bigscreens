@@ -39,6 +39,7 @@ namespace bigscreens
         
         void load(const TransitionStyle style);
         void setMSElapsed(const long msElapsedConvergence);
+        void update();
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();

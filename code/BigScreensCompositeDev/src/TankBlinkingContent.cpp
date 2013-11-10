@@ -12,7 +12,7 @@
 using namespace bigscreens;
 using namespace ci;
 using namespace ci::app;
-
+/*
 void TankBlinkingContent::drawTank()
 {
     gl::clear( Color( 0, 0, 0 ) );
@@ -54,3 +54,4 @@ void TankBlinkingContent::drawTank()
     mTankShader->unbind();
     gl::popMatrices();
 }
+*/

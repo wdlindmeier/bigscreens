@@ -20,7 +20,7 @@ typedef std::shared_ptr<class FloorPlane> FloorPlaneRef;
 	
 		// how many across, how many up,  how many units between, element number to create the quads
 		//                                                        this was the magic sauce for the elements
-const int    xCount = 50,    yCount = 50, quadSize = 10,          indexNum = (xCount-1)*(yCount-1) * 4;
+const int    xCount = 50,    zCount = 50, quadSize = 10,          indexNum = (xCount-1)*(zCount-1) * 4;
 
 class FloorPlane {
 public:
@@ -36,7 +36,7 @@ public:
 	}
 	~FloorPlane(){}
 	
-	void draw();
+	void draw(const long framesRendered);
 	
 private:
 	void loadTexture();
