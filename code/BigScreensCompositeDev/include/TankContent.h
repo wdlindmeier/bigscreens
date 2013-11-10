@@ -37,10 +37,11 @@ public:
     void setGroundOffset(const ci::Vec2f offset);
     void setTankPosition(const ci::Vec3f tankPosition);
     ci::Vec3f getTankPosition();
-    ci::CameraPersp& getCamera() { return mCam; }
+    ci::CameraPersp & getCamera();
+    AdvancedTankRef & getTank();
     
     virtual void load(const std::string & objFilename);
-    virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
+    virtual void update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func);
     virtual void resetPositions();
     virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     virtual void reset();

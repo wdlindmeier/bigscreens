@@ -40,6 +40,16 @@ namespace bigscreens
         return mTankPosition;
     }
     
+    ci::CameraPersp & TankContent::getCamera()
+    {
+        return mCam;
+    }
+    
+    AdvancedTankRef & TankContent::getTank()
+    {
+        return mTank;
+    }
+    
     void TankContent::setGroundIsVisible(bool isVisible)
     {
         mIsGroundVisible = isVisible;
@@ -173,6 +183,7 @@ namespace bigscreens
     void TankContent::resetPositions()
     {
         mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+        mTank->setWheelSpeedMultiplier(kDefaultTankWheelSpeedMulti);
         mTankPosition = Vec3f::zero();
     }
     
@@ -181,11 +192,11 @@ namespace bigscreens
         mGroundOffset = offset;
     }
 
-    // Lets the app take control of the cam
-    void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
+    // Lets the app take control of the cam.
+    void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
-        update_func(mCam);
         mTank->update(mNumFramesRendered);
+        update_func(mCam, mTank);
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)

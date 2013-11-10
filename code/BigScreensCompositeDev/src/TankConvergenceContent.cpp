@@ -125,28 +125,33 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     drawTank();
 }
 
+void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
+{
+    update_func(mCam, mDumbTank);
+}
+
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
     gl::pushMatrices();
     gl::setMatrices( mCam );
     
-    // NOTE: This seems considerable slower than the non-advanced version.
-    // Leaving this code here for now in case we decide to revert.
+    // NOTE: Using the dumb tank because there's a lot going on in this scene and
+    // we need to simplify it.
     
     // Make the tanks ease into position
     mGroundShader->bind();
-    //mTankVao->bind();
-    gl::VaoRef & vao = mDumbTank->getModel().getVao();
+    
+    gl::VaoRef & vao = mDumbTank->getModel()->getVao();
     vao->bind();
-    //mTankElementVbo->bind();
-    gl::VboRef & vbo = mDumbTank->getModel().getElementVbo();
+
+    gl::VboRef & vbo = mDumbTank->getModel()->getElementVbo();
     vbo->bind();
 
     gl::pushMatrices();
     gl::setMatrices( mCam );
  
-    mGroundShader->uniform("uColor", ColorAf(1,1,1,0.25f*mRenderAlpha));
+    mGroundShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
@@ -238,7 +243,7 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
 
     gl::setDefaultShaderVars();
     gl::drawElements(GL_LINES,
-                     mDumbTank->getModel().getMesh()->getNumIndices(),
+                     mDumbTank->getModel()->getMesh()->getNumIndices(),
                      //mTankMesh->getNumIndices(),
                      GL_UNSIGNED_INT, 0 );
     

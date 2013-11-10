@@ -21,18 +21,20 @@ TankShot::TankShot(){};
 TankShot::TankShot(float angleRadians,
                    float velocity,
                    const ci::Vec3f & initialPosition,
-                   const gl::GlslProgRef & shader) :
-mVelocity(velocity),
-mTheta(angleRadians),
-mProgress(0),
-mInitialPosition(initialPosition),
-mHasExploded(false),
-mCurrentPosition(initialPosition),
-mPointOfExplosion(0,0,0),
-mCurrentOffset(0,0),
-mExplosionScale(1),
-mIsDead(false),
-mMaxProgress(0)
+                   const gl::GlslProgRef & shader,
+                   const int parentContentID) :
+mVelocity(velocity)
+,mTheta(angleRadians)
+,mProgress(0)
+,mInitialPosition(initialPosition)
+,mHasExploded(false)
+,mCurrentPosition(initialPosition)
+,mPointOfExplosion(0,0,0)
+,mCurrentOffset(0,0)
+,mExplosionScale(1)
+,mIsDead(false)
+,mMaxProgress(0)
+,mContentID(parentContentID)
 {
     if (!ExplosionTexture)
     {
@@ -54,6 +56,11 @@ float TankShot::getTheta()
 float TankShot::getProgress()
 {
     return mProgress;
+}
+
+int TankShot::getContentID()
+{
+    return mContentID;
 }
 
 bool TankShot::isDead()
