@@ -42,6 +42,7 @@ public:
     void setFrameContentID(const int contentID);
     void render(ci::CameraPersp & cam, const float alpha = 1.0);
     void setWheelSpeedMultiplier(const float wheelMultiplier);
+    void setTargetPosition(const ci::Vec3f & targetPos);
     
 protected:
     
@@ -55,15 +56,15 @@ protected:
     ObjModelRef     mWheelModel;
     
     std::vector<TankShot>  mShotsFired;
-    float           mBarrelAngle;
-    float           mHeadRotation;
+    float           mBarrelAngleDeg;
+    float           mHeadRotationDeg;
     float           mWheelRotation;
     float           mGearRotation;
     float           mShotProgress;
     float           mWheelProgressMulti;
     ci::gl::GlslProgRef mTankShader;
     int             mContentID;
-    
+    ci::Vec3f       mTargetPosition;
 };
 	
 }

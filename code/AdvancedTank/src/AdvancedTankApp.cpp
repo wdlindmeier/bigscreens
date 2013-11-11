@@ -88,6 +88,10 @@ void OBJTestApp::draw()
     gl::pushMatrices();
     gl::setMatrices( mCam );
 
+    Vec3f target = Vec3f(cos(getElapsedFrames() * 0.01) * 2000,
+                            800,
+                            sin(getElapsedFrames() * 0.01) * 2000);
+    mTank->setTargetPosition(target);
     mTank->setFrameContentID(1);
     mTank->update(getElapsedFrames());
     mTank->render(mCam, 1);

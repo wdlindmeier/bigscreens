@@ -121,6 +121,9 @@
 		A9C3E32118304B54003C3DA5 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E32018304B54003C3DA5 /* explosion.png */; };
 		A9C3E32218304B54003C3DA5 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E32018304B54003C3DA5 /* explosion.png */; };
 		A9C3E32318304B54003C3DA5 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E32018304B54003C3DA5 /* explosion.png */; };
+		A9C3E34918314439003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
+		A9C3E34A1831444A003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
+		A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
 		A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
 		A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
@@ -285,27 +288,15 @@
 		B3115CD8182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */; };
 		B3115CD9182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */; };
 		B3115CDA182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */; };
-		B3115CDB182D99C300FB7D2F /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD0182D99C300FB7D2F /* tank_barrel.obj */; };
-		B3115CDC182D99C300FB7D2F /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD0182D99C300FB7D2F /* tank_barrel.obj */; };
-		B3115CDD182D99C300FB7D2F /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD0182D99C300FB7D2F /* tank_barrel.obj */; };
 		B3115CDE182D99C300FB7D2F /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD1182D99C300FB7D2F /* tank_body.obj */; };
 		B3115CDF182D99C300FB7D2F /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD1182D99C300FB7D2F /* tank_body.obj */; };
 		B3115CE0182D99C300FB7D2F /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD1182D99C300FB7D2F /* tank_body.obj */; };
 		B3115CE1182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */; };
 		B3115CE2182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */; };
 		B3115CE3182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */; };
-		B3115CE4182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD3182D99C300FB7D2F /* tank_gear_wheel.obj */; };
-		B3115CE5182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD3182D99C300FB7D2F /* tank_gear_wheel.obj */; };
-		B3115CE6182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD3182D99C300FB7D2F /* tank_gear_wheel.obj */; };
-		B3115CE7182D99C300FB7D2F /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD4182D99C300FB7D2F /* tank_head.obj */; };
-		B3115CE8182D99C300FB7D2F /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD4182D99C300FB7D2F /* tank_head.obj */; };
-		B3115CE9182D99C300FB7D2F /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD4182D99C300FB7D2F /* tank_head.obj */; };
 		B3115CEA182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */; };
 		B3115CEB182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */; };
 		B3115CEC182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */; };
-		B3115CED182D99C300FB7D2F /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD6182D99C300FB7D2F /* tank_wheel.obj */; };
-		B3115CEE182D99C300FB7D2F /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD6182D99C300FB7D2F /* tank_wheel.obj */; };
-		B3115CEF182D99C300FB7D2F /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD6182D99C300FB7D2F /* tank_wheel.obj */; };
 		B3115CF0182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
 		B3115CF1182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
 		B3115CF2182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
@@ -383,6 +374,7 @@
 		A9C3E318183034A8003C3DA5 /* DumbTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumbTank.h; sourceTree = "<group>"; };
 		A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DumbTank.cpp; sourceTree = "<group>"; };
 		A9C3E32018304B54003C3DA5 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		A9C3E34818314439003C3DA5 /* tank_head_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_head_centered.obj; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
 		A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold.ttf"; sourceTree = "<group>"; };
 		A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Italic.ttf"; sourceTree = "<group>"; };
@@ -442,13 +434,9 @@
 		B3115CC7182D889600FB7D2F /* noise_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise_map.png; sourceTree = "<group>"; };
 		B3115CC8182D889600FB7D2F /* smoke_blur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke_blur.png; sourceTree = "<group>"; };
 		B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_barrel_centered.obj; sourceTree = "<group>"; };
-		B3115CD0182D99C300FB7D2F /* tank_barrel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_barrel.obj; sourceTree = "<group>"; };
 		B3115CD1182D99C300FB7D2F /* tank_body.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_body.obj; sourceTree = "<group>"; };
 		B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
-		B3115CD3182D99C300FB7D2F /* tank_gear_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_gear_wheel.obj; sourceTree = "<group>"; };
-		B3115CD4182D99C300FB7D2F /* tank_head.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_head.obj; sourceTree = "<group>"; };
 		B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_wheel_centered.obj; sourceTree = "<group>"; };
-		B3115CD6182D99C300FB7D2F /* tank_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_wheel.obj; sourceTree = "<group>"; };
 		B3115CD7182D99C300FB7D2F /* tank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank.obj; sourceTree = "<group>"; };
 		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
@@ -756,21 +744,18 @@
 			isa = PBXGroup;
 			children = (
 				A9C3E32018304B54003C3DA5 /* explosion.png */,
+				B3115CC7182D889600FB7D2F /* noise_map.png */,
 				A9E48EAD18103A8300F2F1C9 /* paused.png */,
 				A9E48EAE18103A8300F2F1C9 /* playing.png */,
 				A9E48EAF18103A8300F2F1C9 /* screen.png */,
+				B3115CC8182D889600FB7D2F /* smoke_blur.png */,
+				A9E48EB018103A8300F2F1C9 /* T72.obj */,
+				B3115CD7182D99C300FB7D2F /* tank.obj */,
 				B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */,
-				B3115CD0182D99C300FB7D2F /* tank_barrel.obj */,
 				B3115CD1182D99C300FB7D2F /* tank_body.obj */,
 				B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */,
-				B3115CD3182D99C300FB7D2F /* tank_gear_wheel.obj */,
-				B3115CD4182D99C300FB7D2F /* tank_head.obj */,
+				A9C3E34818314439003C3DA5 /* tank_head_centered.obj */,
 				B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */,
-				B3115CD6182D99C300FB7D2F /* tank_wheel.obj */,
-				B3115CD7182D99C300FB7D2F /* tank.obj */,
-				A9E48EB018103A8300F2F1C9 /* T72.obj */,
-				B3115CC7182D889600FB7D2F /* noise_map.png */,
-				B3115CC8182D889600FB7D2F /* smoke_blur.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -972,17 +957,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3115CE7182D99C300FB7D2F /* tank_head.obj in Resources */,
-				B3115CE4182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */,
 				B3115CCC182D889600FB7D2F /* smoke_blur.png in Resources */,
 				B3115CF0182D99C300FB7D2F /* tank.obj in Resources */,
-				B3115CED182D99C300FB7D2F /* tank_wheel.obj in Resources */,
 				A97122981819C9E6006DD64E /* heightmap.frag in Resources */,
 				A971229F1819E369006DD64E /* height_sample.png in Resources */,
 				B3115CDE182D99C300FB7D2F /* tank_body.obj in Resources */,
 				A971229B1819C9E6006DD64E /* heightmap.vert in Resources */,
 				A9E48ED818103CA900F2F1C9 /* settings.555.IAC.xml in Resources */,
 				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
+				A9C3E34918314439003C3DA5 /* tank_head_centered.obj in Resources */,
 				A9E48ED218103CA900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				B3115CE1182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
 				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
@@ -1017,7 +1000,6 @@
 				A9B50B0618230A1100C077BD /* ground_texture.vert in Resources */,
 				B3115CEA182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				B3052DAE1823DD64006D91DD /* finalEffects.vert in Resources */,
-				B3115CDB182D99C300FB7D2F /* tank_barrel.obj in Resources */,
 				B3052DAB1823DD64006D91DD /* finalEffects.frag in Resources */,
 				A9B50B0318230A1100C077BD /* ground_texture.frag in Resources */,
 				B3115CC4182D823600FB7D2F /* quadTriangle.frag in Resources */,
@@ -1058,22 +1040,20 @@
 				A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */,
 				A9E48EEA18103CE300F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48EEC18103CE300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A9C3E34A1831444A003C3DA5 /* tank_head_centered.obj in Resources */,
 				A9E48EEE18103CE300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A9E48EEF18103CE300F2F1C9 /* settings.0.xml in Resources */,
 				A9E48EF018103CE300F2F1C9 /* T72.obj in Resources */,
 				B3115CD9182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */,
 				A97122C2181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
-				B3115CEE182D99C300FB7D2F /* tank_wheel.obj in Resources */,
 				A971228218197C85006DD64E /* grid.png in Resources */,
 				A9C3E32218304B54003C3DA5 /* explosion.png in Resources */,
 				B3115CCA182D889600FB7D2F /* noise_map.png in Resources */,
-				B3115CDC182D99C300FB7D2F /* tank_barrel.obj in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
 				A97C8903181087BC00AE2AE2 /* basic.vert in Resources */,
 				A97C8907181087BC00AE2AE2 /* outline.frag in Resources */,
 				A97C890B181087BC00AE2AE2 /* outline.vert in Resources */,
-				B3115CE5182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */,
 				A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */,
 				B3115CF1182D99C300FB7D2F /* tank.obj in Resources */,
 				A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */,
@@ -1087,7 +1067,6 @@
 				B3115CDF182D99C300FB7D2F /* tank_body.obj in Resources */,
 				B3052DAC1823DD64006D91DD /* finalEffects.frag in Resources */,
 				A9B50B0418230A1100C077BD /* ground_texture.frag in Resources */,
-				B3115CE8182D99C300FB7D2F /* tank_head.obj in Resources */,
 				B3115C9F182D614700FB7D2F /* quadTriangle.frag in Resources */,
 				B3115C9C182D614700FB7D2F /* quadOutline.vert in Resources */,
 				B3115C7B182D613100FB7D2F /* oppBasic.geom in Resources */,
@@ -1126,22 +1105,20 @@
 				A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */,
 				A9E48F1318103CE900F2F1C9 /* settings.1.xml in Resources */,
 				A9E48F1518103CE900F2F1C9 /* CinderApp.icns in Resources */,
+				A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */,
 				A9E48F1618103CE900F2F1C9 /* settings.2.xml in Resources */,
 				A9E48F1718103CE900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9E48F1918103CE900F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A9E48F1B18103CE900F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				B3115CDA182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */,
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
-				B3115CEF182D99C300FB7D2F /* tank_wheel.obj in Resources */,
 				A9C3E32318304B54003C3DA5 /* explosion.png in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
-				B3115CDD182D99C300FB7D2F /* tank_barrel.obj in Resources */,
 				A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228318197C85006DD64E /* grid.png in Resources */,
 				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
 				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
 				A97C8908181087BC00AE2AE2 /* outline.frag in Resources */,
-				B3115CE6182D99C300FB7D2F /* tank_gear_wheel.obj in Resources */,
 				A97C890C181087BC00AE2AE2 /* outline.vert in Resources */,
 				B3115CF2182D99C300FB7D2F /* tank.obj in Resources */,
 				A97C8900181087BC00AE2AE2 /* basic.frag in Resources */,
@@ -1169,7 +1146,6 @@
 				B3115C7F182D613100FB7D2F /* oppBasic.vert in Resources */,
 				B3115C9A182D614700FB7D2F /* quadOutline.geom in Resources */,
 				B3115C8E182D613100FB7D2F /* oppSmoke.vert in Resources */,
-				B3115CE9182D99C300FB7D2F /* tank_head.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

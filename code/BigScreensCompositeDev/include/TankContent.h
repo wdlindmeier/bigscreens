@@ -19,6 +19,7 @@
 #include "GroundContent.h"
 
 #include "AdvancedTank.h"
+#include "OpponentGeometry.h"
 #include "FloorPlane.h"
 
 namespace bigscreens {
@@ -48,22 +49,27 @@ public:
     
 protected:
     
-    virtual void loadGround();
-    virtual void loadScreen();
-    virtual void loadShaders();
-            // void loadObj(const std::string & filename);
+    // Funcs
     
-    virtual void drawScreen(const ci::Rectf & contentRect);
-    virtual void drawGround();
-    virtual void drawTank();
+    virtual void        loadGround();
+    virtual void        loadScreen();
+    virtual void        loadShaders();
+    
+    virtual void        drawScreen(const ci::Rectf & contentRect);
+    virtual void        drawGround();
+    virtual void        drawTank();
+    virtual void        drawMinion();
+    
+    // Vars
     
     ci::CameraPersp		mCam;
 
     ci::Vec3f           mTankPosition;
+    ci::Vec3f           mMinionPosition;
 
 	AdvancedTankRef		mTank;
-    
-    // NOTE: Maybe the screen texture should be up 1 level
+    MinionRef           mMinion;
+
     // Screen
     ci::gl::GlslProgRef mTextureShader;
     ci::gl::TextureRef  mScreenTexture;
@@ -71,6 +77,7 @@ protected:
     ci::gl::VboRef      mScreenVbo;
 
     // Ground plane
+    // TODO: Wrap dis up
     ci::gl::GlslProgRef mGroundShader;
     ci::gl::TextureRef  mGridTexture;
     GroundContent       mGroundContent;

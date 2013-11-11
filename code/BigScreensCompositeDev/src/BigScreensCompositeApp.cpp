@@ -441,6 +441,8 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     }
 }
 
+const static int kChanceFire = 100;
+
 void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
 {
     long long contentElapsedFrames = contentInfo.numRenderFrames;
@@ -463,7 +465,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             
             // TMP / Firing
             tank->setFrameContentID(contentInfo.layoutIndex);
-            if (mShouldFire) tank->fire();
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
             
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
@@ -485,7 +487,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             
             // TMP
             tank->setFrameContentID(contentInfo.layoutIndex);
-            if (mShouldFire) tank->fire();
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
             
             float camZ = tankDistance * 500;
             cam.lookAt(Vec3f( 100, 500, camZ ),
@@ -505,7 +507,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
             // TMP
             tank->setFrameContentID(contentInfo.layoutIndex);
-            if (mShouldFire) tank->fire();
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
 
             // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camX, camY, camZ;
@@ -544,7 +546,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
             // TMP
             tank->setFrameContentID(contentInfo.layoutIndex);
-            if (mShouldFire) tank->fire();
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
 
             // Nearly flat
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
@@ -604,7 +606,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         {
             // TMP
             tank->setFrameContentID(contentInfo.layoutIndex);
-            if (mShouldFire) tank->fire();
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
 
             tank->setWheelSpeedMultiplier(6);
             cam.lookAt(Vec3f( 0, 600, -1000 ) + tankPosition,

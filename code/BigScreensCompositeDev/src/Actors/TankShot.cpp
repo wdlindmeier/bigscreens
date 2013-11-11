@@ -18,7 +18,7 @@ static gl::TextureRef ExplosionTexture;
 // Dont use this brah
 TankShot::TankShot(){};
 
-TankShot::TankShot(float angleDegrees,
+TankShot::TankShot(float angleRads,
                    float yRotationRads,
                    float velocity,
                    const ci::Vec3f & initialPosition,
@@ -26,7 +26,7 @@ TankShot::TankShot(float angleDegrees,
                    const int parentContentID) :
 mVelocity(velocity)
 ,mYRotationRads(yRotationRads)
-,mThetaDegrees(angleDegrees)
+,mThetaRads(angleRads)
 ,mProgress(0)
 ,mInitialPosition(initialPosition)
 ,mHasExploded(false)
@@ -51,9 +51,9 @@ float TankShot::getVelocity()
     return mVelocity;
 }
 
-float TankShot::getThetaDegrees()
+float TankShot::getThetaRads()
 {
-    return mThetaDegrees;
+    return mThetaRads;
 }
 
 float TankShot::getProgress()
@@ -73,8 +73,10 @@ bool TankShot::isDead()
 
 ci::Vec2f TankShot::progressAt(float amount)
 {
-    float y = mVelocity*sin(mThetaDegrees*pi/180.0)*amount - 0.5*kGravity*amount*amount;  // altitude
-    float x = mVelocity*cos(mThetaDegrees*M_PI/180.0)*amount;  // downrange
+//    float y = mVelocity*sin(mThetaDegrees*pi/180.0)*amount - 0.5*kGravity*amount*amount;  // altitude
+//    float x = mVelocity*cos(mThetaDegrees*M_PI/180.0)*amount;  // downrange
+    float y = mVelocity*sin(mThetaRads)*amount - 0.5*kGravity*amount*amount;  // altitude
+    float x = mVelocity*cos(mThetaRads)*amount;  // downrange
     return Vec2f(x,y);
 }
 

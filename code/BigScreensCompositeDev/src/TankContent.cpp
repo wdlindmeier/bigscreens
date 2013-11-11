@@ -26,6 +26,7 @@ namespace bigscreens
     , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
+    , mMinion( ContentProviderNew::ActorContent::getMinion() )
     // , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     {
     }
@@ -132,7 +133,8 @@ namespace bigscreens
     {
         gl::Texture::Format texFormat;
         texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
-        texFormat.mipMap(true);
+        //texFormat.mipMap(true);
+        texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
         texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
         mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
         
@@ -195,6 +197,11 @@ namespace bigscreens
     // Lets the app take control of the cam.
     void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
+        mMinionPosition = Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
+                                800,
+                                sin(mNumFramesRendered * -0.01) * 2000);
+        // NOTE: The target position is relative to the tank
+        mTank->setTargetPosition(mMinionPosition - mTankPosition);
         mTank->update(mNumFramesRendered);
         update_func(mCam, mTank);
     }
@@ -238,6 +245,30 @@ namespace bigscreens
         gl::popMatrices();
     }
     
+    void TankContent::drawMinion()
+    {
+        // A simple spin around the tank.
+        // TODO: Make this more interesting
+        
+        gl::bindStockShader(gl::ShaderDef().color());
+
+        gl::pushMatrices();
+        gl::setMatrices( mCam );
+        
+        // Spin baby
+        gl::translate(mMinionPosition);
+        
+        mMinion->bindTexBuffer();
+        gl::scale(Vec3f(150,150,150));
+        gl::color(1, 0, 0);
+        gl::setDefaultShaderVars();
+
+        mMinion->draw();
+        mMinion->unbindTexBuffer();
+
+        gl::popMatrices();
+    }
+    
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         // clear out both of the attachments of the FBO with black
@@ -248,5 +279,7 @@ namespace bigscreens
         drawGround();
 
         drawTank();
+        
+        drawMinion();
     }
 }
