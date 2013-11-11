@@ -18,13 +18,15 @@ static gl::TextureRef ExplosionTexture;
 // Dont use this brah
 TankShot::TankShot(){};
 
-TankShot::TankShot(float angleRadians,
+TankShot::TankShot(float angleDegrees,
+                   float yRotationRads,
                    float velocity,
                    const ci::Vec3f & initialPosition,
                    const gl::GlslProgRef & shader,
                    const int parentContentID) :
 mVelocity(velocity)
-,mTheta(angleRadians)
+,mYRotationRads(yRotationRads)
+,mThetaDegrees(angleDegrees)
 ,mProgress(0)
 ,mInitialPosition(initialPosition)
 ,mHasExploded(false)
@@ -36,6 +38,7 @@ mVelocity(velocity)
 ,mMaxProgress(0)
 ,mContentID(parentContentID)
 {
+    mShotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
     if (!ExplosionTexture)
     {
         ExplosionTexture = gl::Texture::create(loadImage(ci::app::loadResource("explosion.png")));
@@ -48,9 +51,9 @@ float TankShot::getVelocity()
     return mVelocity;
 }
 
-float TankShot::getTheta()
+float TankShot::getThetaDegrees()
 {
-    return mTheta;
+    return mThetaDegrees;
 }
 
 float TankShot::getProgress()
@@ -70,8 +73,8 @@ bool TankShot::isDead()
 
 ci::Vec2f TankShot::progressAt(float amount)
 {
-    float y = mVelocity*sin(mTheta*pi/180.0)*amount - 0.5*kGravity*amount*amount;  // altitude
-    float x = mVelocity*cos(mTheta*M_PI/180.0)*amount;  // downrange
+    float y = mVelocity*sin(mThetaDegrees*pi/180.0)*amount - 0.5*kGravity*amount*amount;  // altitude
+    float x = mVelocity*cos(mThetaDegrees*M_PI/180.0)*amount;  // downrange
     return Vec2f(x,y);
 }
 
@@ -84,11 +87,19 @@ void TankShot::generateLine(const gl::GlslProgRef & shader)
     
     bool didHitGround = false;
     float progress = 0;
+
+    Quatf shotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
+
     while(!didHitGround)
     {
         progress += kLineProgressInterval;
         Vec2f segOffset = progressAt(progress);
+
         Vec3f segPosition = mInitialPosition + Vec3f(0, segOffset.y, segOffset.x);
+
+        // Attempting to rotate around the Y axis
+        segPosition = shotQuat * segPosition;
+        
         lineMesh.appendVertex(segPosition);
         if (segPosition.y <= 0)
         {
@@ -122,6 +133,7 @@ void TankShot::update(float amount)
     if (!mHasExploded)
     {
         mCurrentPosition = mInitialPosition + missleCenter;
+        mCurrentPosition = mShotQuat * mCurrentPosition;
         
         if (mCurrentOffset.x <= 0 || mCurrentOffset.y < (mInitialPosition.y * -1))
         {
@@ -143,7 +155,7 @@ void TankShot::update(float amount)
 }
 
 void TankShot::renderLine()
-{    
+{
     mLineVao->bind();
     mLineVbo->bind();
 
@@ -162,7 +174,7 @@ void TankShot::render()
     if (!mHasExploded)
     {
         gl::setDefaultShaderVars();
-         gl::drawCube(mCurrentPosition, Vec3f(50,50,50));
+        gl::drawCube(mCurrentPosition, Vec3f(50,50,50));
     }
 }
 
@@ -172,9 +184,10 @@ void TankShot::renderMuzzleFlare(ci::CameraPersp & cam)
     if (mProgress < kMussleFlareProgress)
     {
         float amtFlare = 1.0 - (mProgress/kMussleFlareProgress);
+        Vec3f muzzlePosition = mInitialPosition * mShotQuat;
         
         gl::pushMatrices();
-        gl::translate(mInitialPosition);
+        gl::translate(muzzlePosition);
         
         Vec3f right, up;
         cam.getBillboardVectors(&right, &up);

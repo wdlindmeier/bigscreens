@@ -56,6 +56,7 @@ protected:
     
     std::vector<TankShot>  mShotsFired;
     float           mBarrelAngle;
+    float           mHeadRotation;
     float           mWheelRotation;
     float           mGearRotation;
     float           mShotProgress;

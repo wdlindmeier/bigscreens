@@ -22,6 +22,7 @@ mWheelProgressMulti(kDefaultTankWheelSpeedMulti)
 ,mWheelRotation(0)
 ,mGearRotation(0)
 ,mShotProgress(0)
+,mHeadRotation(0)
 {
     loadShader();
     loadModels();
@@ -86,8 +87,11 @@ void AdvancedTank::fire()
     float offX = cos(shotTheta) * kBarrelLength;
     float offY = sin(shotTheta) * kBarrelLength;
     Vec3f exitPoint(0, kBarrelOffsetY + offY, 0 + offX);
+    
+    float yRotRads = toRadians(mHeadRotation);
 
     mShotsFired.push_back(TankShot(mBarrelAngle,
+                                   yRotRads,
                                    targetVelocity,
                                    exitPoint,
                                    mTankShader,
@@ -99,7 +103,9 @@ void AdvancedTank::update(long progressCounter)
     mWheelRotation = fmod(progressCounter * mWheelProgressMulti, 360.0f);
     mGearRotation = mWheelRotation * 1.25f; // gear is smaller ∴ faster
     
+    // TMP angles
     mBarrelAngle = ((1.0 + sin(progressCounter * 0.01)) * 0.5) * 35.0f;
+    mHeadRotation = (mBarrelAngle * -2) + mBarrelAngle;
 
     vector<TankShot> keepTanks;
     for (TankShot & shot : mShotsFired)
@@ -124,16 +130,22 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
     gl::setDefaultShaderVars();
     
     // NOTE: There are so many lines, we throttle the alpha to 0.25 max
-    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, alpha ));
+    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, 0.25 * alpha ));
 
     mBodyModel->render();
+
+    // Head (rotates)
+    gl::pushMatrices();
+    gl::rotate(mHeadRotation, 0, 1, 0);
     mHeadModel->render();
     
-    // Barrel
-    gl::pushMatrices();
-    gl::translate(Vec3f(0.0f, kBarrelOffsetY, 0.0f));
-    gl::rotate(mBarrelAngle * -1, 1, 0, 0);
-    mBarrelModel->render();
+        // Barrel
+        gl::pushMatrices();
+        gl::translate(Vec3f(0.0f, kBarrelOffsetY, 0.0f));
+        gl::rotate(mBarrelAngle * -1, 1, 0, 0);
+        mBarrelModel->render();
+        gl::popMatrices();
+    
     gl::popMatrices();
 
     // Gear Wheel 1
@@ -215,7 +227,7 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
             shot.renderExplosion(cam);
         }
     }
-
+    
     /*
 //    // Draw the shot projectiles
 //    mTankShader->uniform("uColor", ColorAf(1, 0, 0, alpha));

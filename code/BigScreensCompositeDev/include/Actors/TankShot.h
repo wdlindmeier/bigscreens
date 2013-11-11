@@ -26,7 +26,8 @@ class TankShot
 public:
     
     TankShot();        
-    TankShot(float angleRadians,
+    TankShot(float angleDegrees,
+             float yRotationRads,
              float velocity,
              const ci::Vec3f & initialPosition,
              const ci::gl::GlslProgRef & shader,
@@ -35,7 +36,7 @@ public:
     ~TankShot(){};
     
     float           getVelocity();
-    float           getTheta();
+    float           getThetaDegrees();
     float           getProgress();
     int             getContentID();
     void            update(float amount);
@@ -53,12 +54,13 @@ private:
     void            generateLine(const ci::gl::GlslProgRef & shader);
     
     float           mVelocity;
-    float           mTheta;
+    float           mThetaDegrees;
     float           mProgress;
     float           mMaxProgress;
     bool            mIsDead;
     bool            mHasExploded;
     float           mExplosionScale;
+    float           mYRotationRads;
 
     ci::Vec2f       mCurrentOffset;
     ci::Vec3f       mInitialPosition;
@@ -69,7 +71,7 @@ private:
     ci::gl::VboRef  mLineVbo;
     
     int             mContentID;
-
+    ci::Quatf       mShotQuat;
 };
     
 }
