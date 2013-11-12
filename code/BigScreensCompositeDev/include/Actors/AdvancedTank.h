@@ -34,7 +34,7 @@ public:
     void load();
     void fire();
     void update(long progressCounter);
-    void render(ci::CameraPersp & cam);
+    void render(ci::CameraPersp & cam, const float alpha = 1.0);
     
 protected:
     

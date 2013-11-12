@@ -22,11 +22,11 @@ namespace bigscreens
 {
     
     TankContent::TankContent() :
-    mGroundContent(10000.0),
-    mTankPosition(0,0,0),
-    mIsGroundVisible(true),
-	mTank( ContentProviderNew::ActorContent::getAdvancedTank() ),
-	mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    mGroundContent(10000.0)
+    , mTankPosition(0,0,0)
+    , mIsGroundVisible(true)
+    , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
+    // , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     {
     }
     
@@ -50,9 +50,7 @@ namespace bigscreens
         loadShaders();
         
         loadScreen();
-        
-        loadObj(objFilename);
-        
+
         loadGround();
         
         // Cam
@@ -74,12 +72,6 @@ namespace bigscreens
         .fragment( ci::app::loadResource( "ground_texture.frag" ) );
         mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
         mGroundShader->uniform("uColor", Color::white());
-
-        gl::GlslProg::Format mFormat;
-        mFormat.vertex( loadResource( "basic.vert" ) )
-        .fragment( loadResource( "basic.frag" ) );
-        mTankShader = gl::GlslProg::create( mFormat );
-        mTankShader->bind();
     }
     
     void TankContent::loadScreen()
@@ -126,34 +118,6 @@ namespace bigscreens
         mScreenVbo->unbind();
     }
     
-    void TankContent::loadObj(const std::string & objFilename)
-    {
-        DataSourceRef file = loadResource( objFilename ); //"T72.obj"
-        ObjLoader loader( file );
-        mTankMesh = TriMesh::create( loader );
-        
-        mTankVao = gl::Vao::create();
-        mTankVao->bind();
-        
-        mTankVbo = gl::Vbo::create(GL_ARRAY_BUFFER, 3 * mTankMesh->getNumVertices() * sizeof(float),
-                                   mTankMesh->getVertices<3>(), GL_STATIC_DRAW );
-        mTankVbo->bind();
-        
-        GLint pos = mTankShader->getAttribLocation( "vPosition" );
-        gl::enableVertexAttribArray( pos );
-        gl::vertexAttribPointer( pos, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        
-        mTankElementVbo = gl::Vbo::create(GL_ELEMENT_ARRAY_BUFFER,
-                                          mTankMesh->getNumIndices() * 4,
-                                          mTankMesh->getIndices().data());
-        mTankElementVbo->bind();
-        mTankElementVbo->unbind();
-        
-        mTankVbo->unbind();
-        mTankVao->unbind();
-        mTankShader->unbind();
-    }
-    
     void TankContent::loadGround()
     {
         gl::Texture::Format texFormat;
@@ -193,7 +157,8 @@ namespace bigscreens
         
         mGridTexture->unbind();
         mGroundShader->unbind();
-        
+
+        // Removing this for now. Integrating it into the app has proven very awkward.
 //		mGroundPlane->draw();
 		
         gl::popMatrices();
@@ -220,6 +185,7 @@ namespace bigscreens
     void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
     {
         update_func(mCam);
+        mTank->update(mNumFramesRendered);
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -254,27 +220,11 @@ namespace bigscreens
     
     void TankContent::drawTank()
     {
-        mTankShader->bind();
-        mTankVao->bind();
-        mTankElementVbo->bind();
-        
         gl::pushMatrices();
-        
         gl::setMatrices( mCam );
         gl::translate(mTankPosition);
-        
-        gl::setDefaultShaderVars();
-        
-        mTankShader->uniform("uColor", ColorAf(1,1,1,1));
-        
-        gl::drawElements( GL_LINES, mTankMesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+        mTank->render( mCam );
         gl::popMatrices();
-        
-        mTankElementVbo->unbind();
-        mTankVao->unbind();
-        mTankShader->unbind();
-		
-//		mTank->render( mCam );
     }
     
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)

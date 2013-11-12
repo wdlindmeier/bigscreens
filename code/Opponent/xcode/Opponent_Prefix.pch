@@ -13,4 +13,5 @@
 	#include "cinder/Matrix.h"
 	#include "cinder/Vector.h"
 	#include "cinder/Quaternion.h"
+#include "Utilities.hpp"
 #endif

@@ -17,6 +17,7 @@
 #include "SharedTypes.hpp"
 #include "TankContent.h"
 #include "cinder/TriMesh.h"
+#include "ContentProvider.h"
 
 namespace bigscreens
 {
@@ -46,8 +47,9 @@ namespace bigscreens
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
         void drawGround();
-        void drawScreen(const ci::Rectf & contentRect);
         void setMSElapsed(const long msElapsedConvergence);
+        void drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+        virtual void loadShaders();
 
     protected:
 
@@ -57,5 +59,7 @@ namespace bigscreens
         float mRenderAlpha;
         float mScreenAlpha;
         long mMSElapsedConvergence;
+        
+        DumbTankRef mDumbTank;
     };
 }
