@@ -265,13 +265,13 @@ namespace bigscreens
         // Spin baby
         gl::translate(mMinionPosition);
         
-        mMinion->bindTexBuffer();
+//        mMinion->bindTexBuffer();
         gl::scale(Vec3f(150,150,150));
         gl::color(1, 0, 0);
         gl::setDefaultShaderVars();
 
-        mMinion->draw();
-        mMinion->unbindTexBuffer();
+        mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,1));
+//        mMinion->unbindTexBuffer();
 
         gl::popMatrices();
     }

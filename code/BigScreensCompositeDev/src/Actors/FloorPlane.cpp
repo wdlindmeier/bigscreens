@@ -98,15 +98,15 @@ void FloorPlane::loadShaders()
 {
 	// Terrain stuff
 	ci::gl::GlslProg::Format mQuadOutlineFormat;
-	mQuadOutlineFormat.vertex( ci::app::loadAsset( /*"quadOutline.vert"*/ SharedShaderAssetPath("quadOutline.vert", !IS_IAC) ) )
-	.geometry( ci::app::loadAsset( /*"quadOutline.geom"*/ SharedShaderAssetPath("quadOutline.geom", !IS_IAC) ) )
-	.fragment( ci::app::loadAsset( /*"quadOutline.frag"*/ SharedShaderAssetPath("quadOutline.frag", !IS_IAC) ) );
+	mQuadOutlineFormat.vertex( LoadShader("quadOutline.vert") )
+	.geometry( LoadShader("quadOutline.geom") )
+	.fragment( LoadShader("quadOutline.frag") );
 	mQuadOutlineGlsl = ci::gl::GlslProg::create( mQuadOutlineFormat );
 	
 	ci::gl::GlslProg::Format mQuadTriangleFormat;
-	mQuadTriangleFormat.vertex( ci::app::loadAsset( /*"quadTriangle.vert"*/ SharedShaderAssetPath("quadTriangle.vert", !IS_IAC) ) )
-	.geometry( ci::app::loadAsset( /*"quadTriangle.geom"*/ SharedShaderAssetPath("quadTriangle.geom", !IS_IAC) ) )
-	.fragment( ci::app::loadAsset( /*"quadTriangle.frag"*/ SharedShaderAssetPath("quadTriangle.frag", !IS_IAC) ) );
+	mQuadTriangleFormat.vertex( LoadShader("quadTriangle.vert") )
+	.geometry( LoadShader("quadTriangle.geom") )
+	.fragment( LoadShader("quadTriangle.frag") );
 	mQuadTriangleGlsl = ci::gl::GlslProg::create( mQuadTriangleFormat );
 	
 }

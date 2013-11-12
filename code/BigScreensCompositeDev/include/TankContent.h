@@ -68,7 +68,7 @@ protected:
     ci::Vec3f           mMinionPosition;
 
 	AdvancedTankRef		mTank;
-    MinionRef           mMinion;
+    MinionGeometryRef   mMinion;
 
     // Screen
     ci::gl::GlslProgRef mTextureShader;

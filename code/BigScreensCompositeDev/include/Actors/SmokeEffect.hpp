@@ -230,7 +230,7 @@ private:
 	{
 		ci::gl::Texture::Format mTextureFormat;
 		mTextureFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
-		mSmokeTexture = ci::gl::Texture::create( loadImage( ci::app::loadAsset( "smoke_blur.png" ) ), mTextureFormat );
+		mSmokeTexture = ci::gl::Texture::create( loadImage( ci::app::loadResource( "smoke_blur.png" ) ), mTextureFormat );
 	}
 	
 	void loadShaders()
@@ -243,8 +243,9 @@ private:
 			};
 			
 			ci::gl::GlslProg::Format mParticleGlslFormat;
-			mParticleGlslFormat.vertex( ci::app::loadAsset( "oppSmoke.vert" /*SharedShaderAssetPath("oppSmoke.vert", !IS_IAC)*/ ) )
-			.fragment( ci::app::loadAsset( "oppSmoke.frag" /*SharedShaderAssetPath("oppSmoke.geom", !IS_IAC)*/ ) )
+            // NOTE: See SharedShaderAssetPath to dynamically load
+			mParticleGlslFormat.vertex( LoadShader("oppSmoke.vert") )
+			.fragment( LoadShader("oppSmoke.frag") )
 			.transformFeedback().feedbackFormat( GL_SEPARATE_ATTRIBS )
 			.feedbackVaryings( outputNames, 3 );
 			
