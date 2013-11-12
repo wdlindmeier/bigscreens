@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		595120D4485D4714A17957AA /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7203BA9ECC0F40BB9DEC010F /* CinderApp.icns */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		B3115D04182EA2C900FB7D2F /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115CFC182EA2C900FB7D2F /* oppBasic.frag */; };
+		B3115D05182EA2C900FB7D2F /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115CFD182EA2C900FB7D2F /* oppBasic.geom */; };
+		B3115D06182EA2C900FB7D2F /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115CFE182EA2C900FB7D2F /* oppBasic.vert */; };
+		B3115D07182EA2C900FB7D2F /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */; };
+		B3115D08182EA2C900FB7D2F /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115D00182EA2C900FB7D2F /* oppDynamic.geom */; };
+		B3115D09182EA2C900FB7D2F /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115D01182EA2C900FB7D2F /* oppDynamic.vert */; };
+		B3115D0A182EA2C900FB7D2F /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115D02182EA2C900FB7D2F /* oppSmoke.frag */; };
+		B3115D0B182EA2C900FB7D2F /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115D03182EA2C900FB7D2F /* oppSmoke.vert */; };
+		B324D1231831BCFF00A7A9F0 /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B324D1211831BCFF00A7A9F0 /* Opponent.cpp */; };
+		B324D1241831BCFF00A7A9F0 /* OpponentGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */; };
+		B3EA21101830126D0093F5C8 /* minion.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3EA210F1830126D0093F5C8 /* minion.vert */; };
+		B3EA2112183012800093F5C8 /* minion.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2111183012800093F5C8 /* minion.frag */; };
+		B3EA2116183020770093F5C8 /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2114183020770093F5C8 /* finalEffects.frag */; };
+		B3EA2117183020770093F5C8 /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2115183020770093F5C8 /* finalEffects.vert */; };
+		B3EA2126183177230093F5C8 /* renderOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2125183177230093F5C8 /* renderOppDynamic.vert */; };
+		B3EA2128183177460093F5C8 /* renderOppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2127183177460093F5C8 /* renderOppDynamic.geom */; };
+		B3EA212A183177590093F5C8 /* renderOppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2129183177590093F5C8 /* renderOppDynamic.frag */; };
+		B3EA212C18317E180093F5C8 /* updateOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3EA212B18317E180093F5C8 /* updateOppDynamic.vert */; };
+		DBFB36023BF44D99A492924E /* UpdatedOpponentApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E29B9DF2C2C9470386B301D7 /* UpdatedOpponentApp.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0091D8F80E81B9330029341E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		00B784AF0FF439BC000DE1D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3AF956CB52B34684B919567A /* UpdatedOpponent_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = UpdatedOpponent_Prefix.pch; sourceTree = "<group>"; };
+		3C736112DE564F079A2F2B03 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		492D6E3CC677465C94291AE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
+		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		7203BA9ECC0F40BB9DEC010F /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* UpdatedOpponent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpdatedOpponent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3115CFC182EA2C900FB7D2F /* oppBasic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.frag; path = ../assets/oppBasic.frag; sourceTree = "<group>"; };
+		B3115CFD182EA2C900FB7D2F /* oppBasic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.geom; path = ../assets/oppBasic.geom; sourceTree = "<group>"; };
+		B3115CFE182EA2C900FB7D2F /* oppBasic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.vert; path = ../assets/oppBasic.vert; sourceTree = "<group>"; };
+		B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.frag; path = ../assets/oppDynamic.frag; sourceTree = "<group>"; };
+		B3115D00182EA2C900FB7D2F /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.geom; path = ../assets/oppDynamic.geom; sourceTree = "<group>"; };
+		B3115D01182EA2C900FB7D2F /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.vert; path = ../assets/oppDynamic.vert; sourceTree = "<group>"; };
+		B3115D02182EA2C900FB7D2F /* oppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.frag; path = ../assets/oppSmoke.frag; sourceTree = "<group>"; };
+		B3115D03182EA2C900FB7D2F /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.vert; path = ../assets/oppSmoke.vert; sourceTree = "<group>"; };
+		B324D11D1831BCEA00A7A9F0 /* FinalBillboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/Actors/FinalBillboard.h; sourceTree = "<group>"; };
+		B324D11E1831BCEA00A7A9F0 /* Opponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Opponent.h; path = ../../BigScreensCompositeDev/include/Actors/Opponent.h; sourceTree = "<group>"; };
+		B324D11F1831BCEA00A7A9F0 /* OpponentGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OpponentGeometry.h; path = ../../BigScreensCompositeDev/include/Actors/OpponentGeometry.h; sourceTree = "<group>"; };
+		B324D1201831BCEA00A7A9F0 /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SmokeEffect.hpp; path = ../../BigScreensCompositeDev/include/Actors/SmokeEffect.hpp; sourceTree = "<group>"; };
+		B324D1211831BCFF00A7A9F0 /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Opponent.cpp; path = ../../BigScreensCompositeDev/src/Actors/Opponent.cpp; sourceTree = "<group>"; };
+		B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpponentGeometry.cpp; path = ../../BigScreensCompositeDev/src/Actors/OpponentGeometry.cpp; sourceTree = "<group>"; };
+		B324D1251831BD0E00A7A9F0 /* Utilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = ../../BigScreensShared/Headers/Utilities.hpp; sourceTree = "<group>"; };
+		B3EA210F1830126D0093F5C8 /* minion.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.vert; path = ../assets/minion.vert; sourceTree = "<group>"; };
+		B3EA2111183012800093F5C8 /* minion.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.frag; path = ../assets/minion.frag; sourceTree = "<group>"; };
+		B3EA2114183020770093F5C8 /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.frag; path = ../assets/finalEffects.frag; sourceTree = "<group>"; };
+		B3EA2115183020770093F5C8 /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.vert; path = ../assets/finalEffects.vert; sourceTree = "<group>"; };
+		B3EA2125183177230093F5C8 /* renderOppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.vert; path = ../assets/renderOppDynamic.vert; sourceTree = "<group>"; };
+		B3EA2127183177460093F5C8 /* renderOppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.geom; path = ../assets/renderOppDynamic.geom; sourceTree = "<group>"; };
+		B3EA2129183177590093F5C8 /* renderOppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.frag; path = ../assets/renderOppDynamic.frag; sourceTree = "<group>"; };
+		B3EA212B18317E180093F5C8 /* updateOppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = updateOppDynamic.vert; path = ../assets/updateOppDynamic.vert; sourceTree = "<group>"; };
+		E29B9DF2C2C9470386B301D7 /* UpdatedOpponentApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = UpdatedOpponentApp.cpp; path = ../src/UpdatedOpponentApp.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
+				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
+				5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */,
+				00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */,
+				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
+				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
+				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01B97315FEAEA392516A2CEA /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				B3115CF3182EA1AB00FB7D2F /* bigscreens */,
+			);
+			name = Blocks;
+			sourceTree = "<group>";
+		};
+		080E96DDFE201D6D7F000001 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E29B9DF2C2C9470386B301D7 /* UpdatedOpponentApp.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00B784AF0FF439BC000DE1D7 /* Accelerate.framework */,
+				00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */,
+				00B784B10FF439BC000DE1D7 /* AudioUnit.framework */,
+				00B784B20FF439BC000DE1D7 /* CoreAudio.framework */,
+				5323E6B50EAFCA7E003A9687 /* QTKit.framework */,
+				5323E6B10EAFCA74003A9687 /* CoreVideo.framework */,
+				0091D8F80E81B9330029341E /* OpenGL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* UpdatedOpponent.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* UpdatedOpponent */ = {
+			isa = PBXGroup;
+			children = (
+				01B97315FEAEA392516A2CEA /* Blocks */,
+				29B97315FDCFA39411CA2CEA /* Headers */,
+				080E96DDFE201D6D7F000001 /* Source */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = UpdatedOpponent;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				3C736112DE564F079A2F2B03 /* Resources.h */,
+				3AF956CB52B34684B919567A /* UpdatedOpponent_Prefix.pch */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B3EA210F1830126D0093F5C8 /* minion.vert */,
+				B3EA2111183012800093F5C8 /* minion.frag */,
+				B3115CFE182EA2C900FB7D2F /* oppBasic.vert */,
+				B3115CFD182EA2C900FB7D2F /* oppBasic.geom */,
+				B3115CFC182EA2C900FB7D2F /* oppBasic.frag */,
+				B3115D01182EA2C900FB7D2F /* oppDynamic.vert */,
+				B3115D00182EA2C900FB7D2F /* oppDynamic.geom */,
+				B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */,
+				B3115D03182EA2C900FB7D2F /* oppSmoke.vert */,
+				B3115D02182EA2C900FB7D2F /* oppSmoke.frag */,
+				B3EA2114183020770093F5C8 /* finalEffects.frag */,
+				B3EA2115183020770093F5C8 /* finalEffects.vert */,
+				7203BA9ECC0F40BB9DEC010F /* CinderApp.icns */,
+				492D6E3CC677465C94291AE6 /* Info.plist */,
+				B3EA2125183177230093F5C8 /* renderOppDynamic.vert */,
+				B3EA2127183177460093F5C8 /* renderOppDynamic.geom */,
+				B3EA2129183177590093F5C8 /* renderOppDynamic.frag */,
+				B3EA212B18317E180093F5C8 /* updateOppDynamic.vert */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B3115CF3182EA1AB00FB7D2F /* bigscreens */ = {
+			isa = PBXGroup;
+			children = (
+				B3115CF4182EA1BD00FB7D2F /* Content */,
+				B3115CF5182EA1DA00FB7D2F /* Utilities */,
+			);
+			name = bigscreens;
+			sourceTree = "<group>";
+		};
+		B3115CF4182EA1BD00FB7D2F /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				B324D11D1831BCEA00A7A9F0 /* FinalBillboard.h */,
+				B324D11E1831BCEA00A7A9F0 /* Opponent.h */,
+				B324D11F1831BCEA00A7A9F0 /* OpponentGeometry.h */,
+				B324D1201831BCEA00A7A9F0 /* SmokeEffect.hpp */,
+				B324D1211831BCFF00A7A9F0 /* Opponent.cpp */,
+				B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
+		B3115CF5182EA1DA00FB7D2F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B324D1251831BD0E00A7A9F0 /* Utilities.hpp */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* UpdatedOpponent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "UpdatedOpponent" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UpdatedOpponent;
+			productInstallPath = "$(HOME)/Applications";
+			productName = UpdatedOpponent;
+			productReference = 8D1107320486CEB800E47090 /* UpdatedOpponent.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "UpdatedOpponent" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* UpdatedOpponent */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* UpdatedOpponent */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				595120D4485D4714A17957AA /* CinderApp.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3EA2126183177230093F5C8 /* renderOppDynamic.vert in Sources */,
+				B3EA21101830126D0093F5C8 /* minion.vert in Sources */,
+				B3115D04182EA2C900FB7D2F /* oppBasic.frag in Sources */,
+				B3EA212A183177590093F5C8 /* renderOppDynamic.frag in Sources */,
+				B3115D0A182EA2C900FB7D2F /* oppSmoke.frag in Sources */,
+				B3115D08182EA2C900FB7D2F /* oppDynamic.geom in Sources */,
+				B3EA212C18317E180093F5C8 /* updateOppDynamic.vert in Sources */,
+				B3115D0B182EA2C900FB7D2F /* oppSmoke.vert in Sources */,
+				B3115D05182EA2C900FB7D2F /* oppBasic.geom in Sources */,
+				B3115D07182EA2C900FB7D2F /* oppDynamic.frag in Sources */,
+				B324D1231831BCFF00A7A9F0 /* Opponent.cpp in Sources */,
+				B3115D09182EA2C900FB7D2F /* oppDynamic.vert in Sources */,
+				B3115D06182EA2C900FB7D2F /* oppBasic.vert in Sources */,
+				B3EA2112183012800093F5C8 /* minion.frag in Sources */,
+				B3EA2128183177460093F5C8 /* renderOppDynamic.geom in Sources */,
+				B3EA2117183020770093F5C8 /* finalEffects.vert in Sources */,
+				DBFB36023BF44D99A492924E /* UpdatedOpponentApp.cpp in Sources */,
+				B324D1241831BCFF00A7A9F0 /* OpponentGeometry.cpp in Sources */,
+				B3EA2116183020770093F5C8 /* finalEffects.frag in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CINDER_PATH = ../../../cinder_dev;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = UpdatedOpponent_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				PRODUCT_NAME = UpdatedOpponent;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CINDER_PATH = ../../../cinder_dev;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = UpdatedOpponent_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = UpdatedOpponent;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "UpdatedOpponent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "UpdatedOpponent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

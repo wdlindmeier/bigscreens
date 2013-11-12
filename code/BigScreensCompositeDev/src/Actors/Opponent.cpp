@@ -11,40 +11,35 @@
 
 namespace bigscreens {
 	
-void Opponent::draw()
+void Opponent::update( float percentage )
 {
+	mDynamicGeometry->update( percentage );
+}
+	
+void Opponent::draw( float zDepth, const ci::Vec3f & cameraView )
+{
+	// CAMERAVIEW - Will be used for lightPosition
+	// zDepth - Used for particle smoke
+	
 	ci::gl::enableDepthRead();
 	ci::gl::enableDepthWrite();
-	ci::gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-	
-	mGlsl->bind();
-	
-	mGlsl->uniform( "projection", ci::gl::getProjection() );
-	mGlsl->uniform( "modelView", ci::gl::getModelView() );
-	
-	
-	glPointSize(10.0f);
-	
-	mSphericalGeometry->draw();
-	mPyramidalGeometry->draw();
-	
-	mGlsl->unbind();
-	
-	ci::gl::disableDepthRead();
+
+	mDynamicGeometry->draw( cameraView );
+
 	ci::gl::disableDepthWrite();
 	
-	mSmokeEffect->draw();
+//	mSmokeEffect->draw( zDepth );
 	
-	ci::gl::popMatrices();
-	
+	ci::gl::disableDepthRead();
 }
 	
 void Opponent::loadShaders()
 {
-	ci::gl::GlslProg::Format mFormat;
-	mFormat.vertex( ci::app::loadAsset( /*"oppBasic.vert"*/ SharedShaderAssetPath("oppBasic.vert", !IS_IAC) ) )
-	.fragment( ci::app::loadAsset( /*"oppBasic.frag"*/ SharedShaderAssetPath("oppBasic.frag", !IS_IAC) ) );
-	mGlsl = ci::gl::GlslProg::create( mFormat );
+}
+	
+void Opponent::loadTextures()
+{
+	
 }
 	
 }

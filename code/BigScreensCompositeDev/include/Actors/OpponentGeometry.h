@@ -18,104 +18,68 @@
 
 namespace bigscreens {
 
-class PyramidalGeometry;
+class MinionGeometry;
 class SphericalGeometry;
 class DynamicOpponent;
-typedef std::shared_ptr<PyramidalGeometry>	PyramidalGeometryRef;
+typedef std::shared_ptr<MinionGeometry>	    MinionGeometryRef;
 typedef std::shared_ptr<SphericalGeometry>	SphericalGeometryRef;
 typedef std::shared_ptr<DynamicOpponent>	DynamicOpponentRef;
-typedef PyramidalGeometryRef				MinionRef;
 
 class DynamicOpponent {
 public:
 	DynamicOpponent();
 	~DynamicOpponent() {}
 	
-	void render();
+	void update( float percentage );
+	void draw( const ci::Vec3f & cameraView );
 	
 private:
 	void loadShaders();
 	void loadBuffers();
-	void loadGeometry();
-	void update();
-	void draw();
+	void loadTexture();
 	
 private:
-	ci::gl::VaoRef mVao[2];
-	ci::gl::VboRef mPositionVbo[2];
-	ci::gl::TextureRef mNoiseTexture;
-	ci::gl::GlslProgRef mGlsl;
-	ci::TriMeshRef	mTrimesh;
-	PyramidalGeometryRef	mPyramid;
+	
+	SphericalGeometryRef	mPyramid;
 	SphericalGeometryRef	mSphere;
-};
-
-
-class PyramidalGeometry {
-public:
-	PyramidalGeometry() : mPyramidalTrimesh( ci::TriMesh::create( ci::TriMesh::Format().positions(3).normals() ) )
-	{
-		calcGeometry();
-		loadBuffers();
-	}
-	~PyramidalGeometry(){}
 	
-	void draw();
-	
-	void bindTexBuffer()
-	{
-		glActiveTexture( GL_TEXTURE0 );
-		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
-	}
-	
-	void unbindTexBuffer()
-	{
-		glActiveTexture( GL_TEXTURE0 );
-		glBindTexture( GL_TEXTURE_BUFFER, 0 );
-	}
-	
-private:
-	
-	// SETUP FUNCTIONS
-	void loadBuffers();
-	void calcGeometry();
-	
-private:
-	// PRIVATE MEMBERS
-	
-	ci::gl::VaoRef mPyramidalVao;
-	ci::gl::VboRef mPyramidalVbo, mPyramidalNormalVbo, mPyramidalElementVbo;
-	ci::TriMeshRef mPyramidalTrimesh;
-	GLuint			mTexBuffer;
+	ci::gl::VaoRef mVao[2];
+	ci::gl::VboRef mPositionVbo[2], mAnimatingVbo[2], mTimeLeft[2], mElementVbo;
+	ci::gl::TextureRef mNoiseTexture;
+	ci::gl::GlslProgRef mRenderOppDynamicGlsl, mUpdateOppDynamicGlsl;
+	ci::TriMeshRef	mTrimesh;
+	GLuint			mRenderSub, mUpdateSub, mTFOs[2], drawBuf;
 };
 	
 class SphericalGeometry {
 public:
-	SphericalGeometry() : mSphericalTrimesh( ci::TriMesh::create( ci::TriMesh::Format().positions(3).normals() ) )
+	SphericalGeometry( bool sphere ) : mSphericalTrimesh( ci::TriMesh::create( ci::TriMesh::Format().positions(3).normals() ) )
 	{
-		calcGeometry( 1, 20, 20 );
+		calcGeometry( 1, 20, 20, sphere );
 		loadBuffers();
 	}
 	~SphericalGeometry() {}
 	
 	void draw();
 	
-	void bindTexBuffer()
+	void bindTexBuffer( GLenum texturebind )
 	{
-		glActiveTexture( GL_TEXTURE1 );
+		glActiveTexture( texturebind );
 		glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
 	}
 	
-	void unbindTexBuffer()
+	void unbindTexBuffer( GLenum texturebind )
 	{
-		glActiveTexture( GL_TEXTURE1 );
+		glActiveTexture( texturebind );
 		glBindTexture( GL_TEXTURE_BUFFER, 0 );
 	}
+	
+	ci::TriMeshRef getTrimesh() { return mSphericalTrimesh; }
 	
 private:
 	// SETUP FUNCTIONS
 	void loadBuffers();
-	void calcGeometry( float radius, unsigned int rings, unsigned int sectors );
+	void calcGeometry( float radius, unsigned int rings, unsigned int sectors, bool sphere );
 	
 private:
 	// PRIVATE MEMBERS
@@ -126,6 +90,35 @@ private:
 	GLuint			mTexBuffer;
 };
 
-
+class MinionGeometry {
+public:
+	MinionGeometry() : mPyramidalTrimesh( ci::TriMesh::create( ci::TriMesh::Format().positions(3).normals() ) )
+	{
+		calcGeometry();
+		loadBuffers();
+		loadShaders();
+	}
+	~MinionGeometry(){}
+	
+	// LightPosition is the camera's position in the world
+	void draw( const ci::Vec3f & lightPosition, const ci::ColorA & minionColor  );
+	
+	ci::TriMeshRef getTrimesh() { return mPyramidalTrimesh; }
+	
+private:
+	
+	// SETUP FUNCTIONS
+	void loadBuffers();
+	void calcGeometry();
+	void loadShaders();
+	
+private:
+	// PRIVATE MEMBERS
+	
+	ci::gl::VaoRef mPyramidalVao;
+	ci::gl::VboRef mPyramidalVbo, mPyramidalNormalVbo, mPyramidalElementVbo;
+	ci::TriMeshRef mPyramidalTrimesh;
+	ci::gl::GlslProgRef mGlsl;
+};
 	
 }

@@ -21,24 +21,29 @@ class Opponent {
 public:
 	Opponent()
 	{
-		mPyramidalGeometry = PyramidalGeometryRef( new PyramidalGeometry() );
-		mSphericalGeometry = SphericalGeometryRef( new SphericalGeometry() );
+//		mMinionGeometry = MinionGeometryRef( new MinionGeometry() );
+//		mSphericalGeometry = SphericalGeometryRef( new SphericalGeometry(false) );
 		mSmokeEffect = SmokeEffectRef( new SmokeEffect() );
+		mDynamicGeometry = DynamicOpponentRef( new DynamicOpponent() );
 		
 		loadShaders();
 	}
 	
-	void draw();
-	
-private:
+	void update( float percentage );
+	void draw( float zDepth, const ci::Vec3f & cameraView );
 	
 	void loadShaders();
+	void loadTextures();
 	
 private:
-	PyramidalGeometryRef	mPyramidalGeometry;
+	
+private:
+	MinionGeometryRef		mMinionGeometry;
+	DynamicOpponentRef		mDynamicGeometry;
 	SphericalGeometryRef	mSphericalGeometry;
 	SmokeEffectRef			mSmokeEffect;
 	ci::gl::GlslProgRef		mGlsl;
+	GLuint					renderSub, updateSub;
 };
 	
 }

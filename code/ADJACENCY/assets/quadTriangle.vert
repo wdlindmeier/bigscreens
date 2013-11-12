@@ -40,7 +40,7 @@ void main(void)
 		vs_out.color = colors[1];
 	}
 	else {
-		gl_Position = projection * modelView * vec4( position.x, position.y, position.z + heightPixel * 100 * ( (position.y - 250.0) / 250.0 ), 1.0 );
+		gl_Position = projection * modelView * vec4( position.x, position.y, position.z + ( heightPixel * 100 * ( (position.y - 250.0) / 250.0 ) ), 1.0 );
 		vs_out.color = colors[(gl_VertexID + colorOffset / 4) % 12];
 	}
 }

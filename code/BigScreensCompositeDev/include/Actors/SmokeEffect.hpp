@@ -22,7 +22,7 @@
 
 namespace bigscreens {
 	
-const int nParticles = 2000;
+const int nParticles = 4000;
 	
 typedef std::shared_ptr<class SmokeEffect> SmokeEffectRef;
 	
@@ -44,10 +44,81 @@ public:
 	}
 	~SmokeEffect(){}
 	
-	void draw()
+	void draw(float zDepth)
 	{
-		update( ci::app::getElapsedSeconds() );
-		render();
+		update();
+		render(zDepth);
+	}
+	
+	void update()
+	{
+		drawBuf = 1 - drawBuf;
+		deltaT = ci::app::getElapsedSeconds() - time;
+		time = ci::app::getElapsedSeconds();
+		mOpponentParticlesGlsl->bind();
+		
+		// UPDATE
+		glUniformSubroutinesuiv( GL_VERTEX_SHADER, 1, &updateSub );
+		
+		mOpponentParticlesGlsl->uniform( "Time", time );
+		mOpponentParticlesGlsl->uniform( "H", deltaT );
+		
+		ci::gl::enable( GL_RASTERIZER_DISCARD );
+		
+		glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
+		
+		glBeginTransformFeedback(GL_POINTS);
+		mPVao[drawBuf]->bind();
+		ci::gl::drawArrays( GL_POINTS, 0, nParticles );
+		glEndTransformFeedback();
+		
+		ci::gl::disable( GL_RASTERIZER_DISCARD );
+	}
+	
+	void render( float zDepth )
+	{
+		glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &renderSub);
+		//		mSmokeTexture->bind();
+		
+		glActiveTexture( GL_TEXTURE0 );
+		glBindTexture( GL_TEXTURE_2D, mSmokeTexture->getId() );
+		
+		mPVao[1-drawBuf]->bind();
+		
+		// TODO: Make the scaling parabolic
+		float maxParticleSize = ci::lmap(zDepth, 40.0f, 0.1f, 1.0f, 64.0f );
+		float scale = ci::lmap( zDepth, 40.0f, 0.1f, 0.0f, 0.4f );
+		scale = ( scale > 0.1f ) ? scale : 0.1f;
+		
+		ci::gl::pushMatrices();
+//		ci::gl::multProjection( ci::Matrix44f::createTranslation( ci::Vec3f( 0, 0 ,  ) ) );
+		ci::gl::multModelView( ci::Matrix44f::createScale( ci::Vec3f( scale, scale, scale ) ) );
+		
+		ci::gl::enable( GL_PROGRAM_POINT_SIZE );
+		
+		ci::gl::enableAlphaBlending();
+		
+		mOpponentParticlesGlsl->uniform( "projection", ci::gl::getProjection() );
+		mOpponentParticlesGlsl->uniform( "modelView", ci::gl::getModelView() );
+		mOpponentParticlesGlsl->uniform( "MinParticleSize", 1.0f  );
+		mOpponentParticlesGlsl->uniform( "MaxParticleSize", maxParticleSize > 10.0f ? maxParticleSize : 10.0f );
+		mOpponentParticlesGlsl->uniform( "ParticleLifetime", 3.0f );
+		
+//		std::cout << maxParticleSize << " " << zDepth << " " << scale << std::endl;
+		
+		glDrawArrays( GL_POINTS, 0, nParticles);
+		
+		ci::gl::disable( GL_PROGRAM_POINT_SIZE );
+		
+		ci::gl::popMatrices();
+		
+		ci::gl::disableAlphaBlending();
+		
+		mPVao[1-drawBuf]->unbind();
+		//		mSmokeTexture->unbind();
+		glBindTexture( GL_TEXTURE_2D, 0 );
+		mOpponentParticlesGlsl->unbind();
+		
 	}
 	
 	
@@ -70,13 +141,15 @@ private:
 			theta = mix( 0.0f, (float)pi / 6.0f, ci::randFloat() );
 			phi = mix( 0.0f, (float)(2 * pi), ci::randFloat() );
 			
-			v.x = sinf(i) * cosf(i);
-			v.y = cosf(phi) * sinf(i);
-			v.z = sinf(theta);
+//			v.x = sinf(i) * cosf(i);
+//			v.y = cosf(phi) * sinf(i);
+//			v.z = sinf(theta);
+			v.x = cos( 2*M_PI * i * (i/nParticles) ) * sin( M_PI + i );
+			v.y = sin( -M_PI_2 + M_PI + i );
+			v.z = sin( 2* M_PI * i * (i/nParticles) ) * sin( M_PI + i );
 			
 			velocity = mix( 0.0f, 1.5f, ci::randFloat() );
 			v = v.normalized() * velocity;
-//			std::cout << v << ", " << velocity << std::endl;
 			mTrimesh->appendNormal( v );
 		}
 		mPVelocities[0] = ci::gl::Vbo::create( GL_ARRAY_BUFFER, mTrimesh->getNormals().size() * sizeof(ci::Vec3f), mTrimesh->getNormals().data(), GL_DYNAMIC_COPY );
@@ -140,7 +213,6 @@ private:
 		// INITIALIZE THE TRANSFORM FEEDBACK OBJECTS
 		glGenTransformFeedbacks( 2, mTFOs );
 		
-		std::cout << mTFOs[0] << ", " << mTFOs[1] << std::endl;
 		glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
 		glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[0]->getId() );
 		glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[0]->getId() );
@@ -171,8 +243,8 @@ private:
 			};
 			
 			ci::gl::GlslProg::Format mParticleGlslFormat;
-			mParticleGlslFormat.vertex( ci::app::loadAsset( /*"oppSmoke.vert"*/ SharedShaderAssetPath("oppSmoke.vert", !IS_IAC) ) )
-			.fragment( ci::app::loadAsset( /*"oppSmoke.frag"*/ SharedShaderAssetPath("oppSmoke.geom", !IS_IAC) ) )
+			mParticleGlslFormat.vertex( ci::app::loadAsset( "oppSmoke.vert" /*SharedShaderAssetPath("oppSmoke.vert", !IS_IAC)*/ ) )
+			.fragment( ci::app::loadAsset( "oppSmoke.frag" /*SharedShaderAssetPath("oppSmoke.geom", !IS_IAC)*/ ) )
 			.transformFeedback().feedbackFormat( GL_SEPARATE_ATTRIBS )
 			.feedbackVaryings( outputNames, 3 );
 			
@@ -185,75 +257,10 @@ private:
 		updateSub = glGetSubroutineIndex( mOpponentParticlesGlsl->getHandle(), GL_VERTEX_SHADER, "update");
 		
 		mOpponentParticlesGlsl->uniform( "ParticleTex", 0 );
-		mOpponentParticlesGlsl->uniform( "ParticleLifetime", 3.0f );
+		
 		mOpponentParticlesGlsl->uniform( "Accel", ci::Vec3f( 0.3f, 0.3f, 0.3f ) );
 		mOpponentParticlesGlsl->uniform( "ParticleTex", 0 );
-		mOpponentParticlesGlsl->uniform( "MinParticleSize", 10.0f );
-		mOpponentParticlesGlsl->uniform( "MaxParticleSize", 200.0f );
 		
-	}
-	
-	void update( float t )
-	{
-		deltaT = t - time;
-		time = t;
-		mOpponentParticlesGlsl->bind();
-		
-		// UPDATE
-		glUniformSubroutinesuiv( GL_VERTEX_SHADER, 1, &updateSub );
-		
-		mOpponentParticlesGlsl->uniform( "Time", time );
-		mOpponentParticlesGlsl->uniform( "H", deltaT );
-		
-		glEnable( GL_RASTERIZER_DISCARD );
-		
-		glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[drawBuf] );
-		
-		glBeginTransformFeedback(GL_POINTS);
-			mPVao[1-drawBuf]->bind();
-			ci::gl::drawArrays( GL_POINTS, 0, nParticles );
-		glEndTransformFeedback();
-		
-		glDisable( GL_RASTERIZER_DISCARD );
-	}
-	
-	void render()
-	{
-		static int i = 0;
-		glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &renderSub);
-//		mSmokeTexture->bind();
-		glActiveTexture( GL_TEXTURE0 );
-		glBindTexture( GL_TEXTURE_2D, mSmokeTexture->getId() );
-		mPVao[drawBuf]->bind();
-
-		
-		ci::gl::pushMatrices();
-		ci::gl::setMatrices(mCam);
-		ci::gl::multModelView( ci::Matrix44f::createRotation( ci::Vec3f( 0, 1, 0 ), ci::toRadians( (float)i++ ) ) );
-		
-		glPointSize(10);
-
-		ci::gl::enable( GL_PROGRAM_POINT_SIZE );
-		
-		ci::gl::enableAlphaBlending();
-		
-		mOpponentParticlesGlsl->uniform( "projection", ci::gl::getProjection() );
-		mOpponentParticlesGlsl->uniform( "modelView", ci::gl::getModelView() );
-		
-		glDrawArrays( GL_POINTS, 0, nParticles);
-		
-		ci::gl::disable( GL_PROGRAM_POINT_SIZE );
-
-		ci::gl::popMatrices();
-		
-		ci::gl::disableAlphaBlending();
-		
-		mPVao[drawBuf]->unbind();
-//		mSmokeTexture->unbind();
-		glBindTexture( GL_TEXTURE_2D, 0 );
-		mOpponentParticlesGlsl->unbind();
-		
-		drawBuf = 1 - drawBuf;
 	}
 	
 	float mix( float x, float y, float a )

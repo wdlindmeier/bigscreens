@@ -61,29 +61,32 @@ public:
 	void loadShaders()
 	{
 		ci::gl::GlslProg::Format mEffectsFormat;
-		mEffectsFormat.vertex( ci::app::loadAsset( SharedShaderAssetPath("finalEffects.vert", !IS_IAC) ) )
-		.fragment( ci::app::loadAsset( SharedShaderAssetPath("finalEffects.frag", !IS_IAC) ) );
+		mEffectsFormat.vertex( ci::app::loadAsset( "finalEffects.vert"/*SharedShaderAssetPath("finalEffects.vert", !IS_IAC)*/ ) )
+		.fragment( ci::app::loadAsset( "finalEffects.frag"/*SharedShaderAssetPath("finalEffects.frag", !IS_IAC)*/ ) );
 		mEffectsGlsl = ci::gl::GlslProg::create( mEffectsFormat );
 	}
 	
 	void draw( const ci::gl::TextureRef billboardTex )
 	{
+		
 		ci::gl::pushMatrices();
 		ci::gl::viewport( ci::Vec2i(), billboardTex->getSize() );
+		
 		mBillboardVao->bind();
 		mBillboardElementVbo->bind();
-		billboardTex->bind();
+		glActiveTexture( GL_TEXTURE0 );
+		glBindTexture( GL_TEXTURE_2D, billboardTex->getId() );
 		
 		mEffectsGlsl->bind();
 		mEffectsGlsl->uniform( "fboTexture", 0 );
-		mEffectsGlsl->uniform( "texSize", billboardTex->getSize() );
+//		mEffectsGlsl->uniform( "texSize", billboardTex->getSize() );
 		mEffectsGlsl->uniform( "time", (float)ci::app::getElapsedSeconds() );
 		
 		ci::gl::drawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 		
 		mEffectsGlsl->unbind();
 		
-		billboardTex->unbind();
+		glBindTexture( GL_TEXTURE_2D, 0 );
 		mBillboardElementVbo->unbind();
 		mBillboardVao->unbind();
 		

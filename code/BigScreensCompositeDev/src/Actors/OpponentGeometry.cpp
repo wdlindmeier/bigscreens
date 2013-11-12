@@ -6,8 +6,6 @@
 //
 //
 
-#pragma once
-
 #include "OpponentGeometry.h"
 #include "Utilities.hpp"
 
@@ -15,58 +13,143 @@ namespace bigscreens {
 	
 // ---------------------------------------------------------------------------------
 // DYNAMIC OPPONENT GEOMETRY
-DynamicOpponent::DynamicOpponent() {
-	
-	mPyramid = PyramidalGeometryRef( new PyramidalGeometry() );
-	mSphere = SphericalGeometryRef( new SphericalGeometry() );
-	
-	ci::TriMesh::Format mFormat;
-	mFormat.positions(3);
-	
-	mTrimesh = ci::TriMesh::create( mFormat );
-	
+DynamicOpponent::DynamicOpponent()
+	: drawBuf( 1 ), mPyramid( new SphericalGeometry(false) ),
+		mSphere( new SphericalGeometry(true) ), mTrimesh( mPyramid->getTrimesh() )
+{
 	loadShaders();
-	loadGeometry();
 	loadBuffers();
+	loadTexture();
 }
 	
-void DynamicOpponent::update()
+void DynamicOpponent::update( float percentage )
 {
+	GLuint query;
+	glGenQueries(1, &query);
 	
+	drawBuf = 1 - drawBuf;
+	
+	mUpdateOppDynamicGlsl->bind();
+	
+	mPyramid->bindTexBuffer( GL_TEXTURE1 );
+	mSphere->bindTexBuffer( GL_TEXTURE2 );
+	
+	mUpdateOppDynamicGlsl->uniform( "pyramidalTex", 1 );
+	mUpdateOppDynamicGlsl->uniform( "sphericalTex", 2 );
+	mUpdateOppDynamicGlsl->uniform( "percentage", percentage);
+	
+	ci::gl::enable( GL_RASTERIZER_DISCARD );
+	
+	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, query);
+	
+	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
+	
+	
+	glBeginTransformFeedback(GL_POINTS);
+	mVao[drawBuf]->bind();
+	ci::gl::drawArrays( GL_POINTS, 0, mPyramid->getTrimesh()->getNumVertices() );
+	mVao[drawBuf]->unbind();
+	glEndTransformFeedback();
+	
+	glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
+	
+	GLuint vertices;
+	glGetQueryObjectuiv(query, GL_QUERY_RESULT, &vertices);
+	
+//	printf("%u vertices written!\n\n", vertices);
+	
+//	float matefeedback[1200];
+//	glGetBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, 0, sizeof(matefeedback), matefeedback);
+//	printf("Mating Percentage Info:\n");
+//	for (int i = 0; i < 400; i+=3) {
+//		printf("%i: %f, %f, %f\n", i, matefeedback[i], matefeedback[i+1], matefeedback[i+2]);
+//		
+//	}
+//	printf("%u vertices written!\n", vertices);
+
+	mSphere->unbindTexBuffer( GL_TEXTURE2 );
+	mPyramid->unbindTexBuffer( GL_TEXTURE1 );
+	mUpdateOppDynamicGlsl->unbind();
 }
 
-void DynamicOpponent::draw()
+void DynamicOpponent::draw( const ci::Vec3f & cameraView )
 {
+	mRenderOppDynamicGlsl->bind();
+	
+	mRenderOppDynamicGlsl->uniform( "projection", ci::gl::getProjection() );
+	mRenderOppDynamicGlsl->uniform( "modelView", ci::gl::getModelView() );
+	mRenderOppDynamicGlsl->uniform( "lightPosition", cameraView );
+	
+	mVao[1-drawBuf]->bind();
+	mElementVbo->bind();
+	
+	ci::gl::drawElements( GL_LINES_ADJACENCY, mTrimesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+	
+	mElementVbo->unbind();
+	mVao[1-drawBuf]->unbind();
+	mPyramid->draw();
+	
+	mRenderOppDynamicGlsl->unbind();
 	
 }
 	
 void DynamicOpponent::loadBuffers()
 {
+	mPositionVbo[0] = ci::gl::Vbo::create( GL_ARRAY_BUFFER, mTrimesh->getNumVertices() * sizeof(ci::Vec3f), mTrimesh->getVertices<3>(), GL_DYNAMIC_COPY );
+	mPositionVbo[1] = ci::gl::Vbo::create( GL_ARRAY_BUFFER, mTrimesh->getNumVertices() * sizeof(ci::Vec3f), GL_DYNAMIC_COPY );
 	
-}
+	mElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mTrimesh->getNumIndices() * sizeof(uint32_t), mTrimesh->getIndices().data(), GL_STATIC_DRAW );
 	
-void DynamicOpponent::loadGeometry()
-{
-	for( int i = 0; i < 1200; i++ ) {
-		mTrimesh->appendVertex( ci::Vec3i( 0.0f, 0.0f, 0.0f ) );
-	}
+	mVao[0] = ci::gl::Vao::create();
+	mVao[1] = ci::gl::Vao::create();
 	
-	//		mTrimesh->appendIndices( , );
+	mVao[0]->bind();
+	
+	mPositionVbo[0]->bind();
+	ci::gl::enableVertexAttribArray(0);
+	ci::gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+	
+	mVao[1]->bind();
+	
+	mPositionVbo[1]->bind();
+	ci::gl::enableVertexAttribArray(0);
+	ci::gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+	
+	glGenTransformFeedbacks(2, mTFOs);
+	
+	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
+	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[0]->getId() );
+
+	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1] );
+	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[1]->getId() );
+
+	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
 }
 	
 void DynamicOpponent::loadShaders()
 {
 	const char * varyings[] = {
-		"position"
+		"outPosition"
 	};
 	
-	ci::gl::GlslProg::Format mGlslFormat;
-	mGlslFormat.vertex( ci::app::loadAsset( /*"oppDynamic.vert"*/ SharedShaderAssetPath("oppDynamic.vert", !IS_IAC) ) )
-	.geometry( ci::app::loadAsset( /*"oppDynamic.geom"*/ SharedShaderAssetPath("oppDynamic.geom", !IS_IAC) ) )
-	.fragment( ci::app::loadAsset( /*"oppDynamic.geom"*/ SharedShaderAssetPath("oppDynamic.frag", !IS_IAC) ) )
+	ci::gl::GlslProg::Format mUpdateOppDynamicGlslFormat;
+	mUpdateOppDynamicGlslFormat.vertex( ci::app::loadAsset( "updateOppDynamic.vert" /*SharedShaderAssetPath("oppDynamic.vert", !IS_IAC)*/ ) )
 	.transformFeedback().feedbackVaryings( varyings, 1 )
 	.feedbackFormat( GL_SEPARATE_ATTRIBS );
+	mUpdateOppDynamicGlsl = ci::gl::GlslProg::create( mUpdateOppDynamicGlslFormat );
+
 	
+	ci::gl::GlslProg::Format mRenderOppDynamicGlslFormat;
+	mRenderOppDynamicGlslFormat.vertex( ci::app::loadAsset( "renderOppDynamic.vert" /*SharedShaderAssetPath("oppDynamic.vert", !IS_IAC)*/ ) )
+	.geometry( ci::app::loadAsset( "renderOppDynamic.geom" /*SharedShaderAssetPath("oppDynamic.geom", !IS_IAC)*/ ) )
+	.fragment( ci::app::loadAsset( "renderOppDynamic.frag" /*SharedShaderAssetPath("oppDynamic.frag", !IS_IAC)*/ ) );
+	mRenderOppDynamicGlsl = ci::gl::GlslProg::create( mRenderOppDynamicGlslFormat );
+	
+}
+	
+void DynamicOpponent::loadTexture()
+{
+	mNoiseTexture = ci::gl::Texture::create( ci::loadImage( ci::app::loadAsset( "noise_map.png"  ) ) );
 }
 	
 // ----------------------------------------------------------------------------------
@@ -76,8 +159,8 @@ void SphericalGeometry::draw() {
 	mSphericalVao->bind();
 	mSphericalElementVbo->bind();
 	
-	//		ci::gl::drawElements( GL_TRIANGLES, mSphericalTrimesh->getNumIndices(), GL_UNSIGNED_INT, 0);
-	ci::gl::drawArrays( GL_TRIANGLES, 0, mSphericalTrimesh->getNumVertices() );
+	ci::gl::drawElements( GL_LINES_ADJACENCY, mSphericalTrimesh->getNumIndices(), GL_UNSIGNED_INT, 0);
+
 	mSphericalElementVbo->unbind();
 	mSphericalVao->unbind();
 }
@@ -97,46 +180,74 @@ void SphericalGeometry::loadBuffers()
 	ci::gl::enableVertexAttribArray( 1 );
 	ci::gl::vertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, 0 );
 	
-	mSphericalElementVbo = ci::gl::Vbo::create( GL_ARRAY_BUFFER, mSphericalTrimesh->getNumIndices() * sizeof( uint32_t ), GL_STATIC_DRAW );
+	mSphericalElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mSphericalTrimesh->getNumIndices() * sizeof( uint32_t ), mSphericalTrimesh->getIndices().data(), GL_STATIC_DRAW );
 	mSphericalVao->unbind();
 	
 	glGenTextures( 1, &mTexBuffer );
 	glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
-	glTexBuffer( GL_TEXTURE_BUFFER, GL_RGBA32F, mSphericalVbo->getId() );
+	glTexBuffer( GL_TEXTURE_BUFFER, GL_RGB32F, mSphericalVbo->getId() );
 }
 	
-void SphericalGeometry::calcGeometry( float radius, unsigned int rings, unsigned int sectors )
+void SphericalGeometry::calcGeometry( float radius, unsigned int rings, unsigned int sectors, bool sphere )
 {
-	float const R = 1./(float)(rings-1);
-	float const S = 1./(float)(sectors-1);
+	float const R = 1.0f/(float)(rings-1);
+	float const S = 1.0f/(float)(sectors-1);
 	float r, s;
+	float pyramidStep = 0.0f;
+	int sInt = 0;
 	
 	std::vector< ci::Vec3f > vertices;
 	std::vector< ci::Vec3f > normals;
 	std::vector< uint32_t > indices;
 	
-	vertices.resize(rings * sectors * 3);
-	normals.resize(rings * sectors * 3);
+	vertices.resize(rings * sectors);
+	normals.resize(rings * sectors);
 	std::vector< ci::Vec3f >::iterator v = vertices.begin();
 	std::vector< ci::Vec3f >::iterator n = normals.begin();
-	for(r = 0; r < rings; r++) for(s = 0; s < sectors; s++) {
-		float const y = sin( -M_PI_2 + M_PI * r * R );
-		float const x = cos(2*M_PI * s * S) * sin( M_PI * r * R );
-		float const z = sin(2*M_PI * s * S) * sin( M_PI * r * R );
-		
-		*v++ = ci::Vec3f( x * radius, y * radius, z * radius );
-		*n++ = ci::Vec3f( x, y, z );
-	}
 	
-	indices.resize(rings * sectors * 6);
+	if( !sphere ) {
+		for(r = 0; r < rings; r++) {
+			float x = 0.0f;
+			float z = 0.0f;
+			for(s = 0; s < sectors; s++) {
+				sInt = s;
+				
+				float const y = sin( -M_PI_2 + M_PI * r * R );
+				if( sInt % 5 == 0) {
+					x = cos(2*M_PI * s * S) * sin( M_PI * r * R ) * pyramidStep;
+					z = sin(2*M_PI * s * S) * sin( M_PI * r * R ) * pyramidStep;
+				}
+				
+				*v++ = ci::Vec3f( x * radius, y * radius, z * radius );
+				*n++ = ci::Vec3f( x, y, z );
+			}
+			if( r < 10 )
+				pyramidStep += 0.05;
+			else
+				pyramidStep -= 0.05;
+		}
+	}
+	else {
+		for(r = 0; r < rings; r++) for(s = 0; s < sectors; s++) {
+			float const y = sin( -M_PI_2 + M_PI * r * R );
+			float const x = cos(2*M_PI * s * S) * sin( M_PI * r * R );
+			float const z = sin(2*M_PI * s * S) * sin( M_PI * r * R );
+			
+			*v++ = ci::Vec3f( x * radius, y * radius, z * radius );
+			*n++ = ci::Vec3f( x, y, z );
+		}
+	}
+	indices.resize(rings * sectors * 4);
 	std::vector<uint32_t>::iterator i = indices.begin();
-	for(r = 0; r < rings-1; r++) for(s = 0; s < sectors-1; s++) {
+	for(r = 0; r < rings-1; r++) { for(s = 0; s < sectors-1; s++) {
 		*i++ = r * sectors + s;
 		*i++ = r * sectors + (s+1);
 		*i++ = (r+1) * sectors + (s+1);
 		*i++ = (r+1) * sectors + s;
-	}
+	}}
 	
+	std::cout << vertices.size() << std::endl;
+	std::cout << indices.size() << std::endl;
 	mSphericalTrimesh->appendVertices( vertices.data(), vertices.size() );
 	mSphericalTrimesh->appendIndices( indices.data(), indices.size() );
 	mSphericalTrimesh->recalculateNormals();
@@ -145,17 +256,34 @@ void SphericalGeometry::calcGeometry( float radius, unsigned int rings, unsigned
 // ---------------------------------------------------------------------------------
 // PYRAMIDAL OPPONENT GEOMETRY
 	
-void PyramidalGeometry::draw() {
+void MinionGeometry::draw( const ci::Vec3f & lightPosition, const ci::ColorA & minionColor  )
+{
+	// LightPosition is the camera's position in the world
+	ci::gl::enableDepthWrite();
+	ci::gl::enableDepthRead();
+	
 	mPyramidalVao->bind();
 	mPyramidalElementVbo->bind();
 	
+	mGlsl->bind();
+	mGlsl->uniform( "projection", ci::gl::getProjection() );
+	mGlsl->uniform( "modelView", ci::gl::getModelView() );
+	mGlsl->uniform( "normalMatrix", ci::gl::calcNormalMatrix() );
+	mGlsl->uniform( "lightPosition", lightPosition);
+	mGlsl->uniform( "mColor", minionColor );
+	
 	ci::gl::drawElements( GL_TRIANGLES, mPyramidalTrimesh->getNumIndices(), GL_UNSIGNED_INT, 0 );
+	
+	mGlsl->unbind();
 	
 	mPyramidalElementVbo->unbind();
 	mPyramidalVao->unbind();
+	
+	ci::gl::disableDepthWrite();
+	ci::gl::disableDepthRead();
 }
 	
-void PyramidalGeometry::loadBuffers()
+void MinionGeometry::loadBuffers()
 {
 	mPyramidalVao = ci::gl::Vao::create();
 	mPyramidalVao->bind();
@@ -173,13 +301,16 @@ void PyramidalGeometry::loadBuffers()
 	mPyramidalElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mPyramidalTrimesh->getNumIndices() * sizeof( uint32_t ), mPyramidalTrimesh->getIndices().data(), GL_STATIC_DRAW );
 	
 	mPyramidalVao->unbind();
-	
-	glGenTextures( 1, &mTexBuffer );
-	glBindTexture( GL_TEXTURE_BUFFER, mTexBuffer );
-	glTexBuffer( GL_TEXTURE_BUFFER, GL_RGBA32F, mPyramidalVbo->getId() );
 }
 	
-void PyramidalGeometry::calcGeometry()
+void MinionGeometry::loadShaders()
+{
+	mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
+		.vertex( ci::app::loadAsset( "minion.vert" ) )
+		.fragment( ci::app::loadAsset( "minion.frag" ) ) );
+}
+	
+void MinionGeometry::calcGeometry()
 {
 	std::vector< ci::Vec3f > vertices;
 	std::vector< ci::Vec3f > normals;
@@ -220,6 +351,8 @@ void PyramidalGeometry::calcGeometry()
 	mPyramidalTrimesh->appendVertices( vertices.data(), vertices.size() );
 	mPyramidalTrimesh->appendIndices( indices.data(), indices.size() );
 	mPyramidalTrimesh->recalculateNormals();
+	for( int i = 0; i < mPyramidalTrimesh->getNormals().size(); i++ )
+		std::cout << mPyramidalTrimesh->getNormals()[i] << std::endl;
 }
 	
 }
