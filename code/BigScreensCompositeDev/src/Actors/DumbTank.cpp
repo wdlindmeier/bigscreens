@@ -30,10 +30,12 @@ void DumbTank::loadShader()
 
 void DumbTank::loadModels()
 {
-    mTankModel.load("tank.obj", mTankShader);
+    ObjModel *tankModel = new ObjModel();
+    tankModel->load("tank.obj", mTankShader);
+    mTankModel = ObjModelRef(tankModel);
 }
 
-ObjModel & DumbTank::getModel()
+ObjModelRef & DumbTank::getModel()
 {
     return mTankModel;
 }
@@ -46,10 +48,9 @@ void DumbTank::render(ci::CameraPersp & cam, const float alpha)
     
     gl::setDefaultShaderVars();
     
-    // NOTE: There are so many lines, we throttle the alpha to 0.25 max
-    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, alpha*0.25f ));
+    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, alpha ));
     
-    mTankModel.render();
+    mTankModel->render();
 
     mTankShader->unbind();
 }

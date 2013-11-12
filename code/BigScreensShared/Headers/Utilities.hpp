@@ -111,12 +111,24 @@ namespace bigscreens
             return cinder::app::getAppPath() / ".." / "Assets";
         }
     }
-
+    
     static ci::fs::path SharedShaderAssetPath(const std::string & shaderName, bool isLocalApp = false)
     {
+        // NOTE:
+        // Define USE_DYNAMIC_ASSETS in your project settings (or elsewhere) to dynamically load shaders.
+        // Easier than comment tag.
+#ifdef USE_DYNAMIC_ASSETS
+        return shaderName;
+#else
         return SharedAssetPath(isLocalApp) / "shaders" / shaderName;
+#endif
     }
 
+    static inline ci::DataSourceRef LoadShader(const std::string & assetName)
+    {
+        return ci::app::loadAsset(SharedShaderAssetPath(assetName, !IS_IAC));
+    }
+    
     static ci::fs::path SharedGridAssetPath(bool isLocalApp)
     {
         return SharedAssetPath(isLocalApp) / "grid";

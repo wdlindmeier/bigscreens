@@ -33,14 +33,14 @@ namespace bigscreens
         
         void load();
         void render(ci::CameraPersp & cam, const float alpha = 1.0);
-        ObjModel & getModel();
+        ObjModelRef & getModel();
         
     protected:
         
         void loadShader();
         void loadModels();
         
-        ObjModel    mTankModel;
+        ObjModelRef    mTankModel;
 
         ci::gl::GlslProgRef mTankShader;
         

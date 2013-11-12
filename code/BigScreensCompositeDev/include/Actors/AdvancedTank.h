@@ -21,6 +21,8 @@
 namespace bigscreens
 {
 	
+const static float kDefaultTankWheelSpeedMulti = 6.0f;
+    
 typedef std::shared_ptr<class AdvancedTank> AdvancedTankRef;
 	
 class AdvancedTank
@@ -28,33 +30,41 @@ class AdvancedTank
     
 public:
     
-    AdvancedTank() { load(); }
+    AdvancedTank();
     ~AdvancedTank(){};
-    
-    void load();
+
     void fire();
     void update(long progressCounter);
+    // NOTE: Set a tmp content ID before rendering
+    // and before firing a shot. All shots are tied to
+    // a specific content ID.
+    // Content ID is cleared after the tank has been rendered.
+    void setFrameContentID(const int contentID);
     void render(ci::CameraPersp & cam, const float alpha = 1.0);
+    void setWheelSpeedMultiplier(const float wheelMultiplier);
+    void setTargetPosition(const ci::Vec3f & targetPos);
     
 protected:
     
     void loadShader();
     void loadModels();
 
-    ObjModel    mBodyModel;
-    ObjModel    mHeadModel;
-    ObjModel    mBarrelModel;
-    ObjModel    mGearWheelModel;
-    ObjModel    mWheelModel;
+    ObjModelRef     mBodyModel;
+    ObjModelRef     mHeadModel;
+    ObjModelRef     mBarrelModel;
+    ObjModelRef     mGearWheelModel;
+    ObjModelRef     mWheelModel;
     
     std::vector<TankShot>  mShotsFired;
-    float       mBarrelAngle;
-    float       mWheelRotation;
-    float       mGearRotation;
-    float       mShotProgress;
-    
+    float           mBarrelAngleDeg;
+    float           mHeadRotationDeg;
+    float           mWheelRotation;
+    float           mGearRotation;
+    float           mShotProgress;
+    float           mWheelProgressMulti;
     ci::gl::GlslProgRef mTankShader;
-    
+    int             mContentID;
+    ci::Vec3f       mTargetPosition;
 };
 	
 }

@@ -26,7 +26,8 @@ namespace bigscreens
     , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
-    // , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    , mMinion( ContentProviderNew::ActorContent::getMinion() )
+    , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     {
     }
     
@@ -38,6 +39,16 @@ namespace bigscreens
     ci::Vec3f TankContent::getTankPosition()
     {
         return mTankPosition;
+    }
+    
+    ci::CameraPersp & TankContent::getCamera()
+    {
+        return mCam;
+    }
+    
+    AdvancedTankRef & TankContent::getTank()
+    {
+        return mTank;
     }
     
     void TankContent::setGroundIsVisible(bool isVisible)
@@ -122,7 +133,8 @@ namespace bigscreens
     {
         gl::Texture::Format texFormat;
         texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
-        texFormat.mipMap(true);
+        //texFormat.mipMap(true);
+        texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
         texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
         mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
         
@@ -133,6 +145,7 @@ namespace bigscreens
     {
         if (!mIsGroundVisible) return;
         
+        /*
         gl::pushMatrices();
 
         gl::setMatrices( mCam );
@@ -157,9 +170,17 @@ namespace bigscreens
         
         mGridTexture->unbind();
         mGroundShader->unbind();
+         
+         gl::popMatrices();
 
+        */
+        
+        gl::pushMatrices();
+        gl::setMatrices( mCam );
+
+        gl::multModelView(Matrix44f::createTranslation(Vec3f(0,100, 0)));
         // Removing this for now. Integrating it into the app has proven very awkward.
-//		mGroundPlane->draw();
+		mGroundPlane->draw(mNumFramesRendered);
 		
         gl::popMatrices();
     }
@@ -173,6 +194,7 @@ namespace bigscreens
     void TankContent::resetPositions()
     {
         mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+        mTank->setWheelSpeedMultiplier(kDefaultTankWheelSpeedMulti);
         mTankPosition = Vec3f::zero();
     }
     
@@ -181,11 +203,16 @@ namespace bigscreens
         mGroundOffset = offset;
     }
 
-    // Lets the app take control of the cam
-    void TankContent::update(std::function<void (ci::CameraPersp & cam)> update_func)
+    // Lets the app take control of the cam.
+    void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
-        update_func(mCam);
+        mMinionPosition = Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
+                                800,
+                                sin(mNumFramesRendered * -0.01) * 2000);
+        // NOTE: The target position is relative to the tank
+        mTank->setTargetPosition(mMinionPosition - mTankPosition);
         mTank->update(mNumFramesRendered);
+        update_func(mCam, mTank);
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -227,6 +254,30 @@ namespace bigscreens
         gl::popMatrices();
     }
     
+    void TankContent::drawMinion()
+    {
+        // A simple spin around the tank.
+        // TODO: Make this more interesting
+        
+        gl::bindStockShader(gl::ShaderDef().color());
+
+        gl::pushMatrices();
+        gl::setMatrices( mCam );
+        
+        // Spin baby
+        gl::translate(mMinionPosition);
+        
+//        mMinion->bindTexBuffer();
+        gl::scale(Vec3f(150,150,150));
+        gl::color(1, 0, 0);
+        gl::setDefaultShaderVars();
+
+        mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,1));
+//        mMinion->unbindTexBuffer();
+
+        gl::popMatrices();
+    }
+    
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         // clear out both of the attachments of the FBO with black
@@ -235,7 +286,9 @@ namespace bigscreens
         drawScreen(contentRect);
         
         drawGround();
-
+        
         drawTank();
+        
+        drawMinion();
     }
 }

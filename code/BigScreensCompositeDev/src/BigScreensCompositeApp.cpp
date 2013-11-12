@@ -115,6 +115,8 @@ public:
     int                  mPreConvergenceLayoutIndex;
     long long            mMSElapsedConvergence;
     long long            mMSConvergenceBegan;
+    
+    bool                 mShouldFire;
 };
 
 #pragma mark - Setup
@@ -149,6 +151,8 @@ void BigScreensCompositeApp::setup()
 //	mFbo->bindFramebuffer();
 //	gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 //	mFbo->unbindFramebuffer();
+    
+    mShouldFire = false;
 	
     mIsDrawingColumns = false;
 
@@ -349,6 +353,10 @@ void BigScreensCompositeApp::keyUp(KeyEvent event)
         {
             mClient->sendMessage(kMPEMessageLoad);
         }
+        else if (key == 'f')
+        {
+            mShouldFire = true;
+        }
     }
 }
 
@@ -433,6 +441,8 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     }
 }
 
+const static int kChanceFire = 100;
+
 void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
 {
     long long contentElapsedFrames = contentInfo.numRenderFrames;
@@ -440,16 +450,23 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     RenderableContentRef content = contentInfo.contentRef;
     content->setFramesRendered(contentElapsedFrames);
     
+    // TODO: Use blink spin / dumbTank update
     if (contentInfo.contentKey == kContentKeyTankSpin)
     {
         // Blinking tank rotation
         float tankRotation = contentElapsedFrames * 0.01;
-        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
-        tank->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
-        tank->setGroundIsVisible(true);
-        tank->resetPositions();
-        tank->update([=](CameraPersp & cam){
-            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
+        scene->setGroundIsVisible(true);
+        scene->resetPositions();
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+        {
+            tank->setWheelSpeedMultiplier(0);
+            
+            // TMP / Firing
+            tank->setFrameContentID(contentInfo.layoutIndex);
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
+            
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
             cam.lookAt( Vec3f( camX, 400, camZ ), Vec3f( 0, 100, 0 ) );
@@ -459,13 +476,19 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Flat texture ground
         float tankDistance = sinf(contentElapsedFrames * 0.0025);
-        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
-        tank->setGroundOffset(tankGroundOffset);
-        tank->setGroundIsVisible(true);
-        tank->resetPositions();
-        tank->update([=](CameraPersp & cam){
-            // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->setGroundOffset(tankGroundOffset);
+        scene->setGroundIsVisible(true);
+        scene->resetPositions();
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+        {
             // Zoom in and out
+            tank->setWheelSpeedMultiplier(6);
+            
+            // TMP
+            tank->setFrameContentID(contentInfo.layoutIndex);
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
+            
             float camZ = tankDistance * 500;
             cam.lookAt(Vec3f( 100, 500, camZ ),
                        Vec3f( 0, 100, 0 ) );
@@ -474,11 +497,18 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     else if (contentInfo.contentKey == kContentKeyTankWide)
     {
         // Tank content wide shot
-        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
-        tank->setGroundOffset(tankGroundOffset);
-        tank->setGroundIsVisible(true);
-        tank->resetPositions();
-        tank->update([=](CameraPersp & cam){
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->setGroundOffset(tankGroundOffset);
+        scene->setGroundIsVisible(true);
+        scene->resetPositions();
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+        {
+            tank->setWheelSpeedMultiplier(6);
+
+            // TMP
+            tank->setFrameContentID(contentInfo.layoutIndex);
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
+
             // cam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
             float camX, camY, camZ;
             switch (CLIENT_ID)
@@ -507,11 +537,17 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     else if (contentInfo.contentKey == kContentKeyTankHorizon)
     {
         // Tank content horizon shot
-        shared_ptr<TankContent> tank = static_pointer_cast<TankContent>(content);
-        tank->setTankPosition(Vec3f(0, 0, -45000 * (1.0-(contentElapsedFrames/4000.0))));
-        tank->setGroundIsVisible(false);
-        tank->update([=](CameraPersp & cam)
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->setTankPosition(Vec3f(0, 0, -45000 * (1.0-(contentElapsedFrames/4000.0))));
+        scene->setGroundIsVisible(false);
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
+            tank->setWheelSpeedMultiplier(6);
+
+            // TMP
+            tank->setFrameContentID(contentInfo.layoutIndex);
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
+
             // Nearly flat
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
             float camX = -80000;
@@ -523,14 +559,14 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
-        shared_ptr<ConvergenceContent> merge = static_pointer_cast<ConvergenceContent>(content);
-        merge->setMSElapsed(mMSElapsedConvergence);
-        merge->update();
+        shared_ptr<ConvergenceContent> scene = static_pointer_cast<ConvergenceContent>(content);
+        scene->setMSElapsed(mMSElapsedConvergence);
+        scene->update();
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
-        shared_ptr<TankConvergenceContent> tank = static_pointer_cast<TankConvergenceContent>(content);
-        tank->setMSElapsed(mMSElapsedConvergence);
+        shared_ptr<TankConvergenceContent> scene = static_pointer_cast<TankConvergenceContent>(content);
+        scene->setMSElapsed(mMSElapsedConvergence);
         //mSingleTankConvergeContent
         // Nothing to see here
 
@@ -545,7 +581,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                                                                              contentInfo.rect);
         float fullAspectRatio = masterSize.x / masterSize.y;
         
-        tank->update([=](CameraPersp & cam)
+        scene->update([=](CameraPersp & cam, DumbTankRef & tank)
                       {
                           cam.setAspectRatio(fullAspectRatio);
                           cam.lookAt( orig.eye, orig.target );
@@ -557,19 +593,22 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Perlin
         // NOTE: The movement here doesn't map to PX.
         // The image /should/ shift 1px per frame...
-        shared_ptr<PerlinContent> perlin = static_pointer_cast<PerlinContent>(content);
-        perlin->update(Vec2f(0.0, -0.2));
+        shared_ptr<PerlinContent> scene = static_pointer_cast<PerlinContent>(content);
+        scene->update(Vec2f(0.0, -0.2));
     }
     else if (contentInfo.contentKey == kContentKeyTankHeightmap)
     {
         // Heightmap
-        shared_ptr<TankHeightmapContent> tank = static_pointer_cast<TankHeightmapContent>(content);
-        // tank->getCamera().setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
-
-        Vec3f tankPosition = tank->getTankPosition() + Vec3f(0, 0, 20);
-        tank->setTankPosition(tankPosition);
-        tank->update([=](CameraPersp & cam)
+        shared_ptr<TankHeightmapContent> scene = static_pointer_cast<TankHeightmapContent>(content);
+        Vec3f tankPosition = scene->getTankPosition() + Vec3f(0, 0, 20);
+        scene->setTankPosition(tankPosition);
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
+            // TMP
+            tank->setFrameContentID(contentInfo.layoutIndex);
+            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) tank->fire();
+
+            tank->setWheelSpeedMultiplier(6);
             cam.lookAt(Vec3f( 0, 600, -1000 ) + tankPosition,
                        Vec3f( 0, 100, 0 ) + tankPosition);
         });
@@ -644,6 +683,11 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             OriginAndDimension contentOrigAndDim = OriginAndDimensionFromRectf(contentRect, masterSize.y);
             RenderableContentRef content = renderMe.contentRef;
 
+            ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
+                            contentOrigAndDim.first.y - screenOffset.y,
+                            contentOrigAndDim.second.x,
+                            contentOrigAndDim.second.y );
+            
             if (renderMe.contentKey != kContentKeySingleTankConverge)
             {
                 // Ported from SceneWindow
@@ -653,11 +697,6 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
                                  contentOrigAndDim.first.y - screenOffset.y,
                                  contentOrigAndDim.second.x,
                                  contentOrigAndDim.second.y );
-                
-                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
-                                contentOrigAndDim.first.y - screenOffset.y,
-                                contentOrigAndDim.second.x,
-                                contentOrigAndDim.second.y );
                 
                 content->render(screenOffset, renderMe.rect);
             }
@@ -672,11 +711,6 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
                                  -screenOffset.y,
                                  masterSize.x,
                                  masterSize.y);
-
-                ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
-                                contentOrigAndDim.first.y - screenOffset.y,
-                                contentOrigAndDim.second.x,
-                                contentOrigAndDim.second.y );
 
                 content->render(screenOffset, renderMe.rect);
 
@@ -708,6 +742,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mCurrentContentInfo = newContentInfo;
+    
+    mShouldFire = false;
     
 }
 

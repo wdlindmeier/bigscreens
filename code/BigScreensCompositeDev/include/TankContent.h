@@ -19,6 +19,7 @@
 #include "GroundContent.h"
 
 #include "AdvancedTank.h"
+#include "OpponentGeometry.h"
 #include "FloorPlane.h"
 
 namespace bigscreens {
@@ -37,32 +38,38 @@ public:
     void setGroundOffset(const ci::Vec2f offset);
     void setTankPosition(const ci::Vec3f tankPosition);
     ci::Vec3f getTankPosition();
-    ci::CameraPersp& getCamera() { return mCam; }
+    ci::CameraPersp & getCamera();
+    AdvancedTankRef & getTank();
     
     virtual void load(const std::string & objFilename);
-    virtual void update(std::function<void (ci::CameraPersp & cam)> update_func);
+    virtual void update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func);
     virtual void resetPositions();
     virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     virtual void reset();
     
 protected:
     
-    virtual void loadGround();
-    virtual void loadScreen();
-    virtual void loadShaders();
-            // void loadObj(const std::string & filename);
+    // Funcs
     
-    virtual void drawScreen(const ci::Rectf & contentRect);
-    virtual void drawGround();
-    virtual void drawTank();
+    virtual void        loadGround();
+    virtual void        loadScreen();
+    virtual void        loadShaders();
+    
+    virtual void        drawScreen(const ci::Rectf & contentRect);
+    virtual void        drawGround();
+    virtual void        drawTank();
+    virtual void        drawMinion();
+    
+    // Vars
     
     ci::CameraPersp		mCam;
 
     ci::Vec3f           mTankPosition;
+    ci::Vec3f           mMinionPosition;
 
 	AdvancedTankRef		mTank;
-    
-    // NOTE: Maybe the screen texture should be up 1 level
+    MinionGeometryRef   mMinion;
+
     // Screen
     ci::gl::GlslProgRef mTextureShader;
     ci::gl::TextureRef  mScreenTexture;
@@ -70,12 +77,13 @@ protected:
     ci::gl::VboRef      mScreenVbo;
 
     // Ground plane
+    // TODO: Wrap dis up
     ci::gl::GlslProgRef mGroundShader;
     ci::gl::TextureRef  mGridTexture;
     GroundContent       mGroundContent;
     ci::Vec2f           mGroundOffset;
     bool                mIsGroundVisible;
 	    
-	// FloorPlaneRef		mGroundPlane;
+    FloorPlaneRef		mGroundPlane;
 };
 }
