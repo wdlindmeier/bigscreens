@@ -164,6 +164,8 @@ void TankConvergenceContent::drawTank()
     vbo->unbind();
     vao->unbind();
     mGroundShader->unbind();
+    
+    gl::popMatrices();
 }
 
 void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)

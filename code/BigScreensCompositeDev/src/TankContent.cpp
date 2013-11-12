@@ -27,7 +27,7 @@ namespace bigscreens
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
-    // , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     {
     }
     
@@ -145,6 +145,7 @@ namespace bigscreens
     {
         if (!mIsGroundVisible) return;
         
+        /*
         gl::pushMatrices();
 
         gl::setMatrices( mCam );
@@ -169,9 +170,15 @@ namespace bigscreens
         
         mGridTexture->unbind();
         mGroundShader->unbind();
+         
+         gl::popMatrices();
 
+        */
+        
+        gl::pushMatrices();
+        gl::multModelView(Matrix44f::createTranslation(Vec3f(0,100, 0)));
         // Removing this for now. Integrating it into the app has proven very awkward.
-//		mGroundPlane->draw();
+		mGroundPlane->draw(mNumFramesRendered);
 		
         gl::popMatrices();
     }
@@ -277,7 +284,7 @@ namespace bigscreens
         drawScreen(contentRect);
         
         drawGround();
-
+        
         drawTank();
         
         drawMinion();

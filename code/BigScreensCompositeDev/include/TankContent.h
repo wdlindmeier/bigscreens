@@ -84,6 +84,6 @@ protected:
     ci::Vec2f           mGroundOffset;
     bool                mIsGroundVisible;
 	    
-	// FloorPlaneRef		mGroundPlane;
+    FloorPlaneRef		mGroundPlane;
 };
 }

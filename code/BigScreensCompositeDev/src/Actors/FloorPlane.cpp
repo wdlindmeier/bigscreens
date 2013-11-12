@@ -42,6 +42,7 @@ void FloorPlane::draw(const long framesRendered)
 	mNoiseTexture->bind();
 	
 	// This shader draws the colored quads
+    /*
 	mQuadTriangleGlsl->bind();
 	
 	mQuadTriangleGlsl->uniform( "projection", ci::gl::getProjection() );
@@ -67,7 +68,8 @@ void FloorPlane::draw(const long framesRendered)
 	ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
 	
 	mQuadTriangleGlsl->unbind();
-	
+	*/
+    
 	// This draws the wireframe
 	mQuadOutlineGlsl->bind();
 	
