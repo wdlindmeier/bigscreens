@@ -67,13 +67,13 @@ namespace ActorContent {
         return masterOpponent;
 	}
 	
-	static MinionRef getMinion()
+	static MinionGeometryRef getMinion()
 	{
-		static MinionRef masterMinion;
+		static MinionGeometryRef masterMinion;
 		if( !masterMinion )
         {
             ci::app::console() << "Initting Minion\n";
-			masterMinion = MinionRef( new PyramidalGeometry() );
+			masterMinion = MinionGeometryRef( new MinionGeometry() );
 		}
         return masterMinion;
 	}
