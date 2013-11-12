@@ -176,6 +176,8 @@ namespace bigscreens
         */
         
         gl::pushMatrices();
+        gl::setMatrices( mCam );
+
         gl::multModelView(Matrix44f::createTranslation(Vec3f(0,100, 0)));
         // Removing this for now. Integrating it into the app has proven very awkward.
 		mGroundPlane->draw(mNumFramesRendered);

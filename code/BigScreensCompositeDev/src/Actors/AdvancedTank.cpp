@@ -13,10 +13,6 @@ using std::vector;
 using namespace ci::app;
 using namespace bigscreens;
 
-const static float kBarrelOffsetY = 170.0f;
-const static float kHeadOffsetZ = 65.0f;
-const static float kBarrelLength = 461.0f;
-
 AdvancedTank::AdvancedTank() :
 mWheelProgressMulti(kDefaultTankWheelSpeedMulti)
 ,mBarrelAngleDeg(0)
@@ -91,12 +87,12 @@ void AdvancedTank::fire()
     console() << "Firing w/ velocity " << targetVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
     
     float shotTheta = toRadians(mBarrelAngleDeg);
-    float offZ = cos(shotTheta) * kBarrelLength;
-    float offY = sin(shotTheta) * kBarrelLength;
+    float offZ = cos(shotTheta) * kTankBarrelLength;
+    float offY = sin(shotTheta) * kTankBarrelLength;
     
     Vec3f exitPoint(0,
-                    kBarrelOffsetY + offY,
-                    offZ + kHeadOffsetZ);
+                    kTankBarrelOffsetY + offY,
+                    offZ + kTankHeadOffsetZ);
     
     float yRotRads = toRadians(mHeadRotationDeg);
 
@@ -163,8 +159,8 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
     
         // Barrel
         gl::pushMatrices();
-        gl::translate(Vec3f(0.0f, kBarrelOffsetY, 0.0f));
-        gl::translate(Vec3f(0,0,kHeadOffsetZ));
+        gl::translate(Vec3f(0.0f, kTankBarrelOffsetY, 0.0f));
+        gl::translate(Vec3f(0, 0, kTankHeadOffsetZ));
         gl::rotate(mBarrelAngleDeg * -1, 1, 0, 0);
         mBarrelModel->render();
         gl::popMatrices();
@@ -233,9 +229,9 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
     gl::enableAdditiveBlending();
 
     /*
-    float offX = cos(toRadians(mBarrelAngleDeg)) * kBarrelLength;
-    float offY = sin(toRadians(mBarrelAngleDeg)) * kBarrelLength;
-    Vec3f barrelHead(0, kBarrelOffsetY + offY, 0 + offX);
+    float offX = cos(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
+    float offY = sin(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
+    Vec3f barrelHead(0, kTankBarrelOffsetY + offY, 0 + offX);
     */
     
     // Draw the shot lines

@@ -45,11 +45,23 @@ const static float kPosColumn4 = (3.5f + 34.166f + 32.8333f + 34.33333f) * kPxPe
 // Audio
 const static int kNumFFTChannels = 64;
 
-// TIMING
+// Timing
 // This should be synchronized w/ the timeline.
 const long kMSFullConvergence = 20000; // 20 sec
-extern long MSCamerasConverge;// = 1000; // TBD: Determined by the layout timeline
-extern long MSConvergeBeforeCameraMerge;// = 1000;// TBD: Determined by the layout timeline
+extern long MSCamerasConverge;// TBD: Determined by the layout timeline
+extern long MSConvergeBeforeCameraMerge;// TBD: Determined by the layout timeline
 // ... was kMSFullConvergence - kMSCamerasConverge;
 // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
 
+// Model Measurements
+
+const static float kTankBarrelTipZ = 470.0f;
+const static float kTankBarrelTipY = 164.0f;
+const static float kTankBarrelTipX = 0.0f;
+
+const static float kTankHeadOffsetZ = 65.0f;
+const static float kTankBarrelOffsetY = 170.0f;
+const static float kTankBarrelLength = 461.0f;
+
+const static float kTankBodyFrontZ = 267.0f;
+const static float kTankBodyCenterY = 107.0f;
