@@ -7,6 +7,7 @@
 //
 
 #include "DumbTank.h"
+#include "Utilities.hpp"
 
 using namespace bigscreens;
 using namespace ci;
@@ -22,9 +23,9 @@ void DumbTank::load()
 void DumbTank::loadShader()
 {
     gl::GlslProg::Format mRenderFormat;
-    mRenderFormat.vertex( loadAsset("renderDumbTank.vert" ) )
-	.geometry( loadAsset( "renderDumbTank.geom" ) )
-    .fragment( loadAsset( "renderDumbTank.frag" ) );
+    mRenderFormat.vertex( LoadShader("renderDumbTank.vert") )
+	.geometry( LoadShader("renderDumbTank.geom") )
+    .fragment( LoadShader("renderDumbTank.frag") );
     mRenderTankShader = gl::GlslProg::create( mRenderFormat );
 }
 
