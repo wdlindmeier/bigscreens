@@ -50,7 +50,7 @@ public:
 		mQuadTriangleGlsl->uniform( "chooseColor", mChooseColor );
 		mQuadTriangleGlsl->uniform( "colorOffset", index++ );
 		mQuadTriangleGlsl->uniform( "heightMap", 0 );
-		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+//		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
 		// lines adjacency gives the geometry shader two points on either side of the line
 		// this was the problem with the indexing, you have to give two other points when
 		// using it. basically from above

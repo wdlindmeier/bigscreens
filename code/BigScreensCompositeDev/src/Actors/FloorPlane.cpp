@@ -14,59 +14,40 @@ namespace bigscreens {
 
 void FloorPlane::draw(const long framesRendered)
 {
-/*
-    gl::pushMatrices();
-    gl::translate(offset);
-    // 0..1 -> 0..5000
-    gl::scale(mGroundPlaneScale,
-              mGroundPlaneScale * mGroundDepthScale,
-              mGroundPlaneScale);
-    
-    mGroundVao->bind();
-    mGroundVbo->bind();
-    
-    gl::setDefaultShaderVars();
-    
-    gl::drawArrays(drawMode, 0, mNumVerts);
-    
-    mGroundVao->unbind();
-    mGroundVbo->unbind();
-    gl::popMatrices();
-*/
-    
-//	static int index = 0;
-//	static float divideNum = 0.0f;
-    
 	mVao->bind();
 	mLineElementVbo->bind();
 	mNoiseTexture->bind();
 	
-	// This shader draws the colored quads
-	mQuadTriangleGlsl->bind();
-	
-	mQuadTriangleGlsl->uniform( "projection", ci::gl::getProjection() );
-	mQuadTriangleGlsl->uniform( "modelView", ci::gl::getModelView() );
-	mQuadTriangleGlsl->uniform( "chooseColor", mChooseColor );
-	mQuadTriangleGlsl->uniform( "colorOffset", (int)framesRendered );
-	mQuadTriangleGlsl->uniform( "heightMap", 0 );
-//	mQuadTriangleGlsl->uniform( "divideNum", divideNum );
-	// lines adjacency gives the geometry shader two points on either side of the line
-	// this was the problem with the indexing, you have to give two other points when
-	// using it. basically from above
-	//
-	// index0 - - - - index1 ------------ index2 - - - - index3
-	//
-	// if I just drew GL_LINES it wouldn't use index0 or index3 in one geometry shader
-	// instance. basically you get the four points of a quad and can make the triangle_strip
-	// or line_strip like i do with the shaders
-	// instead it would be...
-	//
-	// index0 --------- index1 // one geometry shader instance
-	// index1 --------- index2 // another geometry shader instance
-	// etc.
-	ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
-	
-	mQuadTriangleGlsl->unbind();
+	if( mDrawColoredQuads ) {
+		// This shader draws the colored quads
+		mQuadTriangleGlsl->bind();
+		
+		mQuadTriangleGlsl->uniform( "projection", ci::gl::getProjection() );
+		mQuadTriangleGlsl->uniform( "modelView", ci::gl::getModelView() );
+		mQuadTriangleGlsl->uniform( "colorOffset", (int)framesRendered );
+		mQuadTriangleGlsl->uniform( "heightMap", 0 );
+		mQuadTriangleGlsl->uniform( "count", xCount * quadSize );
+		mQuadTriangleGlsl->uniform( "farLimit", mFarLimit );
+		mQuadTriangleGlsl->uniform( "nearLimit", mNearLimit );
+		mQuadTriangleGlsl->uniform( "chooseColor", mDrawColoredQuads );
+		// lines adjacency gives the geometry shader two points on either side of the line
+		// this was the problem with the indexing, you have to give two other points when
+		// using it. basically from above
+		//
+		// index0 - - - - index1 ------------ index2 - - - - index3
+		//
+		// if I just drew GL_LINES it wouldn't use index0 or index3 in one geometry shader
+		// instance. basically you get the four points of a quad and can make the triangle_strip
+		// or line_strip like i do with the shaders
+		// instead it would be...
+		//
+		// index0 --------- index1 // one geometry shader instance
+		// index1 --------- index2 // another geometry shader instance
+		// etc.
+		ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
+		
+		mQuadTriangleGlsl->unbind();
+	}
 	
 	// This draws the wireframe
 	mQuadOutlineGlsl->bind();
@@ -75,7 +56,9 @@ void FloorPlane::draw(const long framesRendered)
 	mQuadOutlineGlsl->uniform( "modelView", ci::gl::getModelView() );
 	mQuadOutlineGlsl->uniform( "colorOffset", (int)framesRendered );
 	mQuadOutlineGlsl->uniform( "heightMap", 0 );
-	//		mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+	mQuadOutlineGlsl->uniform( "count", xCount * quadSize );
+	mQuadOutlineGlsl->uniform( "farLimit", mFarLimit );
+	mQuadOutlineGlsl->uniform( "nearLimit", mNearLimit );
 	
 	ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
 	

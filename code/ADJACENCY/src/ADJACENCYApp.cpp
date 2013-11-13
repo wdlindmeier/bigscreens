@@ -152,7 +152,7 @@ void ADJACENCYApp::draw()
 	
 	mEffectsGlsl->bind();
 	mEffectsGlsl->uniform( "fboTexture", 0 );
-	mEffectsGlsl->uniform( "texSize", mFbo->getTexture()->getSize() );
+//	mEffectsGlsl->uniform( "texSize", mFbo->getTexture()->getSize() );
 	mEffectsGlsl->uniform( "time", (float)getElapsedSeconds() );
 	
 	gl::drawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );

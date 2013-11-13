@@ -24,7 +24,7 @@ const int    xCount = 50,    zCount = 50, quadSize = 10,          indexNum = (xC
 
 class FloorPlane {
 public:
-	FloorPlane()
+	FloorPlane() : mDrawColoredQuads( false ), mNearLimit( 150 ), mFarLimit( 300 )
 	{
 		ci::TriMesh::Format mTriFormat;
 		mTriFormat.positions(3);
@@ -38,6 +38,10 @@ public:
 	
 	void draw(const long framesRendered);
 	
+	void setFarLimit( float farLimit ) { mFarLimit = farLimit; }
+	void setNearLimit( float nearLimit ) { mNearLimit = nearLimit; }
+	void toggleDrawColoredQuads() { mDrawColoredQuads = !mDrawColoredQuads; }
+	
 private:
 	void loadTexture();
 	void loadShaders();
@@ -49,7 +53,9 @@ private:
 	ci::gl::GlslProgRef mQuadOutlineGlsl, mQuadTriangleGlsl;
 	ci::TriMeshRef		mTrimesh;
 	ci::gl::TextureRef  mNoiseTexture;
-	bool				mChooseColor;
+	bool				mDrawColoredQuads;
+	int					mNearLimit, mFarLimit;
+	
 };
 	
 }

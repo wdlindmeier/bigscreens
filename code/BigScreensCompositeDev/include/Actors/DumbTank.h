@@ -16,34 +16,41 @@
 #include "cinder/TriMesh.h"
 #include "ObjModel.h"
 #include "TankShot.h"
+#include "Utilities.hpp"
 
 #pragma once
 
 namespace bigscreens
 {
-    typedef std::shared_ptr<class DumbTank> DumbTankRef;
 	
-    class DumbTank
-    {
-        
-    public:
-        
-        DumbTank() { load(); }
-        ~DumbTank(){};
-        
-        void load();
-        void render(ci::CameraPersp & cam, const float alpha = 1.0);
-        ObjModel & getModel();
-        
-    protected:
-        
-        void loadShader();
-        void loadModels();
-        
-        ObjModel    mTankModel;
+typedef std::shared_ptr<class DumbTank> DumbTankRef;
 
-        ci::gl::GlslProgRef mTankShader;
-        
-    };
+class DumbTank
+{
+    
+public:
+    
+    DumbTank() { load(); }
+    ~DumbTank(){ glDeleteTransformFeedbacks( 2, mTFOs ); }
+    
+    void load();
+    void draw( const int zFactor, const ci::Vec3f & seperationPoint );
+	void update( const ci::Vec3f & point );
+    void loadShader();
+	
+private:
+    
+    
+    void loadModels();
+	
+	ci::TriMeshRef		mMesh;
+    ci::gl::VboRef		mFeedbackPositionVbo[2], mInitialTankPositionVbo, mTankPositionNormals;
+    ci::gl::VboRef		mElementVbo;
+    ci::gl::VaoRef		mVao[2];
+	GLuint				mTFOs[2];
+
+    ci::gl::GlslProgRef mRenderTankShader;
+    
+};
 	
 }

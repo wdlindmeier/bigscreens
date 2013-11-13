@@ -135,18 +135,11 @@ void TankConvergenceContent::drawTank()
     // Leaving this code here for now in case we decide to revert.
     
     // Make the tanks ease into position
-    mGroundShader->bind();
-    //mTankVao->bind();
-    gl::VaoRef & vao = mDumbTank->getModel().getVao();
-    vao->bind();
-    //mTankElementVbo->bind();
-    gl::VboRef & vbo = mDumbTank->getModel().getElementVbo();
-    vbo->bind();
 
     gl::pushMatrices();
     gl::setMatrices( mCam );
  
-    mGroundShader->uniform("uColor", ColorAf(1,1,1,0.25f*mRenderAlpha));
+//    mGroundShader->uniform("uColor", ColorAf(1,1,1,0.25f*mRenderAlpha));
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
@@ -156,8 +149,7 @@ void TankConvergenceContent::drawTank()
     }
 
     gl::popMatrices();
-    vbo->unbind();
-    vao->unbind();
+
     mGroundShader->unbind();
 }
 
@@ -234,13 +226,7 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
     gl::translate(position);
     gl::rotate(rotationDegrees, 0, 1, 0);
     
-    // mTank->render(mCam, mRenderAlpha);
-
-    gl::setDefaultShaderVars();
-    gl::drawElements(GL_LINES,
-                     mDumbTank->getModel().getMesh()->getNumIndices(),
-                     //mTankMesh->getNumIndices(),
-                     GL_UNSIGNED_INT, 0 );
+    mTank->render(mCam, mRenderAlpha);
     
     gl::popMatrices();
 }
