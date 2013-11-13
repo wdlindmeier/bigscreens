@@ -17,30 +17,20 @@
 namespace bigscreens {
 	
 typedef std::shared_ptr<class FloorPlane> FloorPlaneRef;
-	
-		// how many across, how many up,  how many units between, element number to create the quads
-		//                                                        this was the magic sauce for the elements
-const int    xCount = 50,    zCount = 50, quadSize = 10,          indexNum = (xCount-1)*(zCount-1) * 4;
 
-class FloorPlane {
+    class FloorPlane {
+    
 public:
-	FloorPlane() : mDrawColoredQuads( false ), mNearLimit( 150 ), mFarLimit( 300 )
-	{
-		ci::TriMesh::Format mTriFormat;
-		mTriFormat.positions(3);
-		mTrimesh = ci::TriMesh::create( mTriFormat );
-		
-		loadTexture();
-		createAndLoadGeometry();
-		loadShaders();
-	}
+
+    FloorPlane(const ci::Vec2i & size);
 	~FloorPlane(){}
 	
-	void draw(const long framesRendered);
+    void draw(const long framesRendered,
+              const bool shouldRenderColor,
+              const ci::ColorAf & colorOutline = ci::ColorAf::white());
 	
 	void setFarLimit( float farLimit ) { mFarLimit = farLimit; }
 	void setNearLimit( float nearLimit ) { mNearLimit = nearLimit; }
-	void toggleDrawColoredQuads() { mDrawColoredQuads = !mDrawColoredQuads; }
 	
 private:
 	void loadTexture();
@@ -53,9 +43,9 @@ private:
 	ci::gl::GlslProgRef mQuadOutlineGlsl, mQuadTriangleGlsl;
 	ci::TriMeshRef		mTrimesh;
 	ci::gl::TextureRef  mNoiseTexture;
-	bool				mDrawColoredQuads;
 	int					mNearLimit, mFarLimit;
-	
+    const ci::Vec2i     mSize;
+    const int           mIndexCount;
 };
 	
 }

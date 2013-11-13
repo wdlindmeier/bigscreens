@@ -145,43 +145,13 @@ namespace bigscreens
     {
         if (!mIsGroundVisible) return;
         
-        /*
-        gl::pushMatrices();
-
-        gl::setMatrices( mCam );
-
-        mGroundShader->bind();
-        mGridTexture->bind();
-        
-        // Probably not necessary
-        gl::enableAlphaBlending();
-        
-        mGroundShader->uniform("uTexCoordOffset", mGroundOffset);
-        mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75,1.0f));
-        mGroundShader->uniform("uTexScale", 50.f);
-        
-        // Get the current plot
-        float groundScale = mGroundContent.getScale();
-        Vec3f groundOffset((-0.5f * groundScale),
-                           0,
-                           (-0.5f * groundScale));
-
-        mGroundContent.render(GL_TRIANGLE_STRIP, groundOffset);
-        
-        mGridTexture->unbind();
-        mGroundShader->unbind();
-         
-         gl::popMatrices();
-
-        */
-        
         gl::pushMatrices();
         gl::setMatrices( mCam );
-
-        gl::multModelView(Matrix44f::createTranslation(Vec3f(0,100, 0)));
-        // Removing this for now. Integrating it into the app has proven very awkward.
-		mGroundPlane->draw(mNumFramesRendered);
-		
+        // Scale to taste
+        gl::scale(Vec3f(5000,100,5000));
+        // Center
+        gl::translate(Vec3f(-0.5,0,-0.5));
+		mGroundPlane->draw(mNumFramesRendered, false);//true);
         gl::popMatrices();
     }
     

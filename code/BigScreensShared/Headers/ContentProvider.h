@@ -51,7 +51,7 @@ namespace ActorContent {
 		if( !masterFloorPlane )
         {
             ci::app::console() << "Initting Ground Plane\n";
-			masterFloorPlane = FloorPlaneRef( new FloorPlane() );
+			masterFloorPlane = FloorPlaneRef( new FloorPlane(ci::Vec2i(50,50)) );
 		}
         return masterFloorPlane;
 	}

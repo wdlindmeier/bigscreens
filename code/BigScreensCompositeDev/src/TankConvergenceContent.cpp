@@ -204,26 +204,12 @@ void TankConvergenceContent::drawGround()
     if (!mIsGroundVisible) return;
     
     gl::pushMatrices();
-    
     gl::setMatrices( mCam );
-    
-    // NOTE: Not using the ground shader since it's a texture shader
-    mGroundShader->bind();
-
-    gl::enableAlphaBlending();
-    
-    mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75, mRenderAlpha));
-    
-    // Get the current plot
-    float groundScale = mGroundContent.getScale();
-    Vec3f groundOffset((-0.5f * groundScale),
-                       0,
-                       (-0.5f * groundScale));
-    
-    mGroundContent.render(GL_LINE_STRIP, groundOffset);
-
-    mGroundShader->unbind();
-    
+    // Scale to taste
+    gl::scale(Vec3f(20000,400,20000));
+    // Center
+    gl::translate(Vec3f(-0.5,0,-0.5));
+    mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.75,0.75,0.75, mRenderAlpha));
     gl::popMatrices();
 }
 

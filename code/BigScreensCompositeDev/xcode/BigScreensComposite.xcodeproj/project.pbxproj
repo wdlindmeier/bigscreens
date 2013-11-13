@@ -253,8 +253,6 @@
 		B3115C97182D614700FB7D2F /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C8F182D614700FB7D2F /* quadOutline.frag */; };
 		B3115C99182D614700FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
 		B3115C9A182D614700FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
-		B3115C9C182D614700FB7D2F /* quadOutline.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C91182D614700FB7D2F /* quadOutline.vert */; };
-		B3115C9D182D614700FB7D2F /* quadOutline.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C91182D614700FB7D2F /* quadOutline.vert */; };
 		B3115C9F182D614700FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
 		B3115CA0182D614700FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
 		B3115CA2182D614700FB7D2F /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C93182D614700FB7D2F /* quadTriangle.geom */; };
@@ -277,7 +275,6 @@
 		B3115CC0182D823600FB7D2F /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C76182D613100FB7D2F /* oppSmoke.vert */; };
 		B3115CC1182D823600FB7D2F /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C8F182D614700FB7D2F /* quadOutline.frag */; };
 		B3115CC2182D823600FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
-		B3115CC3182D823600FB7D2F /* quadOutline.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C91182D614700FB7D2F /* quadOutline.vert */; };
 		B3115CC4182D823600FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
 		B3115CC5182D823600FB7D2F /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C93182D614700FB7D2F /* quadTriangle.geom */; };
 		B3115CC6182D823600FB7D2F /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C94182D614700FB7D2F /* quadTriangle.vert */; };
@@ -422,7 +419,6 @@
 		B3115C76182D613100FB7D2F /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppSmoke.vert; sourceTree = "<group>"; };
 		B3115C8F182D614700FB7D2F /* quadOutline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadOutline.frag; sourceTree = "<group>"; };
 		B3115C90182D614700FB7D2F /* quadOutline.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadOutline.geom; sourceTree = "<group>"; };
-		B3115C91182D614700FB7D2F /* quadOutline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadOutline.vert; sourceTree = "<group>"; };
 		B3115C92182D614700FB7D2F /* quadTriangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.frag; sourceTree = "<group>"; };
 		B3115C93182D614700FB7D2F /* quadTriangle.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.geom; sourceTree = "<group>"; };
 		B3115C94182D614700FB7D2F /* quadTriangle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.vert; sourceTree = "<group>"; };
@@ -688,7 +684,6 @@
 				A97C88FD181087BC00AE2AE2 /* outline.vert */,
 				B3115C8F182D614700FB7D2F /* quadOutline.frag */,
 				B3115C90182D614700FB7D2F /* quadOutline.geom */,
-				B3115C91182D614700FB7D2F /* quadOutline.vert */,
 				B3115C92182D614700FB7D2F /* quadTriangle.frag */,
 				B3115C93182D614700FB7D2F /* quadTriangle.geom */,
 				B3115C94182D614700FB7D2F /* quadTriangle.vert */,
@@ -1003,7 +998,6 @@
 				B3052DAB1823DD64006D91DD /* finalEffects.frag in Resources */,
 				A9B50B0318230A1100C077BD /* ground_texture.frag in Resources */,
 				B3115CC4182D823600FB7D2F /* quadTriangle.frag in Resources */,
-				B3115CC3182D823600FB7D2F /* quadOutline.vert in Resources */,
 				B3115CBA182D823600FB7D2F /* oppBasic.geom in Resources */,
 				B3115CC5182D823600FB7D2F /* quadTriangle.geom in Resources */,
 				B3115CC1182D823600FB7D2F /* quadOutline.frag in Resources */,
@@ -1068,7 +1062,6 @@
 				B3052DAC1823DD64006D91DD /* finalEffects.frag in Resources */,
 				A9B50B0418230A1100C077BD /* ground_texture.frag in Resources */,
 				B3115C9F182D614700FB7D2F /* quadTriangle.frag in Resources */,
-				B3115C9C182D614700FB7D2F /* quadOutline.vert in Resources */,
 				B3115C7B182D613100FB7D2F /* oppBasic.geom in Resources */,
 				B3115CA2182D614700FB7D2F /* quadTriangle.geom in Resources */,
 				B3115C96182D614700FB7D2F /* quadOutline.frag in Resources */,
@@ -1133,7 +1126,6 @@
 				B3052DAD1823DD64006D91DD /* finalEffects.frag in Resources */,
 				A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */,
 				B3115CA0182D614700FB7D2F /* quadTriangle.frag in Resources */,
-				B3115C9D182D614700FB7D2F /* quadOutline.vert in Resources */,
 				B3115C7C182D613100FB7D2F /* oppBasic.geom in Resources */,
 				B3115CA3182D614700FB7D2F /* quadTriangle.geom in Resources */,
 				B3115C97182D614700FB7D2F /* quadOutline.frag in Resources */,

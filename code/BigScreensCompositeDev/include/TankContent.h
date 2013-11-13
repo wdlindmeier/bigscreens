@@ -85,5 +85,6 @@ protected:
     bool                mIsGroundVisible;
 	    
     FloorPlaneRef		mGroundPlane;
+    
 };
 }
