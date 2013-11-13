@@ -20,6 +20,7 @@
 #include "AdvancedTank.h"
 #include "OpponentGeometry.h"
 #include "FloorPlane.h"
+#include "PerlinContent.h"
 
 namespace bigscreens {
 	
@@ -74,9 +75,18 @@ protected:
     ci::gl::VaoRef      mScreenVao;
     ci::gl::VboRef      mScreenVbo;
 
-    bool                mIsGroundVisible;
-	    
+    // Ground
     FloorPlaneRef		mGroundPlane;
+    bool                mIsGroundVisible;
+    
+    virtual void        generateGroundMaps();
+    virtual void        drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
+    
+    PerlinContent                   mPerlinContent;
+    ci::Vec3i                       mGroundPlotCoords;
+    //std::vector<ci::gl::TextureRef> mGroundMaps;
+    std::map<float, ci::gl::TextureRef> mGroundMaps;
+    ci::Vec3f                       mGroundScale;
     
 };
 }

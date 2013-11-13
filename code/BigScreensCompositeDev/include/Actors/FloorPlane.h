@@ -28,17 +28,18 @@ public:
     void draw(const long framesRendered,
               const bool shouldRenderColor,
               const ci::ColorAf & colorOutline = ci::ColorAf::white());
-	
-	void setFarLimit( float farLimit ) { mFarLimit = farLimit; }
-	void setNearLimit( float nearLimit ) { mNearLimit = nearLimit; }
-	
+
+    void setFarLimit( float farLimit );
+    void setNearLimit( float nearLimit );
+    void setNoiseTexture(ci::gl::TextureRef & tex);
+
 private:
+        
 	void loadTexture();
 	void loadShaders();
 	void createAndLoadGeometry();
-	
-private:
-	ci::gl::VaoRef		mVao;
+
+    ci::gl::VaoRef		mVao;
 	ci::gl::VboRef		mVbo, mLineElementVbo;
 	ci::gl::GlslProgRef mQuadOutlineGlsl, mQuadTriangleGlsl;
 	ci::TriMeshRef		mTrimesh;

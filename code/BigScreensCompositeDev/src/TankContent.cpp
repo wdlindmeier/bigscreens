@@ -27,6 +27,8 @@ namespace bigscreens
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
     , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    , mGroundPlotCoords(0,0,0)
+    , mGroundScale(5000, 200, 5000) // Keep these symetrical x/z
     {
     }
     
@@ -57,6 +59,9 @@ namespace bigscreens
     
     void TankContent::load(const std::string & objFilename)
     {
+        
+        mPerlinContent.reset();
+
         loadShaders();
         
         loadScreen();
@@ -117,19 +122,91 @@ namespace bigscreens
         mScreenVao->unbind();
         mScreenVbo->unbind();
     }
+
+    // This is kinda crazy. A quick way of getting a map key from a plot position.
+    static float KeyFromPlot(int x, int z)
+    {
+        return (float)x + (z * 0.001);
+    }
+    
+    void TankContent::generateGroundMaps()
+    {
+        // mGroundMaps.clear();
+        
+        // NOTE: This lets us cache all of the textures,
+        // but depending upon how long each scene runs, this might
+        // gobble up a bunch of memory... probably not a huge deal.
+        
+        Vec2i texSize = mPerlinContent.getTexture()->getSize();
+        
+        for (int i = 0; i < 9; ++i)
+        {
+            int x = (i % 3) - 1;
+            int z = ((i / 3) - 1) * -1;
+            int plotX = mGroundPlotCoords.x + x;
+            int plotZ = mGroundPlotCoords.z + z;
+            
+            //Vec2i plot(plotX, plotZ);
+            float key = KeyFromPlot(plotX, plotZ);
+            
+            if (mGroundMaps.find(key) == mGroundMaps.end() )
+            {
+                // Didn't find the texture.
+                // Generate now
+                ci::app::console() << "Generating new ground\n";
+                
+                mPerlinContent.generateNoiseForPosition(Vec2f(texSize.x * plotX,
+                                                              texSize.y * plotZ));
+                gl::TextureRef newTex = mPerlinContent.getTextureRef();
+                mGroundMaps[key] = newTex;
+            }
+        }
+    }
     
     void TankContent::drawGround()
     {
         if (!mIsGroundVisible) return;
+
+        // Get the current plot
+        int plotX = (mTankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
+        int plotZ = (mTankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
         
+        if (mGroundPlotCoords.x != plotX || mGroundPlotCoords.z != plotZ || mGroundMaps.size() == 0)
+        {
+            mGroundPlotCoords = Vec3i(plotX, 0, plotZ);
+            generateGroundMaps();
+        }
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 1), mGroundMaps[KeyFromPlot(plotX-1, plotZ+1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 1), mGroundMaps[KeyFromPlot(plotX, plotZ+1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 1), mGroundMaps[KeyFromPlot(plotX+1, plotZ+1)]);
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 0), mGroundMaps[KeyFromPlot(plotX-1, plotZ)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 0), mGroundMaps[KeyFromPlot(plotX, plotZ)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 0), mGroundMaps[KeyFromPlot(plotX+1, plotZ)]);
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, -1), mGroundMaps[KeyFromPlot(plotX-1, plotZ-1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, -1), mGroundMaps[KeyFromPlot(plotX, plotZ-1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, -1), mGroundMaps[KeyFromPlot(plotX+1, plotZ-1)]);
+    }
+    
+    void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
+    {
+
         gl::pushMatrices();
         gl::setMatrices( mCam );
         // Scale to taste
-        gl::scale(Vec3f(5000,100,5000));
+        gl::scale(mGroundScale);
         // Center
-        gl::translate(Vec3f(-0.5,0,-0.5));
+        gl::translate(Vec3f(-0.5 + plot.x,
+                            0,
+                            -0.5 + plot.z));
+        
+        mGroundPlane->setNoiseTexture(heightMap);
 		mGroundPlane->draw(mNumFramesRendered, false);//true);
+        
         gl::popMatrices();
+        
     }
     
     void TankContent::reset()

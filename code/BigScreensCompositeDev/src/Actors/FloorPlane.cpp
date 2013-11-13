@@ -96,6 +96,21 @@ void FloorPlane::loadTexture()
 {
 	mNoiseTexture = ci::gl::Texture::create( ci::loadImage( ci::app::loadResource( "noise_map.png" ) ) );
 }
+    
+void FloorPlane::setNoiseTexture(ci::gl::TextureRef & tex)
+{
+    mNoiseTexture = tex;
+}
+    
+void FloorPlane::setFarLimit( float farLimit )
+{
+    mFarLimit = farLimit;
+}
+    
+void FloorPlane::setNearLimit( float nearLimit )
+{
+    mNearLimit = nearLimit;
+}
 	
 void FloorPlane::loadShaders()
 {
@@ -120,8 +135,10 @@ void FloorPlane::createAndLoadGeometry()
 {
 	// this creates the points across x and y notice that we don't subtract 1 from each
     
-    float quadScaleX = 1.0f / mSize.x;
-    float quadScaleY = 1.0f / mSize.y;
+    // NOTE: -1 so the planes abut when they're tiled, since we're not drawing the last one
+    float quadScaleX = 1.0f / (mSize.x-1);
+    float quadScaleY = 1.0f / (mSize.y-1);
+    
 	for( int z = 0; z < mSize.y; z++ )
     {
 		for( int x = 0; x < mSize.x; x++ )
