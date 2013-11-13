@@ -36,6 +36,9 @@ public:
     void draw( const int zFactor, const ci::Vec3f & seperationPoint );
 	void update( const ci::Vec3f & point );
     void loadShader();
+    
+    ci::gl::VboRef getElementVbo();
+    ci::gl::VaoRef getVao();
 	
 private:
     

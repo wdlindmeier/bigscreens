@@ -39,6 +39,6 @@ namespace bigscreens
         PerlinContent                   mPerlinContent;
         ci::Vec3i                       mPlotCoords;
         std::vector<ci::gl::TextureRef> mGroundMaps;
-
+        GroundContent                   mGroundContent;
     };
 }

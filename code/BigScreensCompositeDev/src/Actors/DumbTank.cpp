@@ -102,6 +102,16 @@ void DumbTank::update( const Vec3f & point )
 	
 }
 
+ci::gl::VaoRef DumbTank::getVao()
+{
+    return mVao[0];
+}
+
+ci::gl::VboRef DumbTank::getElementVbo()
+{
+    return mElementVbo;
+}
+
 void DumbTank::draw( const int zFactor, const Vec3f & seperationPoint )
 {
     gl::enableAdditiveBlending();

@@ -22,8 +22,7 @@ namespace bigscreens
 {
     
     TankContent::TankContent() :
-    mGroundContent(10000.0)
-    , mTankPosition(0,0,0)
+    mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
@@ -62,12 +61,8 @@ namespace bigscreens
         
         loadScreen();
 
-        loadGround();
-        
-        // Cam
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
-        
-        mGroundOffset = Vec2f::zero();
+
     }
     
     void TankContent::loadShaders()
@@ -77,12 +72,6 @@ namespace bigscreens
         .fragment( ci::app::loadResource( "offset_texture.frag" ) );
         mTextureShader = ci::gl::GlslProg::create( screenShaderFormat );
         mTextureShader->uniform("uColor", Color::white());
-        
-        gl::GlslProg::Format groundShaderFormat;
-        groundShaderFormat.vertex( ci::app::loadResource( "ground_texture.vert" ) )
-        .fragment( ci::app::loadResource( "ground_texture.frag" ) );
-        mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
-        mGroundShader->uniform("uColor", Color::white());
     }
     
     void TankContent::loadScreen()
@@ -129,18 +118,6 @@ namespace bigscreens
         mScreenVbo->unbind();
     }
     
-    void TankContent::loadGround()
-    {
-        gl::Texture::Format texFormat;
-        texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
-        //texFormat.mipMap(true);
-        texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
-        texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
-        mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
-        
-        mGroundContent.load(mGroundShader);
-    }
-    
     void TankContent::drawGround()
     {
         if (!mIsGroundVisible) return;
@@ -157,7 +134,6 @@ namespace bigscreens
     
     void TankContent::reset()
     {
-        mGroundOffset = Vec2f::zero();
         resetPositions();
     }
     
@@ -166,11 +142,6 @@ namespace bigscreens
         mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         mTank->setWheelSpeedMultiplier(kDefaultTankWheelSpeedMulti);
         mTankPosition = Vec3f::zero();
-    }
-    
-    void TankContent::setGroundOffset(const Vec2f offset)
-    {
-        mGroundOffset = offset;
     }
 
     // Lets the app take control of the cam.
@@ -237,13 +208,11 @@ namespace bigscreens
         // Spin baby
         gl::translate(mMinionPosition);
         
-//        mMinion->bindTexBuffer();
         gl::scale(Vec3f(150,150,150));
         gl::color(1, 0, 0);
         gl::setDefaultShaderVars();
 
         mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,1));
-//        mMinion->unbindTexBuffer();
 
         gl::popMatrices();
     }

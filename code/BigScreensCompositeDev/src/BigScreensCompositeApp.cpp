@@ -456,7 +456,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Blinking tank rotation
         float tankRotation = contentElapsedFrames * 0.01;
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        scene->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
+        
+        // scene->setGroundOffset(Vec2f::zero()); // NOTE: Keeping ground still
+        
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
@@ -477,7 +479,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Flat texture ground
         float tankDistance = sinf(contentElapsedFrames * 0.0025);
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        scene->setGroundOffset(tankGroundOffset);
+        
+        // scene->setGroundOffset(tankGroundOffset);
+        
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
@@ -498,7 +502,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Tank content wide shot
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        scene->setGroundOffset(tankGroundOffset);
+        
+        // scene->setGroundOffset(tankGroundOffset);
+        
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
