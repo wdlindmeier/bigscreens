@@ -49,6 +49,7 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     content->reset();
 
     mLayout = previousLayout;
+    /*
     mCameraOrigins.clear();
     int i = 0;
     int regionCount = mLayout.getRegions().size();
@@ -62,7 +63,7 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
         mCameraOrigins.push_back(orig);
         
         ++i;
-    }
+    }*/
 }
 
 void ConvergenceContent::update()
@@ -94,18 +95,19 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     
     // Time based
     float progress = getScalarMergeProgress();
-    float amtRemaining = 1.0 - std::min<float>(progress, 1.0f);
-
     // Weigh
+    float easeProgress = mCamEase(progress);
+
+    float amtRemaining = 1.0 - std::min<float>(easeProgress, 1.0f);
     
     // TODO: Use an ease-in ease-out function
-    amtRemaining *= amtRemaining;
+    // amtRemaining *= amtRemaining;
     
     // Create the target cam position
-    float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
-    float finalOffset = scalarProgress * scalarProgress;
-    float camDist = 3000 + (6000 * finalOffset);
-    float camY = camDist * 0.5;
+    // float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
+    // float finalOffset = scalarProgress * scalarProgress;
+    float camDist = 2500 + (6000 * amtRemaining);
+    float camY = camDist * 0.35;
     float camZ = camDist;
     float camX = camDist;
     
@@ -131,7 +133,8 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         mTransitionStyle == TRANSITION_FADE)
     {
         // This uses the final cam
-        tanks->update([=](CameraPersp & cam)
+        // TODO: Use a dumb tank multiplier
+        tanks->update([=](CameraPersp & cam, DumbTankRef & tank)
         {
             cam.setAspectRatio(fullAspectRatio);
             cam.lookAt( finalOrigin.eye, finalOrigin.target );
@@ -156,7 +159,14 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
             
             if (rectsOverlap(region.rect, mContentRect))
             {
-                CameraOrigin orig = mCameraOrigins[i];
+                // CameraOrigin orig = mCameraOrigins[i];
+                
+                // Rather than getting the stale origin, blend it with the current tank origin
+                CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
+                                                                                     regionCount,
+                                                                                     mMSElapsedConvergence,
+                                                                                     mContentRect.getSize(),
+                                                                                     region.rect);
                 
                 // Lerp the region cam with the final cam
                 Vec3f eyeOffset = orig.eye - finalOrigin.eye;
@@ -168,7 +178,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                 Vec2f camShiftOffset = orig.camShift - finalOrigin.camShift;
                 Vec2f currentCamShift = finalOrigin.camShift + (camShiftOffset * amtRemaining);
                 
-                tanks->update([=](CameraPersp & cam)
+                tanks->update([=](CameraPersp & cam, DumbTankRef & tank)
                 {
                     cam.setAspectRatio(fullAspectRatio);
                     cam.lookAt( currentEye, currentTarget );

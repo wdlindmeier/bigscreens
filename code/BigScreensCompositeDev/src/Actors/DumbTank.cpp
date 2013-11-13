@@ -22,9 +22,9 @@ void DumbTank::load()
 void DumbTank::loadShader()
 {
     gl::GlslProg::Format mRenderFormat;
-    mRenderFormat.vertex( loadAsset( /*"renderDumbTank.vert"*/ SharedShaderAssetPath("renderDumbTank.vert", !IS_IAC) ) )
-	.geometry( loadAsset( /*"renderDumbTank.geom"*/ SharedShaderAssetPath("renderDumbTank.geom", !IS_IAC) ) )
-    .fragment( loadAsset( /*"renderDumbTank.frag"*/ SharedShaderAssetPath("renderDumbTank.frag", !IS_IAC) ) );
+    mRenderFormat.vertex( loadAsset("renderDumbTank.vert" ) )
+	.geometry( loadAsset( "renderDumbTank.geom" ) )
+    .fragment( loadAsset( "renderDumbTank.frag" ) );
     mRenderTankShader = gl::GlslProg::create( mRenderFormat );
 }
 
@@ -115,8 +115,6 @@ void DumbTank::draw( const int zFactor, const Vec3f & seperationPoint )
     
     mVao[0]->bind();
     mElementVbo->bind();
-    
-    gl::setDefaultShaderVars();
     
     int numIndices = mMesh->getNumIndices();
     

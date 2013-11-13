@@ -29,17 +29,18 @@ namespace bigscreens
     
     void TextureContent::load(const std::string & textureName)
     {
-        mTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource(textureName))));
+        gl::Texture::Format texFormat;
+        texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
+        texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
+        mTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource(textureName)), texFormat));
     }
     
     void TextureContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::bindStockShader(gl::ShaderDef().color());
-        
-        // clear out both of the attachments of the FBO with black
-        gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
-        
-        gl::enableAdditiveBlending();
+        gl::enableAlphaBlending();
+        gl::color(1,1,1,1);
+        gl::setDefaultShaderVars();
         Rectf screenRect(0, 0, getWindowWidth(), getWindowHeight());
         gl::draw(mTexture, screenRect);
         gl::disableAlphaBlending();

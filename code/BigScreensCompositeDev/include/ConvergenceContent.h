@@ -18,6 +18,7 @@
 #include "cinder/Text.h"
 #include "GridLayout.h"
 #include "OutLineBorder.hpp"
+#include "cinder/Easing.h"
 
 namespace bigscreens
 {
@@ -67,6 +68,7 @@ namespace bigscreens
         std::vector<CameraOrigin> mCameraOrigins;
         OutLineBorderRef mOutLine;
         long mMSElapsedConvergence;
+        ci::EaseInOutCubic mCamEase;
 
     };
 

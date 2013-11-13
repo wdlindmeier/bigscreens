@@ -125,14 +125,19 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     drawTank();
 }
 
+void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
+{
+    update_func(mCam, mDumbTank);
+}
+
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
     gl::pushMatrices();
     gl::setMatrices( mCam );
     
-    // NOTE: This seems considerable slower than the non-advanced version.
-    // Leaving this code here for now in case we decide to revert.
+    // NOTE: Using the dumb tank because there's a lot going on in this scene and
+    // we need to simplify it.
     
     // Make the tanks ease into position
 
@@ -151,6 +156,8 @@ void TankConvergenceContent::drawTank()
     gl::popMatrices();
 
     mGroundShader->unbind();
+    
+    gl::popMatrices();
 }
 
 void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
@@ -225,7 +232,7 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
     gl::pushMatrices();
     gl::translate(position);
     gl::rotate(rotationDegrees, 0, 1, 0);
-    
+
     mTank->render(mCam, mRenderAlpha);
     
     gl::popMatrices();

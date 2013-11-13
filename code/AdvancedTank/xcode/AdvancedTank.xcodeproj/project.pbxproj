@@ -19,18 +19,19 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A9B50AEA18229D6E00C077BD /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AE818229D6E00C077BD /* basic.frag */; };
 		A9B50AEB18229D6E00C077BD /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AE918229D6E00C077BD /* basic.vert */; };
-		A9B50AEF1822B67300C077BD /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50AEE1822B67300C077BD /* tank.obj */; };
-		A9B50B321826B12600C077BD /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2D1826B12600C077BD /* tank_barrel.obj */; };
-		A9B50B331826B12600C077BD /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2E1826B12600C077BD /* tank_body.obj */; };
-		A9B50B341826B12600C077BD /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */; };
-		A9B50B351826B12600C077BD /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B301826B12600C077BD /* tank_head.obj */; };
-		A9B50B361826B12600C077BD /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B311826B12600C077BD /* tank_wheel.obj */; };
-		A9B50B391826B18500C077BD /* AdvancedTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B371826B18500C077BD /* AdvancedTank.cpp */; };
-		A9B50B3D1826B41100C077BD /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B3B1826B41100C077BD /* ObjModel.cpp */; };
-		A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */; };
-		A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */; };
-		A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */; };
-		A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50B451826C28C00C077BD /* TankShot.cpp */; };
+		A9C3E32618312127003C3DA5 /* AdvancedTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E32418312127003C3DA5 /* AdvancedTank.cpp */; };
+		A9C3E32718312127003C3DA5 /* TankShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E32518312127003C3DA5 /* TankShot.cpp */; };
+		A9C3E32F18312162003C3DA5 /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C3E32E18312162003C3DA5 /* ObjModel.cpp */; };
+		A9C3E33E183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E334183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj */; };
+		A9C3E33F183143E6003C3DA5 /* tank_barrel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E335183143E6003C3DA5 /* tank_barrel_centered.obj */; };
+		A9C3E340183143E6003C3DA5 /* tank_barrel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E336183143E6003C3DA5 /* tank_barrel.obj */; };
+		A9C3E341183143E6003C3DA5 /* tank_body.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E337183143E6003C3DA5 /* tank_body.obj */; };
+		A9C3E342183143E6003C3DA5 /* tank_gear_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E338183143E6003C3DA5 /* tank_gear_wheel_centered.obj */; };
+		A9C3E343183143E6003C3DA5 /* tank_gear_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E339183143E6003C3DA5 /* tank_gear_wheel.obj */; };
+		A9C3E344183143E6003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33A183143E6003C3DA5 /* tank_head_centered.obj */; };
+		A9C3E345183143E6003C3DA5 /* tank_head.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33B183143E6003C3DA5 /* tank_head.obj */; };
+		A9C3E346183143E6003C3DA5 /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33C183143E6003C3DA5 /* tank_wheel_centered.obj */; };
+		A9C3E347183143E6003C3DA5 /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33D183143E6003C3DA5 /* tank_wheel.obj */; };
 		A9CF4D051827F6BF000A350A /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CF4D041827F6BF000A350A /* explosion.png */; };
 /* End PBXBuildFile section */
 
@@ -51,21 +52,22 @@
 		9AEFCB8143DF40D4B268B75E /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		A9B50AE818229D6E00C077BD /* basic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.frag; path = ../resources/basic.frag; sourceTree = "<group>"; };
 		A9B50AE918229D6E00C077BD /* basic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.vert; path = ../resources/basic.vert; sourceTree = "<group>"; };
-		A9B50AEE1822B67300C077BD /* tank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank.obj; path = ../resources/tank.obj; sourceTree = "<group>"; };
-		A9B50B2D1826B12600C077BD /* tank_barrel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel.obj; path = ../resources/tank_barrel.obj; sourceTree = "<group>"; };
-		A9B50B2E1826B12600C077BD /* tank_body.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_body.obj; path = ../resources/tank_body.obj; sourceTree = "<group>"; };
-		A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel.obj; path = ../resources/tank_gear_wheel.obj; sourceTree = "<group>"; };
-		A9B50B301826B12600C077BD /* tank_head.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_head.obj; path = ../resources/tank_head.obj; sourceTree = "<group>"; };
-		A9B50B311826B12600C077BD /* tank_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel.obj; path = ../resources/tank_wheel.obj; sourceTree = "<group>"; };
-		A9B50B371826B18500C077BD /* AdvancedTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTank.cpp; path = ../src/AdvancedTank.cpp; sourceTree = "<group>"; };
-		A9B50B3A1826B19A00C077BD /* AdvancedTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvancedTank.h; path = ../include/AdvancedTank.h; sourceTree = "<group>"; };
-		A9B50B3B1826B41100C077BD /* ObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjModel.cpp; path = ../src/ObjModel.cpp; sourceTree = "<group>"; };
-		A9B50B3E1826B42400C077BD /* ObjModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjModel.h; path = ../include/ObjModel.h; sourceTree = "<group>"; };
-		A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel_centered.obj; path = ../resources/tank_barrel_centered.obj; sourceTree = "<group>"; };
-		A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel_centered.obj; path = ../resources/tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
-		A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
-		A9B50B451826C28C00C077BD /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankShot.cpp; path = ../src/TankShot.cpp; sourceTree = "<group>"; };
-		A9B50B481826C2A600C077BD /* TankShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankShot.h; path = ../include/TankShot.h; sourceTree = "<group>"; };
+		A9C3E32418312127003C3DA5 /* AdvancedTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTank.cpp; path = ../../BigScreensCompositeDev/src/Actors/AdvancedTank.cpp; sourceTree = "<group>"; };
+		A9C3E32518312127003C3DA5 /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankShot.cpp; path = ../../BigScreensCompositeDev/src/Actors/TankShot.cpp; sourceTree = "<group>"; };
+		A9C3E32B18312144003C3DA5 /* AdvancedTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvancedTank.h; path = ../../BigScreensCompositeDev/include/Actors/AdvancedTank.h; sourceTree = "<group>"; };
+		A9C3E32C18312144003C3DA5 /* ObjModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjModel.h; path = ../../BigScreensCompositeDev/include/Actors/ObjModel.h; sourceTree = "<group>"; };
+		A9C3E32D18312144003C3DA5 /* TankShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankShot.h; path = ../../BigScreensCompositeDev/include/Actors/TankShot.h; sourceTree = "<group>"; };
+		A9C3E32E18312162003C3DA5 /* ObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjModel.cpp; path = ../../BigScreensCompositeDev/src/Actors/ObjModel.cpp; sourceTree = "<group>"; };
+		A9C3E334183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel_centered_head_offset.obj; path = ../../BigScreensShared/Resources/tank_barrel_centered_head_offset.obj; sourceTree = "<group>"; };
+		A9C3E335183143E6003C3DA5 /* tank_barrel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel_centered.obj; path = ../../BigScreensShared/Resources/tank_barrel_centered.obj; sourceTree = "<group>"; };
+		A9C3E336183143E6003C3DA5 /* tank_barrel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_barrel.obj; path = ../../BigScreensShared/Resources/tank_barrel.obj; sourceTree = "<group>"; };
+		A9C3E337183143E6003C3DA5 /* tank_body.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_body.obj; path = ../../BigScreensShared/Resources/tank_body.obj; sourceTree = "<group>"; };
+		A9C3E338183143E6003C3DA5 /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel_centered.obj; path = ../../BigScreensShared/Resources/tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
+		A9C3E339183143E6003C3DA5 /* tank_gear_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_gear_wheel.obj; path = ../../BigScreensShared/Resources/tank_gear_wheel.obj; sourceTree = "<group>"; };
+		A9C3E33A183143E6003C3DA5 /* tank_head_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_head_centered.obj; path = ../../BigScreensShared/Resources/tank_head_centered.obj; sourceTree = "<group>"; };
+		A9C3E33B183143E6003C3DA5 /* tank_head.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_head.obj; path = ../../BigScreensShared/Resources/tank_head.obj; sourceTree = "<group>"; };
+		A9C3E33C183143E6003C3DA5 /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../../BigScreensShared/Resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
+		A9C3E33D183143E6003C3DA5 /* tank_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel.obj; path = ../../BigScreensShared/Resources/tank_wheel.obj; sourceTree = "<group>"; };
 		A9CF4D041827F6BF000A350A /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = explosion.png; path = ../../BigScreensShared/Resources/explosion.png; sourceTree = "<group>"; };
 		BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTankApp.cpp; path = ../src/AdvancedTankApp.cpp; sourceTree = "<group>"; };
 		FFAC57DCF4BA4FE4B5F63345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,10 +102,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A9B50B371826B18500C077BD /* AdvancedTank.cpp */,
 				BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */,
-				A9B50B3B1826B41100C077BD /* ObjModel.cpp */,
-				A9B50B451826C28C00C077BD /* TankShot.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -157,11 +156,8 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				A9B50B3A1826B19A00C077BD /* AdvancedTank.h */,
 				496B53A514954BBE9D08A489 /* AdvancedTank_Prefix.pch */,
-				A9B50B3E1826B42400C077BD /* ObjModel.h */,
 				9AEFCB8143DF40D4B268B75E /* Resources.h */,
-				A9B50B481826C2A600C077BD /* TankShot.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -173,15 +169,6 @@
 				A9B50AE918229D6E00C077BD /* basic.vert */,
 				62D59EC250E04FA8B6D6613C /* CinderApp.icns */,
 				FFAC57DCF4BA4FE4B5F63345 /* Info.plist */,
-				A9B50AEE1822B67300C077BD /* tank.obj */,
-				A9B50B2D1826B12600C077BD /* tank_barrel.obj */,
-				A9B50B3F1826B9D000C077BD /* tank_barrel_centered.obj */,
-				A9B50B2E1826B12600C077BD /* tank_body.obj */,
-				A9B50B2F1826B12600C077BD /* tank_gear_wheel.obj */,
-				A9B50B401826B9D000C077BD /* tank_gear_wheel_centered.obj */,
-				A9B50B301826B12600C077BD /* tank_head.obj */,
-				A9B50B311826B12600C077BD /* tank_wheel.obj */,
-				A9B50B411826B9D000C077BD /* tank_wheel_centered.obj */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -198,6 +185,22 @@
 		A9B50B491826D5E200C077BD /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				A9C3E334183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj */,
+				A9C3E335183143E6003C3DA5 /* tank_barrel_centered.obj */,
+				A9C3E336183143E6003C3DA5 /* tank_barrel.obj */,
+				A9C3E337183143E6003C3DA5 /* tank_body.obj */,
+				A9C3E338183143E6003C3DA5 /* tank_gear_wheel_centered.obj */,
+				A9C3E339183143E6003C3DA5 /* tank_gear_wheel.obj */,
+				A9C3E33A183143E6003C3DA5 /* tank_head_centered.obj */,
+				A9C3E33B183143E6003C3DA5 /* tank_head.obj */,
+				A9C3E33C183143E6003C3DA5 /* tank_wheel_centered.obj */,
+				A9C3E33D183143E6003C3DA5 /* tank_wheel.obj */,
+				A9C3E32E18312162003C3DA5 /* ObjModel.cpp */,
+				A9C3E32B18312144003C3DA5 /* AdvancedTank.h */,
+				A9C3E32C18312144003C3DA5 /* ObjModel.h */,
+				A9C3E32D18312144003C3DA5 /* TankShot.h */,
+				A9C3E32418312127003C3DA5 /* AdvancedTank.cpp */,
+				A9C3E32518312127003C3DA5 /* TankShot.cpp */,
 				A9CF4D041827F6BF000A350A /* explosion.png */,
 			);
 			name = Shared;
@@ -256,18 +259,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				424741BB6E194287B6589A9C /* CinderApp.icns in Resources */,
-				A9B50B321826B12600C077BD /* tank_barrel.obj in Resources */,
-				A9B50AEF1822B67300C077BD /* tank.obj in Resources */,
-				A9B50B341826B12600C077BD /* tank_gear_wheel.obj in Resources */,
-				A9B50B361826B12600C077BD /* tank_wheel.obj in Resources */,
+				A9C3E341183143E6003C3DA5 /* tank_body.obj in Resources */,
+				A9C3E343183143E6003C3DA5 /* tank_gear_wheel.obj in Resources */,
+				A9C3E33E183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj in Resources */,
+				A9C3E346183143E6003C3DA5 /* tank_wheel_centered.obj in Resources */,
+				A9C3E347183143E6003C3DA5 /* tank_wheel.obj in Resources */,
 				A9B50AEA18229D6E00C077BD /* basic.frag in Resources */,
-				A9B50B351826B12600C077BD /* tank_head.obj in Resources */,
+				A9C3E345183143E6003C3DA5 /* tank_head.obj in Resources */,
+				A9C3E33F183143E6003C3DA5 /* tank_barrel_centered.obj in Resources */,
+				A9C3E340183143E6003C3DA5 /* tank_barrel.obj in Resources */,
+				A9C3E342183143E6003C3DA5 /* tank_gear_wheel_centered.obj in Resources */,
 				A9CF4D051827F6BF000A350A /* explosion.png in Resources */,
-				A9B50B421826B9D000C077BD /* tank_barrel_centered.obj in Resources */,
 				A9B50AEB18229D6E00C077BD /* basic.vert in Resources */,
-				A9B50B331826B12600C077BD /* tank_body.obj in Resources */,
-				A9B50B431826B9D000C077BD /* tank_gear_wheel_centered.obj in Resources */,
-				A9B50B441826B9D000C077BD /* tank_wheel_centered.obj in Resources */,
+				A9C3E344183143E6003C3DA5 /* tank_head_centered.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,10 +282,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9B50B3D1826B41100C077BD /* ObjModel.cpp in Sources */,
 				62492195C3174C98A3123D8F /* AdvancedTankApp.cpp in Sources */,
-				A9B50B471826C28C00C077BD /* TankShot.cpp in Sources */,
-				A9B50B391826B18500C077BD /* AdvancedTank.cpp in Sources */,
+				A9C3E32F18312162003C3DA5 /* ObjModel.cpp in Sources */,
+				A9C3E32718312127003C3DA5 /* TankShot.cpp in Sources */,
+				A9C3E32618312127003C3DA5 /* AdvancedTank.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

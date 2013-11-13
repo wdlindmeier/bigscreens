@@ -25,7 +25,7 @@ class OBJTestApp : public AppNative
 	void update();
 	void draw();
     
-    AdvancedTank mTank;
+    AdvancedTankRef mTank;
 
     CameraPersp         mCam;
     float               mCameraRotation;
@@ -35,7 +35,7 @@ class OBJTestApp : public AppNative
 
 void OBJTestApp::setup()
 {
-    mTank.load();
+    mTank = AdvancedTankRef(new AdvancedTank());
     
     // Cam
     mCam.setPerspective( 15.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
@@ -47,7 +47,8 @@ void OBJTestApp::setup()
 
 void OBJTestApp::mouseDown( MouseEvent event )
 {
-    mTank.fire();
+    mTank->setFrameContentID(1);
+    mTank->fire();
 }
 
 void OBJTestApp::keyUp(KeyEvent event)
@@ -77,8 +78,6 @@ void OBJTestApp::update()
     lookAt.y = 100;
 
     mCam.lookAt( Vec3f( camX, camY, camZ ), lookAt );
-    
-    mTank.update(getElapsedFrames());
 }
 
 void OBJTestApp::draw()
@@ -89,7 +88,13 @@ void OBJTestApp::draw()
     gl::pushMatrices();
     gl::setMatrices( mCam );
 
-    mTank.render(mCam);
+    Vec3f target = Vec3f(cos(getElapsedFrames() * 0.01) * 2000,
+                            800,
+                            sin(getElapsedFrames() * 0.01) * 2000);
+    mTank->setTargetPosition(target);
+    mTank->setFrameContentID(1);
+    mTank->update(getElapsedFrames());
+    mTank->render(mCam, 1);
     
     gl::popMatrices();
 }

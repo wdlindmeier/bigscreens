@@ -16,13 +16,12 @@
 #include "cinder/TriMesh.h"
 #include "ObjModel.h"
 #include "TankShot.h"
-#include "Utilities.hpp"
 
 #pragma once
 
 namespace bigscreens
 {
-	
+
 typedef std::shared_ptr<class DumbTank> DumbTankRef;
 
 class DumbTank

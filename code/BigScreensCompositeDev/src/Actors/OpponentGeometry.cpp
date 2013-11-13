@@ -133,16 +133,16 @@ void DynamicOpponent::loadShaders()
 	};
 	
 	ci::gl::GlslProg::Format mUpdateOppDynamicGlslFormat;
-	mUpdateOppDynamicGlslFormat.vertex( ci::app::loadAsset( "updateOppDynamic.vert" /*SharedShaderAssetPath("oppDynamic.vert", !IS_IAC)*/ ) )
+	mUpdateOppDynamicGlslFormat.vertex( LoadShader("oppDynamic.vert") )
 	.transformFeedback().feedbackVaryings( varyings, 1 )
 	.feedbackFormat( GL_SEPARATE_ATTRIBS );
 	mUpdateOppDynamicGlsl = ci::gl::GlslProg::create( mUpdateOppDynamicGlslFormat );
 
 	
 	ci::gl::GlslProg::Format mRenderOppDynamicGlslFormat;
-	mRenderOppDynamicGlslFormat.vertex( ci::app::loadAsset( "renderOppDynamic.vert" /*SharedShaderAssetPath("oppDynamic.vert", !IS_IAC)*/ ) )
-	.geometry( ci::app::loadAsset( "renderOppDynamic.geom" /*SharedShaderAssetPath("oppDynamic.geom", !IS_IAC)*/ ) )
-	.fragment( ci::app::loadAsset( "renderOppDynamic.frag" /*SharedShaderAssetPath("oppDynamic.frag", !IS_IAC)*/ ) );
+	mRenderOppDynamicGlslFormat.vertex( LoadShader("oppDynamic.vert") )
+	.geometry( LoadShader("oppDynamic.geom") )
+	.fragment( LoadShader("oppDynamic.frag" ) );
 	mRenderOppDynamicGlsl = ci::gl::GlslProg::create( mRenderOppDynamicGlslFormat );
 	
 }
@@ -305,9 +305,9 @@ void MinionGeometry::loadBuffers()
 	
 void MinionGeometry::loadShaders()
 {
-	mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
-		.vertex( ci::app::loadAsset( "minion.vert" ) )
-		.fragment( ci::app::loadAsset( "minion.frag" ) ) );
+    mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
+                                     .vertex( LoadShader("minion.vert" ) )
+                                     .fragment( LoadShader("minion.frag" ) ) );
 }
 	
 void MinionGeometry::calcGeometry()

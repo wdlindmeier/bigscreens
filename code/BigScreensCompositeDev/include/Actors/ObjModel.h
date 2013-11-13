@@ -18,6 +18,8 @@
 
 namespace bigscreens
 {
+    typedef std::shared_ptr<class ObjModel> ObjModelRef;
+    
     class ObjModel
     {
         
