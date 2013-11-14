@@ -73,7 +73,7 @@ void AdvancedTank::setFrameContentID(const int contentID)
     mContentID = contentID;
 }
 
-void AdvancedTank::fire()
+void AdvancedTank::fire(const ci::Vec3f & worldPosition)
 {
     // NOTE: ContentID is reset after Render
     if (mContentID < 0)
@@ -100,6 +100,7 @@ void AdvancedTank::fire()
                                    yRotRads,
                                    targetVelocity,
                                    exitPoint,
+                                   worldPosition,
                                    mTankShader,
                                    mContentID));
 }
@@ -139,7 +140,7 @@ void AdvancedTank::update(long progressCounter)
     mShotsFired = keepTanks;
 }
 
-void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
+void AdvancedTank::render(const float alpha)
 {
     gl::enableAdditiveBlending();
     
@@ -223,17 +224,21 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
     gl::rotate(mWheelRotation, 1, 0, 0);
     mWheelModel->render();
     gl::popMatrices();
+    
+    mTankShader->unbind();
+    
+}
 
+void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
+{
     // Draw the tip of the barrel for reference.
     // This can be the shot bloom.
     gl::enableAdditiveBlending();
 
-    /*
-    float offX = cos(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
-    float offY = sin(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
-    Vec3f barrelHead(0, kTankBarrelOffsetY + offY, 0 + offX);
-    */
+    mTankShader->bind();
     
+    gl::setDefaultShaderVars();
+
     // Draw the shot lines
     for (TankShot & shot : mShotsFired)
     {
@@ -247,28 +252,7 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
             shot.renderExplosion(cam);
         }
     }
-    
-    /*
-//    // Draw the shot projectiles
-//    mTankShader->uniform("uColor", ColorAf(1, 0, 0, alpha));
-//    for (TankShot & shot : mShotsFired)
-//    {
-//        shot.render();
-//    }
-
-    // Draw the muzzle flare
-    for (TankShot & shot : mShotsFired)
-    {
-        shot.renderMuzzleFlare(cam);
-    }
-
-    // Draw the shot explosions
-    for (TankShot & shot : mShotsFired)
-    {
-        shot.renderExplosion(cam);
-    }
-    */
-    
+        
     mTankShader->unbind();
     
     // Clear out the content ID

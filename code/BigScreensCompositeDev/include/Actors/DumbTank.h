@@ -39,6 +39,7 @@ public:
     
     ci::gl::VboRef getElementVbo();
     ci::gl::VaoRef getVao();
+    ci::TriMeshRef getMesh();
 	
 private:
     

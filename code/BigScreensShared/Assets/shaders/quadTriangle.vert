@@ -17,6 +17,8 @@ uniform int farLimit;
 out VS_OUT
 {
     vec4 color;
+    float fog;
+    
 } vs_out;
 
 void main(void)
@@ -61,4 +63,5 @@ void main(void)
     
     // Why isn't this getting passed through to the frag?
     vs_out.color = colors[(gl_VertexID + colorOffset / 4) % 12];
+    vs_out.fog = gl_Position.z;
 }

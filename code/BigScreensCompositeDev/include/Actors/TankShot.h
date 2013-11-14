@@ -30,6 +30,7 @@ public:
              float yRotationRads,
              float velocity,
              const ci::Vec3f & initialPosition,
+             const ci::Vec3f & tankWorldPosition,
              const ci::gl::GlslProgRef & shader,
              const int parentContentID);
     
@@ -62,6 +63,7 @@ private:
     float           mExplosionScale;
     float           mYRotationRads;
 
+    ci::Vec3f       mTankWorldPosition;
     ci::Vec2f       mCurrentOffset;
     ci::Vec3f       mInitialPosition;
     ci::Vec3f       mCurrentPosition;

@@ -9,6 +9,7 @@
 #include "TankContent.h"
 #include "cinder/ObjLoader.h"
 #include "cinder/app/App.h"
+#include "cinder/Surface.h"
 #include "cinder/Utilities.h"
 #include "cinder/Camera.h"
 #include "Utilities.hpp"
@@ -28,7 +29,7 @@ namespace bigscreens
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
     , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     , mGroundPlotCoords(0,0,0)
-    , mGroundScale(5000, 200, 5000) // Keep these symetrical x/z
+    , mGroundScale(10000, 500, 10000) // Keep these symetrical x/z
     {
     }
     
@@ -192,7 +193,8 @@ namespace bigscreens
     
     void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
     {
-
+        gl::disableAlphaBlending();
+        
         gl::pushMatrices();
         gl::setMatrices( mCam );
         // Scale to taste
@@ -203,7 +205,8 @@ namespace bigscreens
                             -0.5 + plot.z));
         
         mGroundPlane->setNoiseTexture(heightMap);
-		mGroundPlane->draw(mNumFramesRendered, false); //true);
+
+		mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.5,0.5,0.5,1)); //true);
         
         gl::popMatrices();
         
@@ -224,13 +227,21 @@ namespace bigscreens
     // Lets the app take control of the cam.
     void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
-        mMinionPosition = Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
-                                800,
-                                sin(mNumFramesRendered * -0.01) * 2000);
+        // TODO: Make the minion behavior more interesting
+        Vec3f minionTargetPosition = mTankPosition + Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
+                                                           800,
+                                                           sin(mNumFramesRendered * -0.01) * 2000);        
+        mMinionPosition = minionTargetPosition;
+        
         // NOTE: The target position is relative to the tank
         mTank->setTargetPosition(mMinionPosition - mTankPosition);
-        mTank->update(mNumFramesRendered);
+        
         update_func(mCam, mTank);
+        
+        // NOTE: Wheel speed comes from the update llamba, so keep
+        // tank update after that.
+        mTank->update(mNumFramesRendered);
+
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -267,8 +278,52 @@ namespace bigscreens
     {
         gl::pushMatrices();
         gl::setMatrices( mCam );
+
+        // TODO: Bind this to a shader?
+        // TMP
+        
+        // TODO: Get samples from N locations
+        // TOOD: Create an angle between them
+        // TODO: Average the height
+        
+        float key = KeyFromPlot(mGroundPlotCoords.x,
+                                mGroundPlotCoords.z);
+        float height = 0;
+        if (mGroundMaps.find(key) != mGroundMaps.end())
+        {
+            gl::TextureRef currentGround = mGroundMaps[key];
+            float xPos = fmod((mTankPosition.x + (mGroundScale.x * 0.5f)),  mGroundScale.x);
+            float zPos = fmod((mTankPosition.z + (mGroundScale.z * 0.5f)),  mGroundScale.z);
+            float scalarX = xPos / mGroundScale.x;
+            // Either scalarX or 1.0-scalarX
+            float scalarZ = zPos / mGroundScale.z;
+            // TODO: REMOVE
+            Surface8u groundTex(*currentGround);
+            Vec2i tankPos(scalarX * currentGround->getWidth(),
+                          scalarZ * currentGround->getHeight());
+
+            // Average
+            // WARNING: This assumes the tank is traveling on the Z axis
+            ColorAf depthSample0 = groundTex.getPixel(tankPos);
+            tankPos.y -= 1;
+            ColorAf depthSample1 = groundTex.getPixel(tankPos);
+            tankPos.y += 2;
+            ColorAf depthSample2 = groundTex.getPixel(tankPos);
+            ColorAf avgDepthSample = (depthSample0 + depthSample1 + depthSample2) / 3.0f;
+            
+            height = mGroundScale.y * avgDepthSample.g;
+        }
+        
+        gl::pushMatrices();
         gl::translate(mTankPosition);
-        mTank->render( mCam );
+        
+        // TEST: Attemptiny to adjust height
+        gl::translate(Vec3f(0,height,0));
+        
+        mTank->render();
+        gl::popMatrices();
+
+        mTank->renderShots(mCam);
         gl::popMatrices();
     }
     
@@ -283,6 +338,7 @@ namespace bigscreens
         gl::setMatrices( mCam );
         
         // Spin baby
+        // TODO: Give this realistic movement
         gl::translate(mMinionPosition);
         
         gl::scale(Vec3f(150,150,150));
