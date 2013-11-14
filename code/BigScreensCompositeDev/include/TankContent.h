@@ -16,11 +16,11 @@
 #include "cinder/gl/GlslProg.h"
 #include "SharedTypes.hpp"
 #include "cinder/TriMesh.h"
-#include "GroundContent.h"
-
+//#include "GroundContent.h"
 #include "AdvancedTank.h"
 #include "OpponentGeometry.h"
 #include "FloorPlane.h"
+#include "PerlinContent.h"
 
 namespace bigscreens {
 	
@@ -35,7 +35,7 @@ public:
     virtual ~TankContent(){};
     
     void setGroundIsVisible(bool isVisible);
-    void setGroundOffset(const ci::Vec2f offset);
+    //void setGroundOffset(const ci::Vec2f offset);
     void setTankPosition(const ci::Vec3f tankPosition);
     ci::Vec3f getTankPosition();
     ci::CameraPersp & getCamera();
@@ -51,7 +51,6 @@ protected:
     
     // Funcs
     
-    virtual void        loadGround();
     virtual void        loadScreen();
     virtual void        loadShaders();
     
@@ -76,14 +75,18 @@ protected:
     ci::gl::VaoRef      mScreenVao;
     ci::gl::VboRef      mScreenVbo;
 
-    // Ground plane
-    // TODO: Wrap dis up
-    ci::gl::GlslProgRef mGroundShader;
-    ci::gl::TextureRef  mGridTexture;
-    GroundContent       mGroundContent;
-    ci::Vec2f           mGroundOffset;
-    bool                mIsGroundVisible;
-	    
+    // Ground
     FloorPlaneRef		mGroundPlane;
+    bool                mIsGroundVisible;
+    
+    virtual void        generateGroundMaps();
+    virtual void        drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
+    
+    PerlinContent                   mPerlinContent;
+    ci::Vec3i                       mGroundPlotCoords;
+    //std::vector<ci::gl::TextureRef> mGroundMaps;
+    std::map<float, ci::gl::TextureRef> mGroundMaps;
+    ci::Vec3f                       mGroundScale;
+    
 };
 }

@@ -62,5 +62,7 @@ namespace bigscreens
         long mMSElapsedConvergence;
         
         DumbTankRef mDumbTank;
+        ci::gl::GlslProgRef mTankShader;
+        
     };
 }

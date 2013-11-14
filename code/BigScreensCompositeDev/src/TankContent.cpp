@@ -22,12 +22,13 @@ namespace bigscreens
 {
     
     TankContent::TankContent() :
-    mGroundContent(10000.0)
-    , mTankPosition(0,0,0)
+    mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
     , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    , mGroundPlotCoords(0,0,0)
+    , mGroundScale(5000, 200, 5000) // Keep these symetrical x/z
     {
     }
     
@@ -58,16 +59,15 @@ namespace bigscreens
     
     void TankContent::load(const std::string & objFilename)
     {
+        
+        mPerlinContent.reset();
+
         loadShaders();
         
         loadScreen();
 
-        loadGround();
-        
-        // Cam
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
-        
-        mGroundOffset = Vec2f::zero();
+
     }
     
     void TankContent::loadShaders()
@@ -77,12 +77,6 @@ namespace bigscreens
         .fragment( ci::app::loadResource( "offset_texture.frag" ) );
         mTextureShader = ci::gl::GlslProg::create( screenShaderFormat );
         mTextureShader->uniform("uColor", Color::white());
-        
-        gl::GlslProg::Format groundShaderFormat;
-        groundShaderFormat.vertex( ci::app::loadResource( "ground_texture.vert" ) )
-        .fragment( ci::app::loadResource( "ground_texture.frag" ) );
-        mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
-        mGroundShader->uniform("uColor", Color::white());
     }
     
     void TankContent::loadScreen()
@@ -128,66 +122,95 @@ namespace bigscreens
         mScreenVao->unbind();
         mScreenVbo->unbind();
     }
-    
-    void TankContent::loadGround()
+
+    // This is kinda crazy. A quick way of getting a map key from a plot position.
+    static float KeyFromPlot(int x, int z)
     {
-        gl::Texture::Format texFormat;
-        texFormat.setWrap(GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T);
-        //texFormat.mipMap(true);
-        texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
-        texFormat.maxAnisotropy(gl::Texture::getMaxMaxAnisotropy() );
-        mGridTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource("grid.png")), texFormat));
+        return (float)x + (z * 0.001);
+    }
+    
+    void TankContent::generateGroundMaps()
+    {
+        // mGroundMaps.clear();
         
-        mGroundContent.load(mGroundShader);
+        // NOTE: This lets us cache all of the textures,
+        // but depending upon how long each scene runs, this might
+        // gobble up a bunch of memory... probably not a huge deal.
+        
+        Vec2i texSize = mPerlinContent.getTexture()->getSize();
+        
+        for (int i = 0; i < 9; ++i)
+        {
+            int x = (i % 3) - 1;
+            int z = ((i / 3) - 1) * -1;
+            int plotX = mGroundPlotCoords.x + x;
+            int plotZ = mGroundPlotCoords.z + z;
+            
+            //Vec2i plot(plotX, plotZ);
+            float key = KeyFromPlot(plotX, plotZ);
+            
+            if (mGroundMaps.find(key) == mGroundMaps.end() )
+            {
+                // Didn't find the texture.
+                // Generate now
+                ci::app::console() << "Generating new ground\n";
+                
+                mPerlinContent.generateNoiseForPosition(Vec2f(texSize.x * plotX,
+                                                              texSize.y * plotZ));
+                gl::TextureRef newTex = mPerlinContent.getTextureRef();
+                mGroundMaps[key] = newTex;
+            }
+        }
     }
     
     void TankContent::drawGround()
     {
         if (!mIsGroundVisible) return;
-        
-        /*
-        gl::pushMatrices();
 
-        gl::setMatrices( mCam );
-
-        mGroundShader->bind();
-        mGridTexture->bind();
-        
-        // Probably not necessary
-        gl::enableAlphaBlending();
-        
-        mGroundShader->uniform("uTexCoordOffset", mGroundOffset);
-        mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75,1.0f));
-        mGroundShader->uniform("uTexScale", 50.f);
-        
         // Get the current plot
-        float groundScale = mGroundContent.getScale();
-        Vec3f groundOffset((-0.5f * groundScale),
-                           0,
-                           (-0.5f * groundScale));
-
-        mGroundContent.render(GL_TRIANGLE_STRIP, groundOffset);
+        int plotX = (mTankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
+        int plotZ = (mTankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
         
-        mGridTexture->unbind();
-        mGroundShader->unbind();
-         
-         gl::popMatrices();
-
-        */
+        if (mGroundPlotCoords.x != plotX || mGroundPlotCoords.z != plotZ || mGroundMaps.size() == 0)
+        {
+            mGroundPlotCoords = Vec3i(plotX, 0, plotZ);
+            generateGroundMaps();
+        }
         
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 1), mGroundMaps[KeyFromPlot(plotX-1, plotZ+1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 1), mGroundMaps[KeyFromPlot(plotX, plotZ+1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 1), mGroundMaps[KeyFromPlot(plotX+1, plotZ+1)]);
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 0), mGroundMaps[KeyFromPlot(plotX-1, plotZ)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 0), mGroundMaps[KeyFromPlot(plotX, plotZ)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 0), mGroundMaps[KeyFromPlot(plotX+1, plotZ)]);
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, -1), mGroundMaps[KeyFromPlot(plotX-1, plotZ-1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, -1), mGroundMaps[KeyFromPlot(plotX, plotZ-1)]);
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, -1), mGroundMaps[KeyFromPlot(plotX+1, plotZ-1)]);
+    }
+    
+    void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
+    {
+
         gl::pushMatrices();
         gl::setMatrices( mCam );
-
-        gl::multModelView(Matrix44f::createTranslation(Vec3f(0,100, 0)));
-        // Removing this for now. Integrating it into the app has proven very awkward.
-		mGroundPlane->draw(mNumFramesRendered);
-		
+        // Scale to taste
+        gl::scale(mGroundScale);
+        // Center
+        gl::translate(Vec3f(-0.5 + plot.x,
+                            0,
+                            -0.5 + plot.z));
+        
+        mGroundPlane->setNoiseTexture(heightMap);
+		mGroundPlane->draw(mNumFramesRendered, false); //true);
+        
         gl::popMatrices();
+        
     }
     
     void TankContent::reset()
     {
-        mGroundOffset = Vec2f::zero();
         resetPositions();
     }
     
@@ -196,11 +219,6 @@ namespace bigscreens
         mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         mTank->setWheelSpeedMultiplier(kDefaultTankWheelSpeedMulti);
         mTankPosition = Vec3f::zero();
-    }
-    
-    void TankContent::setGroundOffset(const Vec2f offset)
-    {
-        mGroundOffset = offset;
     }
 
     // Lets the app take control of the cam.
@@ -267,13 +285,11 @@ namespace bigscreens
         // Spin baby
         gl::translate(mMinionPosition);
         
-//        mMinion->bindTexBuffer();
         gl::scale(Vec3f(150,150,150));
         gl::color(1, 0, 0);
         gl::setDefaultShaderVars();
 
         mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,1));
-//        mMinion->unbindTexBuffer();
 
         gl::popMatrices();
     }

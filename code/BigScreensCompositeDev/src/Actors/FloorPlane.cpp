@@ -10,60 +10,82 @@
 
 using namespace ci;
 
-namespace bigscreens {
-
-void FloorPlane::draw(const long framesRendered)
+namespace bigscreens
 {
-	mVao->bind();
-	mLineElementVbo->bind();
-	mNoiseTexture->bind();
-	
-	if( mDrawColoredQuads ) {
-		// This shader draws the colored quads
-		mQuadTriangleGlsl->bind();
-		
-		mQuadTriangleGlsl->uniform( "projection", ci::gl::getProjection() );
-		mQuadTriangleGlsl->uniform( "modelView", ci::gl::getModelView() );
-		mQuadTriangleGlsl->uniform( "colorOffset", (int)framesRendered );
-		mQuadTriangleGlsl->uniform( "heightMap", 0 );
-		mQuadTriangleGlsl->uniform( "count", xCount * quadSize );
-		mQuadTriangleGlsl->uniform( "farLimit", mFarLimit );
-		mQuadTriangleGlsl->uniform( "nearLimit", mNearLimit );
-		mQuadTriangleGlsl->uniform( "chooseColor", mDrawColoredQuads );
-		// lines adjacency gives the geometry shader two points on either side of the line
-		// this was the problem with the indexing, you have to give two other points when
-		// using it. basically from above
-		//
-		// index0 - - - - index1 ------------ index2 - - - - index3
-		//
-		// if I just drew GL_LINES it wouldn't use index0 or index3 in one geometry shader
-		// instance. basically you get the four points of a quad and can make the triangle_strip
-		// or line_strip like i do with the shaders
-		// instead it would be...
-		//
-		// index0 --------- index1 // one geometry shader instance
-		// index1 --------- index2 // another geometry shader instance
-		// etc.
-		ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
-		
-		mQuadTriangleGlsl->unbind();
-	}
+
+FloorPlane::FloorPlane(const ci::Vec2i & size) : //, const float scale) :
+mSize(size)
+, mIndexCount((size.x-1)*(size.y-1) * 4)
+, mNearLimit( 150 )
+, mFarLimit( 300 )
+{
+    ci::TriMesh::Format mTriFormat;
+    mTriFormat.positions(3);
+    mTrimesh = ci::TriMesh::create( mTriFormat );
+    
+    loadTexture();
+    createAndLoadGeometry();
+    loadShaders();
+}
+
+void FloorPlane::draw(const long framesRendered,
+                      const bool shouldRenderColor,
+                      const ci::ColorAf & colorOutline)
+{
+    mVao->bind();
+    mLineElementVbo->bind();
+    mNoiseTexture->bind();
+
+    if (shouldRenderColor)
+    {
+        
+        // This shader draws the colored quads
+        mQuadTriangleGlsl->bind();
+        
+        TryAddingUniform(mQuadTriangleGlsl, "projection", ci::gl::getProjection());
+        TryAddingUniform(mQuadTriangleGlsl, "modelView", ci::gl::getModelView() );
+        TryAddingUniform(mQuadTriangleGlsl, "chooseColor", false);
+        TryAddingUniform(mQuadTriangleGlsl, "colorOffset", (int)framesRendered );
+        TryAddingUniform(mQuadTriangleGlsl, "heightMap", 0);
+        TryAddingUniform(mQuadTriangleGlsl, "dimensions", mSize);
+        TryAddingUniform(mQuadTriangleGlsl, "farLimit", mFarLimit );
+        TryAddingUniform(mQuadTriangleGlsl, "nearLimit", mNearLimit );
+
+        //	mQuadTriangleGlsl->uniform( "divideNum", divideNum );
+        // lines adjacency gives the geometry shader two points on either side of the line
+        // this was the problem with the indexing, you have to give two other points when
+        // using it. basically from above
+        //
+        // index0 - - - - index1 ------------ index2 - - - - index3
+        //
+        // if I just drew GL_LINES it wouldn't use index0 or index3 in one geometry shader
+        // instance. basically you get the four points of a quad and can make the triangle_strip
+        // or line_strip like i do with the shaders
+        // instead it would be...
+        //
+        // index0 --------- index1 // one geometry shader instance
+        // index1 --------- index2 // another geometry shader instance
+        // etc.
+        ci::gl::drawElements( GL_LINES_ADJACENCY, mIndexCount, GL_UNSIGNED_INT, 0 );
+        
+        mQuadTriangleGlsl->unbind();
+    }
 
 	// This draws the wireframe
 	mQuadOutlineGlsl->bind();
-	
-	mQuadOutlineGlsl->uniform( "projection", ci::gl::getProjection() );
-	mQuadOutlineGlsl->uniform( "modelView", ci::gl::getModelView() );
-	mQuadOutlineGlsl->uniform( "colorOffset", (int)framesRendered );
-	mQuadOutlineGlsl->uniform( "heightMap", 0 );
-	mQuadOutlineGlsl->uniform( "count", xCount * quadSize );
-	mQuadOutlineGlsl->uniform( "farLimit", mFarLimit );
-	mQuadOutlineGlsl->uniform( "nearLimit", mNearLimit );
-	
-	ci::gl::drawElements( GL_LINES_ADJACENCY, indexNum, GL_UNSIGNED_INT, 0 );
-	
-	mQuadOutlineGlsl->unbind();
-	
+
+    TryAddingUniform(mQuadOutlineGlsl, "dimensions", mSize);
+	TryAddingUniform(mQuadOutlineGlsl, "projection", ci::gl::getProjection() );
+	TryAddingUniform(mQuadOutlineGlsl, "modelView", ci::gl::getModelView() );
+    TryAddingUniform(mQuadOutlineGlsl, "uColor", colorOutline );
+    TryAddingUniform(mQuadOutlineGlsl, "farLimit", mFarLimit );
+    TryAddingUniform(mQuadOutlineGlsl, "nearLimit", mNearLimit );
+	TryAddingUniform(mQuadOutlineGlsl, "heightMap", 0 );
+
+	ci::gl::drawElements( GL_LINES_ADJACENCY, mIndexCount, GL_UNSIGNED_INT, 0 );
+
+    mQuadOutlineGlsl->unbind();
+    
 	mNoiseTexture->unbind();
 	mLineElementVbo->unbind();
 	mVao->unbind();
@@ -74,12 +96,29 @@ void FloorPlane::loadTexture()
 {
 	mNoiseTexture = ci::gl::Texture::create( ci::loadImage( ci::app::loadResource( "noise_map.png" ) ) );
 }
+    
+void FloorPlane::setNoiseTexture(ci::gl::TextureRef & tex)
+{
+    mNoiseTexture = tex;
+}
+    
+void FloorPlane::setFarLimit( float farLimit )
+{
+    mFarLimit = farLimit;
+}
+    
+void FloorPlane::setNearLimit( float nearLimit )
+{
+    mNearLimit = nearLimit;
+}
 	
 void FloorPlane::loadShaders()
 {
 	// Terrain stuff
 	ci::gl::GlslProg::Format mQuadOutlineFormat;
-	mQuadOutlineFormat.vertex( LoadShader("quadOutline.vert") )
+	//mQuadOutlineFormat.vertex( LoadShader("quadOutline.vert") )
+    // NOTE: We're using the same vert shader to keep them in sync.
+    mQuadOutlineFormat.vertex( LoadShader("quadTriangle.vert") )
 	.geometry( LoadShader("quadOutline.geom") )
 	.fragment( LoadShader("quadOutline.frag") );
 	mQuadOutlineGlsl = ci::gl::GlslProg::create( mQuadOutlineFormat );
@@ -95,9 +134,18 @@ void FloorPlane::loadShaders()
 void FloorPlane::createAndLoadGeometry()
 {
 	// this creates the points across x and y notice that we don't subtract 1 from each
-	for( int z = 0; z < zCount; z++ ) {
-		for( int x = 0; x < xCount; x++ ) {
-			mTrimesh->appendVertex( ci::Vec3f( x*quadSize, 0, z*quadSize ) );
+    
+    // NOTE: -1 so the planes abut when they're tiled, since we're not drawing the last one
+    float quadScaleX = 1.0f / (mSize.x-1);
+    float quadScaleY = 1.0f / (mSize.y-1);
+    
+	for( int z = 0; z < mSize.y; z++ )
+    {
+		for( int x = 0; x < mSize.x; x++ )
+        {
+			mTrimesh->appendVertex( ci::Vec3f(x * quadScaleX,
+                                              0,
+                                              z * quadScaleY ) );
 		}
 	}
 	// this creates the index and this was the hardest part,
@@ -113,14 +161,14 @@ void FloorPlane::createAndLoadGeometry()
 	//                   quadsize
 	// we use up to xcount - 1 because we skip the last point to create the last quad
 	//
-	uint32_t * lineIndex = new uint32_t[indexNum];
+	uint32_t * lineIndex = new uint32_t[mIndexCount];
 	int index = 0;
-	for( int i = 0; index < indexNum; i+=xCount ) {
-		for( int j = 0; j < xCount-1; j++ ) {
-			lineIndex[index+0] = i+j+xCount;
+	for( int i = 0; index < mIndexCount; i+=mSize.x ){
+		for( int j = 0; j < mSize.x-1; j++ ){
+			lineIndex[index+0] = i+j+mSize.x;
 			lineIndex[index+1] = i+j+0;
 			lineIndex[index+2] = i+j+1;
-			lineIndex[index+3] = i+j+xCount+1;
+			lineIndex[index+3] = i+j+mSize.x+1;
 			index+=4;
 		}
 	}
@@ -134,8 +182,7 @@ void FloorPlane::createAndLoadGeometry()
 	ci::gl::enableVertexAttribArray(0);
 	ci::gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
 	
-	mLineElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, indexNum * sizeof(uint32_t), lineIndex, GL_STATIC_DRAW );
-	
+	mLineElementVbo = ci::gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, mIndexCount * sizeof(uint32_t), lineIndex, GL_STATIC_DRAW );
 }
 
 }

@@ -14,9 +14,11 @@ using namespace std;
 namespace bigscreens
 {
     
-    TankHeightmapContent::TankHeightmapContent() : TankContent()
+    TankHeightmapContent::TankHeightmapContent() :
+    TankContent(),
+    mGroundContent(5000.0)
     {
-        mGroundContent = GroundContent(5000.0);
+        //mGroundContent = GroundContent(5000.0);
     };
 
     void TankHeightmapContent::loadGround()
@@ -37,6 +39,7 @@ namespace bigscreens
     void TankHeightmapContent::load(const std::string & objFilename)
     {
         TankContent::load(objFilename);
+        loadGround();
         mPerlinContent.reset();
     }
     

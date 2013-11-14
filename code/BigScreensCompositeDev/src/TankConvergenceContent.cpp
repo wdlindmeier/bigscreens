@@ -18,7 +18,7 @@ TankContent()
 , mMSElapsedConvergence(0)
 , mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
 {
-    mGroundContent = GroundContent(20000.0);
+//    mGroundContent = GroundContent(20000.0);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -29,12 +29,11 @@ void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
 void TankConvergenceContent::loadShaders()
 {
     TankContent::loadShaders();
-    
     gl::GlslProg::Format groundShaderFormat;
     groundShaderFormat.vertex( ci::app::loadResource( "basic.vert" ) )
     .fragment( ci::app::loadResource( "basic.frag" ) );
-    mGroundShader = ci::gl::GlslProg::create( groundShaderFormat );
-    mGroundShader->uniform("uColor", Color::white());
+    mTankShader = ci::gl::GlslProg::create( groundShaderFormat );
+    mTankShader->uniform("uColor", Color::white());
 }
 
 CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
@@ -141,11 +140,19 @@ void TankConvergenceContent::drawTank()
     
     // Make the tanks ease into position
 
+    mTankShader->bind();
+    
+    gl::VaoRef vao = mDumbTank->getVao();
+    vao->bind();
+
+    gl::VboRef vbo = mDumbTank->getElementVbo();
+    vbo->bind();
+
     gl::pushMatrices();
     gl::setMatrices( mCam );
  
-//    mGroundShader->uniform("uColor", ColorAf(1,1,1,0.25f*mRenderAlpha));
-    
+    mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
+
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
         TankOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
@@ -155,8 +162,11 @@ void TankConvergenceContent::drawTank()
 
     gl::popMatrices();
 
-    mGroundShader->unbind();
+    vbo->unbind();
+    vao->unbind();
     
+    mTankShader->unbind();
+
     gl::popMatrices();
 }
 
@@ -204,26 +214,12 @@ void TankConvergenceContent::drawGround()
     if (!mIsGroundVisible) return;
     
     gl::pushMatrices();
-    
     gl::setMatrices( mCam );
-    
-    // NOTE: Not using the ground shader since it's a texture shader
-    mGroundShader->bind();
-
-    gl::enableAlphaBlending();
-    
-    mGroundShader->uniform("uColor", ColorAf(0.75,0.75,0.75, mRenderAlpha));
-    
-    // Get the current plot
-    float groundScale = mGroundContent.getScale();
-    Vec3f groundOffset((-0.5f * groundScale),
-                       0,
-                       (-0.5f * groundScale));
-    
-    mGroundContent.render(GL_LINE_STRIP, groundOffset);
-
-    mGroundShader->unbind();
-    
+    // Scale to taste
+    gl::scale(Vec3f(20000,400,20000));
+    // Center
+    gl::translate(Vec3f(-0.5,0,-0.5));
+    mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.75,0.75,0.75, mRenderAlpha));
     gl::popMatrices();
 }
 

@@ -2,8 +2,9 @@
 #extension all : warn
 
 out vec4 color;
+uniform vec4 uColor;
 
 void main(void)
 {
-    color = vec4(1.0);
+    color = uColor;//vec4(1.0);
 }
