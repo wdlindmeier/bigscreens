@@ -35,10 +35,6 @@ public:
 
     void fire(const ci::Vec3f & worldPosition);
     void update(long progressCounter);
-    // NOTE: Set a tmp content ID before rendering
-    // and before firing a shot. All shots are tied to
-    // a specific content ID.
-    // Content ID is cleared after the tank has been rendered.
     void setFrameContentID(const int contentID);
     void render(const float alpha = 1.0);
     void renderShots(ci::CameraPersp & cam, const float alpha = 1.0);

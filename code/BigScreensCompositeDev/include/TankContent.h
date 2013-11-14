@@ -35,7 +35,6 @@ public:
     virtual ~TankContent(){};
     
     void setGroundIsVisible(bool isVisible);
-    //void setGroundOffset(const ci::Vec2f offset);
     void setTankPosition(const ci::Vec3f tankPosition);
     ci::Vec3f getTankPosition();
     ci::CameraPersp & getCamera();
@@ -46,6 +45,7 @@ public:
     virtual void resetPositions();
     virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     virtual void reset();
+    virtual void setFrameContentID(const int contentID);
     
 protected:
     
@@ -82,11 +82,13 @@ protected:
     virtual void        generateGroundMaps();
     virtual void        drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
     
-    PerlinContent                   mPerlinContent;
-    ci::Vec3i                       mGroundPlotCoords;
-    //std::vector<ci::gl::TextureRef> mGroundMaps;
+    PerlinContent       mPerlinContent;
+    ci::Vec3i           mGroundPlotCoords;
     std::map<float, ci::gl::TextureRef> mGroundMaps;
-    ci::Vec3f                       mGroundScale;
+    ci::Vec3f           mGroundScale;
+    
+    std::map<int, ci::Vec3f> mTankGroundRelationships;
+    float               mTankDirectionRadians;
     
 };
 }

@@ -43,6 +43,15 @@ namespace bigscreens
         generateNoiseForPosition(mPosition);
     }
 
+    float PerlinContent::getValueAtPosition(const ci::Vec2f & position)
+    {
+        float val = mPerlin.noise(position.x * mFrequency,
+                                  position.y * mFrequency);
+        // Initial values are -0.5 .. 0.5.
+        // Normalize
+        return 0.5 + val;
+    }
+    
     void PerlinContent::generateNoiseForPosition(const ci::Vec2f & position)
     {
         Surface::Iter iter = mNoiseSurface.getIter();
@@ -50,10 +59,11 @@ namespace bigscreens
         {
             while( iter.pixel() )
             {
-                // Values are -0.5 .. 0.5
-                float v = mPerlin.noise(((iter.x() + position.x) * mFrequency),
-                                        ((iter.y() + position.y) * mFrequency));
-                float val = 0.5 + v;
+                //float v = mPerlin.noise(((iter.x() + position.x) * mFrequency),
+                                        //((iter.y() + position.y) * mFrequency));
+                //float val = 0.5 + v;
+                float val = getValueAtPosition(Vec2f(iter.x() + position.x,
+                                                     iter.y() + position.y));
                 iter.r() = iter.g() = iter.b() = ci::math<int>::clamp(val * 255, 0, 255);
             }
         }

@@ -256,6 +256,6 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
     mTankShader->unbind();
     
     // Clear out the content ID
-    mContentID = -1;
-
+    // Let the parent do this
+    // mContentID = -1;
 }
