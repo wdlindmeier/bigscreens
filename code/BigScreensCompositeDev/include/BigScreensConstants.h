@@ -59,6 +59,10 @@ const static float kTankBarrelTipZ = 470.0f;
 const static float kTankBarrelTipY = 164.0f;
 const static float kTankBarrelTipX = 0.0f;
 
+const static float kTankBodyWidth = 360.0f;
+const static float kTankBodyHeadToToe = 670.0f;
+const static float kTankCenterZOffset = 0.597;
+
 const static float kTankHeadOffsetZ = 65.0f;
 const static float kTankBarrelOffsetY = 170.0f;
 const static float kTankBarrelLength = 461.0f;

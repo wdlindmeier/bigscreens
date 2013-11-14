@@ -5,9 +5,12 @@ in GS_OUT
 {
     flat vec4 color[4];
     vec2 uv;
+    float fog;
+    
 } fs_in;
 
 out vec4 color;
+//out float fog;
 
 void main(void)
 {

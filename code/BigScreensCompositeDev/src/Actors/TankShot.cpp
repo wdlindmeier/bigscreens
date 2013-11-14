@@ -22,6 +22,7 @@ TankShot::TankShot(float angleRads,
                    float yRotationRads,
                    float velocity,
                    const ci::Vec3f & initialPosition,
+                   const ci::Vec3f & tankWorldPosition,
                    const gl::GlslProgRef & shader,
                    const int parentContentID) :
 mVelocity(velocity)
@@ -37,6 +38,7 @@ mVelocity(velocity)
 ,mIsDead(false)
 ,mMaxProgress(0)
 ,mContentID(parentContentID)
+,mTankWorldPosition(tankWorldPosition)
 {
     mShotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
     if (!ExplosionTexture)
@@ -161,12 +163,17 @@ void TankShot::renderLine()
     mLineVao->bind();
     mLineVbo->bind();
 
+    gl::pushMatrices();
+    gl::translate(mTankWorldPosition);
+    
     float progress = std::min<float>(mProgress, mMaxProgress);
     int numVerts = floor(progress / kLineProgressInterval);
 
     gl::setDefaultShaderVars();
     gl::drawArrays(GL_LINES, 0, numVerts);
     
+    gl::popMatrices();
+
     mLineVbo->unbind();
     mLineVao->unbind();
 }
@@ -189,6 +196,7 @@ void TankShot::renderMuzzleFlare(ci::CameraPersp & cam)
         Vec3f muzzlePosition = mInitialPosition * mShotQuat;
         
         gl::pushMatrices();
+        gl::translate(mTankWorldPosition);
         gl::translate(muzzlePosition);
         
         Vec3f right, up;
@@ -209,6 +217,7 @@ void TankShot::renderExplosion(ci::CameraPersp & cam)
     if (mHasExploded)
     {
         gl::pushMatrices();
+        gl::translate(mTankWorldPosition);
         gl::translate(mPointOfExplosion);
 
         Vec3f right, up;

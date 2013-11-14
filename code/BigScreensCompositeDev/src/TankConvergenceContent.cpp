@@ -229,7 +229,13 @@ void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, co
     gl::translate(position);
     gl::rotate(rotationDegrees, 0, 1, 0);
 
-    mTank->render(mCam, mRenderAlpha);
+    // mTank->render(mRenderAlpha);
+    gl::setDefaultShaderVars();
+    gl::drawElements(GL_LINES,
+                     mDumbTank->getMesh()->getNumIndices(),
+                     //mTankMesh->getNumIndices(),
+                     GL_UNSIGNED_INT, 0 );
+    
     
     gl::popMatrices();
 }

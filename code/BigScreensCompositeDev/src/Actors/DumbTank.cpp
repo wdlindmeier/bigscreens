@@ -112,6 +112,11 @@ ci::gl::VboRef DumbTank::getElementVbo()
     return mElementVbo;
 }
 
+ci::TriMeshRef DumbTank::getMesh()
+{
+    return mMesh;
+}
+
 void DumbTank::draw( const int zFactor, const Vec3f & seperationPoint )
 {
     gl::enableAdditiveBlending();

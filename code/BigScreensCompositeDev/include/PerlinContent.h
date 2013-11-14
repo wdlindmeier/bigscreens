@@ -28,6 +28,7 @@ namespace bigscreens
         
         void update(const ci::Vec2f & move);
         void generateNoiseForPosition(const ci::Vec2f & position);
+        float getValueAtPosition(const ci::Vec2f & position);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void preRender();
         ci::gl::TextureRef getTextureRef();

@@ -9,6 +9,7 @@
 #include "TankContent.h"
 #include "cinder/ObjLoader.h"
 #include "cinder/app/App.h"
+#include "cinder/Surface.h"
 #include "cinder/Utilities.h"
 #include "cinder/Camera.h"
 #include "Utilities.hpp"
@@ -22,15 +23,23 @@ namespace bigscreens
 {
     
     TankContent::TankContent() :
-    mTankPosition(0,0,0)
+    RenderableContent()
+    , mTankDirectionRadians(0)
+    , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
     , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
     , mGroundPlotCoords(0,0,0)
-    , mGroundScale(5000, 200, 5000) // Keep these symetrical x/z
+    , mGroundScale(10000, 500, 10000) // Keep these symetrical x/z
     {
     }
+    
+    void TankContent::setFrameContentID(const int contentID)
+    {
+        RenderableContent::setFrameContentID(contentID);
+        mTank->setFrameContentID(contentID);
+    };
     
     void TankContent::setTankPosition(const ci::Vec3f tankPosition)
     {
@@ -192,7 +201,8 @@ namespace bigscreens
     
     void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
     {
-
+        gl::disableAlphaBlending();
+        
         gl::pushMatrices();
         gl::setMatrices( mCam );
         // Scale to taste
@@ -203,7 +213,8 @@ namespace bigscreens
                             -0.5 + plot.z));
         
         mGroundPlane->setNoiseTexture(heightMap);
-		mGroundPlane->draw(mNumFramesRendered, false); //true);
+
+		mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.5,0.5,0.5,1)); //true);
         
         gl::popMatrices();
         
@@ -224,13 +235,21 @@ namespace bigscreens
     // Lets the app take control of the cam.
     void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
-        mMinionPosition = Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
-                                800,
-                                sin(mNumFramesRendered * -0.01) * 2000);
+        // TODO: Make the minion behavior more interesting
+        Vec3f minionTargetPosition = mTankPosition + Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
+                                                           800,
+                                                           sin(mNumFramesRendered * -0.01) * 2000);        
+        mMinionPosition = minionTargetPosition;
+        
         // NOTE: The target position is relative to the tank
         mTank->setTargetPosition(mMinionPosition - mTankPosition);
-        mTank->update(mNumFramesRendered);
+        
         update_func(mCam, mTank);
+        
+        // NOTE: Wheel speed comes from the update llamba, so keep
+        // tank update after that.
+        mTank->update(mNumFramesRendered);
+
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -267,9 +286,109 @@ namespace bigscreens
     {
         gl::pushMatrices();
         gl::setMatrices( mCam );
+        
+        Vec3f prevGroundRelationship = Vec3f::zero();
+        if (mTankGroundRelationships.find(mContentID) != mTankGroundRelationships.end())
+        {
+            prevGroundRelationship = mTankGroundRelationships[mContentID];
+        }
+        Vec3f curGroundRelationship = prevGroundRelationship;
+
+        gl::pushMatrices();
         gl::translate(mTankPosition);
-        mTank->render( mCam );
+        
+        float key = KeyFromPlot(mGroundPlotCoords.x,
+                                mGroundPlotCoords.z);
+        float height = 0;
+        if (mGroundMaps.find(key) != mGroundMaps.end())
+        {
+            // NOTE: This is just used to get the dimensions of the texture
+            // gl::TextureRef currentGround = mGroundMaps[key];
+            Vec2i textureSize = mGroundMaps[key]->getSize();
+            
+            // Get Model Sampling Coords
+            float xPosLeft = kTankBodyWidth*-0.5;
+            float xPosRight = kTankBodyWidth*0.5;
+            float zPosRear = kTankBodyHeadToToe * kTankCenterZOffset * -1;
+            float zPosFore = kTankBodyHeadToToe * (1.0-kTankCenterZOffset);
+            
+            float xMid = (xPosLeft + xPosRight) / 2.0f;
+            float zMid = (zPosRear + zPosFore) / 2.0f;
+            
+            Vec2f tankPosRear(xMid, zPosRear);
+            Vec2f tankPosFore(xMid, zPosFore);
+            Vec2f tankPosLeft(xPosLeft, zMid);
+            Vec2f tankPosRight(xPosRight, zMid);
+            
+            // Rotate arond Zero depending upon the direction
+            tankPosRear.rotate(-mTankDirectionRadians);
+            tankPosFore.rotate(-mTankDirectionRadians);
+            tankPosLeft.rotate(-mTankDirectionRadians);
+            tankPosRight.rotate(-mTankDirectionRadians);
+            
+            // Convert to World coords by adding tank position
+            Vec2f totalOffset = mTankPosition.xz() + (mGroundScale.xz() * 0.5f);
+            tankPosRear += totalOffset;
+            tankPosFore += totalOffset;
+            tankPosLeft += totalOffset;
+            tankPosRight += totalOffset;
+            
+            // Tex / Noise Coords
+            Vec2f groundToTexScale = Vec2f(textureSize) / mGroundScale.xz();
+            float depthSampleRear = mPerlinContent.getValueAtPosition(tankPosRear * groundToTexScale);
+            float depthSampleFore = mPerlinContent.getValueAtPosition(tankPosFore * groundToTexScale);
+            float depthSampleLeft = mPerlinContent.getValueAtPosition(tankPosLeft * groundToTexScale);
+            float depthSampleRight = mPerlinContent.getValueAtPosition(tankPosRight * groundToTexScale);
+            
+            float heightRear = depthSampleRear * mGroundScale.y;
+            float heightFore = depthSampleFore * mGroundScale.y;
+            float heightLeft = depthSampleLeft * mGroundScale.y;
+            float heightRight = depthSampleRight * mGroundScale.y;
+
+            height = (heightRear + heightFore + heightLeft + heightRight) / 4.f;
+            
+            // Get the angle
+            float zOffset = kTankBodyHeadToToe;
+            float yOffset = heightFore - heightRear;
+            float radsAngleX = atan2f(zOffset, yOffset);
+            
+            float xOffset = kTankBodyWidth;
+            yOffset = heightLeft - heightRight;
+            float radsAngleZ = atan2f(xOffset, yOffset);
+            
+            // Average
+            float prevOrientationWeight = 2.0f;
+            float newHeight = (prevGroundRelationship.y * prevOrientationWeight + height) / (prevOrientationWeight + 1.0f);
+            float newAngleX = (prevGroundRelationship.x * prevOrientationWeight + radsAngleX) / (prevOrientationWeight + 1.0f);
+            float newAngleZ = (prevGroundRelationship.z * prevOrientationWeight + radsAngleZ) / (prevOrientationWeight + 1.0f);
+            
+            // Perhaps we should use a more semantically meaningful struct
+            curGroundRelationship.x = newAngleX;
+            curGroundRelationship.y = newHeight;
+            curGroundRelationship.z = newAngleZ;
+
+            // Adjust the height
+            gl::translate(Vec3f(0,curGroundRelationship.y,0));
+            
+            // Adjust the X angle
+            gl::rotate(toDegrees(curGroundRelationship.x) - 90, 1, 0, 0);
+
+            // Adjsut the Z angle
+            gl::rotate(toDegrees(curGroundRelationship.z) - 90, 0, 0, 1);
+            
+        }
+        else
+        {
+            // console() << "WARN: Cant find ground texture\n";
+        }
+        
+        mTank->render();
         gl::popMatrices();
+
+        mTank->renderShots(mCam);
+        gl::popMatrices();
+        
+        mTankGroundRelationships[mContentID] = curGroundRelationship;
     }
     
     void TankContent::drawMinion()
@@ -283,6 +402,7 @@ namespace bigscreens
         gl::setMatrices( mCam );
         
         // Spin baby
+        // TODO: Give this realistic movement
         gl::translate(mMinionPosition);
         
         gl::scale(Vec3f(150,150,150));
@@ -296,15 +416,27 @@ namespace bigscreens
     
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
+        if (mContentID == -1)
+        {
+            console() << "WARN: Tank content doesn't have a contentID\n";
+        }
+        
         // clear out both of the attachments of the FBO with black
         gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
         
         drawScreen(contentRect);
+        
+        gl::enableDepthRead();
+        gl::enableDepthWrite();
         
         drawGround();
         
         drawTank();
         
         drawMinion();
+        
+        // Clear out the content ID.
+        // Do it through the getter.
+        setFrameContentID(-1);
     }
 }
