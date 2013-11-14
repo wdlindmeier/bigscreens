@@ -13,8 +13,8 @@ void main(void)
 {
     // NOTE: I wasn't seeing any color after normalizing the verts
     // so this is a hard-coded value.
-    color = vec4(1.0,0.0,0.0,1.0);
-    return;
+    // color = vec4(1.0,0.0,0.0,1.0);
+    // return;
     
 
 	// I need to tweak this

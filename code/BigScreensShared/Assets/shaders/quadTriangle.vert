@@ -47,6 +47,7 @@ void main(void)
 		// This multiplies the heightPixel (e.g. 0.0-1.0) times a smoothed nearlimit starting from the nearlimit and incrementally getting bigger towards the count
 		gl_Position = projection * modelView * vec4( position.x, position.y + heightPixel * 100 * ( (position.z - nearLimit) / (count - nearLimit)), position.z, 1.0 );
 		vs_out.color = colors[((gl_VertexID + colorOffset / 4)) % 12];
+    }
 */
 
     // Normalized.
@@ -59,5 +60,5 @@ void main(void)
                                                 1.0 );
     
     // Why isn't this getting passed through to the frag?
-    vs_out.color = vec4(1.0,1.0,0.0,1.0); //colors[(gl_VertexID + colorOffset / 4) % 12];    
+    vs_out.color = colors[(gl_VertexID + colorOffset / 4) % 12];
 }

@@ -203,7 +203,7 @@ namespace bigscreens
                             -0.5 + plot.z));
         
         mGroundPlane->setNoiseTexture(heightMap);
-		mGroundPlane->draw(mNumFramesRendered, false);//true);
+		mGroundPlane->draw(mNumFramesRendered, false); //true);
         
         gl::popMatrices();
         
