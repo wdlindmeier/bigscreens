@@ -45,6 +45,7 @@ public:
     virtual void resetPositions();
     virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     virtual void reset();
+    virtual void fireTankGun();
     virtual void setFrameContentID(const int contentID);
     
 protected:

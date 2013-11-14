@@ -7,6 +7,7 @@
 //
 
 #include "AdvancedTank.h"
+#include "cinder/gl/Shader.h"
 
 using namespace ci;
 using std::vector;
@@ -73,7 +74,9 @@ void AdvancedTank::setFrameContentID(const int contentID)
     mContentID = contentID;
 }
 
-void AdvancedTank::fire(const ci::Vec3f & worldPosition)
+void AdvancedTank::fire(const ci::Vec3f & worldPosition,
+                        const ci::Vec3f & groundRelationship)
+                        //const ci::Matrix44f & groundOrientation)
 {
     // NOTE: ContentID is reset after Render
     if (mContentID < 0)
@@ -92,7 +95,7 @@ void AdvancedTank::fire(const ci::Vec3f & worldPosition)
     
     Vec3f exitPoint(0,
                     kTankBarrelOffsetY + offY,
-                    offZ + kTankHeadOffsetZ);
+                    offZ + (kTankHeadOffsetZ * 2));
     
     float yRotRads = toRadians(mHeadRotationDeg);
 
@@ -101,6 +104,7 @@ void AdvancedTank::fire(const ci::Vec3f & worldPosition)
                                    targetVelocity,
                                    exitPoint,
                                    worldPosition,
+                                   groundRelationship,
                                    mTankShader,
                                    mContentID));
 }
@@ -235,25 +239,27 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
     // This can be the shot bloom.
     gl::enableAdditiveBlending();
 
-    mTankShader->bind();
+    // mTankShader->bind();
     
-    gl::setDefaultShaderVars();
+    gl::bindStockShader(gl::ShaderDef().color());
+    // gl::setDefaultShaderVars();
 
     // Draw the shot lines
     for (TankShot & shot : mShotsFired)
     {
         if (shot.getContentID() == mContentID)
         {
-            gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
+            //gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
+            gl::color(ColorAf(1, 0, 0, 1.0f));
             shot.renderLine();
-
+            
             gl::color(1,1,1,alpha);
             shot.renderMuzzleFlare(cam);
             shot.renderExplosion(cam);
         }
     }
         
-    mTankShader->unbind();
+    //mTankShader->unbind();
     
     // Clear out the content ID
     // Let the parent do this

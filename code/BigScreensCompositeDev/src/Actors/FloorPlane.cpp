@@ -44,7 +44,7 @@ void FloorPlane::draw(const long framesRendered,
         
         TryAddingUniform(mQuadTriangleGlsl, "projection", ci::gl::getProjection());
         TryAddingUniform(mQuadTriangleGlsl, "modelView", ci::gl::getModelView() );
-        TryAddingUniform(mQuadTriangleGlsl, "chooseColor", false);
+        TryAddingUniform(mQuadTriangleGlsl, "chooseColor", true);
         TryAddingUniform(mQuadTriangleGlsl, "colorOffset", (int)framesRendered );
         TryAddingUniform(mQuadTriangleGlsl, "heightMap", 0);
         TryAddingUniform(mQuadTriangleGlsl, "dimensions", mSize);

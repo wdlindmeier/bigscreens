@@ -214,10 +214,26 @@ namespace bigscreens
         
         mGroundPlane->setNoiseTexture(heightMap);
 
-		mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.5,0.5,0.5,1)); //true);
+        const static bool kDrawColorGround = false;
+		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,1));
         
         gl::popMatrices();
-        
+    }
+    
+    void TankContent::fireTankGun()
+    {
+        if (mContentID == -1)
+        {
+            console() << "ERROR: Tank content doesn't have a contentID\n";
+        }
+            
+        Vec3f curGroundRelationship = Vec3f::zero();
+        if (mTankGroundRelationships.find(mContentID) != mTankGroundRelationships.end())
+        {
+            curGroundRelationship = mTankGroundRelationships[mContentID];
+        }
+
+        mTank->fire(getTankPosition(), curGroundRelationship);
     }
     
     void TankContent::reset()
@@ -358,6 +374,11 @@ namespace bigscreens
             
             // Average
             float prevOrientationWeight = 2.0f;
+            if (prevGroundRelationship == Vec3f::zero())
+            {
+                prevOrientationWeight = 0.f;
+            }
+
             float newHeight = (prevGroundRelationship.y * prevOrientationWeight + height) / (prevOrientationWeight + 1.0f);
             float newAngleX = (prevGroundRelationship.x * prevOrientationWeight + radsAngleX) / (prevOrientationWeight + 1.0f);
             float newAngleZ = (prevGroundRelationship.z * prevOrientationWeight + radsAngleZ) / (prevOrientationWeight + 1.0f);

@@ -33,7 +33,8 @@ public:
     AdvancedTank();
     ~AdvancedTank(){};
 
-    void fire(const ci::Vec3f & worldPosition);
+    void fire(const ci::Vec3f & worldPosition,
+              const ci::Vec3f & groundRelationship);
     void update(long progressCounter);
     void setFrameContentID(const int contentID);
     void render(const float alpha = 1.0);
