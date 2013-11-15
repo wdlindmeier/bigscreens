@@ -245,6 +245,8 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
     // gl::setDefaultShaderVars();
 
     // Draw the shot lines
+    gl::disableDepthRead();
+    gl::disableDepthWrite();
     for (TankShot & shot : mShotsFired)
     {
         if (shot.getContentID() == mContentID)
@@ -258,6 +260,8 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
             shot.renderExplosion(cam);
         }
     }
+    //gl::disableDepthRead();
+    //gl::disableDepthWrite();
     
     gl::disableAlphaBlending();
     
