@@ -566,24 +566,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             float camZ = 0;
             cam.lookAt(Vec3f( camX, camY, camZ ),
                        Vec3f( 0, camY, camZ ) );
-        });
-        
-        /*
-        scene->setGroundIsVisible(true);
-        scene->resetPositions();
-        scene->setTankPosition(Vec3f(0, 0, 0));
-        
-        scene->update([=](CameraPersp & cam, DumbTankRef & tank)
-                      {
-                          cam.lookAt(Vec3f(0,
-                                           kTankBodyCenterY * 8,
-                                           -1000),
-                                     Vec3f(0,
-                                           kTankBodyCenterY,
-                                           0));
-                      });
-        */
-
+        });        
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {

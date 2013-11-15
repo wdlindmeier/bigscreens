@@ -58,7 +58,7 @@ void DumbTankContent::renderPositionedTank()
     gl::VboRef vbo = mDumbTank->getElementVbo();
     vbo->bind();
 
-    mTankShader->uniform("uColor", ColorAf(1,1,1,0.5));
+    mTankShader->uniform("uColor", ColorAf(1,1,1,0.5 * mRenderAlpha));
     
     gl::setDefaultShaderVars();
     gl::drawElements(GL_LINES,

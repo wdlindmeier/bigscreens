@@ -17,20 +17,27 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
+const static int kTextureDimension = 128;
+
 namespace bigscreens
 {
     
     PerlinContent::PerlinContent() :
     TextureContent()
-    ,mSeed(clock() & 65535)
+    ,mSeed(1221) //clock() & 65535)
 	,mOctaves(4)
     ,mPosition(0,0)
 	,mFrequency(1.0f / 20.0f)
     ,mPerlin( mOctaves, mSeed )
     {
-        Vec2i noiseSize(128,128);
+        Vec2i noiseSize = getTextureSize();
         mNoiseSurface = Surface( noiseSize.x, noiseSize.y, false);
         mTexture = gl::TextureRef( new gl::Texture(noiseSize.x, noiseSize.y) );
+    }
+    
+    const ci::Vec2i PerlinContent::getTextureSize()
+    {
+        return Vec2i(kTextureDimension, kTextureDimension);
     }
     
     void PerlinContent::reset()

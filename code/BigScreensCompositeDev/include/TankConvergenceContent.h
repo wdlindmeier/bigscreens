@@ -44,7 +44,8 @@ namespace bigscreens
         
 
         // void update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func);
-        void drawGround();
+        // void drawGround();
+        virtual void updateGroundCoordsForTank();
         void setMSElapsed(const long msElapsedConvergence);
         void drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         // virtual void loadShaders();
@@ -55,8 +56,6 @@ namespace bigscreens
         void renderPositionedTank();
         void drawSingleTankAtPosition(const ci::Vec3f & position, const float rotationDegrees);
         
-        float mRenderAlpha;
-        float mScreenAlpha;
         long mMSElapsedConvergence;
         
         // DumbTankRef mDumbTank;

@@ -56,11 +56,14 @@ protected:
     virtual void        loadShaders();
     
     virtual void        drawScreen(const ci::Rectf & contentRect);
+    virtual void        updateGroundCoordsForTank();
     virtual void        drawGround();
     virtual void        drawTank();
     virtual void        renderPositionedTank();
     virtual void        drawTankShots();
     virtual void        drawMinion();
+    virtual void        generateGroundMapForPlot(const ci::Vec3i & plot);
+    virtual void        drawGroundTile(const ci::Vec3i & plot);
     
     // Vars
     
@@ -82,9 +85,6 @@ protected:
     FloorPlaneRef		mGroundPlane;
     bool                mIsGroundVisible;
     
-    virtual void        generateGroundMaps();
-    virtual void        drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
-    
     PerlinContent       mPerlinContent;
     ci::Vec3i           mGroundPlotCoords;
     std::map<float, ci::gl::TextureRef> mGroundMaps;
@@ -92,6 +92,8 @@ protected:
     
     std::map<int, GroundOrientaion> mTankGroundOrientations;
     float               mTankDirectionRadians;
+    float               mRenderAlpha;
+    float               mScreenAlpha;
     
 };
 }
