@@ -88,7 +88,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     gl::clear( Color( 0.0, 0.0, 0.0 ) );
     
-    gl::enableAlphaBlending();
+    gl::enableAdditiveBlending();
     
     vector<ScreenRegion> regions = mLayout.getRegions();
     int regionCount = regions.size();
@@ -106,8 +106,8 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     // Create the target cam position
     // float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
     // float finalOffset = scalarProgress * scalarProgress;
-    float camDist = 2500 + (6000 * amtRemaining);
-    float camY = camDist * 0.35;
+    float camDist = 3500 + (6000 * amtRemaining);
+    float camY = camDist * 0.5;//0.35;
     float camZ = camDist;
     float camX = camDist;
     
@@ -152,12 +152,20 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     // If we're using the FADE style, the sub-regions shouldn't be drawn if they're invisible
     if (shouldDrawRegions)
     {
+        // Only draw the subcontent w/ in this screen.
+        // NOTE: This assumes the mContentRect is the whole size of the screen.
+        Rectf screenRect(screenOffset.x,
+                         screenOffset.y,
+                         screenOffset.x + (mContentRect.getWidth() / kNumScreens),
+                         screenOffset.y + (mContentRect.getHeight() / kNumScreens));
+                         
         // Draw each sub-region that converge
         for (int i = 0; i < regionCount; ++i)
         {
             ScreenRegion & region = regions[i];
             
-            if (rectsOverlap(region.rect, mContentRect))
+            if (rectsOverlap(region.rect, screenRect))
+            // if (rectsOverlap(region.rect, mContentRect))
             {
                 // CameraOrigin orig = mCameraOrigins[i];
                 

@@ -16,9 +16,12 @@ using namespace bigscreens;
 TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
 , mMSElapsedConvergence(0)
+// Why doesn't this work?
+//, mGroundScale(10000, 500, 10000)
 //, mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
 {
 //    mGroundContent = GroundContent(20000.0);
+    mGroundScale = Vec3f(10000, 800, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -54,7 +57,7 @@ CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
     
     // TODO: Make this more interesting
     orig.eye = Vec3f(tankPos.x + ((camXOffsetInterval * regionIndex) - 2000.0f), // 
-                     tankPos.y + 500 + (((camYOffsetInterval * regionIndex) - 250.0f)),
+                     tankPos.y + 1500 + (((camYOffsetInterval * regionIndex) - 250.0f)),
                      tankPos.z + ((camZOffsetInterval * regionIndex) - 2000.0f));
     
     // Look at the tank
@@ -80,7 +83,7 @@ TankOrientation TankConvergenceContent::positionForTankWithProgress(const int ta
     float rads = M_PI * 2 * scalarOffset;
     
     const static float kMaxTankDist = 22000.0f;
-    const static float kMinTankDist = 3000.0f;
+    const static float kMinTankDist = 4000.0f;
     const static float kTankTravelDist = kMaxTankDist - kMinTankDist;
     
     // A simple distance based on sin that looks somewhat staggered
@@ -109,26 +112,39 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const ci::Rectf & contentRect,
                                     const float alpha)
 {
-    mRenderAlpha = alpha;
-
+    
+    mRenderAlpha = ci::math<float>::clamp(alpha, 0, 1.0);
     mScreenAlpha = mRenderAlpha*mRenderAlpha*mRenderAlpha;
     
-    // NOTE: Don't clear
+    gl::disableDepthRead();
+    gl::disableDepthWrite();
     
     std::pair<Vec2i,Vec2i> viewport = gl::getViewport();
     drawScreen(screenOffset, contentRect);
     gl::viewport(viewport.first, viewport.second);
+
+    gl::enableAlphaBlending();
     
+    // NOTE: Having issues w/ depth and blending during convergence
+    const bool kUseGroundDepthTest = false;
+    if (kUseGroundDepthTest)
+    {
+        gl::enableDepthWrite();
+        gl::enableDepthRead();
+    }
     drawGround();
     
+    gl::enableAlphaBlending();
+
     drawTank();
+    
+    if (kUseGroundDepthTest)
+    {
+        gl::disableDepthWrite();
+        gl::disableDepthRead();
+    }
 }
-/*
-void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
-{
-    update_func(mCam, mDumbTank);
-}
-*/
+
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
@@ -145,25 +161,18 @@ void TankConvergenceContent::drawTank()
     gl::pushMatrices();
     gl::setMatrices( mCam );
 
-    mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
-
+    mTankShader->uniform("uColor", ColorAf(1, 1, 1, 0.5f * mRenderAlpha));
+    
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
         
         TankOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
 
-        // This should work but it's not.
-        // TODO: Use height mapping
-        /*
-        
         mTankPosition = tankOrient.position;
         mTankDirectionRadians = toRadians(tankOrient.directionDegrees);
         
         TankContent::drawTank();
-        */
 
-        drawSingleTankAtPosition(tankOrient.position,
-                                 tankOrient.directionDegrees);
     }
 
     gl::popMatrices();
@@ -176,6 +185,7 @@ void TankConvergenceContent::drawTank()
 
 void TankConvergenceContent::renderPositionedTank()
 {
+    // Called from TankContent::DrawTank after positioning
     gl::setDefaultShaderVars();
     gl::drawElements(GL_LINES,
                      mDumbTank->getMesh()->getNumIndices(),
@@ -236,16 +246,7 @@ void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci
     gl::popMatrices();
 }
 
-void TankConvergenceContent::drawGround()
+void TankConvergenceContent::updateGroundCoordsForTank()
 {
-    if (!mIsGroundVisible) return;
-    
-    gl::pushMatrices();
-    gl::setMatrices( mCam );
-    // Scale to taste
-    gl::scale(Vec3f(10000,200,10000));
-    // Center
-    gl::translate(Vec3f(-0.5,0,-0.5));
-    mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.75,0.75,0.75, mRenderAlpha));
-    gl::popMatrices();
+    // Do nothing
 }

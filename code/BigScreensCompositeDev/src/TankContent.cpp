@@ -137,45 +137,25 @@ namespace bigscreens
     {
         return (float)x + (z * 0.001);
     }
-    
-    void TankContent::generateGroundMaps()
+
+    void TankContent::generateGroundMapForPlot(const ci::Vec3i & plot)
     {
-        // mGroundMaps.clear();
-        
-        // NOTE: This lets us cache all of the textures,
-        // but depending upon how long each scene runs, this might
-        // gobble up a bunch of memory... probably not a huge deal.
-        
-        Vec2i texSize = mPerlinContent.getTexture()->getSize();
-        
-        for (int i = 0; i < 9; ++i)
+        float key = KeyFromPlot(plot.x, plot.z);
+        Vec2i texSize = mPerlinContent.getTextureSize();
+        if (mGroundMaps.find(key) == mGroundMaps.end() )
         {
-            int x = (i % 3) - 1;
-            int z = ((i / 3) - 1) * -1;
-            int plotX = mGroundPlotCoords.x + x;
-            int plotZ = mGroundPlotCoords.z + z;
-            
-            //Vec2i plot(plotX, plotZ);
-            float key = KeyFromPlot(plotX, plotZ);
-            
-            if (mGroundMaps.find(key) == mGroundMaps.end() )
-            {
-                // Didn't find the texture.
-                // Generate now
-                ci::app::console() << "Generating new ground\n";
-                
-                mPerlinContent.generateNoiseForPosition(Vec2f(texSize.x * plotX,
-                                                              texSize.y * plotZ));
-                gl::TextureRef newTex = mPerlinContent.getTextureRef();
-                mGroundMaps[key] = newTex;
-            }
+            // Didn't find the texture.
+            // Generate now
+            ci::app::console() << "Generating new ground for key " << key << "\n";
+            mPerlinContent.generateNoiseForPosition(Vec2f(texSize.x * plot.x,
+                                                          texSize.y * plot.z));
+            gl::TextureRef newTex = mPerlinContent.getTextureRef();
+            mGroundMaps[key] = newTex;
         }
     }
     
-    void TankContent::drawGround()
+    void TankContent::updateGroundCoordsForTank()
     {
-        if (!mIsGroundVisible) return;
-
         // Get the current plot
         int plotX = (mTankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
         int plotZ = (mTankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
@@ -183,24 +163,41 @@ namespace bigscreens
         if (mGroundPlotCoords.x != plotX || mGroundPlotCoords.z != plotZ || mGroundMaps.size() == 0)
         {
             mGroundPlotCoords = Vec3i(plotX, 0, plotZ);
-            generateGroundMaps();
+            //generateGroundMaps();
         }
-        
-        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 1), mGroundMaps[KeyFromPlot(plotX-1, plotZ+1)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 1), mGroundMaps[KeyFromPlot(plotX, plotZ+1)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 1), mGroundMaps[KeyFromPlot(plotX+1, plotZ+1)]);
-        
-        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 0), mGroundMaps[KeyFromPlot(plotX-1, plotZ)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 0), mGroundMaps[KeyFromPlot(plotX, plotZ)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 0), mGroundMaps[KeyFromPlot(plotX+1, plotZ)]);
-        
-        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, -1), mGroundMaps[KeyFromPlot(plotX-1, plotZ-1)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, -1), mGroundMaps[KeyFromPlot(plotX, plotZ-1)]);
-        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, -1), mGroundMaps[KeyFromPlot(plotX+1, plotZ-1)]);
     }
     
-    void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
+    void TankContent::drawGround()
     {
+        if (!mIsGroundVisible) return;
+        
+        updateGroundCoordsForTank();
+
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 1));
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 1));
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 1));
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, 0));
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, 0));
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, 0));
+        
+        drawGroundTile(mGroundPlotCoords + Vec3i(-1, 0, -1));
+        drawGroundTile(mGroundPlotCoords + Vec3i(0, 0, -1));
+        drawGroundTile(mGroundPlotCoords + Vec3i(1, 0, -1));
+
+    }
+    
+    void TankContent::drawGroundTile(const ci::Vec3i & plot)
+    {
+        float plotKey = KeyFromPlot(plot.x, plot.z);
+        // console() << "ground " << plotKey << "\n";
+        if (mGroundMaps.find(plotKey) == mGroundMaps.end())
+        {
+            generateGroundMapForPlot(plot);
+        }
+        gl::TextureRef & heightMap = mGroundMaps[plotKey];
+        assert(heightMap);
+        
         gl::pushMatrices();
         gl::setMatrices( mCam );
         // Scale to taste
@@ -213,7 +210,7 @@ namespace bigscreens
         mGroundPlane->setNoiseTexture(heightMap);
 
         const static bool kDrawColorGround = false;
-		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,1));
+		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,mRenderAlpha));
         
         gl::popMatrices();
     }
@@ -280,7 +277,7 @@ namespace bigscreens
         
         // No offset
         mTextureShader->uniform("uTexCoordOffset", Vec2f(0,0));
-        mTextureShader->uniform("uColor", ColorAf(1,1,1,1));
+        mTextureShader->uniform("uColor", ColorAf(1,1,1,mScreenAlpha));
 
         mScreenVao->bind();
         mScreenVbo->bind();
@@ -308,16 +305,17 @@ namespace bigscreens
             prevGroundOrientation = mTankGroundOrientations[mContentID];
         }
         GroundOrientaion curGroundOrientation = prevGroundOrientation;
-
-        
+        /*
         float key = KeyFromPlot(mGroundPlotCoords.x,
                                 mGroundPlotCoords.z);
+        */
         float height = 0;
-        if (mGroundMaps.find(key) != mGroundMaps.end())
+        //if (mGroundMaps.find(key) != mGroundMaps.end())
         {
             // NOTE: This is just used to get the dimensions of the texture
             // gl::TextureRef currentGround = mGroundMaps[key];
-            Vec2i textureSize = mGroundMaps[key]->getSize();
+            Vec2i textureSize = mPerlinContent.getTextureSize();
+            // mGroundMaps[key]->getSize();
             
             // Get Model Sampling Coords
             float xPosLeft = kTankBodyWidth*-0.5;
@@ -334,10 +332,13 @@ namespace bigscreens
             Vec2f tankPosRight(xPosRight, zMid);
             
             // Rotate arond Zero depending upon the direction
-            tankPosRear.rotate(-mTankDirectionRadians);
-            tankPosFore.rotate(-mTankDirectionRadians);
-            tankPosLeft.rotate(-mTankDirectionRadians);
-            tankPosRight.rotate(-mTankDirectionRadians);
+            //if (mTankDirectionRadians != 0)
+            {
+                tankPosRear.rotate(-mTankDirectionRadians);
+                tankPosFore.rotate(-mTankDirectionRadians);
+                tankPosLeft.rotate(-mTankDirectionRadians);
+                tankPosRight.rotate(-mTankDirectionRadians);
+            }
             
             // Convert to World coords by adding tank position
             Vec2f totalOffset = mTankPosition.xz() + (mGroundScale.xz() * 0.5f);
@@ -370,7 +371,10 @@ namespace bigscreens
             float radsAngleZ = atan2f(xOffset, yOffset);
             
             // Average
-            float prevOrientationWeight = 2.0f;
+            // Don't bother. Doesn't add to the look.
+            /*
+            float prevOrientationWeight = 0;//2.0f;
+            
             if (prevGroundOrientation.height == 0 &&
                 prevGroundOrientation.xAngleRads == 0 &&
                 prevGroundOrientation.zAngleRads == 0)
@@ -389,7 +393,13 @@ namespace bigscreens
             curGroundOrientation.xAngleRads = newAngleX;
             curGroundOrientation.height = newHeight;
             curGroundOrientation.zAngleRads = newAngleZ;
-
+             */
+            curGroundOrientation.xAngleRads = radsAngleX;
+            curGroundOrientation.height = height;
+            curGroundOrientation.zAngleRads = radsAngleZ;
+            
+            gl::rotate(toDegrees(mTankDirectionRadians), 0, 1, 0);
+            
             // Adjust the height
             gl::translate(Vec3f(0,curGroundOrientation.height,0));
             
@@ -398,12 +408,13 @@ namespace bigscreens
 
             // Adjsut the Z angle
             gl::rotate(toDegrees(curGroundOrientation.zAngleRads) - 90, 0, 0, 1);
-            
+
         }
+        /*
         else
         {
-            // console() << "WARN: Cant find ground texture\n";
-        }
+            console() << "WARN: Cant find ground texture for key: " << key << "\n";
+        }*/
         
         renderPositionedTank();
 
@@ -445,16 +456,19 @@ namespace bigscreens
         gl::translate(mMinionPosition);
         
         gl::scale(Vec3f(150,150,150));
-        gl::color(1, 0, 0);
+        gl::color(1, 0, 0, mRenderAlpha);
         gl::setDefaultShaderVars();
 
-        mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,1));
+        mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,mRenderAlpha));
 
         gl::popMatrices();
     }
     
     void TankContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
+        mRenderAlpha = 1;
+        mScreenAlpha = 1;
+        
         if (mContentID == -1)
         {
             console() << "WARN: Tank content doesn't have a contentID\n";

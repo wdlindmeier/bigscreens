@@ -32,6 +32,7 @@ namespace bigscreens
         float getValueAtPosition(const ci::Vec2f & position);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void preRender();
+        const ci::Vec2i getTextureSize();
         ci::gl::TextureRef getTextureRef();
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }
