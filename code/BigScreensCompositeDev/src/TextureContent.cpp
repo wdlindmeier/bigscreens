@@ -38,6 +38,7 @@ namespace bigscreens
     void TextureContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::bindStockShader(gl::ShaderDef().color());
+        gl::setMatricesWindow(getWindowSize());
         gl::enableAlphaBlending();
         gl::color(1,1,1,1);
         gl::setDefaultShaderVars();

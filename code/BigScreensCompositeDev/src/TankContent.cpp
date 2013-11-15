@@ -66,7 +66,7 @@ namespace bigscreens
         mIsGroundVisible = isVisible;
     }
     
-    void TankContent::load(const std::string & objFilename)
+    void TankContent::load()
     {
         
         mPerlinContent.reset();
@@ -201,8 +201,6 @@ namespace bigscreens
     
     void TankContent::drawGroundTile(const ci::Vec3i & plot, gl::TextureRef & heightMap)
     {
-        gl::disableAlphaBlending();
-        
         gl::pushMatrices();
         gl::setMatrices( mCam );
         // Scale to taste
@@ -214,10 +212,26 @@ namespace bigscreens
         
         mGroundPlane->setNoiseTexture(heightMap);
 
-		mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.5,0.5,0.5,1)); //true);
+        const static bool kDrawColorGround = false;
+		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,1));
         
         gl::popMatrices();
-        
+    }
+    
+    void TankContent::fireTankGun()
+    {
+        if (mContentID == -1)
+        {
+            console() << "ERROR: Tank content doesn't have a contentID\n";
+        }
+            
+        GroundOrientaion curGroundOrientation;
+        if (mTankGroundOrientations.find(mContentID) != mTankGroundOrientations.end())
+        {
+            curGroundOrientation = mTankGroundOrientations[mContentID];
+        }
+
+        mTank->fire(getTankPosition(), curGroundOrientation);
     }
     
     void TankContent::reset()
@@ -286,16 +300,15 @@ namespace bigscreens
     {
         gl::pushMatrices();
         gl::setMatrices( mCam );
-        
-        Vec3f prevGroundRelationship = Vec3f::zero();
-        if (mTankGroundRelationships.find(mContentID) != mTankGroundRelationships.end())
-        {
-            prevGroundRelationship = mTankGroundRelationships[mContentID];
-        }
-        Vec3f curGroundRelationship = prevGroundRelationship;
-
-        gl::pushMatrices();
         gl::translate(mTankPosition);
+
+        GroundOrientaion prevGroundOrientation;
+        if (mTankGroundOrientations.find(mContentID) != mTankGroundOrientations.end())
+        {
+            prevGroundOrientation = mTankGroundOrientations[mContentID];
+        }
+        GroundOrientaion curGroundOrientation = prevGroundOrientation;
+
         
         float key = KeyFromPlot(mGroundPlotCoords.x,
                                 mGroundPlotCoords.z);
@@ -358,23 +371,33 @@ namespace bigscreens
             
             // Average
             float prevOrientationWeight = 2.0f;
-            float newHeight = (prevGroundRelationship.y * prevOrientationWeight + height) / (prevOrientationWeight + 1.0f);
-            float newAngleX = (prevGroundRelationship.x * prevOrientationWeight + radsAngleX) / (prevOrientationWeight + 1.0f);
-            float newAngleZ = (prevGroundRelationship.z * prevOrientationWeight + radsAngleZ) / (prevOrientationWeight + 1.0f);
+            if (prevGroundOrientation.height == 0 &&
+                prevGroundOrientation.xAngleRads == 0 &&
+                prevGroundOrientation.zAngleRads == 0)
+            {
+                prevOrientationWeight = 0.f;
+            }
+
+            float newHeight = (prevGroundOrientation.height * prevOrientationWeight + height) /
+                              (prevOrientationWeight + 1.0f);
+            float newAngleX = (prevGroundOrientation.xAngleRads * prevOrientationWeight + radsAngleX) /
+                              (prevOrientationWeight + 1.0f);
+            float newAngleZ = (prevGroundOrientation.zAngleRads * prevOrientationWeight + radsAngleZ) /
+                              (prevOrientationWeight + 1.0f);
             
             // Perhaps we should use a more semantically meaningful struct
-            curGroundRelationship.x = newAngleX;
-            curGroundRelationship.y = newHeight;
-            curGroundRelationship.z = newAngleZ;
+            curGroundOrientation.xAngleRads = newAngleX;
+            curGroundOrientation.height = newHeight;
+            curGroundOrientation.zAngleRads = newAngleZ;
 
             // Adjust the height
-            gl::translate(Vec3f(0,curGroundRelationship.y,0));
+            gl::translate(Vec3f(0,curGroundOrientation.height,0));
             
             // Adjust the X angle
-            gl::rotate(toDegrees(curGroundRelationship.x) - 90, 1, 0, 0);
+            gl::rotate(toDegrees(curGroundOrientation.xAngleRads) - 90, 1, 0, 0);
 
             // Adjsut the Z angle
-            gl::rotate(toDegrees(curGroundRelationship.z) - 90, 0, 0, 1);
+            gl::rotate(toDegrees(curGroundOrientation.zAngleRads) - 90, 0, 0, 1);
             
         }
         else
@@ -382,19 +405,35 @@ namespace bigscreens
             // console() << "WARN: Cant find ground texture\n";
         }
         
-        mTank->render();
+        renderPositionedTank();
+
         gl::popMatrices();
 
+        mTankGroundOrientations[mContentID] = curGroundOrientation;
+    }
+    
+    void TankContent::renderPositionedTank()
+    {
+        gl::enableAdditiveBlending();
+        mTank->render();
+        gl::disableAlphaBlending();
+    }
+    
+    void TankContent::drawTankShots()
+    {
+        gl::enableAdditiveBlending();
+        // Shots are in world coords
+        gl::pushMatrices();
+        gl::setMatrices( mCam );
         mTank->renderShots(mCam);
         gl::popMatrices();
-        
-        mTankGroundRelationships[mContentID] = curGroundRelationship;
+        gl::disableAlphaBlending();
     }
     
     void TankContent::drawMinion()
     {
         // A simple spin around the tank.
-        // TODO: Make this more interesting
+        // TODO: Make this more interesting.
         
         gl::bindStockShader(gl::ShaderDef().color());
 
@@ -424,14 +463,20 @@ namespace bigscreens
         // clear out both of the attachments of the FBO with black
         gl::clear( ColorAf( 0.0f, 0.0f, 0.0f, 0.0f ) );
         
+        gl::disableDepthWrite();
+        gl::disableDepthRead();
+        gl::disableAlphaBlending();
+        
         drawScreen(contentRect);
-        
-        gl::enableDepthRead();
+
         gl::enableDepthWrite();
-        
+        gl::enableDepthRead();
+
         drawGround();
         
         drawTank();
+
+        drawTankShots();
         
         drawMinion();
         

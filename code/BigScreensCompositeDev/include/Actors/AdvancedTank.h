@@ -13,6 +13,7 @@
 #include "cinder/gl/VboMesh.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/TriMesh.h"
+#include "SharedTypes.hpp"
 #include "ObjModel.h"
 #include "TankShot.h"
 
@@ -33,7 +34,8 @@ public:
     AdvancedTank();
     ~AdvancedTank(){};
 
-    void fire(const ci::Vec3f & worldPosition);
+    void fire(const ci::Vec3f & worldPosition,
+              const GroundOrientaion & groundOrientation);
     void update(long progressCounter);
     void setFrameContentID(const int contentID);
     void render(const float alpha = 1.0);

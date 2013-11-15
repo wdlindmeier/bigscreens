@@ -14,9 +14,9 @@ using namespace ci::app;
 using namespace bigscreens;
 
 TankConvergenceContent::TankConvergenceContent() :
-TankContent()
+DumbTankContent()
 , mMSElapsedConvergence(0)
-, mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
+//, mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
 {
 //    mGroundContent = GroundContent(20000.0);
 };
@@ -25,7 +25,7 @@ void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
 {
     mMSElapsedConvergence = msElapsedConvergence;
 }
-
+/*
 void TankConvergenceContent::loadShaders()
 {
     TankContent::loadShaders();
@@ -35,7 +35,7 @@ void TankConvergenceContent::loadShaders()
     mTankShader = ci::gl::GlslProg::create( groundShaderFormat );
     mTankShader->uniform("uColor", Color::white());
 }
-
+*/
 CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
                                                               int regionCount,
                                                               long msOffset,
@@ -123,21 +123,15 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     
     drawTank();
 }
-
+/*
 void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
 {
     update_func(mCam, mDumbTank);
 }
-
+*/
 // NOTE: This draws a collection of tanks
 void TankConvergenceContent::drawTank()
 {
-    gl::pushMatrices();
-    gl::setMatrices( mCam );
-    
-    // NOTE: Using the dumb tank because there's a lot going on in this scene and
-    // we need to simplify it.
-    
     // Make the tanks ease into position
 
     mTankShader->bind();
@@ -150,12 +144,24 @@ void TankConvergenceContent::drawTank()
 
     gl::pushMatrices();
     gl::setMatrices( mCam );
- 
+
     mTankShader->uniform("uColor", ColorAf(1,1,1,mRenderAlpha));
 
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
+        
         TankOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
+
+        // This should work but it's not.
+        // TODO: Use height mapping
+        /*
+        
+        mTankPosition = tankOrient.position;
+        mTankDirectionRadians = toRadians(tankOrient.directionDegrees);
+        
+        TankContent::drawTank();
+        */
+
         drawSingleTankAtPosition(tankOrient.position,
                                  tankOrient.directionDegrees);
     }
@@ -166,7 +172,28 @@ void TankConvergenceContent::drawTank()
     vao->unbind();
     
     mTankShader->unbind();
+}
 
+void TankConvergenceContent::renderPositionedTank()
+{
+    gl::setDefaultShaderVars();
+    gl::drawElements(GL_LINES,
+                     mDumbTank->getMesh()->getNumIndices(),
+                     GL_UNSIGNED_INT, 0 );
+}
+
+void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float rotationDegrees)
+{
+    gl::pushMatrices();
+    gl::translate(position);
+    gl::rotate(rotationDegrees, 0, 1, 0);
+
+    gl::setDefaultShaderVars();
+    gl::drawElements(GL_LINES,
+                     mDumbTank->getMesh()->getNumIndices(),
+                     GL_UNSIGNED_INT, 0 );
+    
+    
     gl::popMatrices();
 }
 
@@ -216,26 +243,9 @@ void TankConvergenceContent::drawGround()
     gl::pushMatrices();
     gl::setMatrices( mCam );
     // Scale to taste
-    gl::scale(Vec3f(20000,400,20000));
+    gl::scale(Vec3f(10000,200,10000));
     // Center
     gl::translate(Vec3f(-0.5,0,-0.5));
     mGroundPlane->draw(mNumFramesRendered, false, ColorAf(0.75,0.75,0.75, mRenderAlpha));
-    gl::popMatrices();
-}
-
-void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float rotationDegrees)
-{
-    gl::pushMatrices();
-    gl::translate(position);
-    gl::rotate(rotationDegrees, 0, 1, 0);
-
-    // mTank->render(mRenderAlpha);
-    gl::setDefaultShaderVars();
-    gl::drawElements(GL_LINES,
-                     mDumbTank->getMesh()->getNumIndices(),
-                     //mTankMesh->getNumIndices(),
-                     GL_UNSIGNED_INT, 0 );
-    
-    
     gl::popMatrices();
 }

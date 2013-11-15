@@ -102,4 +102,17 @@ namespace bigscreens
         ci::Vec2f camShift;
     };
     
+    struct GroundOrientaion
+    {
+        float height = 0;
+        float xAngleRads = 0;
+        float zAngleRads = 0;
+    };
+    
+    struct TankOrientation
+    {
+        ci::Vec3f position;
+        float directionDegrees;
+    };
+    
 }

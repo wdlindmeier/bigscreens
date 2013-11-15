@@ -6,6 +6,8 @@
 //
 //
 
+#pragma once
+
 #include "cinder/Cinder.h"
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/Vao.h"
@@ -17,7 +19,6 @@
 
 namespace bigscreens
 {
-    
     class TextureContent : public bigscreens::RenderableContent
     {
         
@@ -26,11 +27,11 @@ namespace bigscreens
         TextureContent();
         ~TextureContent(){};
         
-        void load(const std::string & textureName);
-        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+        virtual void load(const std::string & textureName);
+        virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         ci::CameraPersp& getCamera() { return mCam; }
         
-    private:
+    protected:
         
         ci::gl::TextureRef  mTexture;
         ci::CameraPersp mCam;

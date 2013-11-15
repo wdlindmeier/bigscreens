@@ -31,7 +31,7 @@ void ConvergenceContent::setContentRect(const ci::Rectf & rect)
 void ConvergenceContent::load(const TransitionStyle style)
 {
     TankConvergenceContent *content = new TankConvergenceContent();
-    content->load("T72.obj");
+    content->load();
     content->reset();
     mContent = RenderableContentRef(content);
     mTransitionStyle = style;

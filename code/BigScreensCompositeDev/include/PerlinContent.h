@@ -14,11 +14,12 @@
 #include "SharedTypes.hpp"
 #include "cinder/Perlin.h"
 #include "cinder/Surface.h"
+#include "TextureContent.h"
 
 namespace bigscreens
 {
     
-    class PerlinContent : public bigscreens::RenderableContent
+    class PerlinContent : public TextureContent
     {
         
     public:
@@ -38,7 +39,7 @@ namespace bigscreens
         
     private:
         
-        ci::gl::TextureRef      mTexture;
+        //ci::gl::TextureRef      mTexture;
         ci::CameraPersp         mCam;
         ci::Surface             mNoiseSurface;
         int						mSeed;
