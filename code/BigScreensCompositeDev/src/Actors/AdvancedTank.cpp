@@ -75,7 +75,7 @@ void AdvancedTank::setFrameContentID(const int contentID)
 }
 
 void AdvancedTank::fire(const ci::Vec3f & worldPosition,
-                        const ci::Vec3f & groundRelationship)
+                        const GroundOrientaion & groundOrientation)
                         //const ci::Matrix44f & groundOrientation)
 {
     // NOTE: ContentID is reset after Render
@@ -104,7 +104,7 @@ void AdvancedTank::fire(const ci::Vec3f & worldPosition,
                                    targetVelocity,
                                    exitPoint,
                                    worldPosition,
-                                   groundRelationship,
+                                   groundOrientation,
                                    mTankShader,
                                    mContentID));
 }
@@ -146,14 +146,12 @@ void AdvancedTank::update(long progressCounter)
 
 void AdvancedTank::render(const float alpha)
 {
-    gl::enableAdditiveBlending();
-    
     mTankShader->bind();
 
     gl::setDefaultShaderVars();
     
     // NOTE: There are so many lines, we throttle the alpha to 0.25 max
-    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, 0.25 * alpha ));
+    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, 0.5 * alpha ));
 
     mBodyModel->render();
 
@@ -237,11 +235,13 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
 {
     // Draw the tip of the barrel for reference.
     // This can be the shot bloom.
-    gl::enableAdditiveBlending();
+    
 
     // mTankShader->bind();
     
     gl::bindStockShader(gl::ShaderDef().color());
+    gl::enableAdditiveBlending();
+    
     // gl::setDefaultShaderVars();
 
     // Draw the shot lines
@@ -258,7 +258,9 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
             shot.renderExplosion(cam);
         }
     }
-        
+    
+    gl::disableAlphaBlending();
+    
     //mTankShader->unbind();
     
     // Clear out the content ID

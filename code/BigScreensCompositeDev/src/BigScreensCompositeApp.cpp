@@ -20,6 +20,7 @@
 #include "FinalBillboard.h"
 #include "ConvergenceContent.h"
 #include "ContentProvider.h"
+#include "DumbTankContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -100,6 +101,7 @@ public:
     RenderableContentRef mSingleTankConvergeContent;
     RenderableContentRef mTextureContentBlank;
     RenderableContentRef mConvergenceContent;
+    RenderableContentRef mDumbTankContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -175,6 +177,7 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankContent>(mTankContent)->reset();
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
     static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
+    static_pointer_cast<DumbTankContent>(mDumbTankContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
     
@@ -207,7 +210,7 @@ void BigScreensCompositeApp::reload()
 void BigScreensCompositeApp::loadAssets()
 {
     TankContent *tank = new TankContent();
-    tank->load("T72.obj");
+    tank->load();
     mTankContent = RenderableContentRef(tank);
     
     ConvergenceContent *converge = new ConvergenceContent();
@@ -224,8 +227,12 @@ void BigScreensCompositeApp::loadAssets()
     mTextureContentBlank = RenderableContentRef(texBlank);
     
     TankConvergenceContent *tankConverge = new TankConvergenceContent();
-    tankConverge->load("T72.obj");
+    tankConverge->load();
     mSingleTankConvergeContent = RenderableContentRef(tankConverge);
+    
+    DumbTankContent *dumbTank = new DumbTankContent();
+    dumbTank->load();
+    mDumbTankContent = RenderableContentRef(dumbTank);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -278,10 +285,13 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     if (contentName == kContentKeyTankSpin ||
         contentName == kContentKeyTankOverhead ||
         contentName == kContentKeyTankWide ||
-        contentName == kContentKeyTankHorizon ||
         contentName == kContentKeyTankHeightmap )
     {
         return mTankContent;
+    }
+    else if (contentName == kContentKeyTankHorizon)
+    {
+        return mDumbTankContent;
     }
     else if (contentName == kContentKeyTanksConverge)
     {
@@ -471,7 +481,6 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
         
         // scene->setGroundOffset(tankGroundOffset);
-        
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->setTankPosition(tankPosition);
@@ -540,17 +549,17 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     else if (contentInfo.contentKey == kContentKeyTankHorizon)
     {
         // Tank content horizon shot
-        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        shared_ptr<DumbTankContent> scene = static_pointer_cast<DumbTankContent>(content);
+
         scene->setTankPosition(Vec3f(0, 0, -45000 * (1.0-(contentElapsedFrames/4000.0))));
         scene->setGroundIsVisible(false);
 
-        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+        scene->update([=](CameraPersp & cam, DumbTankRef & tank)
         {
-            tank->setWheelSpeedMultiplier(6);
+            // tank->setWheelSpeedMultiplier(6);
+            // if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
 
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
-
-            // Nearly flat
+            // Move the camera, not the tank
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
             float camX = -80000;
             float camY = 100;
@@ -558,6 +567,23 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             cam.lookAt(Vec3f( camX, camY, camZ ),
                        Vec3f( 0, camY, camZ ) );
         });
+        
+        /*
+        scene->setGroundIsVisible(true);
+        scene->resetPositions();
+        scene->setTankPosition(Vec3f(0, 0, 0));
+        
+        scene->update([=](CameraPersp & cam, DumbTankRef & tank)
+                      {
+                          cam.lookAt(Vec3f(0,
+                                           kTankBodyCenterY * 8,
+                                           -1000),
+                                     Vec3f(0,
+                                           kTankBodyCenterY,
+                                           0));
+                      });
+        */
+
     }
     else if (contentInfo.contentKey == kContentKeyTanksConverge)
     {
@@ -687,7 +713,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             ci::gl::scissor(contentOrigAndDim.first.x - screenOffset.x,
                             contentOrigAndDim.first.y - screenOffset.y,
                             contentOrigAndDim.second.x,
-                            contentOrigAndDim.second.y );
+                            contentOrigAndDim.second.y);
             
             if (renderMe.contentKey != kContentKeySingleTankConverge)
             {
@@ -718,8 +744,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
                 // Reset the viewport for the outline
                 ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
                                  contentOrigAndDim.first.y - screenOffset.y,
-                                 contentOrigAndDim.second.x,
-                                 contentOrigAndDim.second.y);
+                                 contentOrigAndDim.second.x,// - 1, // TEST: Does this (-1) fix the IAC jumbo?
+                                 contentOrigAndDim.second.y);// - 1);
 
             }
 

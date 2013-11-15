@@ -22,7 +22,7 @@ TankShot::TankShot(float angleRads,
                    float velocity,
                    const ci::Vec3f & initialPosition,
                    const ci::Vec3f & tankWorldPosition,
-                   const ci::Vec3f & groundRelationship,
+                   const GroundOrientaion & groundOrientation,
                    const gl::GlslProgRef & shader,
                    const int parentContentID) :
 mVelocity(velocity)
@@ -38,7 +38,7 @@ mVelocity(velocity)
 ,mMaxProgress(0)
 ,mContentID(parentContentID)
 ,mTankWorldPosition(tankWorldPosition)
-,mGroundRelationship(groundRelationship)
+,mGroundOrientation(groundOrientation)
 {
     mShotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
     if (!ExplosionTexture)
@@ -102,15 +102,15 @@ void TankShot::generateLine(const gl::GlslProgRef & shader)
         segPosition = shotQuat * segPosition;
         
         // Adjust for tank orientation
-        segPosition += Vec3f(0,mGroundRelationship.y,0);
-        segPosition.rotateX(mGroundRelationship.x - ci::toRadians(90.0f));
-        segPosition.rotateZ(mGroundRelationship.z - ci::toRadians(90.0f));
+        segPosition += Vec3f(0,mGroundOrientation.height,0);
+        segPosition.rotateX(mGroundOrientation.xAngleRads - ci::toRadians(90.0f));
+        segPosition.rotateZ(mGroundOrientation.zAngleRads - ci::toRadians(90.0f));
 
         // Adjust for world position
         segPosition += mTankWorldPosition;
         
         lineMesh.appendVertex(segPosition);
-        if (segPosition.y <= mGroundRelationship.y)
+        if (segPosition.y <= mGroundOrientation.height)
         {
             mMaxProgress = progress;
             didHitGround = true;

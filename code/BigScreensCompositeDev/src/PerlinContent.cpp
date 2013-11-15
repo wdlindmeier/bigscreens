@@ -21,11 +21,12 @@ namespace bigscreens
 {
     
     PerlinContent::PerlinContent() :
-    mSeed(clock() & 65535),
-	mOctaves(4),
-    mPosition(0,0),
-	mFrequency(1.0f / 20.0f),
-    mPerlin( mOctaves, mSeed )
+    TextureContent()
+    ,mSeed(clock() & 65535)
+	,mOctaves(4)
+    ,mPosition(0,0)
+	,mFrequency(1.0f / 20.0f)
+    ,mPerlin( mOctaves, mSeed )
     {
         Vec2i noiseSize(128,128);
         mNoiseSurface = Surface( noiseSize.x, noiseSize.y, false);
@@ -84,10 +85,13 @@ namespace bigscreens
     void PerlinContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         preRender();
+        TextureContent::render(screenOffset, contentRect);
+        /*
         gl::bindStockShader(gl::ShaderDef().color());
         gl::clear( ColorAf( 1.0f, 0.0f, 0.0f, 0.0f ) );
         Rectf screenRect(0, 0, getWindowWidth(), getWindowHeight());
         gl::draw(mTexture, screenRect);
+        */
     }
 	
 }

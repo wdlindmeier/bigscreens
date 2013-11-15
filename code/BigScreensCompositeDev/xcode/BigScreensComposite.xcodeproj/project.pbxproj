@@ -116,6 +116,9 @@
 		A9C3E34A1831444A003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E35B18347D01003C3DA5 /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
+		A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
+		A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
+		A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */; };
 		A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */; };
 		A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */; };
@@ -358,6 +361,8 @@
 		A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DumbTank.cpp; sourceTree = "<group>"; };
 		A9C3E32018304B54003C3DA5 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
 		A9C3E34818314439003C3DA5 /* tank_head_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_head_centered.obj; sourceTree = "<group>"; };
+		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
+		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
 		A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold.ttf"; sourceTree = "<group>"; };
 		A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Italic.ttf"; sourceTree = "<group>"; };
@@ -787,6 +792,7 @@
 			children = (
 				B3115C4D182D524200FB7D2F /* Actors */,
 				A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */,
+				A9C5C7A918358A1D000554D6 /* DumbTankContent.h */,
 				A97122BE181AF14F006DD64E /* PerlinContent.h */,
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
@@ -800,6 +806,7 @@
 			children = (
 				B3115C54182D527100FB7D2F /* Actors */,
 				A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */,
+				A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */,
 				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
@@ -1160,6 +1167,7 @@
 				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAD182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
@@ -1186,6 +1194,7 @@
 				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAE182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
@@ -1212,6 +1221,7 @@
 				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
+				A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAF182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,

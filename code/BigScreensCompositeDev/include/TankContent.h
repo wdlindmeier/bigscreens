@@ -23,7 +23,7 @@
 #include "PerlinContent.h"
 
 namespace bigscreens {
-	
+
 typedef std::shared_ptr<class TankContent> TankContentRef;
     
 class TankContent : public bigscreens::RenderableContent
@@ -40,7 +40,7 @@ public:
     ci::CameraPersp & getCamera();
     AdvancedTankRef & getTank();
     
-    virtual void load(const std::string & objFilename);
+    virtual void load();
     virtual void update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func);
     virtual void resetPositions();
     virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
@@ -58,6 +58,8 @@ protected:
     virtual void        drawScreen(const ci::Rectf & contentRect);
     virtual void        drawGround();
     virtual void        drawTank();
+    virtual void        renderPositionedTank();
+    virtual void        drawTankShots();
     virtual void        drawMinion();
     
     // Vars
@@ -88,7 +90,7 @@ protected:
     std::map<float, ci::gl::TextureRef> mGroundMaps;
     ci::Vec3f           mGroundScale;
     
-    std::map<int, ci::Vec3f> mTankGroundRelationships;
+    std::map<int, GroundOrientaion> mTankGroundOrientations;
     float               mTankDirectionRadians;
     
 };

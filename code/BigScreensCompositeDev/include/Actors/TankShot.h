@@ -13,6 +13,7 @@
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/TriMesh.h"
+#include "SharedTypes.hpp"
 
 namespace bigscreens
 {
@@ -32,7 +33,7 @@ public:
              float velocity,
              const ci::Vec3f & initialPosition,
              const ci::Vec3f & tankWorldPosition,
-             const ci::Vec3f & groundRelationship,
+             const GroundOrientaion & groundOrientation,
              const ci::gl::GlslProgRef & shader,
              const int parentContentID);
     
@@ -70,7 +71,7 @@ private:
     ci::Vec3f       mShotOrigin;
     ci::Vec3f       mCurrentPosition;
     ci::Vec3f       mPointOfExplosion;
-    ci::Vec3f       mGroundRelationship;
+    GroundOrientaion mGroundOrientation;
     
     ci::gl::VaoRef  mLineVao;
     ci::gl::VboRef  mLineVbo;
