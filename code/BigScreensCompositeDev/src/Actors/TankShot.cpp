@@ -14,54 +14,68 @@ using namespace bigscreens;
 // TODO: Make a shared asset manager
 static gl::TextureRef ExplosionTexture;
 
+// Calculate Shot Mats
+const static Vec3f kShotAxis(0,0,1);
+const static Vec3f kAngleAxis(1,0,0);
+const static Vec3f kSpinAxis(0,1,0);
+
 // Dont use this brah
 TankShot::TankShot(){};
 
-TankShot::TankShot(float angleRads,
-                   float yRotationRads,
-                   float velocity,
-                   const ci::Vec3f & initialPosition,
-                   const ci::Vec3f & tankWorldPosition,
+TankShot::TankShot(const PositionOrientation & tankPosition,
                    const GroundOrientaion & groundOrientation,
+                   float barrelDirectionRads,
+                   float barrelAngleRads,
+                   float velocity,
                    const gl::GlslProgRef & shader,
                    const int parentContentID) :
 mVelocity(velocity)
-,mYRotationRads(yRotationRads)
-,mThetaRads(angleRads)
+, mTankMat(ci::Matrix44f::identity())
+, mGunMat(ci::Matrix44f::identity())
 ,mProgress(0)
-,mInitialPosition(initialPosition)
 ,mHasExploded(false)
-,mCurrentPosition(initialPosition)
 ,mPointOfExplosion(0,0,0)
+,mShotOrigin(0,0,0)
 ,mExplosionScale(1)
 ,mIsDead(false)
 ,mMaxProgress(0)
 ,mContentID(parentContentID)
-,mTankWorldPosition(tankWorldPosition)
 ,mGroundOrientation(groundOrientation)
+,mTankOrientation(tankPosition)
 {
-    mShotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
     if (!ExplosionTexture)
     {
         ExplosionTexture = gl::Texture::create(loadImage(ci::app::loadResource("explosion.png")));
     }
+    
+    mTankMat = Matrix44f::identity();
+    
+    // Tank Mat
+    // Adjust to tank orientation
+    mTankMat.rotate(Vec3f(0, 1, 0), toRadians(tankPosition.directionDegrees));
+    // Adjust the height
+    mTankMat.translate(Vec3f(0, groundOrientation.height, 0));
+    // X & Y angles
+    mTankMat.rotate(Vec3f(1, 0, 0), groundOrientation.xAngleRads - (M_PI * 0.5));
+    mTankMat.rotate(Vec3f(0, 0, 1), groundOrientation.zAngleRads - (M_PI * 0.5));
+    
+    // Gun Mat
+    mGunMat = Matrix44f::identity();
+    // Barrel Spin rotation
+    mGunMat.rotate(kSpinAxis, barrelDirectionRads);
+    // Raise to barrel height
+    mGunMat.translate(Vec3f(0,kTankBarrelOffsetY,0));
+    // Barrel shot angle
+    mGunMat.rotate(kAngleAxis, barrelAngleRads);
+    // Get the distance
+    float x = cos(barrelAngleRads) * kTankBarrelLength;
+    float y = sin(barrelAngleRads) * kTankBarrelLength;
+    float dist = sqrt(x*x + y*y);
+    // Barrel length (tip) (on Z axis)
+    mGunMat.translate(kShotAxis * dist);
+
     generateLine(shader);
 };
-
-float TankShot::getVelocity()
-{
-    return mVelocity;
-}
-
-float TankShot::getThetaRads()
-{
-    return mThetaRads;
-}
-
-float TankShot::getProgress()
-{
-    return mProgress;
-}
 
 int TankShot::getContentID()
 {
@@ -73,57 +87,62 @@ bool TankShot::isDead()
     return mIsDead;
 }
 
-ci::Vec2f TankShot::progressAt(float amount)
-{
-    float y = mVelocity*sin(mThetaRads)*amount - 0.5*kGravity*amount*amount;  // altitude
-    float x = mVelocity*cos(mThetaRads)*amount;  // downrange
-    return Vec2f(x,y);
-}
-
 const static float kLineProgressInterval = 0.5;
 
 void TankShot::generateLine(const gl::GlslProgRef & shader)
 {
     TriMesh::Format meshFormat = TriMesh::Format().positions();
     TriMesh lineMesh(meshFormat);
+
+    Matrix44f tankGunTransformMat = mTankMat * mGunMat;
+    Vec3f shotOrigin = tankGunTransformMat.transformPoint(Vec3f(0,0,0));
+    
+    Vec3f barrelBase = Vec3f(0,kTankBarrelOffsetY,0);
+    barrelBase = mTankMat.transformPoint(barrelBase);
+
+    Vec3f relativeOrigin = shotOrigin - barrelBase;
+    float roY = relativeOrigin.y;
+    float roX = Vec3f(relativeOrigin.x, 0, relativeOrigin.z).distance(Vec3f::zero());
+    float shotTheta = atan2(roY, roX);
     
     bool didHitGround = false;
     float progress = 0;
-
-    Quatf shotQuat = ci::Quatf(Vec3f(0,1,0), mYRotationRads);
+    
+    Vec3f worldOffset = mTankOrientation.position;
 
     while(!didHitGround)
     {
-        Vec2f segOffset = progressAt(progress);
-
-        Vec3f segPosition = mInitialPosition + Vec3f(0, segOffset.y, segOffset.x);
-
-        // Rotate around the Y axis to account for shot direction
-        segPosition = shotQuat * segPosition;
+        float shotY = mVelocity*sin(shotTheta)*progress;
+        float shotX = mVelocity*cos(shotTheta)*progress;
+        // Converts the X to whatever the shot axis is
+        Vec3f shotPos = Vec3f(0,shotY,0) + (Vec3f(shotX,shotX,shotX) * kShotAxis);
         
-        // Adjust for tank orientation
-        segPosition += Vec3f(0,mGroundOrientation.height,0);
-        segPosition.rotateX(mGroundOrientation.xAngleRads - ci::toRadians(90.0f));
-        segPosition.rotateZ(mGroundOrientation.zAngleRads - ci::toRadians(90.0f));
-
-        // Adjust for world position
-        segPosition += mTankWorldPosition;
+        shotPos += Vec3f(0,roY,roX);
         
-        lineMesh.appendVertex(segPosition);
-        if (segPosition.y <= mGroundOrientation.height)
+        float relativeAngle = atan2(relativeOrigin.z, relativeOrigin.x);
+        shotPos.rotate(Vec3f(0,1,0), -relativeAngle + (M_PI * 0.5));
+        
+        // NOTE: Added world offset here...
+        Vec3f worldPos = barrelBase + shotPos + worldOffset;
+        worldPos.y -= 0.5*kGravity*progress*progress;
+        
+        lineMesh.appendVertex(worldPos);
+        
+        // NOTE: We could check for the height at this x,z but it's probably overkill right now.
+        if (worldPos.y <= mGroundOrientation.height)
         {
             mMaxProgress = progress;
             didHitGround = true;
-            mPointOfExplosion = segPosition;
+            mPointOfExplosion = worldPos;
         }
         
         if (progress == 0)
         {
-            mShotOrigin = segPosition;
+            mShotOrigin = worldPos;
         }
         
         progress += kLineProgressInterval;
-        
+
     }
     
     mLineVao = gl::Vao::create();
@@ -183,11 +202,6 @@ void TankShot::renderLine()
 
     mLineVbo->unbind();
     mLineVao->unbind();
-}
-
-void TankShot::render()
-{
-    //...
 }
 
 void TankShot::renderMuzzleFlare(ci::CameraPersp & cam)

@@ -457,11 +457,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         
         // Center / still
         scene->setTankPosition(Vec3f::zero());
-        
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(0);
+
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            tank->setWheelSpeedMultiplier(0);
-            
             if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
             
             float camX = cosf(tankRotation) * 1000;
@@ -484,12 +484,13 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->setTankPosition(tankPosition);
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(6);
 
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
             // Zoom in and out
-            tank->setWheelSpeedMultiplier(6);
-            
+
             if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
             
             float camZ = tankPosition.z + (tankDistance * 1000);
@@ -510,11 +511,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->setGroundIsVisible(true);
         scene->resetPositions();
         scene->setTankPosition(tankPosition);
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(6);
 
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            tank->setWheelSpeedMultiplier(6);
-
             if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
 
             float camX, camY, camZ;
@@ -556,9 +557,6 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
         scene->update([=](CameraPersp & cam, DumbTankRef & tank)
         {
-            // tank->setWheelSpeedMultiplier(6);
-            // if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
-
             // Move the camera, not the tank
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
             float camX = -80000;
@@ -611,14 +609,18 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Heightmap
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        Vec3f tankPosition = scene->getTankPosition() + Vec3f(0, 0, 20);
-        scene->setTankPosition(tankPosition);
+
+        Vec3f tankPosition(contentElapsedFrames * 5, 0, contentElapsedFrames * 10);
+        float theta = atan2(tankPosition.x, tankPosition.z);
+        scene->setTankPosition(tankPosition, theta);
+        
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(6);
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
             if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
-
-            tank->setWheelSpeedMultiplier(6);
-            cam.lookAt(Vec3f( 0, 600, -1000 ) + tankPosition,
+            
+            cam.lookAt(Vec3f( 0, 1200, -1000 ) + tankPosition,
                        Vec3f( 0, 100, 0 ) + tankPosition);
         });
 

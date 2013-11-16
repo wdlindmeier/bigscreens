@@ -29,7 +29,7 @@ namespace bigscreens
         DumbTankContent();
         ~DumbTankContent(){};
         /*
-        static TankOrientation positionForTankWithProgress(const int tankNum,
+        static PositionOrientation positionForTankWithProgress(const int tankNum,
                                                            long msOffset);
         static CameraOrigin cameraForTankConvergence(int regionIndex,
                                                      int regionCount,

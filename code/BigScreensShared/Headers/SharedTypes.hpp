@@ -109,10 +109,10 @@ namespace bigscreens
         float zAngleRads = 0;
     };
     
-    struct TankOrientation
+    struct PositionOrientation
     {
-        ci::Vec3f position;
-        float directionDegrees;
+        ci::Vec3f position = ci::Vec3f::zero();
+        float directionDegrees = 0;
     };
     
 }

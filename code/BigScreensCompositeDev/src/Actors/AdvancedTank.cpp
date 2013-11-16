@@ -74,7 +74,7 @@ void AdvancedTank::setFrameContentID(const int contentID)
     mContentID = contentID;
 }
 
-void AdvancedTank::fire(const ci::Vec3f & worldPosition,
+void AdvancedTank::fire(const PositionOrientation & position,
                         const GroundOrientaion & groundOrientation)
                         //const ci::Matrix44f & groundOrientation)
 {
@@ -85,10 +85,10 @@ void AdvancedTank::fire(const ci::Vec3f & worldPosition,
         return;
     }
     
-    float targetVelocity = 200.0f;
+    const static float kShotVelocity = 200.0f;
     
-    console() << "Firing w/ velocity " << targetVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
-    
+    console() << "Firing w/ velocity " << kShotVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
+    /*
     float shotTheta = toRadians(mBarrelAngleDeg);
     float offZ = cos(shotTheta) * kTankBarrelLength;
     float offY = sin(shotTheta) * kTankBarrelLength;
@@ -96,17 +96,27 @@ void AdvancedTank::fire(const ci::Vec3f & worldPosition,
     Vec3f exitPoint(0,
                     kTankBarrelOffsetY + offY,
                     offZ + (kTankHeadOffsetZ * 2));
-    
     float yRotRads = toRadians(mHeadRotationDeg);
+     
+     mShotsFired.push_back(TankShot(shotTheta,
+     yRotRads,
+     targetVelocity,
+     exitPoint,
+     worldPosition,
+     groundOrientation,
+     mTankShader,
+     mContentID));
 
-    mShotsFired.push_back(TankShot(shotTheta,
-                                   yRotRads,
-                                   targetVelocity,
-                                   exitPoint,
-                                   worldPosition,
+     */
+
+    mShotsFired.push_back(TankShot(position,
                                    groundOrientation,
+                                   toRadians(mHeadRotationDeg),
+                                   toRadians(mBarrelAngleDeg),
+                                   kShotVelocity,
                                    mTankShader,
                                    mContentID));
+    
 }
 
 void AdvancedTank::update(long progressCounter)
@@ -126,15 +136,15 @@ void AdvancedTank::update(long progressCounter)
     }
 
     // TODO: Make the angle more intentional
-    mBarrelAngleDeg = 10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f);
+    mBarrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
     
-    mHeadRotationDeg = toDegrees(radsTarget); //(mBarrelAngleDeg * -2) + mBarrelAngleDeg;
+    mHeadRotationDeg = toDegrees(radsTarget);
 
     vector<TankShot> keepTanks;
     for (TankShot & shot : mShotsFired)
     {
-        // TODO: Make this absolute, not relative?
-        // Each tank needs an array of shots
+        // Make this absolute, not relative?
+        // Maybe this is fine if it's always being updated on the frame.
         shot.update(0.2f);
         if (!shot.isDead())
         {
@@ -164,7 +174,7 @@ void AdvancedTank::render(const float alpha)
         gl::pushMatrices();
         gl::translate(Vec3f(0.0f, kTankBarrelOffsetY, 0.0f));
         gl::translate(Vec3f(0, 0, kTankHeadOffsetZ));
-        gl::rotate(mBarrelAngleDeg * -1, 1, 0, 0);
+        gl::rotate(mBarrelAngleDeg, 1, 0, 0);
         mBarrelModel->render();
         gl::popMatrices();
     

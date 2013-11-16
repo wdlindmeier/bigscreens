@@ -132,6 +132,9 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     if (progress >= kFinalSceneProgressBegin &&
         mTransitionStyle == TRANSITION_FADE)
     {
+        static const int kLastContentID = 9999;
+        mContent->setFrameContentID(kLastContentID);
+        
         // This uses the final cam
         // TODO: Use a dumb tank multiplier
         tanks->update([=](CameraPersp & cam, DumbTankRef & tank)
@@ -163,6 +166,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         for (int i = 0; i < regionCount; ++i)
         {
             ScreenRegion & region = regions[i];
+            mContent->setFrameContentID(region.timelineID);
             
             if (rectsOverlap(region.rect, screenRect))
             // if (rectsOverlap(region.rect, mContentRect))
