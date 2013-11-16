@@ -273,7 +273,7 @@ void CinderProjectApp::draw()
     // Get the distance
     float x = cos(barrelTheta) * kBarrelLength;
     float y = sin(barrelTheta) * kBarrelLength;
-    float dist = sqrt(x*x + y*y);
+    float dist = kBarrelLength;//sqrt(x*x + y*y);
     // Barrel length (tip) (on Z axis)
     mGunMat.translate(shotAxis * dist);
     

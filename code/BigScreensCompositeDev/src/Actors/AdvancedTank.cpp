@@ -76,7 +76,6 @@ void AdvancedTank::setFrameContentID(const int contentID)
 
 void AdvancedTank::fire(const PositionOrientation & position,
                         const GroundOrientaion & groundOrientation)
-                        //const ci::Matrix44f & groundOrientation)
 {
     // NOTE: ContentID is reset after Render
     if (mContentID < 0)
@@ -88,26 +87,6 @@ void AdvancedTank::fire(const PositionOrientation & position,
     const static float kShotVelocity = 200.0f;
     
     console() << "Firing w/ velocity " << kShotVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
-    /*
-    float shotTheta = toRadians(mBarrelAngleDeg);
-    float offZ = cos(shotTheta) * kTankBarrelLength;
-    float offY = sin(shotTheta) * kTankBarrelLength;
-    
-    Vec3f exitPoint(0,
-                    kTankBarrelOffsetY + offY,
-                    offZ + (kTankHeadOffsetZ * 2));
-    float yRotRads = toRadians(mHeadRotationDeg);
-     
-     mShotsFired.push_back(TankShot(shotTheta,
-     yRotRads,
-     targetVelocity,
-     exitPoint,
-     worldPosition,
-     groundOrientation,
-     mTankShader,
-     mContentID));
-
-     */
 
     mShotsFired.push_back(TankShot(position,
                                    groundOrientation,
@@ -126,14 +105,6 @@ void AdvancedTank::update(long progressCounter)
     
     // Aim the head at the target
     float radsTarget = atan2f(mTargetPosition.x, mTargetPosition.z);
-    float radsHead = toRadians(mHeadRotationDeg);
-    // Lerp towards the target
-    if (fabs(radsTarget - radsHead) < M_PI)
-    {
-        // NOTE: Only lerp if we're not crossing the 0° threshold.
-        // That causes a jump. This probably wont be obvious.
-        radsTarget = ci::lerp(radsTarget, toRadians(mHeadRotationDeg), 0.25);
-    }
 
     // TODO: Make the angle more intentional
     mBarrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
@@ -245,14 +216,9 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
 {
     // Draw the tip of the barrel for reference.
     // This can be the shot bloom.
-    
 
-    // mTankShader->bind();
-    
     gl::bindStockShader(gl::ShaderDef().color());
     gl::enableAdditiveBlending();
-    
-    // gl::setDefaultShaderVars();
 
     // Draw the shot lines
     gl::disableDepthRead();
@@ -270,14 +236,6 @@ void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
             shot.renderExplosion(cam);
         }
     }
-    //gl::disableDepthRead();
-    //gl::disableDepthWrite();
-    
+
     gl::disableAlphaBlending();
-    
-    //mTankShader->unbind();
-    
-    // Clear out the content ID
-    // Let the parent do this
-    // mContentID = -1;
 }

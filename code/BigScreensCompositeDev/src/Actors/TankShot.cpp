@@ -63,8 +63,14 @@ mVelocity(velocity)
     mGunMat = Matrix44f::identity();
     // Barrel Spin rotation
     mGunMat.rotate(kSpinAxis, barrelDirectionRads);
+
     // Raise to barrel height
     mGunMat.translate(Vec3f(0,kTankBarrelOffsetY,0));
+    
+    // Account for the gun/head offset
+    // NOTE: This could also go before raising to the height
+    mGunMat.translate(Vec3f(0, 0, kTankHeadOffsetZ));
+
     // Barrel shot angle
     mGunMat.rotate(kAngleAxis, barrelAngleRads);
     // Get the distance
@@ -73,7 +79,7 @@ mVelocity(velocity)
     float dist = sqrt(x*x + y*y);
     // Barrel length (tip) (on Z axis)
     mGunMat.translate(kShotAxis * dist);
-
+    
     generateLine(shader);
 };
 
