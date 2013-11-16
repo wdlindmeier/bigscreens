@@ -318,8 +318,8 @@ void MinionGeometry::loadBuffers()
 void MinionGeometry::loadShaders()
 {
     mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
-                                     .vertex( /*LoadShader("minion.vert" )*/ ci::app::loadAsset( "minion.vert" ) )
-                                     .fragment( /*LoadShader("minion.frag" )*/ ci::app::loadAsset( "minion.frag" ) ) );
+                                     .vertex( ci::app::loadAsset( "minion.vert" ) )
+                                     .fragment( ci::app::loadAsset( "minion.frag" ) ) );
 }
 	
 void MinionGeometry::calcGeometry()
