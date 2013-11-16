@@ -14,7 +14,7 @@
 #include "FloorPlane.h"
 #include "Opponent.h"
 #include "TankContent.h"
-#include "GroundContent.h"
+//#include "GroundContent.h"
 #include "DumbTank.h"
 
 namespace bigscreens {
@@ -51,7 +51,7 @@ namespace ActorContent {
 		if( !masterFloorPlane )
         {
             ci::app::console() << "Initting Ground Plane\n";
-			masterFloorPlane = FloorPlaneRef( new FloorPlane() );
+			masterFloorPlane = FloorPlaneRef( new FloorPlane(ci::Vec2i(50,50)) );
 		}
         return masterFloorPlane;
 	}
@@ -78,17 +78,6 @@ namespace ActorContent {
         return masterMinion;
 	}
 
-    static GroundContentRef getGroundContent()
-	{
-		static GroundContentRef masterGround;
-		if( !masterGround )
-        {
-            ci::app::console() << "Initting Ground Content\n";
-			masterGround = GroundContentRef( new GroundContent(10000) );
-		}
-        return masterGround;
-	}
-    
     static DumbTankRef getDumbTank()
 	{
 		static DumbTankRef masterDumbTank;

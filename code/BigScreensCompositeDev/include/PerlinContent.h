@@ -14,11 +14,12 @@
 #include "SharedTypes.hpp"
 #include "cinder/Perlin.h"
 #include "cinder/Surface.h"
+#include "TextureContent.h"
 
 namespace bigscreens
 {
     
-    class PerlinContent : public bigscreens::RenderableContent
+    class PerlinContent : public TextureContent
     {
         
     public:
@@ -28,8 +29,10 @@ namespace bigscreens
         
         void update(const ci::Vec2f & move);
         void generateNoiseForPosition(const ci::Vec2f & position);
+        float getValueAtPosition(const ci::Vec2f & position);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void preRender();
+        const ci::Vec2i getTextureSize();
         ci::gl::TextureRef getTextureRef();
         void reset();
         ci::CameraPersp& getCamera() { return mCam; }
@@ -37,7 +40,7 @@ namespace bigscreens
         
     private:
         
-        ci::gl::TextureRef      mTexture;
+        //ci::gl::TextureRef      mTexture;
         ci::CameraPersp         mCam;
         ci::Surface             mNoiseSurface;
         int						mSeed;

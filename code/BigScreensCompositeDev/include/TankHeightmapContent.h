@@ -29,16 +29,17 @@ namespace bigscreens
         virtual void loadGround();
         virtual void loadShaders();
 
-        void generateGroundMaps();
         virtual void drawGround();
-        void drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
 
         // Ground plane
-        ci::gl::GlslProgRef mHeightmapShader;
-        
-        PerlinContent       mPerlinContent;
-        ci::Vec3i           mPlotCoords;
-        std::vector<ci::gl::TextureRef> mGroundMaps;
+        ci::gl::GlslProgRef             mHeightmapShader;
+        GroundContent                   mGroundContent;
 
+        void generateGroundMaps();
+        void drawGroundTile(const ci::Vec3i & plot, ci::gl::TextureRef & heightMap);
+
+        PerlinContent                   mPerlinContent;
+        ci::Vec3i                       mPlotCoords;
+        std::vector<ci::gl::TextureRef> mGroundMaps;
     };
 }

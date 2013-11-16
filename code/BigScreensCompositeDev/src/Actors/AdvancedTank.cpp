@@ -7,6 +7,7 @@
 //
 
 #include "AdvancedTank.h"
+#include "cinder/gl/Shader.h"
 
 using namespace ci;
 using std::vector;
@@ -73,7 +74,9 @@ void AdvancedTank::setFrameContentID(const int contentID)
     mContentID = contentID;
 }
 
-void AdvancedTank::fire()
+void AdvancedTank::fire(const ci::Vec3f & worldPosition,
+                        const GroundOrientaion & groundOrientation)
+                        //const ci::Matrix44f & groundOrientation)
 {
     // NOTE: ContentID is reset after Render
     if (mContentID < 0)
@@ -92,7 +95,7 @@ void AdvancedTank::fire()
     
     Vec3f exitPoint(0,
                     kTankBarrelOffsetY + offY,
-                    offZ + kTankHeadOffsetZ);
+                    offZ + (kTankHeadOffsetZ * 2));
     
     float yRotRads = toRadians(mHeadRotationDeg);
 
@@ -100,6 +103,8 @@ void AdvancedTank::fire()
                                    yRotRads,
                                    targetVelocity,
                                    exitPoint,
+                                   worldPosition,
+                                   groundOrientation,
                                    mTankShader,
                                    mContentID));
 }
@@ -139,16 +144,14 @@ void AdvancedTank::update(long progressCounter)
     mShotsFired = keepTanks;
 }
 
-void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
+void AdvancedTank::render(const float alpha)
 {
-    gl::enableAdditiveBlending();
-    
     mTankShader->bind();
 
     gl::setDefaultShaderVars();
     
     // NOTE: There are so many lines, we throttle the alpha to 0.25 max
-    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, 0.25 * alpha ));
+    mTankShader->uniform("uColor", ColorAf( 1, 1, 1, 0.5 * alpha ));
 
     mBodyModel->render();
 
@@ -223,55 +226,44 @@ void AdvancedTank::render(ci::CameraPersp & cam, const float alpha)
     gl::rotate(mWheelRotation, 1, 0, 0);
     mWheelModel->render();
     gl::popMatrices();
+    
+    mTankShader->unbind();
+    
+}
 
+void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
+{
     // Draw the tip of the barrel for reference.
     // This can be the shot bloom.
-    gl::enableAdditiveBlending();
-
-    /*
-    float offX = cos(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
-    float offY = sin(toRadians(mBarrelAngleDeg)) * kTankBarrelLength;
-    Vec3f barrelHead(0, kTankBarrelOffsetY + offY, 0 + offX);
-    */
     
+
+    // mTankShader->bind();
+    
+    gl::bindStockShader(gl::ShaderDef().color());
+    gl::enableAdditiveBlending();
+    
+    // gl::setDefaultShaderVars();
+
     // Draw the shot lines
     for (TankShot & shot : mShotsFired)
     {
         if (shot.getContentID() == mContentID)
         {
-            gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
+            //gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
+            gl::color(ColorAf(1, 0, 0, 1.0f));
             shot.renderLine();
-
+            
             gl::color(1,1,1,alpha);
             shot.renderMuzzleFlare(cam);
             shot.renderExplosion(cam);
         }
     }
     
-    /*
-//    // Draw the shot projectiles
-//    mTankShader->uniform("uColor", ColorAf(1, 0, 0, alpha));
-//    for (TankShot & shot : mShotsFired)
-//    {
-//        shot.render();
-//    }
-
-    // Draw the muzzle flare
-    for (TankShot & shot : mShotsFired)
-    {
-        shot.renderMuzzleFlare(cam);
-    }
-
-    // Draw the shot explosions
-    for (TankShot & shot : mShotsFired)
-    {
-        shot.renderExplosion(cam);
-    }
-    */
+    gl::disableAlphaBlending();
     
-    mTankShader->unbind();
+    //mTankShader->unbind();
     
     // Clear out the content ID
-    mContentID = -1;
-
+    // Let the parent do this
+    // mContentID = -1;
 }

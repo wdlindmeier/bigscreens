@@ -9,12 +9,16 @@ uniform bool chooseColor;
 in VS_OUT
 {
     vec4 color;
+    float fog;
+    
 } gs_in[4];
 
 out GS_OUT
 {
     flat vec4 color[4];
     vec2 uv;
+    float fog;
+    
 } gs_out;
 
 float rand(vec2 co){
@@ -35,16 +39,21 @@ int random(int seed, int iterations)
 
 void main(void)
 {
+    
+    
     gl_Position = gl_in[0].gl_Position;
     gs_out.uv = vec2(1.0, 0.0);
+    gs_out.fog = gs_in[0].fog;
     EmitVertex();
     
     gl_Position = gl_in[1].gl_Position;
     gs_out.uv = vec2(0.0, 0.0);
+    gs_out.fog = gs_in[1].fog;
     EmitVertex();
     
     gl_Position = gl_in[2].gl_Position;
     gs_out.uv = vec2(0.0, 1.0);
+    gs_out.fog = gs_in[2].fog;
     
     // We're only writing the output color for the last
     // vertex here because they're flat attributes,
@@ -68,15 +77,18 @@ void main(void)
     
     gl_Position = gl_in[0].gl_Position;
     gs_out.uv = vec2(1.0, 0.0);
+    gs_out.fog = gs_in[0].fog;
     EmitVertex();
     
     gl_Position = gl_in[2].gl_Position;
     gs_out.uv = vec2(0.0, 1.0);
+    gs_out.fog = gs_in[2].fog;
     EmitVertex();
     
     gl_Position = gl_in[3].gl_Position;
     gs_out.uv = vec2(1.0, 1.0);
-	
+	gs_out.fog = gs_in[3].fog;
+    
 	if( chooseColor ) {
 		int r = random(999991929, 4) % 4;
 		gs_out.color[0] = gs_in[r].color;

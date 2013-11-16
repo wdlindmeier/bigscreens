@@ -1,8 +1,8 @@
 //
-//  TankConvergenceContent.h
+//  DumbTankContent.h
 //  BigScreensComposite
 //
-//  Created by William Lindmeier on 10/31/13.
+//  Created by William Lindmeier on 11/14/13.
 //
 //
 
@@ -16,21 +16,19 @@
 #include "cinder/gl/GlslProg.h"
 #include "SharedTypes.hpp"
 #include "TankContent.h"
-#include "DumbTankContent.h"
 #include "cinder/TriMesh.h"
 #include "ContentProvider.h"
 
 namespace bigscreens
 {
-    static const int kNumTanksConverging = 20;
-    
-    class TankConvergenceContent : public DumbTankContent
+    class DumbTankContent : public TankContent
     {
         
     public:
         
-        TankConvergenceContent();
-        ~TankConvergenceContent(){};
+        DumbTankContent();
+        ~DumbTankContent(){};
+        /*
         static TankOrientation positionForTankWithProgress(const int tankNum,
                                                            long msOffset);
         static CameraOrigin cameraForTankConvergence(int regionIndex,
@@ -38,28 +36,31 @@ namespace bigscreens
                                                      long msOffset,
                                                      const ci::Vec2i & masterSize,
                                                      const ci::Rectf & regionRect);
-        
-        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
-        void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
-        
-
-        // void update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func);
-        // void drawGround();
-        virtual void updateGroundCoordsForTank();
+        */
+        // virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
+        // void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
+        virtual void update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func);
+        /*
+        void drawGround();
         void setMSElapsed(const long msElapsedConvergence);
         void drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
-        // virtual void loadShaders();
-
+        */
+        virtual void loadShaders();
+        
     protected:
-
-        void drawTank();
-        void renderPositionedTank();
-        void drawSingleTankAtPosition(const ci::Vec3f & position, const float rotationDegrees);
         
+        // virtual void drawTank();
+        virtual void drawMinion();
+        virtual void drawTankShots();
+        virtual void renderPositionedTank();
+        //void drawSingleTankAtPosition(const ci::Vec3f & position, const float rotationDegrees);
+        /*
+        float mRenderAlpha;
+        float mScreenAlpha;
         long mMSElapsedConvergence;
-        
-        // DumbTankRef mDumbTank;
-        // ci::gl::GlslProgRef mTankShader;
+        */
+        DumbTankRef mDumbTank;
+        ci::gl::GlslProgRef mTankShader;
         
     };
 }

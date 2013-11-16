@@ -3,6 +3,7 @@
 
 uniform mat4 projection;
 uniform mat4 modelView;
+uniform vec2 dimensions;
 uniform int colorOffset;
 uniform float divideNum;
 
@@ -16,8 +17,8 @@ layout (location = 0) in vec3 position;
 
 void main(void)
 {
-    // NOTE: There are a lot of magic numbers in here.
-    // We should make all scale/position/count values uniforms and shader numbers are all unit scalars.
+  // NOTE: use the Triangle Vert Shader so they stay in sync
+  /*
 	nearLimit;
 	int modulatedX = (int(position.x) + colorOffset) % count;
 		
@@ -32,5 +33,5 @@ void main(void)
 	else {
 		gl_Position = projection * modelView * vec4( position.x, position.y + heightPixel * 4, position.z, 1.0 );
 	}
-	
+	*/
 }

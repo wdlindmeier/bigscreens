@@ -19,9 +19,15 @@ namespace bigscreens
     class RenderableContent
     {
     public:
+        RenderableContent() : mContentID(-1), mNumFramesRendered(0){};
         virtual ~RenderableContent(){};
         virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect) = 0;
-        virtual void setFramesRendered(const long long numFramesRendered){ mNumFramesRendered = numFramesRendered; };
+        void setFramesRendered(const long long numFramesRendered){ mNumFramesRendered = numFramesRendered; };
+        // NOTE: Set a tmp content ID before rendering
+        // and before firing a shot. All shots are tied to
+        // a specific content ID.
+        // Content ID is cleared after the tank has been rendered.
+        virtual void setFrameContentID(const int contentID){ mContentID = contentID; };
         // This is to manipulate the aspect ratio
 		// so that we can use different windows
 		// for our content.
@@ -29,6 +35,7 @@ namespace bigscreens
         
     protected:
         long long mNumFramesRendered;
+        int mContentID;
     };
 
     typedef std::shared_ptr<class RenderableContent> RenderableContentRef;
@@ -93,6 +100,19 @@ namespace bigscreens
         ci::Vec3f eye;
         ci::Vec3f target;
         ci::Vec2f camShift;
+    };
+    
+    struct GroundOrientaion
+    {
+        float height = 0;
+        float xAngleRads = 0;
+        float zAngleRads = 0;
+    };
+    
+    struct TankOrientation
+    {
+        ci::Vec3f position;
+        float directionDegrees;
     };
     
 }

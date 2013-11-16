@@ -57,16 +57,6 @@ namespace bigscreens
     {
         return (rectA.x1 < rectB.x2 && rectA.x2 > rectB.x1 &&
                 rectA.y1 < rectB.y2 && rectA.y2 > rectB.y1);
-        /*
-        return rectA.contains(rectB.getUpperLeft()) ||
-        rectA.contains(rectB.getUpperRight()) ||
-        rectA.contains(rectB.getLowerLeft()) ||
-        rectA.contains(rectB.getLowerRight()) ||
-        rectB.contains(rectA.getUpperLeft()) ||
-        rectB.contains(rectA.getUpperRight()) ||
-        rectB.contains(rectA.getLowerLeft()) ||
-        rectB.contains(rectA.getLowerRight());
-        */
     };
     
     static bool rectIsValid(const ci::Rectf & rect,
@@ -135,6 +125,9 @@ namespace bigscreens
     {
         return SharedAssetPath(isLocalApp) / "grid";
     }
+    
+    // Doesn't barf when the uniform doesnt exist
+    #define TryAddingUniform(glsl, name, data) try { glsl->uniform( name, data ); } catch (cinder::gl::GlslUnknownUniform){}
 
     template <typename T>
     bool VectorFind(const std::vector<T> & vec, T item)
