@@ -50,7 +50,7 @@ CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
     float camYOffsetInterval = 500.0f / regionCount;
     float camZOffsetInterval = camXOffsetInterval;
     
-    TankOrientation tankOrient = TankConvergenceContent::positionForTankWithProgress(regionIndex, msOffset);
+    PositionOrientation tankOrient = TankConvergenceContent::positionForTankWithProgress(regionIndex, msOffset);
     Vec3f tankPos = tankOrient.position;
     
     CameraOrigin orig;
@@ -74,7 +74,7 @@ CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
     return orig;
 }
 
-TankOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long msOffset)
+PositionOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long msOffset)
 {
     float scalarProgress = 1.0 - std::min<float>(1.0, (float)msOffset / (float)kMSFullConvergence);
     float weightedProgress = scalarProgress * scalarProgress;
@@ -93,7 +93,7 @@ TankOrientation TankConvergenceContent::positionForTankWithProgress(const int ta
     float x = cos(rads) * tankDist;
     float y = 0;
     float z = sin(rads) * tankDist;
-    TankOrientation orientation;
+    PositionOrientation orientation;
     orientation.position = Vec3f(x,y,z);
 
     // This is always a circle
@@ -165,11 +165,11 @@ void TankConvergenceContent::drawTank()
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
-        
-        TankOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
+        PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
 
-        mTankPosition = tankOrient.position;
-        mTankDirectionRadians = toRadians(tankOrient.directionDegrees);
+        setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
+        //mTankPosition = tankOrient.position;
+        //mTankDirectionRadians = toRadians(tankOrient.directionDegrees);
         
         TankContent::drawTank();
 

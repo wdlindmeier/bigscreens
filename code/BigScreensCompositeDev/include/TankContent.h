@@ -35,7 +35,7 @@ public:
     virtual ~TankContent(){};
     
     void setGroundIsVisible(bool isVisible);
-    void setTankPosition(const ci::Vec3f tankPosition);
+    void setTankPosition(const ci::Vec3f tankPosition, const float directionRadians = 0);
     ci::Vec3f getTankPosition();
     ci::CameraPersp & getCamera();
     AdvancedTankRef & getTank();
@@ -69,7 +69,8 @@ protected:
     
     ci::CameraPersp		mCam;
 
-    ci::Vec3f           mTankPosition;
+    //ci::Vec3f           mTankPosition;
+    //float               mTankDirectionRadians;
     ci::Vec3f           mMinionPosition;
 
 	AdvancedTankRef		mTank;
@@ -90,8 +91,10 @@ protected:
     std::map<float, ci::gl::TextureRef> mGroundMaps;
     ci::Vec3f           mGroundScale;
     
+    // NOTE: These could all be wrapped up in a "Tank State" struct
     std::map<int, GroundOrientaion> mTankGroundOrientations;
-    float               mTankDirectionRadians;
+    std::map<int, PositionOrientation> mPositionOrientations;
+    //std::map<int, float> mWheelSpeeds;
     float               mRenderAlpha;
     float               mScreenAlpha;
     

@@ -24,8 +24,8 @@ namespace bigscreens
     
     TankContent::TankContent() :
     RenderableContent()
-    , mTankDirectionRadians(0)
-    , mTankPosition(0,0,0)
+//    , mTankDirectionRadians(0)
+//    , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
     , mMinion( ContentProviderNew::ActorContent::getMinion() )
@@ -41,14 +41,30 @@ namespace bigscreens
         mTank->setFrameContentID(contentID);
     };
     
-    void TankContent::setTankPosition(const ci::Vec3f tankPosition)
+    void TankContent::setTankPosition(const ci::Vec3f tankPosition, const float directionRadians)
     {
-        mTankPosition = tankPosition;
+        if (mContentID == -1)
+        {
+            console() << "ERROR: Can't set position. Tank content doesn't have a contentID\n";
+        }
+        else
+        {
+            PositionOrientation orientation;
+            orientation.position = tankPosition;
+            orientation.directionDegrees = toDegrees(directionRadians);
+            mPositionOrientations[mContentID] = orientation;
+        }
     }
     
     ci::Vec3f TankContent::getTankPosition()
     {
-        return mTankPosition;
+        if (mContentID == -1)
+        {
+            console() << "ERROR: Can't find position. Tank content doesn't have a contentID\n";
+            return Vec3f::zero();
+        }
+        PositionOrientation orientation = mPositionOrientations[mContentID];
+        return orientation.position;
     }
     
     ci::CameraPersp & TankContent::getCamera()
@@ -68,15 +84,10 @@ namespace bigscreens
     
     void TankContent::load()
     {
-        
         mPerlinContent.reset();
-
         loadShaders();
-        
         loadScreen();
-
         mCam.lookAt( Vec3f( 0, 200, 1000 ), Vec3f( 0, 100, 0 ) );
-
     }
     
     void TankContent::loadShaders()
@@ -156,9 +167,10 @@ namespace bigscreens
     
     void TankContent::updateGroundCoordsForTank()
     {
+        Vec3f tankPosition = getTankPosition();
         // Get the current plot
-        int plotX = (mTankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
-        int plotZ = (mTankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
+        int plotX = (tankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
+        int plotZ = (tankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
         
         if (mGroundPlotCoords.x != plotX || mGroundPlotCoords.z != plotZ || mGroundMaps.size() == 0)
         {
@@ -220,15 +232,22 @@ namespace bigscreens
         if (mContentID == -1)
         {
             console() << "ERROR: Tank content doesn't have a contentID\n";
+            return;
         }
             
         GroundOrientaion curGroundOrientation;
+        PositionOrientation position;
         if (mTankGroundOrientations.find(mContentID) != mTankGroundOrientations.end())
         {
             curGroundOrientation = mTankGroundOrientations[mContentID];
+            position = mPositionOrientations[mContentID];
         }
-
-        mTank->fire(getTankPosition(), curGroundOrientation);
+        
+        // NOTE: Should this be stored in a collection?
+        
+        //orientation.position = mTankPosition;
+        //orientation.directionDegrees = toDegrees(mTankDirectionRadians);
+        mTank->fire(position, curGroundOrientation);
     }
     
     void TankContent::reset()
@@ -240,27 +259,26 @@ namespace bigscreens
     {
         mCam.setPerspective( 45.0f, getWindowAspectRatio(), .01, 40000 );
         mTank->setWheelSpeedMultiplier(kDefaultTankWheelSpeedMulti);
-        mTankPosition = Vec3f::zero();
+        //mTankPosition = Vec3f::zero();
     }
 
     // Lets the app take control of the cam.
     void TankContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
     {
+        Vec3f tankPosition = getTankPosition();
         // TODO: Make the minion behavior more interesting
-        Vec3f minionTargetPosition = mTankPosition + Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
+        Vec3f minionTargetPosition = tankPosition + Vec3f(cos(mNumFramesRendered * -0.01) * 2000,
                                                            800,
                                                            sin(mNumFramesRendered * -0.01) * 2000);        
         mMinionPosition = minionTargetPosition;
         
         // NOTE: The target position is relative to the tank
-        mTank->setTargetPosition(mMinionPosition - mTankPosition);
-        
-        update_func(mCam, mTank);
-        
-        // NOTE: Wheel speed comes from the update llamba, so keep
-        // tank update after that.
-        mTank->update(mNumFramesRendered);
+        mTank->setTargetPosition(mMinionPosition - tankPosition);
 
+        // NOTE: Keep this before the update llambda so the user has access to the current state
+        mTank->update(mNumFramesRendered);
+        
+        update_func(mCam, mTank);        
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -295,28 +313,21 @@ namespace bigscreens
     
     void TankContent::drawTank()
     {
+        PositionOrientation tankOrient = mPositionOrientations[mContentID];
+        GroundOrientaion groundOrient = mTankGroundOrientations[mContentID];
+        
         gl::pushMatrices();
+        
         gl::setMatrices( mCam );
-        gl::translate(mTankPosition);
 
-        GroundOrientaion prevGroundOrientation;
-        if (mTankGroundOrientations.find(mContentID) != mTankGroundOrientations.end())
+        gl::translate(tankOrient.position);
+
+        if (mIsGroundVisible)
         {
-            prevGroundOrientation = mTankGroundOrientations[mContentID];
-        }
-        GroundOrientaion curGroundOrientation = prevGroundOrientation;
-        /*
-        float key = KeyFromPlot(mGroundPlotCoords.x,
-                                mGroundPlotCoords.z);
-        */
-        float height = 0;
-        //if (mGroundMaps.find(key) != mGroundMaps.end())
-        {
-            // NOTE: This is just used to get the dimensions of the texture
-            // gl::TextureRef currentGround = mGroundMaps[key];
+            float height = 0;
+        
             Vec2i textureSize = mPerlinContent.getTextureSize();
-            // mGroundMaps[key]->getSize();
-            
+        
             // Get Model Sampling Coords
             float xPosLeft = kTankBodyWidth*-0.5;
             float xPosRight = kTankBodyWidth*0.5;
@@ -332,16 +343,14 @@ namespace bigscreens
             Vec2f tankPosRight(xPosRight, zMid);
             
             // Rotate arond Zero depending upon the direction
-            //if (mTankDirectionRadians != 0)
-            {
-                tankPosRear.rotate(-mTankDirectionRadians);
-                tankPosFore.rotate(-mTankDirectionRadians);
-                tankPosLeft.rotate(-mTankDirectionRadians);
-                tankPosRight.rotate(-mTankDirectionRadians);
-            }
+            float directionRads = toRadians(tankOrient.directionDegrees);
+            tankPosRear.rotate(-directionRads);
+            tankPosFore.rotate(-directionRads);
+            tankPosLeft.rotate(-directionRads);
+            tankPosRight.rotate(-directionRads);
             
             // Convert to World coords by adding tank position
-            Vec2f totalOffset = mTankPosition.xz() + (mGroundScale.xz() * 0.5f);
+            Vec2f totalOffset = tankOrient.position.xz() + (mGroundScale.xz() * 0.5f);
             tankPosRear += totalOffset;
             tankPosFore += totalOffset;
             tankPosLeft += totalOffset;
@@ -369,58 +378,30 @@ namespace bigscreens
             float xOffset = kTankBodyWidth;
             yOffset = heightLeft - heightRight;
             float radsAngleZ = atan2f(xOffset, yOffset);
+        
+            // Update the orientation
+            groundOrient.xAngleRads = radsAngleX;
+            groundOrient.height = height;
+            groundOrient.zAngleRads = radsAngleZ;
             
-            // Average
-            // Don't bother. Doesn't add to the look.
-            /*
-            float prevOrientationWeight = 0;//2.0f;
-            
-            if (prevGroundOrientation.height == 0 &&
-                prevGroundOrientation.xAngleRads == 0 &&
-                prevGroundOrientation.zAngleRads == 0)
-            {
-                prevOrientationWeight = 0.f;
-            }
-
-            float newHeight = (prevGroundOrientation.height * prevOrientationWeight + height) /
-                              (prevOrientationWeight + 1.0f);
-            float newAngleX = (prevGroundOrientation.xAngleRads * prevOrientationWeight + radsAngleX) /
-                              (prevOrientationWeight + 1.0f);
-            float newAngleZ = (prevGroundOrientation.zAngleRads * prevOrientationWeight + radsAngleZ) /
-                              (prevOrientationWeight + 1.0f);
-            
-            // Perhaps we should use a more semantically meaningful struct
-            curGroundOrientation.xAngleRads = newAngleX;
-            curGroundOrientation.height = newHeight;
-            curGroundOrientation.zAngleRads = newAngleZ;
-             */
-            curGroundOrientation.xAngleRads = radsAngleX;
-            curGroundOrientation.height = height;
-            curGroundOrientation.zAngleRads = radsAngleZ;
-            
-            gl::rotate(toDegrees(mTankDirectionRadians), 0, 1, 0);
+            gl::rotate(tankOrient.directionDegrees, 0, 1, 0);
             
             // Adjust the height
-            gl::translate(Vec3f(0,curGroundOrientation.height,0));
+            gl::translate(Vec3f(0,groundOrient.height,0));
             
             // Adjust the X angle
-            gl::rotate(toDegrees(curGroundOrientation.xAngleRads) - 90, 1, 0, 0);
+            gl::rotate(toDegrees(groundOrient.xAngleRads) - 90, 1, 0, 0);
 
             // Adjsut the Z angle
-            gl::rotate(toDegrees(curGroundOrientation.zAngleRads) - 90, 0, 0, 1);
-
+            gl::rotate(toDegrees(groundOrient.zAngleRads) - 90, 0, 0, 1);
+            
         }
-        /*
-        else
-        {
-            console() << "WARN: Cant find ground texture for key: " << key << "\n";
-        }*/
-        
+
         renderPositionedTank();
 
         gl::popMatrices();
 
-        mTankGroundOrientations[mContentID] = curGroundOrientation;
+        mTankGroundOrientations[mContentID] = groundOrient;
     }
     
     void TankContent::renderPositionedTank()
