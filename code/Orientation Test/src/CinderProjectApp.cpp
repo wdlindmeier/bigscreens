@@ -14,16 +14,25 @@ class CinderProjectApp : public AppNative {
   public:
 	void setup();
 	void mouseDown( MouseEvent event );
+    void keyDown(KeyEvent event);
     void mouseDrag(cinder::app::MouseEvent event);
 	void update();
 	void draw();
     void drawGun();
+    void drawShot();
+    void createShotMat();
     
     CameraPersp mCam;
     
     float mTankDirectionRadians;
     float mBarrelDirectionRadians;
+    float mShotProgress;
     
+    Matrix44f mTankMat;
+    Matrix44f mGunMat;
+    
+    Matrix44f mShotTankMat;
+    Matrix44f mShotGunMat;
 };
 
 void CinderProjectApp::setup()
@@ -38,7 +47,18 @@ void CinderProjectApp::setup()
     Vec3f camTarget = Vec3f::zero();
     //mCam.setLensShift(Vec2f(0,-0.35));
     mCam.lookAt(camEye, camTarget);
+    
+    mShotProgress = 0;
+}
 
+void CinderProjectApp::keyDown(KeyEvent event)
+{
+    if (event.getChar() == ' ')
+    {
+        mShotTankMat = mTankMat;
+        mShotGunMat = mGunMat;
+        mShotProgress = 0;
+    }
 }
 
 void CinderProjectApp::mouseDrag(cinder::app::MouseEvent event)
@@ -64,6 +84,7 @@ void CinderProjectApp::mouseDown( MouseEvent event )
 
 void CinderProjectApp::update()
 {
+    mShotProgress += 0.1;
 }
 
 float HeightForXZ(float x, float z)
@@ -75,6 +96,12 @@ float HeightForXZ(float x, float z)
 static const float kBarrelYOffset = 100;
 static const float kBarrelAngleDegrees = -15;
 static const float kBarrelLength = 200;
+
+// Calculate Shot Mats
+const static double kGravity = 9.81;
+const static Vec3f shotAxis(0,0,1);
+const static Vec3f angleAxis(1,0,0);
+const static Vec3f spinAxis(0,1,0);
 
 void CinderProjectApp::draw()
 {
@@ -150,7 +177,6 @@ void CinderProjectApp::draw()
                             xPosRight + 10,
                             heightBR + 10));
     gl::popMatrices();
-
     
     mTankDirectionRadians += 0.003;
     
@@ -159,8 +185,7 @@ void CinderProjectApp::draw()
     Vec2f tankPosLeft(xPosLeft, zMid);
     Vec2f tankPosRight(xPosRight, zMid);
     
-    const static float kTankY = -20;
-    
+
     // Rotate arond Zero depending upon the direction
     if (mTankDirectionRadians != 0)
     {
@@ -220,75 +245,82 @@ void CinderProjectApp::draw()
                  Vec3f(200,10,200));
     
     drawGun();
-    
+
     gl::popMatrices();
     
-    Vec3f shotWorldPosition(50,0,50); // FPO
-    Vec3f shotAxis(0,0,1);
-    Vec3f angleAxis(1,0,0);
-    Vec3f spinAxis(0,1,0);
+    mTankMat = Matrix44f::identity();
     
-    Matrix44f tankTransformMat = Matrix44f::identity();
-    
-    // Start with inactive barrel orientation
-    // Vec3f shotVec = shotAxis;
-
+    // Tank Mat
     // TAKEN FROM ABOVE
     // Adjust to tank orientation
-    tankTransformMat.rotate(Vec3f(0, 1, 0), mTankDirectionRadians);
-    
+    mTankMat.rotate(Vec3f(0, 1, 0), mTankDirectionRadians);
     // Adjust the height
-    //
-    tankTransformMat.translate(Vec3f(0, tankHeight, 0));
-    
-    tankTransformMat.rotate(Vec3f(1, 0, 0), radsAngleX - (M_PI * 0.5));
-    tankTransformMat.rotate(Vec3f(0, 0, 1), radsAngleZ - (M_PI * 0.5));
+    mTankMat.translate(Vec3f(0, tankHeight, 0));
+    // X & Y angles
+    mTankMat.rotate(Vec3f(1, 0, 0), radsAngleX - (M_PI * 0.5));
+    mTankMat.rotate(Vec3f(0, 0, 1), radsAngleZ - (M_PI * 0.5));
     // END TAKEN FROM ABOVE
 
-    Matrix44f gunTransformMat = Matrix44f::identity();
+    // Gun Mat
+    mGunMat = Matrix44f::identity();
     // Barrel Spin rotation
-    // shotVec.rotate(spinAxis, mBarrelDirectionRadians);
-    gunTransformMat.rotate(spinAxis, mBarrelDirectionRadians);
-
+    mGunMat.rotate(spinAxis, mBarrelDirectionRadians);
     // Raise to barrel height
-    // shotVec += ...;
-    gunTransformMat.translate(Vec3f(0,kBarrelYOffset,0));
-
+    mGunMat.translate(Vec3f(0,kBarrelYOffset,0));
     // Barrel shot angle (-50)
-    // shotVec.rotate(shotAxis, toRadians(kBarrelAngleDegrees));
-    float theta = toRadians(kBarrelAngleDegrees);
-    gunTransformMat.rotate(angleAxis, theta);
-    
+    float barrelTheta = toRadians(kBarrelAngleDegrees);
+    mGunMat.rotate(angleAxis, barrelTheta);
     // Get the distance
-    float x = cos(theta) * kBarrelLength;
-    float y = sin(theta) * kBarrelLength;
+    float x = cos(barrelTheta) * kBarrelLength;
+    float y = sin(barrelTheta) * kBarrelLength;
     float dist = sqrt(x*x + y*y);
-    
     // Barrel length (tip) (on Z axis)
-    // shotVec += shotAxis * kBarrelLength;
-    gunTransformMat.translate(shotAxis * dist); //kBarrelLength);
-
-    //Vec3f shotOrigin = tankTransformMat.transformPoint(Vec3f(0,0,0));
-    Matrix44f tankGunTransformMat = tankTransformMat * gunTransformMat;
+    mGunMat.translate(shotAxis * dist);
     
+    drawShot();
+}
+
+void CinderProjectApp::drawShot()
+{
+    // Draw the shot
+    
+//    mShotTankMat = mTankMat;
+//    mShotGunMat = mGunMat;
+
+    Matrix44f tankGunTransformMat = mShotTankMat * mShotGunMat;
+
     Vec3f shotOrigin = tankGunTransformMat.transformPoint(Vec3f(0,0,0));
-    Vec3f shotTrajectory = tankGunTransformMat.transformPoint(shotAxis * 100);
-    
-    // Vec3f shotTrajectory = transformMat.transformPoint(Vec3f(1,1,1));//(shotAxis);
 
+    float velocity = 100;
+
+    Vec3f barrelBase = Vec3f(0,kBarrelYOffset,0);
+    barrelBase = mShotTankMat.transformPoint(barrelBase);
+    gl::drawCube(barrelBase, Vec3f(10, 10, 10));
+    
+    Vec3f relativeOrigin = shotOrigin - barrelBase;
+    float roY = relativeOrigin.y;
+    float roX = Vec3f(relativeOrigin.x, 0, relativeOrigin.z).distance(Vec3f::zero());
+    float shotTheta = atan2(roY, roX);
+    
+    float shotY = velocity*sin(shotTheta)*mShotProgress;
+    float shotX = velocity*cos(shotTheta)*mShotProgress;
+    // Converts the X to whatever the shot axis is
+    Vec3f shotPos = Vec3f(0,shotY,0) + (Vec3f(shotX,shotX,shotX) * shotAxis);
+
+    shotPos += Vec3f(0,roY,roX);
+    
+    float relativeAngle = atan2(relativeOrigin.z, relativeOrigin.x);
+    shotPos.rotate(Vec3f(0,1,0), -relativeAngle + (M_PI * 0.5));
+    
+    Vec3f worldPos = barrelBase + shotPos;
+    worldPos.y -= 0.5*kGravity*mShotProgress*mShotProgress;
+    
     gl::drawCube(shotOrigin,
                  Vec3f(20,20,20));
     
-    gl::drawCube(shotTrajectory,
+    gl::drawCube(worldPos,
                  Vec3f(10,10,10));
-    
-    /*
-    gl::drawCube(shotOrigin + (shotTrajectory.normalized() * 100.0f),
-                 Vec3f(10,10,10));
-    */
-    
-    // TODO
-    // Apply world position
+
 }
 
 void CinderProjectApp::drawGun()
@@ -301,7 +333,7 @@ void CinderProjectApp::drawGun()
     gl::translate(Vec3f(0, kBarrelYOffset, 0));
     
     // Pivot point
-    gl::drawCube(Vec3f(0, 0, 0), Vec3f(10, 10, 10));
+    // gl::drawCube(Vec3f(0, 0, 0), Vec3f(10, 10, 10));
 
     // Direction
     gl::rotate(toDegrees(mBarrelDirectionRadians), 0, 1, 0);
