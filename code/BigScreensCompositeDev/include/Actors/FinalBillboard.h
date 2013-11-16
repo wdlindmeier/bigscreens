@@ -62,8 +62,8 @@ public:
 	{
 		ci::gl::GlslProg::Format mEffectsFormat;
         // NOTE: See SharedShaderAssetPath to toggle dynamic shader loading
-        mEffectsFormat.vertex( LoadShader("finalEffects.vert") )
-		.fragment( LoadShader("finalEffects.frag") );
+        mEffectsFormat.vertex( ci::app::loadAsset( "finalEffects.vert" ) )
+		.fragment( ci::app::loadAsset( "finalEffects.frag" ) );
 
 		mEffectsGlsl = ci::gl::GlslProg::create( mEffectsFormat );
 	}

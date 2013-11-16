@@ -22,10 +22,13 @@
 		B3115D07182EA2C900FB7D2F /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */; };
 		B3115D08182EA2C900FB7D2F /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B3115D00182EA2C900FB7D2F /* oppDynamic.geom */; };
 		B3115D09182EA2C900FB7D2F /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115D01182EA2C900FB7D2F /* oppDynamic.vert */; };
-		B3115D0A182EA2C900FB7D2F /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115D02182EA2C900FB7D2F /* oppSmoke.frag */; };
-		B3115D0B182EA2C900FB7D2F /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115D03182EA2C900FB7D2F /* oppSmoke.vert */; };
+		B3115D0A182EA2C900FB7D2F /* renderOppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3115D02182EA2C900FB7D2F /* renderOppSmoke.frag */; };
+		B3115D0B182EA2C900FB7D2F /* renderOppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3115D03182EA2C900FB7D2F /* renderOppSmoke.vert */; };
 		B324D1231831BCFF00A7A9F0 /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B324D1211831BCFF00A7A9F0 /* Opponent.cpp */; };
 		B324D1241831BCFF00A7A9F0 /* OpponentGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */; };
+		B324D14B1833F01800A7A9F0 /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B324D14A1833F01800A7A9F0 /* smoke_blur.png */; };
+		B324D14D18358D5500A7A9F0 /* SmokeEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B324D14C18358D5500A7A9F0 /* SmokeEffect.cpp */; };
+		B349E38218369AFC008E5592 /* updateOppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38118369AFC008E5592 /* updateOppSmoke.vert */; };
 		B3EA21101830126D0093F5C8 /* minion.vert in Sources */ = {isa = PBXBuildFile; fileRef = B3EA210F1830126D0093F5C8 /* minion.vert */; };
 		B3EA2112183012800093F5C8 /* minion.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2111183012800093F5C8 /* minion.frag */; };
 		B3EA2116183020770093F5C8 /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B3EA2114183020770093F5C8 /* finalEffects.frag */; };
@@ -59,15 +62,18 @@
 		B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.frag; path = ../assets/oppDynamic.frag; sourceTree = "<group>"; };
 		B3115D00182EA2C900FB7D2F /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.geom; path = ../assets/oppDynamic.geom; sourceTree = "<group>"; };
 		B3115D01182EA2C900FB7D2F /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.vert; path = ../assets/oppDynamic.vert; sourceTree = "<group>"; };
-		B3115D02182EA2C900FB7D2F /* oppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.frag; path = ../assets/oppSmoke.frag; sourceTree = "<group>"; };
-		B3115D03182EA2C900FB7D2F /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.vert; path = ../assets/oppSmoke.vert; sourceTree = "<group>"; };
+		B3115D02182EA2C900FB7D2F /* renderOppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppSmoke.frag; path = ../assets/renderOppSmoke.frag; sourceTree = "<group>"; };
+		B3115D03182EA2C900FB7D2F /* renderOppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppSmoke.vert; path = ../assets/renderOppSmoke.vert; sourceTree = "<group>"; };
 		B324D11D1831BCEA00A7A9F0 /* FinalBillboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinalBillboard.h; path = ../../BigScreensCompositeDev/include/Actors/FinalBillboard.h; sourceTree = "<group>"; };
 		B324D11E1831BCEA00A7A9F0 /* Opponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Opponent.h; path = ../../BigScreensCompositeDev/include/Actors/Opponent.h; sourceTree = "<group>"; };
 		B324D11F1831BCEA00A7A9F0 /* OpponentGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OpponentGeometry.h; path = ../../BigScreensCompositeDev/include/Actors/OpponentGeometry.h; sourceTree = "<group>"; };
-		B324D1201831BCEA00A7A9F0 /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SmokeEffect.hpp; path = ../../BigScreensCompositeDev/include/Actors/SmokeEffect.hpp; sourceTree = "<group>"; };
+		B324D1201831BCEA00A7A9F0 /* SmokeEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SmokeEffect.h; path = ../../BigScreensCompositeDev/include/Actors/SmokeEffect.h; sourceTree = "<group>"; };
 		B324D1211831BCFF00A7A9F0 /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Opponent.cpp; path = ../../BigScreensCompositeDev/src/Actors/Opponent.cpp; sourceTree = "<group>"; };
 		B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpponentGeometry.cpp; path = ../../BigScreensCompositeDev/src/Actors/OpponentGeometry.cpp; sourceTree = "<group>"; };
 		B324D1251831BD0E00A7A9F0 /* Utilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = ../../BigScreensShared/Headers/Utilities.hpp; sourceTree = "<group>"; };
+		B324D14A1833F01800A7A9F0 /* smoke_blur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smoke_blur.png; path = ../assets/smoke_blur.png; sourceTree = "<group>"; };
+		B324D14C18358D5500A7A9F0 /* SmokeEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmokeEffect.cpp; path = ../../BigScreensCompositeDev/src/Actors/SmokeEffect.cpp; sourceTree = "<group>"; };
+		B349E38118369AFC008E5592 /* updateOppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = updateOppSmoke.vert; path = ../assets/updateOppSmoke.vert; sourceTree = "<group>"; };
 		B3EA210F1830126D0093F5C8 /* minion.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.vert; path = ../assets/minion.vert; sourceTree = "<group>"; };
 		B3EA2111183012800093F5C8 /* minion.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.frag; path = ../assets/minion.frag; sourceTree = "<group>"; };
 		B3EA2114183020770093F5C8 /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.frag; path = ../assets/finalEffects.frag; sourceTree = "<group>"; };
@@ -171,6 +177,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B324D14A1833F01800A7A9F0 /* smoke_blur.png */,
 				B3EA210F1830126D0093F5C8 /* minion.vert */,
 				B3EA2111183012800093F5C8 /* minion.frag */,
 				B3115CFE182EA2C900FB7D2F /* oppBasic.vert */,
@@ -179,8 +186,9 @@
 				B3115D01182EA2C900FB7D2F /* oppDynamic.vert */,
 				B3115D00182EA2C900FB7D2F /* oppDynamic.geom */,
 				B3115CFF182EA2C900FB7D2F /* oppDynamic.frag */,
-				B3115D03182EA2C900FB7D2F /* oppSmoke.vert */,
-				B3115D02182EA2C900FB7D2F /* oppSmoke.frag */,
+				B349E38118369AFC008E5592 /* updateOppSmoke.vert */,
+				B3115D03182EA2C900FB7D2F /* renderOppSmoke.vert */,
+				B3115D02182EA2C900FB7D2F /* renderOppSmoke.frag */,
 				B3EA2114183020770093F5C8 /* finalEffects.frag */,
 				B3EA2115183020770093F5C8 /* finalEffects.vert */,
 				7203BA9ECC0F40BB9DEC010F /* CinderApp.icns */,
@@ -217,9 +225,10 @@
 				B324D11D1831BCEA00A7A9F0 /* FinalBillboard.h */,
 				B324D11E1831BCEA00A7A9F0 /* Opponent.h */,
 				B324D11F1831BCEA00A7A9F0 /* OpponentGeometry.h */,
-				B324D1201831BCEA00A7A9F0 /* SmokeEffect.hpp */,
+				B324D1201831BCEA00A7A9F0 /* SmokeEffect.h */,
 				B324D1211831BCFF00A7A9F0 /* Opponent.cpp */,
 				B324D1221831BCFF00A7A9F0 /* OpponentGeometry.cpp */,
+				B324D14C18358D5500A7A9F0 /* SmokeEffect.cpp */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -284,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B324D14B1833F01800A7A9F0 /* smoke_blur.png in Resources */,
 				595120D4485D4714A17957AA /* CinderApp.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,10 +309,12 @@
 				B3EA21101830126D0093F5C8 /* minion.vert in Sources */,
 				B3115D04182EA2C900FB7D2F /* oppBasic.frag in Sources */,
 				B3EA212A183177590093F5C8 /* renderOppDynamic.frag in Sources */,
-				B3115D0A182EA2C900FB7D2F /* oppSmoke.frag in Sources */,
+				B324D14D18358D5500A7A9F0 /* SmokeEffect.cpp in Sources */,
+				B3115D0A182EA2C900FB7D2F /* renderOppSmoke.frag in Sources */,
+				B349E38218369AFC008E5592 /* updateOppSmoke.vert in Sources */,
 				B3115D08182EA2C900FB7D2F /* oppDynamic.geom in Sources */,
 				B3EA212C18317E180093F5C8 /* updateOppDynamic.vert in Sources */,
-				B3115D0B182EA2C900FB7D2F /* oppSmoke.vert in Sources */,
+				B3115D0B182EA2C900FB7D2F /* renderOppSmoke.vert in Sources */,
 				B3115D05182EA2C900FB7D2F /* oppBasic.geom in Sources */,
 				B3115D07182EA2C900FB7D2F /* oppDynamic.frag in Sources */,
 				B324D1231831BCFF00A7A9F0 /* Opponent.cpp in Sources */,

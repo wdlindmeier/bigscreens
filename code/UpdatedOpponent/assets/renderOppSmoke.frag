@@ -13,6 +13,8 @@ void main() {
 	FragColor = texture( ParticleTex, gl_PointCoord );
 	FragColor = vec4((vec3(1 - FragColor.r, 1 - FragColor.g, 1 - FragColor.b) * pink), FragColor.a);
 	FragColor.a *= (Transp);
-//	FragColor.a -= .1;
-//	FragColor = vec4(pink, 1.0 * Transp);
+	FragColor.a -= .1;
+	FragColor = vec4(pink, (1.0 * Transp)-.03);
+//	FragColor = vec4(1.0);
+//	FragColor = texture( ParticleTex, gl_PointCoord );
 }

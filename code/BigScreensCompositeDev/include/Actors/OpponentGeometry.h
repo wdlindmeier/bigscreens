@@ -30,25 +30,30 @@ public:
 	DynamicOpponent();
 	~DynamicOpponent() {}
 	
-	void update( float percentage );
+	void update( float percentage, float time );
 	void draw( const ci::Vec3f & cameraView );
 	
 private:
 	void loadShaders();
 	void loadBuffers();
 	void loadTexture();
+	void createRandomMap();
+	
+	friend class Opponent;
 	
 private:
 	
 	SphericalGeometryRef	mPyramid;
 	SphericalGeometryRef	mSphere;
 	
-	ci::gl::VaoRef mVao[2];
-	ci::gl::VboRef mPositionVbo[2], mAnimatingVbo[2], mTimeLeft[2], mElementVbo;
-	ci::gl::TextureRef mNoiseTexture;
-	ci::gl::GlslProgRef mRenderOppDynamicGlsl, mUpdateOppDynamicGlsl;
-	ci::TriMeshRef	mTrimesh;
-	GLuint			mRenderSub, mUpdateSub, mTFOs[2], drawBuf;
+	ci::gl::VaoRef		mVao[2];
+	ci::gl::VboRef		mPositionVbo[2], mAnimatingVbo[2], mTimeLeft[2],
+						mElementVbo, mSphericalVbo, mPyramidalVbo;
+	ci::gl::TextureRef	mNoiseTexture;
+	ci::gl::GlslProgRef	mRenderOppDynamicGlsl, mUpdateOppDynamicGlsl;
+	ci::TriMeshRef		mTrimesh;
+	ci::gl::TextureRef	mRandomTexture;
+	GLuint				mRenderSub, mUpdateSub, mTFOs[2], drawBuf;
 };
 	
 class SphericalGeometry {

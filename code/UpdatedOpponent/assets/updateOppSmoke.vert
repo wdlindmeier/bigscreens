@@ -1,8 +1,5 @@
-#version 400 
+#version 150 core
 #extension all : warn
-
-subroutine void RenderPassType();
-subroutine uniform RenderPassType RenderPass;
 
 layout (location = 0) in vec3 VertexPosition;
 layout (location = 1) in vec3 VertexVelocity;
@@ -12,21 +9,13 @@ layout (location = 3) in vec3 VertexInitialVelocity;
 out vec3 Position; // To Transform Feedback
 out vec3 Velocity; // To Transform Feedback
 out float StartTime; // To Transform Feedback
-out float Transp; // To Fragment Shader
-
-uniform float MinParticleSize;
-uniform float MaxParticleSize;
 
 uniform float Time; // Time
 uniform float H;	// Elapsed time between frames
 uniform vec3 Accel; // Particle Acceleration
 uniform float ParticleLifetime; // Particle lifespan
 
-uniform mat4 modelView;
-uniform mat4 projection;
-
-subroutine(RenderPassType)
-void update() {
+void main() {
 	
 	// Update position & velocity for next frame
 	Position = VertexPosition;
@@ -49,22 +38,4 @@ void update() {
 			Velocity += Accel * H;
 		}
 	}
-}
-
-subroutine (RenderPassType)
-void render() {
-	float age = Time - VertexStartTime;
-	Transp = 0.0;
-	gl_Position = projection * modelView * vec4(VertexPosition, 1.0);
-	if( Time >= VertexStartTime ) {
-		float agePct = age / ParticleLifetime;
-		Transp = 1.0 - agePct;
-		gl_PointSize = mix( MinParticleSize, MaxParticleSize, agePct );
-	}
-}
-
-void main()
-{
-	// This will call either render() or update().
-	RenderPass();
 }

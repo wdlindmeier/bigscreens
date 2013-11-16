@@ -30,18 +30,6 @@
 		A9712285181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
 		A9712286181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
 		A9712287181986DA006DD64E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = A9712284181986DA006DD64E /* test.png */; };
-		A971228A1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
-		A971228B1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
-		A971228C1819BD0E006DD64E /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122881819BD0E006DD64E /* offset_texture.frag */; };
-		A971228D1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
-		A971228E1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
-		A971228F1819BD0E006DD64E /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122891819BD0E006DD64E /* offset_texture.vert */; };
-		A97122981819C9E6006DD64E /* heightmap.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122961819C9E6006DD64E /* heightmap.frag */; };
-		A97122991819C9E6006DD64E /* heightmap.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122961819C9E6006DD64E /* heightmap.frag */; };
-		A971229A1819C9E6006DD64E /* heightmap.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97122961819C9E6006DD64E /* heightmap.frag */; };
-		A971229B1819C9E6006DD64E /* heightmap.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122971819C9E6006DD64E /* heightmap.vert */; };
-		A971229C1819C9E6006DD64E /* heightmap.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122971819C9E6006DD64E /* heightmap.vert */; };
-		A971229D1819C9E6006DD64E /* heightmap.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97122971819C9E6006DD64E /* heightmap.vert */; };
 		A971229F1819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
 		A97122A01819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
 		A97122A11819E369006DD64E /* height_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = A971229E1819E369006DD64E /* height_sample.png */; };
@@ -76,33 +64,9 @@
 		A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
 		A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
 		A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */; };
-		A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
-		A97C88FF181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
-		A97C8900181087BC00AE2AE2 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FA181087BC00AE2AE2 /* basic.frag */; };
-		A97C8902181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
-		A97C8903181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
-		A97C8904181087BC00AE2AE2 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FB181087BC00AE2AE2 /* basic.vert */; };
-		A97C8906181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
-		A97C8907181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
-		A97C8908181087BC00AE2AE2 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FC181087BC00AE2AE2 /* outline.frag */; };
-		A97C890A181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
-		A97C890B181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
-		A97C890C181087BC00AE2AE2 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C88FD181087BC00AE2AE2 /* outline.vert */; };
-		A97C89101810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
-		A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
-		A97C89121810AA7A00AE2AE2 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A97C890E1810AA7A00AE2AE2 /* texture.frag */; };
-		A97C89141810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
-		A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
-		A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A97C890F1810AA7A00AE2AE2 /* texture.vert */; };
 		A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */; };
 		A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */; };
 		A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */; };
-		A9B50B0318230A1100C077BD /* ground_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0118230A1100C077BD /* ground_texture.frag */; };
-		A9B50B0418230A1100C077BD /* ground_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0118230A1100C077BD /* ground_texture.frag */; };
-		A9B50B0518230A1100C077BD /* ground_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0118230A1100C077BD /* ground_texture.frag */; };
-		A9B50B0618230A1100C077BD /* ground_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0218230A1100C077BD /* ground_texture.vert */; };
-		A9B50B0718230A1100C077BD /* ground_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0218230A1100C077BD /* ground_texture.vert */; };
-		A9B50B0818230A1100C077BD /* ground_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9B50B0218230A1100C077BD /* ground_texture.vert */; };
 		A9B52B3D182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */; };
 		A9B52B3E182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */; };
 		A9B52B3F182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */; };
@@ -207,12 +171,6 @@
 		A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */; };
-		B3052DAB1823DD64006D91DD /* finalEffects.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
-		B3052DAC1823DD64006D91DD /* finalEffects.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
-		B3052DAD1823DD64006D91DD /* finalEffects.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3052DA91823DD64006D91DD /* finalEffects.frag */; };
-		B3052DAE1823DD64006D91DD /* finalEffects.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
-		B3052DAF1823DD64006D91DD /* finalEffects.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
-		B3052DB01823DD64006D91DD /* finalEffects.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3052DAA1823DD64006D91DD /* finalEffects.vert */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -228,51 +186,12 @@
 		B3115C62182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
 		B3115C63182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
 		B3115C64182D560F00FB7D2F /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C61182D560F00FB7D2F /* FloorPlane.cpp */; };
-		B3115C78182D613100FB7D2F /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6F182D613100FB7D2F /* oppBasic.frag */; };
-		B3115C79182D613100FB7D2F /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6F182D613100FB7D2F /* oppBasic.frag */; };
-		B3115C7B182D613100FB7D2F /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C70182D613100FB7D2F /* oppBasic.geom */; };
-		B3115C7C182D613100FB7D2F /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C70182D613100FB7D2F /* oppBasic.geom */; };
-		B3115C7E182D613100FB7D2F /* oppBasic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C71182D613100FB7D2F /* oppBasic.vert */; };
-		B3115C7F182D613100FB7D2F /* oppBasic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C71182D613100FB7D2F /* oppBasic.vert */; };
-		B3115C81182D613100FB7D2F /* oppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C72182D613100FB7D2F /* oppDynamic.frag */; };
-		B3115C82182D613100FB7D2F /* oppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C72182D613100FB7D2F /* oppDynamic.frag */; };
-		B3115C84182D613100FB7D2F /* oppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C73182D613100FB7D2F /* oppDynamic.geom */; };
-		B3115C85182D613100FB7D2F /* oppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C73182D613100FB7D2F /* oppDynamic.geom */; };
-		B3115C87182D613100FB7D2F /* oppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C74182D613100FB7D2F /* oppDynamic.vert */; };
-		B3115C88182D613100FB7D2F /* oppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C74182D613100FB7D2F /* oppDynamic.vert */; };
-		B3115C8A182D613100FB7D2F /* oppSmoke.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C75182D613100FB7D2F /* oppSmoke.frag */; };
-		B3115C8B182D613100FB7D2F /* oppSmoke.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C75182D613100FB7D2F /* oppSmoke.frag */; };
-		B3115C8D182D613100FB7D2F /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C76182D613100FB7D2F /* oppSmoke.vert */; };
-		B3115C8E182D613100FB7D2F /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C76182D613100FB7D2F /* oppSmoke.vert */; };
-		B3115C96182D614700FB7D2F /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C8F182D614700FB7D2F /* quadOutline.frag */; };
-		B3115C97182D614700FB7D2F /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C8F182D614700FB7D2F /* quadOutline.frag */; };
-		B3115C99182D614700FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
-		B3115C9A182D614700FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
-		B3115C9F182D614700FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
-		B3115CA0182D614700FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
-		B3115CA2182D614700FB7D2F /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C93182D614700FB7D2F /* quadTriangle.geom */; };
-		B3115CA3182D614700FB7D2F /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C93182D614700FB7D2F /* quadTriangle.geom */; };
-		B3115CA5182D614700FB7D2F /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C94182D614700FB7D2F /* quadTriangle.vert */; };
-		B3115CA6182D614700FB7D2F /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C94182D614700FB7D2F /* quadTriangle.vert */; };
 		B3115CAD182D61A400FB7D2F /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CAC182D61A400FB7D2F /* Opponent.cpp */; };
 		B3115CAE182D61A400FB7D2F /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CAC182D61A400FB7D2F /* Opponent.cpp */; };
 		B3115CAF182D61A400FB7D2F /* Opponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CAC182D61A400FB7D2F /* Opponent.cpp */; };
 		B3115CB6182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */; };
 		B3115CB7182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */; };
 		B3115CB8182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */; };
-		B3115CB9182D823600FB7D2F /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C6F182D613100FB7D2F /* oppBasic.frag */; };
-		B3115CBA182D823600FB7D2F /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C70182D613100FB7D2F /* oppBasic.geom */; };
-		B3115CBB182D823600FB7D2F /* oppBasic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C71182D613100FB7D2F /* oppBasic.vert */; };
-		B3115CBC182D823600FB7D2F /* oppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C72182D613100FB7D2F /* oppDynamic.frag */; };
-		B3115CBD182D823600FB7D2F /* oppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C73182D613100FB7D2F /* oppDynamic.geom */; };
-		B3115CBE182D823600FB7D2F /* oppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C74182D613100FB7D2F /* oppDynamic.vert */; };
-		B3115CBF182D823600FB7D2F /* oppSmoke.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C75182D613100FB7D2F /* oppSmoke.frag */; };
-		B3115CC0182D823600FB7D2F /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C76182D613100FB7D2F /* oppSmoke.vert */; };
-		B3115CC1182D823600FB7D2F /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C8F182D614700FB7D2F /* quadOutline.frag */; };
-		B3115CC2182D823600FB7D2F /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C90182D614700FB7D2F /* quadOutline.geom */; };
-		B3115CC4182D823600FB7D2F /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B3115C92182D614700FB7D2F /* quadTriangle.frag */; };
-		B3115CC5182D823600FB7D2F /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B3115C93182D614700FB7D2F /* quadTriangle.geom */; };
-		B3115CC6182D823600FB7D2F /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B3115C94182D614700FB7D2F /* quadTriangle.vert */; };
 		B3115CC9182D889600FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
 		B3115CCA182D889600FB7D2F /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
 		B3115CCC182D889600FB7D2F /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC8182D889600FB7D2F /* smoke_blur.png */; };
@@ -292,6 +211,154 @@
 		B3115CF0182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
 		B3115CF1182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
 		B3115CF2182D99C300FB7D2F /* tank.obj in Resources */ = {isa = PBXBuildFile; fileRef = B3115CD7182D99C300FB7D2F /* tank.obj */; };
+		B349E3B11837CB67008E5592 /* basic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3841837CB67008E5592 /* basic.frag */; };
+		B349E3B21837CB67008E5592 /* basic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3841837CB67008E5592 /* basic.frag */; };
+		B349E3B31837CB67008E5592 /* basic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3841837CB67008E5592 /* basic.frag */; };
+		B349E3B41837CB67008E5592 /* basic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3851837CB67008E5592 /* basic.vert */; };
+		B349E3B51837CB67008E5592 /* basic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3851837CB67008E5592 /* basic.vert */; };
+		B349E3B61837CB67008E5592 /* basic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3851837CB67008E5592 /* basic.vert */; };
+		B349E3B71837CB67008E5592 /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3861837CB67008E5592 /* finalEffects.frag */; };
+		B349E3B81837CB67008E5592 /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3861837CB67008E5592 /* finalEffects.frag */; };
+		B349E3B91837CB67008E5592 /* finalEffects.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3861837CB67008E5592 /* finalEffects.frag */; };
+		B349E3BA1837CB67008E5592 /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3871837CB67008E5592 /* finalEffects.vert */; };
+		B349E3BB1837CB67008E5592 /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3871837CB67008E5592 /* finalEffects.vert */; };
+		B349E3BC1837CB67008E5592 /* finalEffects.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3871837CB67008E5592 /* finalEffects.vert */; };
+		B349E3BD1837CB67008E5592 /* ground_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3881837CB67008E5592 /* ground_texture.frag */; };
+		B349E3BE1837CB67008E5592 /* ground_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3881837CB67008E5592 /* ground_texture.frag */; };
+		B349E3BF1837CB67008E5592 /* ground_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3881837CB67008E5592 /* ground_texture.frag */; };
+		B349E3C01837CB67008E5592 /* ground_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3891837CB67008E5592 /* ground_texture.vert */; };
+		B349E3C11837CB67008E5592 /* ground_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3891837CB67008E5592 /* ground_texture.vert */; };
+		B349E3C21837CB67008E5592 /* ground_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3891837CB67008E5592 /* ground_texture.vert */; };
+		B349E3C31837CB67008E5592 /* heightmap.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38A1837CB67008E5592 /* heightmap.frag */; };
+		B349E3C41837CB67008E5592 /* heightmap.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38A1837CB67008E5592 /* heightmap.frag */; };
+		B349E3C51837CB67008E5592 /* heightmap.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38A1837CB67008E5592 /* heightmap.frag */; };
+		B349E3C61837CB67008E5592 /* heightmap.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38B1837CB67008E5592 /* heightmap.vert */; };
+		B349E3C71837CB67008E5592 /* heightmap.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38B1837CB67008E5592 /* heightmap.vert */; };
+		B349E3C81837CB67008E5592 /* heightmap.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38B1837CB67008E5592 /* heightmap.vert */; };
+		B349E3C91837CB67008E5592 /* minion.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38C1837CB67008E5592 /* minion.frag */; };
+		B349E3CA1837CB67008E5592 /* minion.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38C1837CB67008E5592 /* minion.frag */; };
+		B349E3CB1837CB67008E5592 /* minion.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38C1837CB67008E5592 /* minion.frag */; };
+		B349E3CC1837CB67008E5592 /* minion.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38D1837CB67008E5592 /* minion.vert */; };
+		B349E3CD1837CB67008E5592 /* minion.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38D1837CB67008E5592 /* minion.vert */; };
+		B349E3CE1837CB67008E5592 /* minion.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38D1837CB67008E5592 /* minion.vert */; };
+		B349E3CF1837CB67008E5592 /* offset_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38E1837CB67008E5592 /* offset_texture.frag */; };
+		B349E3D01837CB67008E5592 /* offset_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38E1837CB67008E5592 /* offset_texture.frag */; };
+		B349E3D11837CB67008E5592 /* offset_texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E38E1837CB67008E5592 /* offset_texture.frag */; };
+		B349E3D21837CB67008E5592 /* offset_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38F1837CB67008E5592 /* offset_texture.vert */; };
+		B349E3D31837CB67008E5592 /* offset_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38F1837CB67008E5592 /* offset_texture.vert */; };
+		B349E3D41837CB67008E5592 /* offset_texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E38F1837CB67008E5592 /* offset_texture.vert */; };
+		B349E3D51837CB67008E5592 /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3901837CB67008E5592 /* oppBasic.frag */; };
+		B349E3D61837CB67008E5592 /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3901837CB67008E5592 /* oppBasic.frag */; };
+		B349E3D71837CB67008E5592 /* oppBasic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3901837CB67008E5592 /* oppBasic.frag */; };
+		B349E3D81837CB67008E5592 /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3911837CB67008E5592 /* oppBasic.geom */; };
+		B349E3D91837CB67008E5592 /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3911837CB67008E5592 /* oppBasic.geom */; };
+		B349E3DA1837CB67008E5592 /* oppBasic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3911837CB67008E5592 /* oppBasic.geom */; };
+		B349E3DB1837CB67008E5592 /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3921837CB67008E5592 /* oppBasic.vert */; };
+		B349E3DC1837CB67008E5592 /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3921837CB67008E5592 /* oppBasic.vert */; };
+		B349E3DD1837CB67008E5592 /* oppBasic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3921837CB67008E5592 /* oppBasic.vert */; };
+		B349E3DE1837CB67008E5592 /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3931837CB67008E5592 /* oppDynamic.frag */; };
+		B349E3DF1837CB67008E5592 /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3931837CB67008E5592 /* oppDynamic.frag */; };
+		B349E3E01837CB67008E5592 /* oppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3931837CB67008E5592 /* oppDynamic.frag */; };
+		B349E3E11837CB67008E5592 /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3941837CB67008E5592 /* oppDynamic.geom */; };
+		B349E3E21837CB67008E5592 /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3941837CB67008E5592 /* oppDynamic.geom */; };
+		B349E3E31837CB67008E5592 /* oppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3941837CB67008E5592 /* oppDynamic.geom */; };
+		B349E3E41837CB67008E5592 /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3951837CB67008E5592 /* oppDynamic.vert */; };
+		B349E3E51837CB67008E5592 /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3951837CB67008E5592 /* oppDynamic.vert */; };
+		B349E3E61837CB67008E5592 /* oppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3951837CB67008E5592 /* oppDynamic.vert */; };
+		B349E3E71837CB67008E5592 /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3961837CB67008E5592 /* oppSmoke.frag */; };
+		B349E3E81837CB67008E5592 /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3961837CB67008E5592 /* oppSmoke.frag */; };
+		B349E3E91837CB67008E5592 /* oppSmoke.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3961837CB67008E5592 /* oppSmoke.frag */; };
+		B349E3EA1837CB67008E5592 /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3971837CB67008E5592 /* oppSmoke.vert */; };
+		B349E3EB1837CB67008E5592 /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3971837CB67008E5592 /* oppSmoke.vert */; };
+		B349E3EC1837CB67008E5592 /* oppSmoke.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3971837CB67008E5592 /* oppSmoke.vert */; };
+		B349E3ED1837CB67008E5592 /* outline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3981837CB67008E5592 /* outline.frag */; };
+		B349E3EE1837CB67008E5592 /* outline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3981837CB67008E5592 /* outline.frag */; };
+		B349E3EF1837CB67008E5592 /* outline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3981837CB67008E5592 /* outline.frag */; };
+		B349E3F01837CB67008E5592 /* outline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3991837CB67008E5592 /* outline.vert */; };
+		B349E3F11837CB67008E5592 /* outline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3991837CB67008E5592 /* outline.vert */; };
+		B349E3F21837CB67008E5592 /* outline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3991837CB67008E5592 /* outline.vert */; };
+		B349E3F31837CB67008E5592 /* quadOutline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39A1837CB67008E5592 /* quadOutline.frag */; };
+		B349E3F41837CB67008E5592 /* quadOutline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39A1837CB67008E5592 /* quadOutline.frag */; };
+		B349E3F51837CB67008E5592 /* quadOutline.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39A1837CB67008E5592 /* quadOutline.frag */; };
+		B349E3F61837CB67008E5592 /* quadOutline.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39B1837CB67008E5592 /* quadOutline.geom */; };
+		B349E3F71837CB67008E5592 /* quadOutline.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39B1837CB67008E5592 /* quadOutline.geom */; };
+		B349E3F81837CB67008E5592 /* quadOutline.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39B1837CB67008E5592 /* quadOutline.geom */; };
+		B349E3F91837CB67008E5592 /* quadOutline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39C1837CB67008E5592 /* quadOutline.vert */; };
+		B349E3FA1837CB67008E5592 /* quadOutline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39C1837CB67008E5592 /* quadOutline.vert */; };
+		B349E3FB1837CB67008E5592 /* quadOutline.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39C1837CB67008E5592 /* quadOutline.vert */; };
+		B349E3FC1837CB67008E5592 /* quadTriangle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39D1837CB67008E5592 /* quadTriangle.frag */; };
+		B349E3FD1837CB67008E5592 /* quadTriangle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39D1837CB67008E5592 /* quadTriangle.frag */; };
+		B349E3FE1837CB67008E5592 /* quadTriangle.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E39D1837CB67008E5592 /* quadTriangle.frag */; };
+		B349E3FF1837CB67008E5592 /* quadTriangle.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39E1837CB67008E5592 /* quadTriangle.geom */; };
+		B349E4001837CB67008E5592 /* quadTriangle.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39E1837CB67008E5592 /* quadTriangle.geom */; };
+		B349E4011837CB67008E5592 /* quadTriangle.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E39E1837CB67008E5592 /* quadTriangle.geom */; };
+		B349E4021837CB67008E5592 /* quadTriangle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39F1837CB67008E5592 /* quadTriangle.vert */; };
+		B349E4031837CB67008E5592 /* quadTriangle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39F1837CB67008E5592 /* quadTriangle.vert */; };
+		B349E4041837CB67008E5592 /* quadTriangle.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E39F1837CB67008E5592 /* quadTriangle.vert */; };
+		B349E4051837CB67008E5592 /* renderDumbTank.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A01837CB67008E5592 /* renderDumbTank.frag */; };
+		B349E4061837CB67008E5592 /* renderDumbTank.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A01837CB67008E5592 /* renderDumbTank.frag */; };
+		B349E4071837CB67008E5592 /* renderDumbTank.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A01837CB67008E5592 /* renderDumbTank.frag */; };
+		B349E4081837CB67008E5592 /* renderDumbTank.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A11837CB67008E5592 /* renderDumbTank.geom */; };
+		B349E4091837CB67008E5592 /* renderDumbTank.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A11837CB67008E5592 /* renderDumbTank.geom */; };
+		B349E40A1837CB67008E5592 /* renderDumbTank.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A11837CB67008E5592 /* renderDumbTank.geom */; };
+		B349E40B1837CB67008E5592 /* renderDumbTank.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A21837CB67008E5592 /* renderDumbTank.vert */; };
+		B349E40C1837CB67008E5592 /* renderDumbTank.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A21837CB67008E5592 /* renderDumbTank.vert */; };
+		B349E40D1837CB67008E5592 /* renderDumbTank.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A21837CB67008E5592 /* renderDumbTank.vert */; };
+		B349E40E1837CB67008E5592 /* renderOppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A31837CB67008E5592 /* renderOppDynamic.frag */; };
+		B349E40F1837CB67008E5592 /* renderOppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A31837CB67008E5592 /* renderOppDynamic.frag */; };
+		B349E4101837CB67008E5592 /* renderOppDynamic.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A31837CB67008E5592 /* renderOppDynamic.frag */; };
+		B349E4111837CB67008E5592 /* renderOppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A41837CB67008E5592 /* renderOppDynamic.geom */; };
+		B349E4121837CB67008E5592 /* renderOppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A41837CB67008E5592 /* renderOppDynamic.geom */; };
+		B349E4131837CB67008E5592 /* renderOppDynamic.geom in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A41837CB67008E5592 /* renderOppDynamic.geom */; };
+		B349E4141837CB67008E5592 /* renderOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A51837CB67008E5592 /* renderOppDynamic.vert */; };
+		B349E4151837CB67008E5592 /* renderOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A51837CB67008E5592 /* renderOppDynamic.vert */; };
+		B349E4161837CB67008E5592 /* renderOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3A51837CB67008E5592 /* renderOppDynamic.vert */; };
+		B349E42F1837CB67008E5592 /* texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AE1837CB67008E5592 /* texture.frag */; };
+		B349E4301837CB67008E5592 /* texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AE1837CB67008E5592 /* texture.frag */; };
+		B349E4311837CB67008E5592 /* texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AE1837CB67008E5592 /* texture.frag */; };
+		B349E4321837CB67008E5592 /* texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AF1837CB67008E5592 /* texture.vert */; };
+		B349E4331837CB67008E5592 /* texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AF1837CB67008E5592 /* texture.vert */; };
+		B349E4341837CB67008E5592 /* texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3AF1837CB67008E5592 /* texture.vert */; };
+		B349E4351837CB67008E5592 /* updateOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3B01837CB67008E5592 /* updateOppDynamic.vert */; };
+		B349E4361837CB67008E5592 /* updateOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3B01837CB67008E5592 /* updateOppDynamic.vert */; };
+		B349E4371837CB67008E5592 /* updateOppDynamic.vert in Sources */ = {isa = PBXBuildFile; fileRef = B349E3B01837CB67008E5592 /* updateOppDynamic.vert */; };
+		B349E4381837CC4E008E5592 /* basic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3841837CB67008E5592 /* basic.frag */; };
+		B349E4391837CC4E008E5592 /* basic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3851837CB67008E5592 /* basic.vert */; };
+		B349E43A1837CC4E008E5592 /* finalEffects.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3861837CB67008E5592 /* finalEffects.frag */; };
+		B349E43B1837CC4E008E5592 /* finalEffects.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3871837CB67008E5592 /* finalEffects.vert */; };
+		B349E43C1837CC4E008E5592 /* ground_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3881837CB67008E5592 /* ground_texture.frag */; };
+		B349E43D1837CC4E008E5592 /* ground_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3891837CB67008E5592 /* ground_texture.vert */; };
+		B349E43E1837CC4E008E5592 /* heightmap.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E38A1837CB67008E5592 /* heightmap.frag */; };
+		B349E43F1837CC4E008E5592 /* heightmap.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E38B1837CB67008E5592 /* heightmap.vert */; };
+		B349E4401837CC4E008E5592 /* minion.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E38C1837CB67008E5592 /* minion.frag */; };
+		B349E4411837CC4E008E5592 /* minion.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E38D1837CB67008E5592 /* minion.vert */; };
+		B349E4421837CC4E008E5592 /* offset_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E38E1837CB67008E5592 /* offset_texture.frag */; };
+		B349E4431837CC4E008E5592 /* offset_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E38F1837CB67008E5592 /* offset_texture.vert */; };
+		B349E4441837CC4E008E5592 /* oppBasic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3901837CB67008E5592 /* oppBasic.frag */; };
+		B349E4451837CC4E008E5592 /* oppBasic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E3911837CB67008E5592 /* oppBasic.geom */; };
+		B349E4461837CC4E008E5592 /* oppBasic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3921837CB67008E5592 /* oppBasic.vert */; };
+		B349E4471837CC4E008E5592 /* oppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3931837CB67008E5592 /* oppDynamic.frag */; };
+		B349E4481837CC4E008E5592 /* oppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E3941837CB67008E5592 /* oppDynamic.geom */; };
+		B349E4491837CC4E008E5592 /* oppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3951837CB67008E5592 /* oppDynamic.vert */; };
+		B349E44A1837CC4E008E5592 /* oppSmoke.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3961837CB67008E5592 /* oppSmoke.frag */; };
+		B349E44B1837CC4E008E5592 /* oppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3971837CB67008E5592 /* oppSmoke.vert */; };
+		B349E44C1837CC4E008E5592 /* outline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3981837CB67008E5592 /* outline.frag */; };
+		B349E44D1837CC4E008E5592 /* outline.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3991837CB67008E5592 /* outline.vert */; };
+		B349E44E1837CC4E008E5592 /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E39A1837CB67008E5592 /* quadOutline.frag */; };
+		B349E44F1837CC4E008E5592 /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E39B1837CB67008E5592 /* quadOutline.geom */; };
+		B349E4501837CC4E008E5592 /* quadOutline.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E39C1837CB67008E5592 /* quadOutline.vert */; };
+		B349E4511837CC4E008E5592 /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E39D1837CB67008E5592 /* quadTriangle.frag */; };
+		B349E4521837CC4E008E5592 /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E39E1837CB67008E5592 /* quadTriangle.geom */; };
+		B349E4531837CC4E008E5592 /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E39F1837CB67008E5592 /* quadTriangle.vert */; };
+		B349E4541837CC4E008E5592 /* renderDumbTank.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A01837CB67008E5592 /* renderDumbTank.frag */; };
+		B349E4551837CC4E008E5592 /* renderDumbTank.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A11837CB67008E5592 /* renderDumbTank.geom */; };
+		B349E4561837CC4E008E5592 /* renderDumbTank.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A21837CB67008E5592 /* renderDumbTank.vert */; };
+		B349E4571837CC4E008E5592 /* renderOppDynamic.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A31837CB67008E5592 /* renderOppDynamic.frag */; };
+		B349E4581837CC4E008E5592 /* renderOppDynamic.geom in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A41837CB67008E5592 /* renderOppDynamic.geom */; };
+		B349E4591837CC4E008E5592 /* renderOppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3A51837CB67008E5592 /* renderOppDynamic.vert */; };
+		B349E45A1837CC4E008E5592 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3AE1837CB67008E5592 /* texture.frag */; };
+		B349E45B1837CC4E008E5592 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3AF1837CB67008E5592 /* texture.vert */; };
+		B349E45C1837CC4E008E5592 /* updateOppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3B01837CB67008E5592 /* updateOppDynamic.vert */; };
 		C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A52A38F82244EABBF2BBA1 /* BigScreensCompositeApp.cpp */; };
 		EB7B7AAD34154888985FA13A /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 159A1C61600B47B3B2BA11F8 /* CinderApp.icns */; };
 /* End PBXBuildFile section */
@@ -317,10 +384,6 @@
 		A971227F18196DDD006DD64E /* TextureContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureContent.h; path = ../include/TextureContent.h; sourceTree = "<group>"; };
 		A971228018197C85006DD64E /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grid.png; path = ../resources/grid.png; sourceTree = "<group>"; };
 		A9712284181986DA006DD64E /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = ../resources/test.png; sourceTree = "<group>"; };
-		A97122881819BD0E006DD64E /* offset_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = offset_texture.frag; sourceTree = "<group>"; };
-		A97122891819BD0E006DD64E /* offset_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = offset_texture.vert; sourceTree = "<group>"; };
-		A97122961819C9E6006DD64E /* heightmap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = heightmap.frag; sourceTree = "<group>"; };
-		A97122971819C9E6006DD64E /* heightmap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = heightmap.vert; sourceTree = "<group>"; };
 		A971229E1819E369006DD64E /* height_sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = height_sample.png; path = ../resources/height_sample.png; sourceTree = "<group>"; };
 		A97122B0181AB443006DD64E /* BigScreensConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BigScreensConstants.h; path = ../include/BigScreensConstants.h; sourceTree = "<group>"; };
 		A97122B1181AB8DC006DD64E /* hide_columns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hide_columns.png; path = ../resources/hide_columns.png; sourceTree = "<group>"; };
@@ -344,17 +407,9 @@
 		A97C88E218107A8900AE2AE2 /* GridLayoutTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayoutTimeline.h; sourceTree = "<group>"; };
 		A97C88E718107B3000AE2AE2 /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
 		A97C88E818107B3B00AE2AE2 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
-		A97C88FA181087BC00AE2AE2 /* basic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic.frag; sourceTree = "<group>"; };
-		A97C88FB181087BC00AE2AE2 /* basic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic.vert; sourceTree = "<group>"; };
-		A97C88FC181087BC00AE2AE2 /* outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.frag; sourceTree = "<group>"; };
-		A97C88FD181087BC00AE2AE2 /* outline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = outline.vert; sourceTree = "<group>"; };
-		A97C890E1810AA7A00AE2AE2 /* texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.frag; sourceTree = "<group>"; };
-		A97C890F1810AA7A00AE2AE2 /* texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.vert; sourceTree = "<group>"; };
 		A97C89181810B24D00AE2AE2 /* OutLineBorder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutLineBorder.hpp; sourceTree = "<group>"; };
 		A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankConvergenceContent.cpp; path = ../src/TankConvergenceContent.cpp; sourceTree = "<group>"; };
 		A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankConvergenceContent.h; path = ../include/TankConvergenceContent.h; sourceTree = "<group>"; };
-		A9B50B0118230A1100C077BD /* ground_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground_texture.frag; sourceTree = "<group>"; };
-		A9B50B0218230A1100C077BD /* ground_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground_texture.vert; sourceTree = "<group>"; };
 		A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConvergenceContent.cpp; path = ../src/ConvergenceContent.cpp; sourceTree = "<group>"; };
 		A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvergenceContent.h; path = ../include/ConvergenceContent.h; sourceTree = "<group>"; };
 		A9C3E318183034A8003C3DA5 /* DumbTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumbTank.h; sourceTree = "<group>"; };
@@ -387,8 +442,6 @@
 		A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreensController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensControllerApp.cpp; path = ../src/BigScreensControllerApp.cpp; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B3052DA91823DD64006D91DD /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.frag; sourceTree = "<group>"; };
-		B3052DAA1823DD64006D91DD /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = finalEffects.vert; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
 		B3115C4E182D524200FB7D2F /* AdvancedTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedTank.h; sourceTree = "<group>"; };
@@ -400,19 +453,6 @@
 		B3115C57182D527100FB7D2F /* TankShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TankShot.cpp; sourceTree = "<group>"; };
 		B3115C61182D560F00FB7D2F /* FloorPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloorPlane.cpp; sourceTree = "<group>"; };
 		B3115C65182D562400FB7D2F /* FloorPlane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorPlane.h; sourceTree = "<group>"; };
-		B3115C6F182D613100FB7D2F /* oppBasic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppBasic.frag; sourceTree = "<group>"; };
-		B3115C70182D613100FB7D2F /* oppBasic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppBasic.geom; sourceTree = "<group>"; };
-		B3115C71182D613100FB7D2F /* oppBasic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppBasic.vert; sourceTree = "<group>"; };
-		B3115C72182D613100FB7D2F /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppDynamic.frag; sourceTree = "<group>"; };
-		B3115C73182D613100FB7D2F /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppDynamic.geom; sourceTree = "<group>"; };
-		B3115C74182D613100FB7D2F /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppDynamic.vert; sourceTree = "<group>"; };
-		B3115C75182D613100FB7D2F /* oppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppSmoke.frag; sourceTree = "<group>"; };
-		B3115C76182D613100FB7D2F /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = oppSmoke.vert; sourceTree = "<group>"; };
-		B3115C8F182D614700FB7D2F /* quadOutline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadOutline.frag; sourceTree = "<group>"; };
-		B3115C90182D614700FB7D2F /* quadOutline.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadOutline.geom; sourceTree = "<group>"; };
-		B3115C92182D614700FB7D2F /* quadTriangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.frag; sourceTree = "<group>"; };
-		B3115C93182D614700FB7D2F /* quadTriangle.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.geom; sourceTree = "<group>"; };
-		B3115C94182D614700FB7D2F /* quadTriangle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadTriangle.vert; sourceTree = "<group>"; };
 		B3115CA8182D618200FB7D2F /* Opponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
 		B3115CAB182D619000FB7D2F /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SmokeEffect.hpp; sourceTree = "<group>"; };
 		B3115CAC182D61A400FB7D2F /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Opponent.cpp; sourceTree = "<group>"; };
@@ -425,6 +465,43 @@
 		B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_gear_wheel_centered.obj; sourceTree = "<group>"; };
 		B3115CD5182D99C300FB7D2F /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_wheel_centered.obj; sourceTree = "<group>"; };
 		B3115CD7182D99C300FB7D2F /* tank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank.obj; sourceTree = "<group>"; };
+		B349E3841837CB67008E5592 /* basic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.frag; path = ../assets/basic.frag; sourceTree = "<group>"; };
+		B349E3851837CB67008E5592 /* basic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basic.vert; path = ../assets/basic.vert; sourceTree = "<group>"; };
+		B349E3861837CB67008E5592 /* finalEffects.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.frag; path = ../assets/finalEffects.frag; sourceTree = "<group>"; };
+		B349E3871837CB67008E5592 /* finalEffects.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = finalEffects.vert; path = ../assets/finalEffects.vert; sourceTree = "<group>"; };
+		B349E3881837CB67008E5592 /* ground_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ground_texture.frag; path = ../assets/ground_texture.frag; sourceTree = "<group>"; };
+		B349E3891837CB67008E5592 /* ground_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ground_texture.vert; path = ../assets/ground_texture.vert; sourceTree = "<group>"; };
+		B349E38A1837CB67008E5592 /* heightmap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = heightmap.frag; path = ../assets/heightmap.frag; sourceTree = "<group>"; };
+		B349E38B1837CB67008E5592 /* heightmap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = heightmap.vert; path = ../assets/heightmap.vert; sourceTree = "<group>"; };
+		B349E38C1837CB67008E5592 /* minion.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.frag; path = ../assets/minion.frag; sourceTree = "<group>"; };
+		B349E38D1837CB67008E5592 /* minion.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = minion.vert; path = ../assets/minion.vert; sourceTree = "<group>"; };
+		B349E38E1837CB67008E5592 /* offset_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = offset_texture.frag; path = ../assets/offset_texture.frag; sourceTree = "<group>"; };
+		B349E38F1837CB67008E5592 /* offset_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = offset_texture.vert; path = ../assets/offset_texture.vert; sourceTree = "<group>"; };
+		B349E3901837CB67008E5592 /* oppBasic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.frag; path = ../assets/oppBasic.frag; sourceTree = "<group>"; };
+		B349E3911837CB67008E5592 /* oppBasic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.geom; path = ../assets/oppBasic.geom; sourceTree = "<group>"; };
+		B349E3921837CB67008E5592 /* oppBasic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppBasic.vert; path = ../assets/oppBasic.vert; sourceTree = "<group>"; };
+		B349E3931837CB67008E5592 /* oppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.frag; path = ../assets/oppDynamic.frag; sourceTree = "<group>"; };
+		B349E3941837CB67008E5592 /* oppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.geom; path = ../assets/oppDynamic.geom; sourceTree = "<group>"; };
+		B349E3951837CB67008E5592 /* oppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppDynamic.vert; path = ../assets/oppDynamic.vert; sourceTree = "<group>"; };
+		B349E3961837CB67008E5592 /* oppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.frag; path = ../assets/oppSmoke.frag; sourceTree = "<group>"; };
+		B349E3971837CB67008E5592 /* oppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = oppSmoke.vert; path = ../assets/oppSmoke.vert; sourceTree = "<group>"; };
+		B349E3981837CB67008E5592 /* outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = outline.frag; path = ../assets/outline.frag; sourceTree = "<group>"; };
+		B349E3991837CB67008E5592 /* outline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = outline.vert; path = ../assets/outline.vert; sourceTree = "<group>"; };
+		B349E39A1837CB67008E5592 /* quadOutline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.frag; path = ../assets/quadOutline.frag; sourceTree = "<group>"; };
+		B349E39B1837CB67008E5592 /* quadOutline.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.geom; path = ../assets/quadOutline.geom; sourceTree = "<group>"; };
+		B349E39C1837CB67008E5592 /* quadOutline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.vert; path = ../assets/quadOutline.vert; sourceTree = "<group>"; };
+		B349E39D1837CB67008E5592 /* quadTriangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.frag; path = ../assets/quadTriangle.frag; sourceTree = "<group>"; };
+		B349E39E1837CB67008E5592 /* quadTriangle.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.geom; path = ../assets/quadTriangle.geom; sourceTree = "<group>"; };
+		B349E39F1837CB67008E5592 /* quadTriangle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.vert; path = ../assets/quadTriangle.vert; sourceTree = "<group>"; };
+		B349E3A01837CB67008E5592 /* renderDumbTank.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.frag; path = ../assets/renderDumbTank.frag; sourceTree = "<group>"; };
+		B349E3A11837CB67008E5592 /* renderDumbTank.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.geom; path = ../assets/renderDumbTank.geom; sourceTree = "<group>"; };
+		B349E3A21837CB67008E5592 /* renderDumbTank.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.vert; path = ../assets/renderDumbTank.vert; sourceTree = "<group>"; };
+		B349E3A31837CB67008E5592 /* renderOppDynamic.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.frag; path = ../assets/renderOppDynamic.frag; sourceTree = "<group>"; };
+		B349E3A41837CB67008E5592 /* renderOppDynamic.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.geom; path = ../assets/renderOppDynamic.geom; sourceTree = "<group>"; };
+		B349E3A51837CB67008E5592 /* renderOppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppDynamic.vert; path = ../assets/renderOppDynamic.vert; sourceTree = "<group>"; };
+		B349E3AE1837CB67008E5592 /* texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texture.frag; path = ../assets/texture.frag; sourceTree = "<group>"; };
+		B349E3AF1837CB67008E5592 /* texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texture.vert; path = ../assets/texture.vert; sourceTree = "<group>"; };
+		B349E3B01837CB67008E5592 /* updateOppDynamic.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = updateOppDynamic.vert; path = ../assets/updateOppDynamic.vert; sourceTree = "<group>"; };
 		F3377C32D0D444C0A417BAA5 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		FD0988C7557F4CB6BF6DD313 /* BigScreensComposite_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BigScreensComposite_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -595,6 +672,7 @@
 		A971227918196D8D006DD64E /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				B349E3831837CB53008E5592 /* Shaders */,
 				B3115C52182D525700FB7D2F /* Headers */,
 				B3115C53182D526300FB7D2F /* Source */,
 			);
@@ -650,40 +728,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		A97C88F9181087BC00AE2AE2 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				A97C88FA181087BC00AE2AE2 /* basic.frag */,
-				A97C88FB181087BC00AE2AE2 /* basic.vert */,
-				B3052DA91823DD64006D91DD /* finalEffects.frag */,
-				B3052DAA1823DD64006D91DD /* finalEffects.vert */,
-				A9B50B0118230A1100C077BD /* ground_texture.frag */,
-				A9B50B0218230A1100C077BD /* ground_texture.vert */,
-				A97122961819C9E6006DD64E /* heightmap.frag */,
-				A97122971819C9E6006DD64E /* heightmap.vert */,
-				A97122881819BD0E006DD64E /* offset_texture.frag */,
-				A97122891819BD0E006DD64E /* offset_texture.vert */,
-				B3115C6F182D613100FB7D2F /* oppBasic.frag */,
-				B3115C70182D613100FB7D2F /* oppBasic.geom */,
-				B3115C71182D613100FB7D2F /* oppBasic.vert */,
-				B3115C72182D613100FB7D2F /* oppDynamic.frag */,
-				B3115C73182D613100FB7D2F /* oppDynamic.geom */,
-				B3115C74182D613100FB7D2F /* oppDynamic.vert */,
-				B3115C75182D613100FB7D2F /* oppSmoke.frag */,
-				B3115C76182D613100FB7D2F /* oppSmoke.vert */,
-				A97C88FC181087BC00AE2AE2 /* outline.frag */,
-				A97C88FD181087BC00AE2AE2 /* outline.vert */,
-				B3115C8F182D614700FB7D2F /* quadOutline.frag */,
-				B3115C90182D614700FB7D2F /* quadOutline.geom */,
-				B3115C92182D614700FB7D2F /* quadTriangle.frag */,
-				B3115C93182D614700FB7D2F /* quadTriangle.geom */,
-				B3115C94182D614700FB7D2F /* quadTriangle.vert */,
-				A97C890E1810AA7A00AE2AE2 /* texture.frag */,
-				A97C890F1810AA7A00AE2AE2 /* texture.vert */,
-			);
-			path = shaders;
-			sourceTree = "<group>";
-		};
 		A9E48E9718103A8300F2F1C9 /* BigScreensShared */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,7 +749,6 @@
 				A9E48EA218103A8300F2F1C9 /* Hyperspace Bold.ttf */,
 				A9E48EA318103A8300F2F1C9 /* Hyperspace Italic.ttf */,
 				A9E48EA418103A8300F2F1C9 /* Hyperspace.ttf */,
-				A97C88F9181087BC00AE2AE2 /* shaders */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -830,6 +873,50 @@
 			path = ../src/Actors;
 			sourceTree = "<group>";
 		};
+		B349E3831837CB53008E5592 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B349E3841837CB67008E5592 /* basic.frag */,
+				B349E3851837CB67008E5592 /* basic.vert */,
+				B349E3861837CB67008E5592 /* finalEffects.frag */,
+				B349E3871837CB67008E5592 /* finalEffects.vert */,
+				B349E3881837CB67008E5592 /* ground_texture.frag */,
+				B349E3891837CB67008E5592 /* ground_texture.vert */,
+				B349E38A1837CB67008E5592 /* heightmap.frag */,
+				B349E38B1837CB67008E5592 /* heightmap.vert */,
+				B349E38C1837CB67008E5592 /* minion.frag */,
+				B349E38D1837CB67008E5592 /* minion.vert */,
+				B349E38E1837CB67008E5592 /* offset_texture.frag */,
+				B349E38F1837CB67008E5592 /* offset_texture.vert */,
+				B349E3901837CB67008E5592 /* oppBasic.frag */,
+				B349E3911837CB67008E5592 /* oppBasic.geom */,
+				B349E3921837CB67008E5592 /* oppBasic.vert */,
+				B349E3931837CB67008E5592 /* oppDynamic.frag */,
+				B349E3941837CB67008E5592 /* oppDynamic.geom */,
+				B349E3951837CB67008E5592 /* oppDynamic.vert */,
+				B349E3961837CB67008E5592 /* oppSmoke.frag */,
+				B349E3971837CB67008E5592 /* oppSmoke.vert */,
+				B349E3981837CB67008E5592 /* outline.frag */,
+				B349E3991837CB67008E5592 /* outline.vert */,
+				B349E39A1837CB67008E5592 /* quadOutline.frag */,
+				B349E39B1837CB67008E5592 /* quadOutline.geom */,
+				B349E39C1837CB67008E5592 /* quadOutline.vert */,
+				B349E39D1837CB67008E5592 /* quadTriangle.frag */,
+				B349E39E1837CB67008E5592 /* quadTriangle.geom */,
+				B349E39F1837CB67008E5592 /* quadTriangle.vert */,
+				B349E3A01837CB67008E5592 /* renderDumbTank.frag */,
+				B349E3A11837CB67008E5592 /* renderDumbTank.geom */,
+				B349E3A21837CB67008E5592 /* renderDumbTank.vert */,
+				B349E3A31837CB67008E5592 /* renderOppDynamic.frag */,
+				B349E3A41837CB67008E5592 /* renderOppDynamic.geom */,
+				B349E3A51837CB67008E5592 /* renderOppDynamic.vert */,
+				B349E3AE1837CB67008E5592 /* texture.frag */,
+				B349E3AF1837CB67008E5592 /* texture.vert */,
+				B349E3B01837CB67008E5592 /* updateOppDynamic.vert */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -939,12 +1026,47 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B349E4381837CC4E008E5592 /* basic.frag in Resources */,
+				B349E4391837CC4E008E5592 /* basic.vert in Resources */,
+				B349E43A1837CC4E008E5592 /* finalEffects.frag in Resources */,
+				B349E43B1837CC4E008E5592 /* finalEffects.vert in Resources */,
+				B349E43C1837CC4E008E5592 /* ground_texture.frag in Resources */,
+				B349E43D1837CC4E008E5592 /* ground_texture.vert in Resources */,
+				B349E43E1837CC4E008E5592 /* heightmap.frag in Resources */,
+				B349E43F1837CC4E008E5592 /* heightmap.vert in Resources */,
+				B349E4401837CC4E008E5592 /* minion.frag in Resources */,
+				B349E4411837CC4E008E5592 /* minion.vert in Resources */,
+				B349E4421837CC4E008E5592 /* offset_texture.frag in Resources */,
+				B349E4431837CC4E008E5592 /* offset_texture.vert in Resources */,
+				B349E4441837CC4E008E5592 /* oppBasic.frag in Resources */,
+				B349E4451837CC4E008E5592 /* oppBasic.geom in Resources */,
+				B349E4461837CC4E008E5592 /* oppBasic.vert in Resources */,
+				B349E4471837CC4E008E5592 /* oppDynamic.frag in Resources */,
+				B349E4481837CC4E008E5592 /* oppDynamic.geom in Resources */,
+				B349E4491837CC4E008E5592 /* oppDynamic.vert in Resources */,
+				B349E44A1837CC4E008E5592 /* oppSmoke.frag in Resources */,
+				B349E44B1837CC4E008E5592 /* oppSmoke.vert in Resources */,
+				B349E44C1837CC4E008E5592 /* outline.frag in Resources */,
+				B349E44D1837CC4E008E5592 /* outline.vert in Resources */,
+				B349E44E1837CC4E008E5592 /* quadOutline.frag in Resources */,
+				B349E44F1837CC4E008E5592 /* quadOutline.geom in Resources */,
+				B349E4501837CC4E008E5592 /* quadOutline.vert in Resources */,
+				B349E4511837CC4E008E5592 /* quadTriangle.frag in Resources */,
+				B349E4521837CC4E008E5592 /* quadTriangle.geom in Resources */,
+				B349E4531837CC4E008E5592 /* quadTriangle.vert in Resources */,
+				B349E4541837CC4E008E5592 /* renderDumbTank.frag in Resources */,
+				B349E4551837CC4E008E5592 /* renderDumbTank.geom in Resources */,
+				B349E4561837CC4E008E5592 /* renderDumbTank.vert in Resources */,
+				B349E4571837CC4E008E5592 /* renderOppDynamic.frag in Resources */,
+				B349E4581837CC4E008E5592 /* renderOppDynamic.geom in Resources */,
+				B349E4591837CC4E008E5592 /* renderOppDynamic.vert in Resources */,
+				B349E45A1837CC4E008E5592 /* texture.frag in Resources */,
+				B349E45B1837CC4E008E5592 /* texture.vert in Resources */,
+				B349E45C1837CC4E008E5592 /* updateOppDynamic.vert in Resources */,
 				B3115CCC182D889600FB7D2F /* smoke_blur.png in Resources */,
 				B3115CF0182D99C300FB7D2F /* tank.obj in Resources */,
-				A97122981819C9E6006DD64E /* heightmap.frag in Resources */,
 				A971229F1819E369006DD64E /* height_sample.png in Resources */,
 				B3115CDE182D99C300FB7D2F /* tank_body.obj in Resources */,
-				A971229B1819C9E6006DD64E /* heightmap.vert in Resources */,
 				A9E48ED818103CA900F2F1C9 /* settings.555.IAC.xml in Resources */,
 				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
 				A9C3E34918314439003C3DA5 /* tank_head_centered.obj in Resources */,
@@ -967,36 +1089,11 @@
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A9E48ED318103CA900F2F1C9 /* settings.0.xml in Resources */,
-				A97C8902181087BC00AE2AE2 /* basic.vert in Resources */,
 				A971228118197C85006DD64E /* grid.png in Resources */,
-				A97C8906181087BC00AE2AE2 /* outline.frag in Resources */,
-				A97C890A181087BC00AE2AE2 /* outline.vert in Resources */,
-				A97C88FE181087BC00AE2AE2 /* basic.frag in Resources */,
 				A9E48EC218103A8300F2F1C9 /* T72.obj in Resources */,
 				A9E48ED918103CA900F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EBE18103A8300F2F1C9 /* Hyperspace.ttf in Resources */,
-				A97C89101810AA7A00AE2AE2 /* texture.frag in Resources */,
-				A971228A1819BD0E006DD64E /* offset_texture.frag in Resources */,
-				A971228D1819BD0E006DD64E /* offset_texture.vert in Resources */,
-				A97C89141810AA7A00AE2AE2 /* texture.vert in Resources */,
-				A9B50B0618230A1100C077BD /* ground_texture.vert in Resources */,
 				B3115CEA182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
-				B3052DAE1823DD64006D91DD /* finalEffects.vert in Resources */,
-				B3052DAB1823DD64006D91DD /* finalEffects.frag in Resources */,
-				A9B50B0318230A1100C077BD /* ground_texture.frag in Resources */,
-				B3115CC4182D823600FB7D2F /* quadTriangle.frag in Resources */,
-				B3115CBA182D823600FB7D2F /* oppBasic.geom in Resources */,
-				B3115CC5182D823600FB7D2F /* quadTriangle.geom in Resources */,
-				B3115CC1182D823600FB7D2F /* quadOutline.frag in Resources */,
-				B3115CB9182D823600FB7D2F /* oppBasic.frag in Resources */,
-				B3115CBD182D823600FB7D2F /* oppDynamic.geom in Resources */,
-				B3115CC6182D823600FB7D2F /* quadTriangle.vert in Resources */,
-				B3115CBC182D823600FB7D2F /* oppDynamic.frag in Resources */,
-				B3115CBE182D823600FB7D2F /* oppDynamic.vert in Resources */,
-				B3115CBF182D823600FB7D2F /* oppSmoke.frag in Resources */,
-				B3115CBB182D823600FB7D2F /* oppBasic.vert in Resources */,
-				B3115CC2182D823600FB7D2F /* quadOutline.geom in Resources */,
-				B3115CC0182D823600FB7D2F /* oppSmoke.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1032,35 +1129,8 @@
 				B3115CCA182D889600FB7D2F /* noise_map.png in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
-				A97C8903181087BC00AE2AE2 /* basic.vert in Resources */,
-				A97C8907181087BC00AE2AE2 /* outline.frag in Resources */,
-				A97C890B181087BC00AE2AE2 /* outline.vert in Resources */,
-				A97C89111810AA7A00AE2AE2 /* texture.frag in Resources */,
 				B3115CF1182D99C300FB7D2F /* tank.obj in Resources */,
-				A97C89151810AA7A00AE2AE2 /* texture.vert in Resources */,
-				A971228B1819BD0E006DD64E /* offset_texture.frag in Resources */,
-				A971228E1819BD0E006DD64E /* offset_texture.vert in Resources */,
-				A97122991819C9E6006DD64E /* heightmap.frag in Resources */,
-				A971229C1819C9E6006DD64E /* heightmap.vert in Resources */,
-				A97C88FF181087BC00AE2AE2 /* basic.frag in Resources */,
-				A9B50B0718230A1100C077BD /* ground_texture.vert in Resources */,
-				B3052DAF1823DD64006D91DD /* finalEffects.vert in Resources */,
 				B3115CDF182D99C300FB7D2F /* tank_body.obj in Resources */,
-				B3052DAC1823DD64006D91DD /* finalEffects.frag in Resources */,
-				A9B50B0418230A1100C077BD /* ground_texture.frag in Resources */,
-				B3115C9F182D614700FB7D2F /* quadTriangle.frag in Resources */,
-				B3115C7B182D613100FB7D2F /* oppBasic.geom in Resources */,
-				B3115CA2182D614700FB7D2F /* quadTriangle.geom in Resources */,
-				B3115C96182D614700FB7D2F /* quadOutline.frag in Resources */,
-				B3115C78182D613100FB7D2F /* oppBasic.frag in Resources */,
-				B3115C84182D613100FB7D2F /* oppDynamic.geom in Resources */,
-				B3115CA5182D614700FB7D2F /* quadTriangle.vert in Resources */,
-				B3115C81182D613100FB7D2F /* oppDynamic.frag in Resources */,
-				B3115C87182D613100FB7D2F /* oppDynamic.vert in Resources */,
-				B3115C8A182D613100FB7D2F /* oppSmoke.frag in Resources */,
-				B3115C7E182D613100FB7D2F /* oppBasic.vert in Resources */,
-				B3115C99182D614700FB7D2F /* quadOutline.geom in Resources */,
-				B3115C8D182D613100FB7D2F /* oppSmoke.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1068,8 +1138,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9B50B0818230A1100C077BD /* ground_texture.vert in Resources */,
-				A9B50B0518230A1100C077BD /* ground_texture.frag in Resources */,
 				A9E48F0918103CE900F2F1C9 /* settings.555.IAC.xml in Resources */,
 				B3115CEC182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				A97122A11819E369006DD64E /* height_sample.png in Resources */,
@@ -1097,35 +1165,10 @@
 				A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228318197C85006DD64E /* grid.png in Resources */,
 				A9E48F1E18103CE900F2F1C9 /* settings.555.xml in Resources */,
-				A97C8904181087BC00AE2AE2 /* basic.vert in Resources */,
-				A97C8908181087BC00AE2AE2 /* outline.frag in Resources */,
-				A97C890C181087BC00AE2AE2 /* outline.vert in Resources */,
 				B3115CF2182D99C300FB7D2F /* tank.obj in Resources */,
-				A97C8900181087BC00AE2AE2 /* basic.frag in Resources */,
 				A9E48F1F18103CE900F2F1C9 /* Hyperspace.ttf in Resources */,
-				A97C89121810AA7A00AE2AE2 /* texture.frag in Resources */,
-				A971228C1819BD0E006DD64E /* offset_texture.frag in Resources */,
-				A971228F1819BD0E006DD64E /* offset_texture.vert in Resources */,
-				A971229A1819C9E6006DD64E /* heightmap.frag in Resources */,
-				A971229D1819C9E6006DD64E /* heightmap.vert in Resources */,
-				B3052DB01823DD64006D91DD /* finalEffects.vert in Resources */,
 				B3115CE0182D99C300FB7D2F /* tank_body.obj in Resources */,
-				B3052DAD1823DD64006D91DD /* finalEffects.frag in Resources */,
-				A97C89161810AA7A00AE2AE2 /* texture.vert in Resources */,
-				B3115CA0182D614700FB7D2F /* quadTriangle.frag in Resources */,
-				B3115C7C182D613100FB7D2F /* oppBasic.geom in Resources */,
-				B3115CA3182D614700FB7D2F /* quadTriangle.geom in Resources */,
-				B3115C97182D614700FB7D2F /* quadOutline.frag in Resources */,
-				B3115C79182D613100FB7D2F /* oppBasic.frag in Resources */,
-				B3115C85182D613100FB7D2F /* oppDynamic.geom in Resources */,
-				B3115CA6182D614700FB7D2F /* quadTriangle.vert in Resources */,
-				B3115C82182D613100FB7D2F /* oppDynamic.frag in Resources */,
-				B3115C88182D613100FB7D2F /* oppDynamic.vert in Resources */,
-				B3115C8B182D613100FB7D2F /* oppSmoke.frag in Resources */,
-				B3115C7F182D613100FB7D2F /* oppBasic.vert in Resources */,
-				B3115C9A182D614700FB7D2F /* quadOutline.geom in Resources */,
 				A9C3E35B18347D01003C3DA5 /* noise_map.png in Resources */,
-				B3115C8E182D613100FB7D2F /* oppSmoke.vert in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1158,26 +1201,63 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B349E3FC1837CB67008E5592 /* quadTriangle.frag in Sources */,
+				B349E3CC1837CB67008E5592 /* minion.vert in Sources */,
+				B349E3C61837CB67008E5592 /* heightmap.vert in Sources */,
+				B349E3CF1837CB67008E5592 /* offset_texture.frag in Sources */,
+				B349E3D51837CB67008E5592 /* oppBasic.frag in Sources */,
+				B349E4111837CB67008E5592 /* renderOppDynamic.geom in Sources */,
+				B349E3ED1837CB67008E5592 /* outline.frag in Sources */,
+				B349E3E11837CB67008E5592 /* oppDynamic.geom in Sources */,
+				B349E3C31837CB67008E5592 /* heightmap.frag in Sources */,
+				B349E3DE1837CB67008E5592 /* oppDynamic.frag in Sources */,
+				B349E3DB1837CB67008E5592 /* oppBasic.vert in Sources */,
 				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				B349E4141837CB67008E5592 /* renderOppDynamic.vert in Sources */,
+				B349E3F31837CB67008E5592 /* quadOutline.frag in Sources */,
+				B349E3C01837CB67008E5592 /* ground_texture.vert in Sources */,
+				B349E3EA1837CB67008E5592 /* oppSmoke.vert in Sources */,
+				B349E42F1837CB67008E5592 /* texture.frag in Sources */,
+				B349E40B1837CB67008E5592 /* renderDumbTank.vert in Sources */,
 				B3115C5E182D527100FB7D2F /* TankShot.cpp in Sources */,
+				B349E3BA1837CB67008E5592 /* finalEffects.vert in Sources */,
 				B3115CB6182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31D183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3D182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BB181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
+				B349E4351837CB67008E5592 /* updateOppDynamic.vert in Sources */,
+				B349E3C91837CB67008E5592 /* minion.frag in Sources */,
+				B349E40E1837CB67008E5592 /* renderOppDynamic.frag in Sources */,
 				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				B349E4321837CB67008E5592 /* texture.vert in Sources */,
+				B349E3F01837CB67008E5592 /* outline.vert in Sources */,
 				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				B349E3F61837CB67008E5592 /* quadOutline.geom in Sources */,
+				B349E4051837CB67008E5592 /* renderDumbTank.frag in Sources */,
 				C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */,
+				B349E3FF1837CB67008E5592 /* quadTriangle.geom in Sources */,
 				B3115CAD182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
+				B349E3B41837CB67008E5592 /* basic.vert in Sources */,
+				B349E3B11837CB67008E5592 /* basic.frag in Sources */,
+				B349E4021837CB67008E5592 /* quadTriangle.vert in Sources */,
 				A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C58182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				B349E3BD1837CB67008E5592 /* ground_texture.frag in Sources */,
+				B349E3D21837CB67008E5592 /* offset_texture.vert in Sources */,
+				B349E3E71837CB67008E5592 /* oppSmoke.frag in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				B349E3D81837CB67008E5592 /* oppBasic.geom in Sources */,
+				B349E3F91837CB67008E5592 /* quadOutline.vert in Sources */,
+				B349E3E41837CB67008E5592 /* oppDynamic.vert in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5B182D527100FB7D2F /* ObjModel.cpp in Sources */,
+				B349E3B71837CB67008E5592 /* finalEffects.frag in Sources */,
 				B3115C62182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227C18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B349E4081837CB67008E5592 /* renderDumbTank.geom in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,26 +1265,63 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B349E3FD1837CB67008E5592 /* quadTriangle.frag in Sources */,
+				B349E3CD1837CB67008E5592 /* minion.vert in Sources */,
+				B349E3C71837CB67008E5592 /* heightmap.vert in Sources */,
+				B349E3D01837CB67008E5592 /* offset_texture.frag in Sources */,
+				B349E3D61837CB67008E5592 /* oppBasic.frag in Sources */,
+				B349E4121837CB67008E5592 /* renderOppDynamic.geom in Sources */,
+				B349E3EE1837CB67008E5592 /* outline.frag in Sources */,
+				B349E3E21837CB67008E5592 /* oppDynamic.geom in Sources */,
+				B349E3C41837CB67008E5592 /* heightmap.frag in Sources */,
+				B349E3DF1837CB67008E5592 /* oppDynamic.frag in Sources */,
+				B349E3DC1837CB67008E5592 /* oppBasic.vert in Sources */,
 				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				B349E4151837CB67008E5592 /* renderOppDynamic.vert in Sources */,
+				B349E3F41837CB67008E5592 /* quadOutline.frag in Sources */,
+				B349E3C11837CB67008E5592 /* ground_texture.vert in Sources */,
+				B349E3EB1837CB67008E5592 /* oppSmoke.vert in Sources */,
+				B349E4301837CB67008E5592 /* texture.frag in Sources */,
+				B349E40C1837CB67008E5592 /* renderDumbTank.vert in Sources */,
 				B3115C5F182D527100FB7D2F /* TankShot.cpp in Sources */,
+				B349E3BB1837CB67008E5592 /* finalEffects.vert in Sources */,
 				B3115CB7182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31E183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3E182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BC181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
+				B349E4361837CB67008E5592 /* updateOppDynamic.vert in Sources */,
+				B349E3CA1837CB67008E5592 /* minion.frag in Sources */,
+				B349E40F1837CB67008E5592 /* renderOppDynamic.frag in Sources */,
 				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				B349E4331837CB67008E5592 /* texture.vert in Sources */,
+				B349E3F11837CB67008E5592 /* outline.vert in Sources */,
 				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				B349E3F71837CB67008E5592 /* quadOutline.geom in Sources */,
+				B349E4061837CB67008E5592 /* renderDumbTank.frag in Sources */,
 				A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				B349E4001837CB67008E5592 /* quadTriangle.geom in Sources */,
 				B3115CAE182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
+				B349E3B51837CB67008E5592 /* basic.vert in Sources */,
+				B349E3B21837CB67008E5592 /* basic.frag in Sources */,
+				B349E4031837CB67008E5592 /* quadTriangle.vert in Sources */,
 				A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C59182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				B349E3BE1837CB67008E5592 /* ground_texture.frag in Sources */,
+				B349E3D31837CB67008E5592 /* offset_texture.vert in Sources */,
+				B349E3E81837CB67008E5592 /* oppSmoke.frag in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				B349E3D91837CB67008E5592 /* oppBasic.geom in Sources */,
+				B349E3FA1837CB67008E5592 /* quadOutline.vert in Sources */,
+				B349E3E51837CB67008E5592 /* oppDynamic.vert in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5C182D527100FB7D2F /* ObjModel.cpp in Sources */,
+				B349E3B81837CB67008E5592 /* finalEffects.frag in Sources */,
 				B3115C63182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227D18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B349E4091837CB67008E5592 /* renderDumbTank.geom in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1212,26 +1329,63 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B349E3FE1837CB67008E5592 /* quadTriangle.frag in Sources */,
+				B349E3CE1837CB67008E5592 /* minion.vert in Sources */,
+				B349E3C81837CB67008E5592 /* heightmap.vert in Sources */,
+				B349E3D11837CB67008E5592 /* offset_texture.frag in Sources */,
+				B349E3D71837CB67008E5592 /* oppBasic.frag in Sources */,
+				B349E4131837CB67008E5592 /* renderOppDynamic.geom in Sources */,
+				B349E3EF1837CB67008E5592 /* outline.frag in Sources */,
+				B349E3E31837CB67008E5592 /* oppDynamic.geom in Sources */,
+				B349E3C51837CB67008E5592 /* heightmap.frag in Sources */,
+				B349E3E01837CB67008E5592 /* oppDynamic.frag in Sources */,
+				B349E3DD1837CB67008E5592 /* oppBasic.vert in Sources */,
 				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				B349E4161837CB67008E5592 /* renderOppDynamic.vert in Sources */,
+				B349E3F51837CB67008E5592 /* quadOutline.frag in Sources */,
+				B349E3C21837CB67008E5592 /* ground_texture.vert in Sources */,
+				B349E3EC1837CB67008E5592 /* oppSmoke.vert in Sources */,
+				B349E4311837CB67008E5592 /* texture.frag in Sources */,
+				B349E40D1837CB67008E5592 /* renderDumbTank.vert in Sources */,
 				B3115C60182D527100FB7D2F /* TankShot.cpp in Sources */,
+				B349E3BC1837CB67008E5592 /* finalEffects.vert in Sources */,
 				B3115CB8182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31F183034C0003C3DA5 /* DumbTank.cpp in Sources */,
 				A9B52B3F182C1BC3009B0D71 /* ConvergenceContent.cpp in Sources */,
 				A97122BD181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,
+				B349E4371837CB67008E5592 /* updateOppDynamic.vert in Sources */,
+				B349E3CB1837CB67008E5592 /* minion.frag in Sources */,
+				B349E4101837CB67008E5592 /* renderOppDynamic.frag in Sources */,
 				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				B349E4341837CB67008E5592 /* texture.vert in Sources */,
+				B349E3F21837CB67008E5592 /* outline.vert in Sources */,
 				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				B349E3F81837CB67008E5592 /* quadOutline.geom in Sources */,
+				B349E4071837CB67008E5592 /* renderDumbTank.frag in Sources */,
 				A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				B349E4011837CB67008E5592 /* quadTriangle.geom in Sources */,
 				B3115CAF182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,
+				B349E3B61837CB67008E5592 /* basic.vert in Sources */,
+				B349E3B31837CB67008E5592 /* basic.frag in Sources */,
+				B349E4041837CB67008E5592 /* quadTriangle.vert in Sources */,
 				A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C5A182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				B349E3BF1837CB67008E5592 /* ground_texture.frag in Sources */,
+				B349E3D41837CB67008E5592 /* offset_texture.vert in Sources */,
+				B349E3E91837CB67008E5592 /* oppSmoke.frag in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
+				B349E3DA1837CB67008E5592 /* oppBasic.geom in Sources */,
+				B349E3FB1837CB67008E5592 /* quadOutline.vert in Sources */,
+				B349E3E61837CB67008E5592 /* oppDynamic.vert in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5D182D527100FB7D2F /* ObjModel.cpp in Sources */,
+				B349E3B91837CB67008E5592 /* finalEffects.frag in Sources */,
 				B3115C64182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227E18196DCB006DD64E /* TextureContent.cpp in Sources */,
+				B349E40A1837CB67008E5592 /* renderDumbTank.geom in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

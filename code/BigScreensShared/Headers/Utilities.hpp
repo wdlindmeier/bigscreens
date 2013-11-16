@@ -16,6 +16,8 @@
 #include <time.h>
 #include <sys/timeb.h>
 
+#define IS_IAC 0
+
 #define QUOTE(str) #str
 #define EXPAND_AND_QUOTE(str) QUOTE(str)
 
