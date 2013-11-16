@@ -11,9 +11,16 @@
 
 namespace bigscreens {
 	
-void Opponent::update( float percentage )
+void Opponent::update( float percentage, const ci::Vec3f & smokeAccel )
 {
-	mDynamicGeometry->update( percentage );
+	// Smoke should have the opposite accel as movement
+	float deltaT = (ci::app::getElapsedSeconds() / 1000) - mTime;
+	mTime = ci::app::getElapsedSeconds() / 1000;
+	if( mUpdateG ) {
+		mDynamicGeometry->update( percentage, mTime );
+		mUpdateG = false;
+	}
+//	mSmokeEffect->update( smokeAccel, mTime );
 }
 	
 void Opponent::draw( float zDepth, const ci::Vec3f & cameraView )
@@ -35,11 +42,8 @@ void Opponent::draw( float zDepth, const ci::Vec3f & cameraView )
 	
 void Opponent::loadShaders()
 {
-}
-	
-void Opponent::loadTextures()
-{
-	
+	mDynamicGeometry->loadShaders();
+	mSmokeEffect->loadShaders();
 }
 	
 }

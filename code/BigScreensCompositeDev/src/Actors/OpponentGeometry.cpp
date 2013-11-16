@@ -20,9 +20,10 @@ DynamicOpponent::DynamicOpponent()
 	loadShaders();
 	loadBuffers();
 	loadTexture();
+	createRandomMap();
 }
 	
-void DynamicOpponent::update( float percentage )
+void DynamicOpponent::update( float percentage, float time )
 {
 	GLuint query;
 	glGenQueries(1, &query);
@@ -33,17 +34,21 @@ void DynamicOpponent::update( float percentage )
 	
 	mPyramid->bindTexBuffer( GL_TEXTURE1 );
 	mSphere->bindTexBuffer( GL_TEXTURE2 );
+
+	glActiveTexture( GL_TEXTURE3 );
+	glBindTexture( GL_TEXTURE_2D, mRandomTexture->getId() );
 	
 	mUpdateOppDynamicGlsl->uniform( "pyramidalTex", 1 );
 	mUpdateOppDynamicGlsl->uniform( "sphericalTex", 2 );
-	mUpdateOppDynamicGlsl->uniform( "percentage", percentage);
+	mUpdateOppDynamicGlsl->uniform( "randomMap", 3 );
+	mUpdateOppDynamicGlsl->uniform( "percentage", percentage );
+	mUpdateOppDynamicGlsl->uniform( "frameNum", (int)ci::app::getElapsedFrames() );
 	
-	ci::gl::enable( GL_RASTERIZER_DISCARD );
+	glEnable( GL_RASTERIZER_DISCARD );
 	
 	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, query);
 	
 	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
-	
 	
 	glBeginTransformFeedback(GL_POINTS);
 	mVao[drawBuf]->bind();
@@ -56,17 +61,11 @@ void DynamicOpponent::update( float percentage )
 	GLuint vertices;
 	glGetQueryObjectuiv(query, GL_QUERY_RESULT, &vertices);
 	
-//	printf("%u vertices written!\n\n", vertices);
-	
-//	float matefeedback[1200];
-//	glGetBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, 0, sizeof(matefeedback), matefeedback);
-//	printf("Mating Percentage Info:\n");
-//	for (int i = 0; i < 400; i+=3) {
-//		printf("%i: %f, %f, %f\n", i, matefeedback[i], matefeedback[i+1], matefeedback[i+2]);
-//		
-//	}
-//	printf("%u vertices written!\n", vertices);
+	glDisable(GL_RASTERIZER_DISCARD);
 
+
+	glActiveTexture( GL_TEXTURE3 );
+	glBindTexture( GL_TEXTURE_2D, mRandomTexture->getId() );
 	mSphere->unbindTexBuffer( GL_TEXTURE2 );
 	mPyramid->unbindTexBuffer( GL_TEXTURE1 );
 	mUpdateOppDynamicGlsl->unbind();
@@ -133,18 +132,33 @@ void DynamicOpponent::loadShaders()
 	};
 	
 	ci::gl::GlslProg::Format mUpdateOppDynamicGlslFormat;
-	mUpdateOppDynamicGlslFormat.vertex( LoadShader("oppDynamic.vert") )
+	mUpdateOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadAsset( "updateOppDynamic.vert" ) )
 	.transformFeedback().feedbackVaryings( varyings, 1 )
 	.feedbackFormat( GL_SEPARATE_ATTRIBS );
 	mUpdateOppDynamicGlsl = ci::gl::GlslProg::create( mUpdateOppDynamicGlslFormat );
 
 	
 	ci::gl::GlslProg::Format mRenderOppDynamicGlslFormat;
-	mRenderOppDynamicGlslFormat.vertex( LoadShader("oppDynamic.vert") )
-	.geometry( LoadShader("oppDynamic.geom") )
-	.fragment( LoadShader("oppDynamic.frag" ) );
+	mRenderOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadAsset( "renderOppDynamic.vert" ))
+	.geometry( /*LoadShader("oppDynamic.geom")*/ ci::app::loadAsset( "renderOppDynamic.geom" ) )
+	.fragment( /*LoadShader("oppDynamic.frag" )*/ ci::app::loadAsset( "renderOppDynamic.frag" ) );
 	mRenderOppDynamicGlsl = ci::gl::GlslProg::create( mRenderOppDynamicGlslFormat );
 	
+}
+	
+void DynamicOpponent::createRandomMap()
+{
+	ci::Surface32f mSurface(400, 400, false);
+	auto iter = mSurface.getIter();
+	while(iter.line()) {
+		while(iter.pixel()) {
+			iter.r() = ci::randFloat( 0.0f, 1.0f );
+			iter.g() = ci::randFloat( 0.0f, 1.0f );
+			iter.b() = ci::randFloat( 0.0f, 1.0f );
+		}
+	}
+	
+	mRandomTexture = ci::gl::Texture::create( mSurface );
 }
 	
 void DynamicOpponent::loadTexture()
@@ -246,8 +260,6 @@ void SphericalGeometry::calcGeometry( float radius, unsigned int rings, unsigned
 		*i++ = (r+1) * sectors + s;
 	}}
 	
-	std::cout << vertices.size() << std::endl;
-	std::cout << indices.size() << std::endl;
 	mSphericalTrimesh->appendVertices( vertices.data(), vertices.size() );
 	mSphericalTrimesh->appendIndices( indices.data(), indices.size() );
 	mSphericalTrimesh->recalculateNormals();
@@ -306,8 +318,8 @@ void MinionGeometry::loadBuffers()
 void MinionGeometry::loadShaders()
 {
     mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
-                                     .vertex( LoadShader("minion.vert" ) )
-                                     .fragment( LoadShader("minion.frag" ) ) );
+                                     .vertex( /*LoadShader("minion.vert" )*/ ci::app::loadAsset( "minion.vert" ) )
+                                     .fragment( /*LoadShader("minion.frag" )*/ ci::app::loadAsset( "minion.frag" ) ) );
 }
 	
 void MinionGeometry::calcGeometry()
@@ -351,8 +363,6 @@ void MinionGeometry::calcGeometry()
 	mPyramidalTrimesh->appendVertices( vertices.data(), vertices.size() );
 	mPyramidalTrimesh->appendIndices( indices.data(), indices.size() );
 	mPyramidalTrimesh->recalculateNormals();
-	for( int i = 0; i < mPyramidalTrimesh->getNormals().size(); i++ )
-		std::cout << mPyramidalTrimesh->getNormals()[i] << std::endl;
 }
 	
 }
