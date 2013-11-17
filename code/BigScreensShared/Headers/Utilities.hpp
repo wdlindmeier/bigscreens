@@ -118,7 +118,8 @@ namespace bigscreens
 
     static inline ci::DataSourceRef LoadShader(const std::string & assetName)
     {
-        return ci::app::loadAsset(SharedShaderAssetPath(assetName, !IS_IAC));
+        //return ci::app::loadAsset(SharedShaderAssetPath(assetName, !IS_IAC));
+        return ci::app::loadResource(assetName);
     }
     
     static ci::fs::path SharedGridAssetPath(bool isLocalApp)

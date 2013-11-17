@@ -23,9 +23,9 @@ void DumbTank::load()
 void DumbTank::loadShader()
 {
     gl::GlslProg::Format mRenderFormat;
-    mRenderFormat.vertex( ci::app::loadAsset("renderDumbTank.vert") )
-	.geometry( ci::app::loadAsset("renderDumbTank.geom") )
-    .fragment( ci::app::loadAsset("renderDumbTank.frag") );
+    mRenderFormat.vertex( ci::app::loadResource("renderDumbTank.vert") )
+	.geometry( ci::app::loadResource("renderDumbTank.geom") )
+    .fragment( ci::app::loadResource("renderDumbTank.frag") );
     mRenderTankShader = gl::GlslProg::create( mRenderFormat );
 }
 

@@ -23,8 +23,8 @@ public:
 	OutLineBorder()
 	{
 		ci::gl::GlslProg::Format format;
-		format.vertex( ci::app::loadAsset( "outline.vert" ) )
-			.fragment( ci::app::loadAsset( "outline.frag" ) );
+		format.vertex( ci::app::loadResource( "outline.vert" ) )
+			.fragment( ci::app::loadResource( "outline.frag" ) );
 		mGlsl = ci::gl::GlslProg::create( format );
 		mGlsl->bind();
 		

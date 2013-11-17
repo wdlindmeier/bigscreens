@@ -116,15 +116,15 @@ void FloorPlane::loadShaders()
 {
 	// Terrain stuff
 	ci::gl::GlslProg::Format mQuadOutlineFormat;
-	mQuadOutlineFormat.vertex( ci::app::loadAsset("quadOutline.vert") )
-	.geometry( ci::app::loadAsset("quadOutline.geom") )
-	.fragment( ci::app::loadAsset("quadOutline.frag") );
+	mQuadOutlineFormat.vertex( ci::app::loadResource("quadTriangle.vert") ) // NOTE: not using outline
+	.geometry( ci::app::loadResource("quadOutline.geom") )
+	.fragment( ci::app::loadResource("quadOutline.frag") );
 	mQuadOutlineGlsl = ci::gl::GlslProg::create( mQuadOutlineFormat );
 	
 	ci::gl::GlslProg::Format mQuadTriangleFormat;
-	mQuadTriangleFormat.vertex( ci::app::loadAsset("quadTriangle.vert") )
-	.geometry( ci::app::loadAsset("quadTriangle.geom") )
-	.fragment( ci::app::loadAsset("quadTriangle.frag") );
+	mQuadTriangleFormat.vertex( ci::app::loadResource("quadTriangle.vert") )
+	.geometry( ci::app::loadResource("quadTriangle.geom") )
+	.fragment( ci::app::loadResource("quadTriangle.frag") );
 	mQuadTriangleGlsl = ci::gl::GlslProg::create( mQuadTriangleFormat );
 	
 }
