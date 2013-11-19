@@ -92,6 +92,9 @@
 		A962380F183985DC00C1CF83 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = B349E3AE1837CB67008E5592 /* texture.frag */; };
 		A9623810183985DC00C1CF83 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3AF1837CB67008E5592 /* texture.vert */; };
 		A9623811183985DC00C1CF83 /* updateOppDynamic.vert in Resources */ = {isa = PBXBuildFile; fileRef = B349E3B01837CB67008E5592 /* updateOppDynamic.vert */; };
+		A969C9BA183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */; };
+		A969C9BB183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */; };
+		A969C9BC183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */; };
 		A971227318196D60006DD64E /* blank_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = A971227218196D60006DD64E /* blank_texture.png */; };
 		A971227418196D60006DD64E /* blank_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = A971227218196D60006DD64E /* blank_texture.png */; };
 		A971227518196D60006DD64E /* blank_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = A971227218196D60006DD64E /* blank_texture.png */; };
@@ -342,6 +345,8 @@
 		8D1107320486CEB800E47090 /* BigScreens0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A90D312E18118B260068E386 /* TankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankContent.h; path = ../include/TankContent.h; sourceTree = "<group>"; };
 		A90D312F18118B2E0068E386 /* TankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankContent.cpp; path = ../src/TankContent.cpp; sourceTree = "<group>"; };
+		A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankMultiOverheadContent.cpp; path = ../src/TankMultiOverheadContent.cpp; sourceTree = "<group>"; };
+		A969C9BD183AF0C70030569D /* TankMultiOverheadContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankMultiOverheadContent.h; path = ../include/TankMultiOverheadContent.h; sourceTree = "<group>"; };
 		A971227218196D60006DD64E /* blank_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blank_texture.png; path = ../resources/blank_texture.png; sourceTree = "<group>"; };
 		A971227A18196DCB006DD64E /* TextureContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextureContent.cpp; path = ../src/TextureContent.cpp; sourceTree = "<group>"; };
 		A971227F18196DDD006DD64E /* TextureContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureContent.h; path = ../include/TextureContent.h; sourceTree = "<group>"; };
@@ -802,6 +807,7 @@
 				A97122BE181AF14F006DD64E /* PerlinContent.h */,
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
+				A969C9BD183AF0C70030569D /* TankMultiOverheadContent.h */,
 				A971227F18196DDD006DD64E /* TextureContent.h */,
 			);
 			name = Headers;
@@ -816,6 +822,7 @@
 				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
+				A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */,
 				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 			);
 			name = Source;
@@ -1239,6 +1246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A969C9BA183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C5E182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB6182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31D183034C0003C3DA5 /* DumbTank.cpp in Sources */,
@@ -1266,6 +1274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A969C9BB183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C5F182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB7182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31E183034C0003C3DA5 /* DumbTank.cpp in Sources */,
@@ -1293,6 +1302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
+				A969C9BC183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C60182D527100FB7D2F /* TankShot.cpp in Sources */,
 				B3115CB8182D629B00FB7D2F /* OpponentGeometry.cpp in Sources */,
 				A9C3E31F183034C0003C3DA5 /* DumbTank.cpp in Sources */,

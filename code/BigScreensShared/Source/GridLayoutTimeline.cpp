@@ -279,10 +279,13 @@ namespace bigscreens
             for (int j = 0; j < numCompareRegions; ++j)
             {
                 ScreenRegion compareReg = compareRegions[j];
+                /*
                 Rectf rB = compareReg.rect;
-                
                 if (compareReg.isActive &&
                     rectCompare(rA, rB))
+                {
+                */
+                if (compareReg.timelineID == transitionReg.timelineID)
                 {
                     // No transition. Just draw at full blast.
                     rectScale = 1.0f;

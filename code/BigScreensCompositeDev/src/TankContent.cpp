@@ -322,6 +322,8 @@ namespace bigscreens
 
         gl::translate(tankOrient.position);
 
+        gl::rotate(tankOrient.directionDegrees, 0, 1, 0);
+        
         if (mIsGroundVisible)
         {
             float height = 0;
@@ -383,8 +385,6 @@ namespace bigscreens
             groundOrient.xAngleRads = radsAngleX;
             groundOrient.height = height;
             groundOrient.zAngleRads = radsAngleZ;
-            
-            gl::rotate(tankOrient.directionDegrees, 0, 1, 0);
             
             // Adjust the height
             gl::translate(Vec3f(0,groundOrient.height,0));
