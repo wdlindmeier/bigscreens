@@ -53,5 +53,7 @@ namespace bigscreens
         void renderPositionedTank();
         
         long mMSElapsedConvergence;
+        
+        OpponentRef mOpponent;
     };
 }

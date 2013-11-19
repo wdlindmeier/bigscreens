@@ -23,7 +23,7 @@ void Opponent::update( float percentage, const ci::Vec3f & smokeAccel )
 //	mSmokeEffect->update( smokeAccel, mTime );
 }
 	
-void Opponent::draw( float zDepth, const ci::Vec3f & cameraView )
+void Opponent::draw( float zDepth, const ci::Vec3f & lightPosition )
 {
 	// CAMERAVIEW - Will be used for lightPosition
 	// zDepth - Used for particle smoke
@@ -31,7 +31,7 @@ void Opponent::draw( float zDepth, const ci::Vec3f & cameraView )
 	ci::gl::enableDepthRead();
 	ci::gl::enableDepthWrite();
 
-	mDynamicGeometry->draw( cameraView );
+	mDynamicGeometry->draw( lightPosition );
 
 	ci::gl::disableDepthWrite();
 	

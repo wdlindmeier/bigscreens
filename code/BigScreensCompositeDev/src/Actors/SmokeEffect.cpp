@@ -228,7 +228,7 @@ void SmokeEffect::loadShaders()
 		
 		ci::gl::GlslProg::Format mUpdateParticleGlslFormat;
         // NOTE: See SharedShaderAssetPath to dynamically load
-		mUpdateParticleGlslFormat.vertex( /*LoadShader("oppSmoke.vert")*/ ci::app::loadAsset( "updateOppSmoke.vert" ) )
+		mUpdateParticleGlslFormat.vertex( /*LoadShader("oppSmoke.vert")*/ ci::app::loadResource( "updateOppSmoke.vert" ) )
 		.transformFeedback().feedbackFormat( GL_SEPARATE_ATTRIBS )
 		.feedbackVaryings( outputNames, 3 );
 		
@@ -240,8 +240,8 @@ void SmokeEffect::loadShaders()
 	
 	try {
 		ci::gl::GlslProg::Format mRenderParticleGlslFormat;
-		mRenderParticleGlslFormat.vertex( ci::app::loadAsset( "renderOppSmoke.vert" ) )
-		.fragment( ci::app::loadAsset( "renderOppSmoke.frag" ) );
+		mRenderParticleGlslFormat.vertex( ci::app::loadResource( "renderOppSmoke.vert" ) )
+		.fragment( ci::app::loadResource( "renderOppSmoke.frag" ) );
 		
 		mRenderOpponentParticlesGlsl = ci::gl::GlslProg::create( mRenderParticleGlslFormat );
 	}

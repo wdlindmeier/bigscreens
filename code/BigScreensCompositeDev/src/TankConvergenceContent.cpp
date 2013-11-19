@@ -15,6 +15,7 @@ using namespace bigscreens;
 
 TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
+, mOpponent(ContentProviderNew::ActorContent::getOpponent())
 , mMSElapsedConvergence(0)
 {
     mDumbTank = ContentProviderNew::ActorContent::getAngledDumbTank();
@@ -61,6 +62,8 @@ CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
     
     return orig;
 }
+
+// TODO: Update opponent
 
 PositionOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long msOffset)
 {
@@ -129,6 +132,26 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     gl::enableAlphaBlending();
     
+    gl::pushMatrices();
+    gl::setMatrices(mCam);
+    gl::scale(Vec3f(1000, 1000, 1000));
+    
+    ColorAf randColor(CM_HSV,
+                      Rand::randFloat(),
+                      1.0f,
+                      1.0f,
+                      mRenderAlpha);
+    Vec3f lightPos(sin(mNumFramesRendered * 0.1),
+                   cos(mNumFramesRendered * 0.06666),
+                   cos(mNumFramesRendered * 0.03333));
+
+    //Vec3f camEye = mCam.getEyePoint();
+    //Vec3f lightEye(camEye.z, camEye.y, camEye.x);
+    
+    mOpponent->draw(0, lightPos);
+    
+    gl::popMatrices();
+    
     // NOTE: Having issues w/ depth and blending during convergence
     const bool kUseGroundDepthTest = false;
     if (kUseGroundDepthTest)
@@ -149,6 +172,7 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
         gl::disableDepthWrite();
         gl::disableDepthRead();
     }
+    
 }
 
 // NOTE: This draws a collection of tanks
