@@ -26,7 +26,7 @@ PositionOrientation TankMultiOverheadContent::positionForTankWithProgress(const 
     const static float kTankTravelDist = kMaxTankDist - kMinTankDist;
     
     // A simple distance based on sin that looks somewhat staggered
-    float startDist = kMinTankDist + (fabs(sin(tankNum)) * (kTankTravelDist * -0.25));
+    float startDist = (kMinTankDist * 1.5) + (sin(tankNum) * (kTankTravelDist * -0.5));
     
     float tankDist = startDist + (kTankTravelDist * scalarProgress);
 

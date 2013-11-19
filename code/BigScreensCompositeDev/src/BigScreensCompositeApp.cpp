@@ -380,6 +380,7 @@ void BigScreensCompositeApp::play()
     console() << "play\n";
     mTimeline->play();
     mSoundtrack->play();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
 }
 
 void BigScreensCompositeApp::pause()
@@ -393,12 +394,14 @@ void BigScreensCompositeApp::advance()
 {
     console() << "advance\n";
     mTimeline->stepToNextLayout();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
 }
 
 void BigScreensCompositeApp::reverse()
 {
     console() << "reverse\n";
     mTimeline->stepToPreviousLayout();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
 }
 
 #pragma mark - Update
