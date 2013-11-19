@@ -54,7 +54,7 @@ void FiringTank::fire(const PositionOrientation & position,
     
     const static float kShotVelocity = 200.0f;
     
-    console() << "Firing w/ velocity " << kShotVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
+    // console() << "Firing w/ velocity " << kShotVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
     
     mShotsFired.push_back(TankShot(position,
                                    groundOrientation,

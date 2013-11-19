@@ -54,6 +54,9 @@ protected:
     virtual void        loadScreen();
     virtual void        loadShaders();
     
+    GroundOrientaion    groundOrientationForPosition(const PositionOrientation & position);
+    void                updateGroundOrientationWithCurrentPosition();
+    
     virtual void        drawScreen(const ci::Rectf & contentRect);
     virtual void        updateGroundCoordsForTank();
     virtual void        drawGround();

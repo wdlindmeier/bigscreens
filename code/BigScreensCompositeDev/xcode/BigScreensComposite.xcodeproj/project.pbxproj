@@ -251,6 +251,9 @@
 		A9EE4B21183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
 		A9EE4B22183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
 		A9EE4B23183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
+		A9EE4B25183BEA950089FF27 /* tank_angled.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B24183BEA950089FF27 /* tank_angled.obj */; };
+		A9EE4B26183BEA950089FF27 /* tank_angled.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B24183BEA950089FF27 /* tank_angled.obj */; };
+		A9EE4B27183BEA950089FF27 /* tank_angled.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B24183BEA950089FF27 /* tank_angled.obj */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -415,6 +418,7 @@
 		A9EE4B1D183B112B0089FF27 /* SmokeEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmokeEffect.h; sourceTree = "<group>"; };
 		A9EE4B1E183B116B0089FF27 /* FiringTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiringTank.h; sourceTree = "<group>"; };
 		A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FiringTank.cpp; sourceTree = "<group>"; };
+		A9EE4B24183BEA950089FF27 /* tank_angled.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_angled.obj; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
@@ -751,6 +755,7 @@
 				B3115CC8182D889600FB7D2F /* smoke_blur.png */,
 				A9E48EB018103A8300F2F1C9 /* T72.obj */,
 				B3115CD7182D99C300FB7D2F /* tank.obj */,
+				A9EE4B24183BEA950089FF27 /* tank_angled.obj */,
 				B3115CCF182D99C300FB7D2F /* tank_barrel_centered.obj */,
 				B3115CD1182D99C300FB7D2F /* tank_body.obj */,
 				B3115CD2182D99C300FB7D2F /* tank_gear_wheel_centered.obj */,
@@ -1026,6 +1031,7 @@
 				B349E44C1837CC4E008E5592 /* outline.frag in Resources */,
 				B349E44D1837CC4E008E5592 /* outline.vert in Resources */,
 				B349E44E1837CC4E008E5592 /* quadOutline.frag in Resources */,
+				A9EE4B25183BEA950089FF27 /* tank_angled.obj in Resources */,
 				B349E44F1837CC4E008E5592 /* quadOutline.geom in Resources */,
 				B349E4501837CC4E008E5592 /* quadOutline.vert in Resources */,
 				B349E4511837CC4E008E5592 /* quadTriangle.frag in Resources */,
@@ -1106,6 +1112,7 @@
 				B3115CCA182D889600FB7D2F /* noise_map.png in Resources */,
 				A9E48EF118103CE300F2F1C9 /* settings.555.xml in Resources */,
 				A9E48EF218103CE300F2F1C9 /* Hyperspace.ttf in Resources */,
+				A9EE4B26183BEA950089FF27 /* tank_angled.obj in Resources */,
 				B3115CF1182D99C300FB7D2F /* tank.obj in Resources */,
 				B3115CDF182D99C300FB7D2F /* tank_body.obj in Resources */,
 				A96237E1183985DB00C1CF83 /* quadTriangle.frag in Resources */,
@@ -1175,6 +1182,7 @@
 				B3115CDA182D99C300FB7D2F /* tank_barrel_centered.obj in Resources */,
 				A9E48F1C18103CE900F2F1C9 /* settings.0.xml in Resources */,
 				A9C3E32318304B54003C3DA5 /* explosion.png in Resources */,
+				A9EE4B27183BEA950089FF27 /* tank_angled.obj in Resources */,
 				A9E48F1D18103CE900F2F1C9 /* T72.obj in Resources */,
 				A97122C3181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A971228318197C85006DD64E /* grid.png in Resources */,

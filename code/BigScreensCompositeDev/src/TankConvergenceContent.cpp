@@ -17,8 +17,9 @@ TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
 , mMSElapsedConvergence(0)
 {
-    //mGroundScale = Vec3f(10000, 800, 10000);
-    mGroundScale = Vec3f(10000, 0, 10000);
+    mDumbTank = ContentProviderNew::ActorContent::getAngledDumbTank();
+    mGroundScale = Vec3f(15000, 600, 15000);
+    // mGroundScale = Vec3f(10000, 0, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)

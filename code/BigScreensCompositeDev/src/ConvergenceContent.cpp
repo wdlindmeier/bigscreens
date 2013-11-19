@@ -48,21 +48,6 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     content->reset();
 
     mLayout = previousLayout;
-    /*
-    mCameraOrigins.clear();
-    int i = 0;
-    int regionCount = mLayout.getRegions().size();
-    for (ScreenRegion region : mLayout.getRegions())
-    {
-        CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
-                                                                             regionCount,
-                                                                             MSConvergeBeforeCameraMerge,
-                                                                             mContentRect.getSize(),
-                                                                             region.rect);
-        mCameraOrigins.push_back(orig);
-        
-        ++i;
-    }*/
 }
 
 void ConvergenceContent::update()
@@ -98,15 +83,10 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     float easeProgress = mCamEase(progress);
 
     float amtRemaining = 1.0 - std::min<float>(easeProgress, 1.0f);
-    
-    // TODO: Use an ease-in ease-out function
-    // amtRemaining *= amtRemaining;
-    
+
     // Create the target cam position
-    // float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
-    // float finalOffset = scalarProgress * scalarProgress;
     float camDist = 3500 + (6000 * amtRemaining);
-    float camY = camDist * 0.5;//0.35;
+    float camY = camDist * 0.5;
     float camZ = camDist;
     float camX = camDist;
     
@@ -115,9 +95,6 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     finalOrigin.target = Vec3f( 0.f, -1000.f, 0.f );
     finalOrigin.camShift = Vec2f(0,0);
 
-    // NOTE: This content starts in the previous layout so we're adding render frames
-    // mContent->setFramesRendered(kNumFramesConvergeBeforeCameraMerge + mNumFramesRendered);
-    
     shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mContent);
     tanks->setMSElapsed(mMSElapsedConvergence);
     
@@ -126,13 +103,23 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     ci::gl::enable( GL_SCISSOR_TEST );
     
+    //float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
+    float fadeAlpha = 0.25 + std::max<float>(1.0f-progress, -1.0);
+    bool shouldDrawRegions = fadeAlpha > 0.01;
+    
     // Draw the "background" image that fades in at the end.
     const static float kFinalSceneProgressBegin = 0.75;
     if (progress >= kFinalSceneProgressBegin)
     {
         static const int kLastContentID = 9999;
         mContent->setFrameContentID(kLastContentID);
-        
+
+        // Ring of fire every 60 frames
+        if (!shouldDrawRegions && (mNumFramesRendered % 60 == 0))
+        {
+            tanks->fireTankGun();
+        }
+
         // This uses the final cam
         // TODO: Use a dumb tank multiplier
         tanks->update([=](CameraPersp & cam, DumbTankRef & tank)
@@ -146,9 +133,6 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                                  mContentRect,
                                  finalSceneAlpha);
     }
-
-    float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
-    bool shouldDrawRegions = fadeAlpha > 0.01;
 
     // If we're using the FADE style, the sub-regions shouldn't be drawn if they're invisible
     if (shouldDrawRegions)
@@ -231,6 +215,9 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
     
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;
+    
+    // TEST
+    outlineAlpha = alpha;
 
     ci::gl::viewport(rect.x1 - screenOffset.x,
                      contentSize.y - rect.y2 - screenOffset.y,

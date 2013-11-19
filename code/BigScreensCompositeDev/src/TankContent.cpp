@@ -54,6 +54,8 @@ namespace bigscreens
             orientation.position = tankPosition;
             orientation.directionDegrees = toDegrees(directionRadians);
             mPositionOrientations[mContentID] = orientation;
+            // update ground orientation
+            updateGroundOrientationWithCurrentPosition();
         }
     }
     
@@ -293,7 +295,18 @@ namespace bigscreens
         // NOTE: Keep this before the update llambda so the user has access to the current state
         mTank->update(mNumFramesRendered);
         
-        update_func(mCam, mTank);        
+        // updateGroundOrientationWithCurrentPosition();
+        
+        update_func(mCam, mTank);
+        // Nothing should happen after update_func
+    }
+    
+    void TankContent::updateGroundOrientationWithCurrentPosition()
+    {
+        // NOTE: This assumes the tank position has already been set
+        PositionOrientation tankOrient = mPositionOrientations[mContentID];
+        GroundOrientaion groundOrient = groundOrientationForPosition(tankOrient);
+        mTankGroundOrientations[mContentID] = groundOrient;
     }
     
     void TankContent::drawScreen(const ci::Rectf & contentRect)
@@ -326,10 +339,76 @@ namespace bigscreens
         gl::popMatrices();
     }
     
+    GroundOrientaion TankContent::groundOrientationForPosition(const PositionOrientation & position)
+    {
+        GroundOrientaion groundOrient;
+        
+        float height = 0;
+        
+        Vec2i textureSize = mPerlinContent.getTextureSize();
+        
+        // Get Model Sampling Coords
+        float xPosLeft = kTankBodyWidth*-0.5;
+        float xPosRight = kTankBodyWidth*0.5;
+        float zPosRear = kTankBodyHeadToToe * kTankCenterZOffset * -1;
+        float zPosFore = kTankBodyHeadToToe * (1.0-kTankCenterZOffset);
+        
+        float xMid = (xPosLeft + xPosRight) / 2.0f;
+        float zMid = (zPosRear + zPosFore) / 2.0f;
+        
+        Vec2f tankPosRear(xMid, zPosRear);
+        Vec2f tankPosFore(xMid, zPosFore);
+        Vec2f tankPosLeft(xPosLeft, zMid);
+        Vec2f tankPosRight(xPosRight, zMid);
+        
+        // Rotate arond Zero depending upon the direction
+        float directionRads = toRadians(position.directionDegrees);
+        tankPosRear.rotate(-directionRads);
+        tankPosFore.rotate(-directionRads);
+        tankPosLeft.rotate(-directionRads);
+        tankPosRight.rotate(-directionRads);
+        
+        // Convert to World coords by adding tank position
+        Vec2f totalOffset = position.position.xz() + (mGroundScale.xz() * 0.5f);
+        tankPosRear += totalOffset;
+        tankPosFore += totalOffset;
+        tankPosLeft += totalOffset;
+        tankPosRight += totalOffset;
+        
+        // Tex / Noise Coords
+        Vec2f groundToTexScale = Vec2f(textureSize) / mGroundScale.xz();
+        float depthSampleRear = mPerlinContent.getValueAtPosition(tankPosRear * groundToTexScale);
+        float depthSampleFore = mPerlinContent.getValueAtPosition(tankPosFore * groundToTexScale);
+        float depthSampleLeft = mPerlinContent.getValueAtPosition(tankPosLeft * groundToTexScale);
+        float depthSampleRight = mPerlinContent.getValueAtPosition(tankPosRight * groundToTexScale);
+        
+        float heightRear = depthSampleRear * mGroundScale.y;
+        float heightFore = depthSampleFore * mGroundScale.y;
+        float heightLeft = depthSampleLeft * mGroundScale.y;
+        float heightRight = depthSampleRight * mGroundScale.y;
+        
+        height = (heightRear + heightFore + heightLeft + heightRight) / 4.f;
+        
+        // Get the angle
+        float zOffset = kTankBodyHeadToToe;
+        float yOffset = heightFore - heightRear;
+        float radsAngleX = atan2f(zOffset, yOffset);
+        
+        float xOffset = kTankBodyWidth;
+        yOffset = heightLeft - heightRight;
+        float radsAngleZ = atan2f(xOffset, yOffset);
+        
+        // Update the orientation
+        groundOrient.xAngleRads = radsAngleX;
+        groundOrient.height = height;
+        groundOrient.zAngleRads = radsAngleZ;
+        
+        return groundOrient;
+    }
+    
     void TankContent::drawTank()
     {
         PositionOrientation tankOrient = mPositionOrientations[mContentID];
-        GroundOrientaion groundOrient = mTankGroundOrientations[mContentID];
         
         gl::pushMatrices();
         
@@ -341,65 +420,7 @@ namespace bigscreens
         
         if (mIsGroundVisible)
         {
-            float height = 0;
-        
-            Vec2i textureSize = mPerlinContent.getTextureSize();
-        
-            // Get Model Sampling Coords
-            float xPosLeft = kTankBodyWidth*-0.5;
-            float xPosRight = kTankBodyWidth*0.5;
-            float zPosRear = kTankBodyHeadToToe * kTankCenterZOffset * -1;
-            float zPosFore = kTankBodyHeadToToe * (1.0-kTankCenterZOffset);
-            
-            float xMid = (xPosLeft + xPosRight) / 2.0f;
-            float zMid = (zPosRear + zPosFore) / 2.0f;
-            
-            Vec2f tankPosRear(xMid, zPosRear);
-            Vec2f tankPosFore(xMid, zPosFore);
-            Vec2f tankPosLeft(xPosLeft, zMid);
-            Vec2f tankPosRight(xPosRight, zMid);
-            
-            // Rotate arond Zero depending upon the direction
-            float directionRads = toRadians(tankOrient.directionDegrees);
-            tankPosRear.rotate(-directionRads);
-            tankPosFore.rotate(-directionRads);
-            tankPosLeft.rotate(-directionRads);
-            tankPosRight.rotate(-directionRads);
-            
-            // Convert to World coords by adding tank position
-            Vec2f totalOffset = tankOrient.position.xz() + (mGroundScale.xz() * 0.5f);
-            tankPosRear += totalOffset;
-            tankPosFore += totalOffset;
-            tankPosLeft += totalOffset;
-            tankPosRight += totalOffset;
-            
-            // Tex / Noise Coords
-            Vec2f groundToTexScale = Vec2f(textureSize) / mGroundScale.xz();
-            float depthSampleRear = mPerlinContent.getValueAtPosition(tankPosRear * groundToTexScale);
-            float depthSampleFore = mPerlinContent.getValueAtPosition(tankPosFore * groundToTexScale);
-            float depthSampleLeft = mPerlinContent.getValueAtPosition(tankPosLeft * groundToTexScale);
-            float depthSampleRight = mPerlinContent.getValueAtPosition(tankPosRight * groundToTexScale);
-            
-            float heightRear = depthSampleRear * mGroundScale.y;
-            float heightFore = depthSampleFore * mGroundScale.y;
-            float heightLeft = depthSampleLeft * mGroundScale.y;
-            float heightRight = depthSampleRight * mGroundScale.y;
-
-            height = (heightRear + heightFore + heightLeft + heightRight) / 4.f;
-            
-            // Get the angle
-            float zOffset = kTankBodyHeadToToe;
-            float yOffset = heightFore - heightRear;
-            float radsAngleX = atan2f(zOffset, yOffset);
-            
-            float xOffset = kTankBodyWidth;
-            yOffset = heightLeft - heightRight;
-            float radsAngleZ = atan2f(xOffset, yOffset);
-        
-            // Update the orientation
-            groundOrient.xAngleRads = radsAngleX;
-            groundOrient.height = height;
-            groundOrient.zAngleRads = radsAngleZ;
+            GroundOrientaion groundOrient = mTankGroundOrientations[mContentID];
             
             // Adjust the height
             gl::translate(Vec3f(0,groundOrient.height,0));
@@ -415,8 +436,7 @@ namespace bigscreens
         renderPositionedTank();
 
         gl::popMatrices();
-
-        mTankGroundOrientations[mContentID] = groundOrient;
+        
     }
     
     void TankContent::renderPositionedTank()

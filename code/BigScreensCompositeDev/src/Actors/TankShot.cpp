@@ -174,7 +174,6 @@ void TankShot::update(float amount)
     {
         if (progress == mMaxProgress)
         {
-            ci::app::console() << "EXPLODE!!\n";
             mHasExploded = true;
             mExplosionScale = 1.5f;
         }

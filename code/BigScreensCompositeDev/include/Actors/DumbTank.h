@@ -30,10 +30,9 @@ class DumbTank : public FiringTank
     
 public:
     
-    DumbTank() { load(); }
+    DumbTank(const std::string & objName, const float barrelAngleDegrees);
     ~DumbTank(){ glDeleteTransformFeedbacks( 2, mTFOs ); }
     
-    void load();
     void draw( const int zFactor, const ci::Vec3f & seperationPoint );
 	void update(long progressCounter);
     void loadShader();
@@ -45,7 +44,7 @@ public:
 private:
     
     
-    void loadModels();
+    void loadModels(const std::string & modelName);
 	
 	ci::TriMeshRef		mMesh;
     ci::gl::VboRef		mFeedbackPositionVbo[2], mInitialTankPositionVbo, mTankPositionNormals;

@@ -79,7 +79,8 @@ void AdvancedTank::update(long progressCounter)
     // TODO: Make the angle more intentional
     mBarrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
     
-    mHeadRotationDeg = toDegrees(radsTarget);
+    // NOTE: Aiming 20 degrees "ahead" of the minion
+    mHeadRotationDeg = toDegrees(radsTarget) + 20.0f;
 
     FiringTank::update(progressCounter);
 }

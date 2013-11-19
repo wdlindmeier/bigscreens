@@ -33,6 +33,7 @@ void DumbTankContent::loadShaders()
 void DumbTankContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
 {
     mDumbTank->update(mNumFramesRendered);
+    // updateGroundOrientationWithCurrentPosition();
     update_func(mCam, mDumbTank);
 }
 

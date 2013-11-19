@@ -14,14 +14,14 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-void DumbTank::load()
+DumbTank::DumbTank(const std::string & objName, const float barrelAngleDegrees) :
+FiringTank()
 {
-    // TEST
-    mBarrelAngleDeg = 0;//-90.0f;
+    mBarrelAngleDeg = barrelAngleDegrees;
     mHeadRotationDeg = 0.0f;
-
+    
     loadShader();
-    loadModels();
+    loadModels(objName);
 }
 
 void DumbTank::loadShader()
@@ -33,9 +33,9 @@ void DumbTank::loadShader()
     mRenderTankShader = gl::GlslProg::create( mRenderFormat );
 }
 
-void DumbTank::loadModels()
+void DumbTank::loadModels(const std::string & modelName)
 {
-	DataSourceRef file = loadResource( "tank.obj" );
+	DataSourceRef file = loadResource(modelName);
     ObjLoader loader( file );
     mMesh = TriMesh::create( loader );
     
@@ -103,8 +103,7 @@ void DumbTank::loadModels()
 
 void DumbTank::update(long progressCounter)
 {
-    mHeadRotationDeg += 0.5;
-    
+    // mHeadRotationDeg += 0.5;
     FiringTank::update(progressCounter);
 }
 
