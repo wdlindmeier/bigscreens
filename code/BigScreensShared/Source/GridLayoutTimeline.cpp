@@ -178,7 +178,11 @@ namespace bigscreens
     
     long long GridLayoutTimeline::getPlayheadMillisec()
     {
-        return mPlayheadTime;
+        if (mIsPlaying)
+        {
+            return mPlayheadTime;
+        }
+        return 0;
     }
     
 #pragma mark - App Loop

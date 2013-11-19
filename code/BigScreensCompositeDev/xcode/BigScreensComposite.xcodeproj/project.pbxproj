@@ -248,6 +248,9 @@
 		A9E48F5A18103CF500F2F1C9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		A9E48F5B18103CF500F2F1C9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		A9E48F6418103DD300F2F1C9 /* BigScreensControllerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */; };
+		A9EE4B21183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
+		A9EE4B22183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
+		A9EE4B23183B11F90089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -409,6 +412,9 @@
 		A9E48F3218103CE900F2F1C9 /* BigScreens2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreens2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F5F18103CF500F2F1C9 /* BigScreensController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigScreensController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E48F6318103DD300F2F1C9 /* BigScreensControllerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BigScreensControllerApp.cpp; path = ../src/BigScreensControllerApp.cpp; sourceTree = "<group>"; };
+		A9EE4B1D183B112B0089FF27 /* SmokeEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmokeEffect.h; sourceTree = "<group>"; };
+		A9EE4B1E183B116B0089FF27 /* FiringTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiringTank.h; sourceTree = "<group>"; };
+		A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FiringTank.cpp; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
@@ -422,7 +428,6 @@
 		B3115C61182D560F00FB7D2F /* FloorPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloorPlane.cpp; sourceTree = "<group>"; };
 		B3115C65182D562400FB7D2F /* FloorPlane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorPlane.h; sourceTree = "<group>"; };
 		B3115CA8182D618200FB7D2F /* Opponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
-		B3115CAB182D619000FB7D2F /* SmokeEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SmokeEffect.hpp; sourceTree = "<group>"; };
 		B3115CAC182D61A400FB7D2F /* Opponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Opponent.cpp; sourceTree = "<group>"; };
 		B3115CB1182D624900FB7D2F /* OpponentGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpponentGeometry.h; sourceTree = "<group>"; };
 		B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpponentGeometry.cpp; sourceTree = "<group>"; };
@@ -787,11 +792,12 @@
 				B3115C4E182D524200FB7D2F /* AdvancedTank.h */,
 				A9C3E318183034A8003C3DA5 /* DumbTank.h */,
 				B3115C4F182D524200FB7D2F /* FinalBillboard.h */,
+				A9EE4B1E183B116B0089FF27 /* FiringTank.h */,
 				B3115C65182D562400FB7D2F /* FloorPlane.h */,
 				B3115C50182D524200FB7D2F /* ObjModel.h */,
 				B3115CA8182D618200FB7D2F /* Opponent.h */,
 				B3115CB1182D624900FB7D2F /* OpponentGeometry.h */,
-				B3115CAB182D619000FB7D2F /* SmokeEffect.hpp */,
+				A9EE4B1D183B112B0089FF27 /* SmokeEffect.h */,
 				B3115C51182D524200FB7D2F /* TankShot.h */,
 			);
 			name = Actors;
@@ -833,6 +839,7 @@
 			children = (
 				B3115C55182D527100FB7D2F /* AdvancedTank.cpp */,
 				A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */,
+				A9EE4B1F183B11F90089FF27 /* FiringTank.cpp */,
 				B3115C61182D560F00FB7D2F /* FloorPlane.cpp */,
 				B3115C56182D527100FB7D2F /* ObjModel.cpp */,
 				B3115CAC182D61A400FB7D2F /* Opponent.cpp */,
@@ -1245,6 +1252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EE4B21183B11F90089FF27 /* FiringTank.cpp in Sources */,
 				A97C88A31810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				A969C9BA183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C5E182D527100FB7D2F /* TankShot.cpp in Sources */,
@@ -1273,6 +1281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EE4B22183B11F90089FF27 /* FiringTank.cpp in Sources */,
 				A97C88A41810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				A969C9BB183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C5F182D527100FB7D2F /* TankShot.cpp in Sources */,
@@ -1301,6 +1310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EE4B23183B11F90089FF27 /* FiringTank.cpp in Sources */,
 				A97C88A51810440800AE2AE2 /* TCPClient.cpp in Sources */,
 				A969C9BC183AF0A50030569D /* TankMultiOverheadContent.cpp in Sources */,
 				B3115C60182D527100FB7D2F /* TankShot.cpp in Sources */,

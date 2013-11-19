@@ -32,6 +32,7 @@ void DumbTankContent::loadShaders()
 
 void DumbTankContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
 {
+    mDumbTank->update(mNumFramesRendered);
     update_func(mCam, mDumbTank);
 }
 
@@ -43,7 +44,26 @@ void DumbTankContent::drawMinion()
 
 void DumbTankContent::drawTankShots()
 {
-    // Not for now
+    // gl::enableAdditiveBlending();
+    
+    // Shots are in world coords
+    gl::pushMatrices();
+    gl::setMatrices(mCam);
+    mDumbTank->renderShots(mCam);
+    gl::popMatrices();
+    
+    // gl::disableAlphaBlending();
+}
+
+void DumbTankContent::setFrameContentID(const int contentID)
+{
+    TankContent::setFrameContentID(contentID);
+    mDumbTank->setFrameContentID(contentID);
+};
+
+void DumbTankContent::fireTankGun()
+{
+    TankContent::fireTankGun(mDumbTank);
 }
 
 void DumbTankContent::renderPositionedTank()

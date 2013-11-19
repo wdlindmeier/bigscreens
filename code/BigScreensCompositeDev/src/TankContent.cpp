@@ -13,6 +13,7 @@
 #include "cinder/Utilities.h"
 #include "cinder/Camera.h"
 #include "Utilities.hpp"
+#include "FiringTank.h"
 #include "ContentProvider.h"
 
 using namespace ci;
@@ -229,6 +230,11 @@ namespace bigscreens
     
     void TankContent::fireTankGun()
     {
+        fireTankGun(mTank);
+    }
+    
+    void TankContent::fireTankGun(FiringTankRef firingTank)
+    {
         if (mContentID == -1)
         {
             console() << "ERROR: Tank content doesn't have a contentID\n";
@@ -240,14 +246,23 @@ namespace bigscreens
         if (mTankGroundOrientations.find(mContentID) != mTankGroundOrientations.end())
         {
             curGroundOrientation = mTankGroundOrientations[mContentID];
-            position = mPositionOrientations[mContentID];
+        }
+        else
+        {
+            console() << "ERROR: Couldn't find ground orientation for firing\n";
         }
         
-        // NOTE: Should this be stored in a collection?
-        
-        //orientation.position = mTankPosition;
-        //orientation.directionDegrees = toDegrees(mTankDirectionRadians);
-        mTank->fire(position, curGroundOrientation);
+        if (mPositionOrientations.find(mContentID) != mPositionOrientations.end())
+        {
+            position = mPositionOrientations[mContentID];
+        }
+        else
+        {
+            console() << "ERROR: Couldn't find position for firing\n";
+        }
+        console() << "Firing from position: " << position.position << "\n";
+
+        firingTank->fire(position, curGroundOrientation);
     }
     
     void TankContent::reset()
@@ -439,8 +454,16 @@ namespace bigscreens
         gl::scale(Vec3f(150,150,150));
         gl::color(1, 0, 0, mRenderAlpha);
         gl::setDefaultShaderVars();
+        
+        ColorAf randColor(CM_HSV,
+                          Rand::randFloat(),
+                          1.0f,
+                          1.0f,
+                          mRenderAlpha);
 
-        mMinion->draw(Vec3f::zero(), ColorAf(1,0,0,mRenderAlpha));
+        mMinion->draw(Vec3f(sin(mNumFramesRendered * 0.1),
+                            cos(mNumFramesRendered * 0.06666),
+                            cos(mNumFramesRendered * 0.03333)), randColor);
 
         gl::popMatrices();
     }

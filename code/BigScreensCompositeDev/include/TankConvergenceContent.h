@@ -43,6 +43,7 @@ namespace bigscreens
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect, const float alpha);
         
         virtual void updateGroundCoordsForTank();
+        virtual void fireTankGun();
         void setMSElapsed(const long msElapsedConvergence);
         void drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
 

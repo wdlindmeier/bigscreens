@@ -16,6 +16,10 @@ using namespace std;
 
 void DumbTank::load()
 {
+    // TEST
+    mBarrelAngleDeg = 0;//-90.0f;
+    mHeadRotationDeg = 0.0f;
+
     loadShader();
     loadModels();
 }
@@ -97,9 +101,11 @@ void DumbTank::loadModels()
 	
 }
 
-void DumbTank::update( const Vec3f & point )
+void DumbTank::update(long progressCounter)
 {
-	
+    mHeadRotationDeg += 0.5;
+    
+    FiringTank::update(progressCounter);
 }
 
 ci::gl::VaoRef DumbTank::getVao()

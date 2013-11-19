@@ -17,7 +17,8 @@ TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
 , mMSElapsedConvergence(0)
 {
-    mGroundScale = Vec3f(10000, 800, 10000);
+    //mGroundScale = Vec3f(10000, 800, 10000);
+    mGroundScale = Vec3f(10000, 0, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -94,6 +95,22 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     render(screenOffset, contentRect, 1.0f);
 }
 
+void TankConvergenceContent::fireTankGun()
+{
+    // TMP
+    // This kind of sucks
+    for (int i = 0; i < kNumTanksConverging; ++i)
+    {
+        PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
+        setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
+        
+        // TODO:
+        // BUG
+        // HOWEVER, we're not setting the orientation here
+        TankContent::fireTankGun(mDumbTank);
+    }
+}
+
 void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const ci::Rectf & contentRect,
                                     const float alpha)
@@ -123,6 +140,8 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     gl::enableAlphaBlending();
 
     drawTank();
+    
+    DumbTankContent::drawTankShots();
     
     if (kUseGroundDepthTest)
     {

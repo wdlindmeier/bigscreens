@@ -16,6 +16,7 @@
 #include "cinder/TriMesh.h"
 #include "ObjModel.h"
 #include "TankShot.h"
+#include "FiringTank.h"
 
 #pragma once
 
@@ -24,7 +25,7 @@ namespace bigscreens
 
 typedef std::shared_ptr<class DumbTank> DumbTankRef;
 
-class DumbTank
+class DumbTank : public FiringTank
 {
     
 public:
@@ -34,7 +35,7 @@ public:
     
     void load();
     void draw( const int zFactor, const ci::Vec3f & seperationPoint );
-	void update( const ci::Vec3f & point );
+	void update(long progressCounter);
     void loadShader();
     
     ci::gl::VboRef getElementVbo();

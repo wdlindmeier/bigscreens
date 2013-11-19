@@ -16,6 +16,7 @@
 #include "SharedTypes.hpp"
 #include "ObjModel.h"
 #include "TankShot.h"
+#include "FiringTank.h"
 
 #pragma once
 
@@ -26,7 +27,7 @@ const static float kDefaultTankWheelSpeedMulti = 6.0f;
     
 typedef std::shared_ptr<class AdvancedTank> AdvancedTankRef;
 	
-class AdvancedTank
+class AdvancedTank : public FiringTank
 {
     
 public:
@@ -34,12 +35,8 @@ public:
     AdvancedTank();
     ~AdvancedTank(){};
 
-    void fire(const PositionOrientation & position,
-              const GroundOrientaion & groundOrientation);
     void update(long progressCounter);
-    void setFrameContentID(const int contentID);
     void render(const float alpha = 1.0);
-    void renderShots(ci::CameraPersp & cam, const float alpha = 1.0);
     void setWheelSpeedMultiplier(const float wheelMultiplier);
     void setTargetPosition(const ci::Vec3f & targetPos);
     
@@ -54,15 +51,13 @@ protected:
     ObjModelRef     mGearWheelModel;
     ObjModelRef     mWheelModel;
     
-    std::vector<TankShot>  mShotsFired;
-    float           mBarrelAngleDeg;
-    float           mHeadRotationDeg;
+    //float           mBarrelAngleDeg;
+    //float           mHeadRotationDeg;
     float           mWheelRotation;
     float           mGearRotation;
     float           mShotProgress;
     float           mWheelProgressMulti;
     ci::gl::GlslProgRef mTankShader;
-    int             mContentID;
     ci::Vec3f       mTargetPosition;
 };
 	
