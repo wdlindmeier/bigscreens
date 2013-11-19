@@ -33,7 +33,6 @@ public:
              float barrelDirectionRads,
              float barrelAngleRads,
              float velocity,
-             const ci::gl::GlslProgRef & shader,
              const int parentContentID);
 
     ~TankShot(){};
@@ -49,7 +48,7 @@ public:
 
 private:
     
-    void            generateLine(const ci::gl::GlslProgRef & shader);
+    void            generateLine();
     
     float           mVelocity;
     float           mProgress;

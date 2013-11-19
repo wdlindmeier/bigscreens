@@ -16,7 +16,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "SharedTypes.hpp"
 #include "cinder/TriMesh.h"
-//#include "GroundContent.h"
+#include "FiringTank.h"
 #include "AdvancedTank.h"
 #include "OpponentGeometry.h"
 #include "FloorPlane.h"
@@ -51,9 +51,11 @@ public:
 protected:
     
     // Funcs
-    
     virtual void        loadScreen();
     virtual void        loadShaders();
+    
+    GroundOrientaion    groundOrientationForPosition(const PositionOrientation & position);
+    void                updateGroundOrientationWithCurrentPosition();
     
     virtual void        drawScreen(const ci::Rectf & contentRect);
     virtual void        updateGroundCoordsForTank();
@@ -65,12 +67,11 @@ protected:
     virtual void        generateGroundMapForPlot(const ci::Vec3i & plot);
     virtual void        drawGroundTile(const ci::Vec3i & plot);
     
-    // Vars
+    void                fireTankGun(FiringTankRef firingTank);
     
+    // Vars
     ci::CameraPersp		mCam;
 
-    //ci::Vec3f           mTankPosition;
-    //float               mTankDirectionRadians;
     ci::Vec3f           mMinionPosition;
 
 	AdvancedTankRef		mTank;
@@ -94,7 +95,6 @@ protected:
     // NOTE: These could all be wrapped up in a "Tank State" struct
     std::map<int, GroundOrientaion> mTankGroundOrientations;
     std::map<int, PositionOrientation> mPositionOrientations;
-    //std::map<int, float> mWheelSpeeds;
     float               mRenderAlpha;
     float               mScreenAlpha;
     

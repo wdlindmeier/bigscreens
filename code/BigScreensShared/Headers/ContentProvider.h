@@ -84,9 +84,21 @@ namespace ActorContent {
 		if( !masterDumbTank )
         {
             ci::app::console() << "Initting Dumb Tank Content\n";
-			masterDumbTank = DumbTankRef( new DumbTank() );
+			masterDumbTank = DumbTankRef( new DumbTank("tank.obj", 0) );
 		}
         return masterDumbTank;
+	}
+    
+    static DumbTankRef getAngledDumbTank()
+	{
+		static DumbTankRef masterAngledDumbTank;
+		if( !masterAngledDumbTank )
+        {
+            ci::app::console() << "Initting Angled Dumb Tank Content\n";
+            const static float kDumbTankBarrelAngle = -18.0f;//-15.69;
+			masterAngledDumbTank = DumbTankRef( new DumbTank("tank_angled.obj", kDumbTankBarrelAngle) );
+		}
+        return masterAngledDumbTank;
 	}
 }
 	

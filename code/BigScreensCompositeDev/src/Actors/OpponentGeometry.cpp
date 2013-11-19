@@ -132,16 +132,16 @@ void DynamicOpponent::loadShaders()
 	};
 	
 	ci::gl::GlslProg::Format mUpdateOppDynamicGlslFormat;
-	mUpdateOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadAsset( "updateOppDynamic.vert" ) )
+	mUpdateOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadResource( "updateOppDynamic.vert" ) )
 	.transformFeedback().feedbackVaryings( varyings, 1 )
 	.feedbackFormat( GL_SEPARATE_ATTRIBS );
 	mUpdateOppDynamicGlsl = ci::gl::GlslProg::create( mUpdateOppDynamicGlslFormat );
 
 	
 	ci::gl::GlslProg::Format mRenderOppDynamicGlslFormat;
-	mRenderOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadAsset( "renderOppDynamic.vert" ))
-	.geometry( /*LoadShader("oppDynamic.geom")*/ ci::app::loadAsset( "renderOppDynamic.geom" ) )
-	.fragment( /*LoadShader("oppDynamic.frag" )*/ ci::app::loadAsset( "renderOppDynamic.frag" ) );
+	mRenderOppDynamicGlslFormat.vertex( /*LoadShader("oppDynamic.vert")*/ ci::app::loadResource( "renderOppDynamic.vert" ))
+	.geometry( /*LoadShader("oppDynamic.geom")*/ ci::app::loadResource( "renderOppDynamic.geom" ) )
+	.fragment( /*LoadShader("oppDynamic.frag" )*/ ci::app::loadResource( "renderOppDynamic.frag" ) );
 	mRenderOppDynamicGlsl = ci::gl::GlslProg::create( mRenderOppDynamicGlslFormat );
 	
 }
@@ -163,7 +163,7 @@ void DynamicOpponent::createRandomMap()
 	
 void DynamicOpponent::loadTexture()
 {
-	mNoiseTexture = ci::gl::Texture::create( ci::loadImage( ci::app::loadAsset( "noise_map.png"  ) ) );
+	mNoiseTexture = ci::gl::Texture::create( ci::loadImage( ci::app::loadResource( "noise_map.png"  ) ) );
 }
 	
 // ----------------------------------------------------------------------------------
@@ -318,8 +318,8 @@ void MinionGeometry::loadBuffers()
 void MinionGeometry::loadShaders()
 {
     mGlsl = ci::gl::GlslProg::create( ci::gl::GlslProg::Format()
-                                     .vertex( ci::app::loadAsset( "minion.vert" ) )
-                                     .fragment( ci::app::loadAsset( "minion.frag" ) ) );
+                                     .vertex( ci::app::loadResource( "minion.vert" ) )
+                                     .fragment( ci::app::loadResource( "minion.frag" ) ) );
 }
 	
 void MinionGeometry::calcGeometry()

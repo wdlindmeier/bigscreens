@@ -28,13 +28,12 @@ void ConvergenceContent::setContentRect(const ci::Rectf & rect)
     mContentRect = rect;
 }
 
-void ConvergenceContent::load(const TransitionStyle style)
+void ConvergenceContent::load()
 {
     TankConvergenceContent *content = new TankConvergenceContent();
     content->load();
     content->reset();
     mContent = RenderableContentRef(content);
-    mTransitionStyle = style;
     mOutLine = OutLineBorderRef(new OutLineBorder());
 }
 
@@ -49,21 +48,6 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     content->reset();
 
     mLayout = previousLayout;
-    /*
-    mCameraOrigins.clear();
-    int i = 0;
-    int regionCount = mLayout.getRegions().size();
-    for (ScreenRegion region : mLayout.getRegions())
-    {
-        CameraOrigin orig = TankConvergenceContent::cameraForTankConvergence(i,
-                                                                             regionCount,
-                                                                             MSConvergeBeforeCameraMerge,
-                                                                             mContentRect.getSize(),
-                                                                             region.rect);
-        mCameraOrigins.push_back(orig);
-        
-        ++i;
-    }*/
 }
 
 void ConvergenceContent::update()
@@ -99,15 +83,10 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     float easeProgress = mCamEase(progress);
 
     float amtRemaining = 1.0 - std::min<float>(easeProgress, 1.0f);
-    
-    // TODO: Use an ease-in ease-out function
-    // amtRemaining *= amtRemaining;
-    
+
     // Create the target cam position
-    // float scalarProgress = 1.0 - std::min<float>(progress, 1.0f);
-    // float finalOffset = scalarProgress * scalarProgress;
     float camDist = 3500 + (6000 * amtRemaining);
-    float camY = camDist * 0.5;//0.35;
+    float camY = camDist * 0.5;
     float camZ = camDist;
     float camX = camDist;
     
@@ -116,9 +95,6 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     finalOrigin.target = Vec3f( 0.f, -1000.f, 0.f );
     finalOrigin.camShift = Vec2f(0,0);
 
-    // NOTE: This content starts in the previous layout so we're adding render frames
-    // mContent->setFramesRendered(kNumFramesConvergeBeforeCameraMerge + mNumFramesRendered);
-    
     shared_ptr<TankConvergenceContent> tanks = static_pointer_cast<TankConvergenceContent>(mContent);
     tanks->setMSElapsed(mMSElapsedConvergence);
     
@@ -127,14 +103,23 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     ci::gl::enable( GL_SCISSOR_TEST );
     
+    //float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
+    float fadeAlpha = 0.25 + std::max<float>(1.0f-progress, -1.0);
+    bool shouldDrawRegions = fadeAlpha > 0.01;
+    
     // Draw the "background" image that fades in at the end.
     const static float kFinalSceneProgressBegin = 0.75;
-    if (progress >= kFinalSceneProgressBegin &&
-        mTransitionStyle == TRANSITION_FADE)
+    if (progress >= kFinalSceneProgressBegin)
     {
         static const int kLastContentID = 9999;
         mContent->setFrameContentID(kLastContentID);
-        
+
+        // Ring of fire every 60 frames
+        if (!shouldDrawRegions && (mNumFramesRendered % 60 == 0))
+        {
+            tanks->fireTankGun();
+        }
+
         // This uses the final cam
         // TODO: Use a dumb tank multiplier
         tanks->update([=](CameraPersp & cam, DumbTankRef & tank)
@@ -149,9 +134,6 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                                  finalSceneAlpha);
     }
 
-    float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
-    bool shouldDrawRegions = mTransitionStyle != TRANSITION_FADE || fadeAlpha > 0.01;
-
     // If we're using the FADE style, the sub-regions shouldn't be drawn if they're invisible
     if (shouldDrawRegions)
     {
@@ -160,7 +142,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         Rectf screenRect(screenOffset.x,
                          screenOffset.y,
                          screenOffset.x + (mContentRect.getWidth() / kNumScreens),
-                         screenOffset.y + (mContentRect.getHeight() / kNumScreens));
+                         screenOffset.y + mContentRect.getHeight());
                          
         // Draw each sub-region that converge
         for (int i = 0; i < regionCount; ++i)
@@ -197,94 +179,14 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
                     cam.setLensShift(currentCamShift);
                 });
                 
-                switch (mTransitionStyle)
-                {
-                    case TRANSITION_ALPHA:
-                        renderWithAlphaTransition(screenOffset, region.rect);
-                        break;
-                    case TRANSITION_EXPAND:
-                        renderWithExpandTransition(screenOffset, region.rect);
-                        break;
-                    case TRANSITION_FADE:
-                        renderWithFadeTransition(screenOffset,
-                                                 region.rect,
-                                                 fadeAlpha);
-                        break;
-                }
+                renderWithFadeTransition(screenOffset,
+                                         region.rect,
+                                         fadeAlpha);
             }
         }
     }
 
     ci::gl::disable( GL_SCISSOR_TEST );
-}
-
-void ConvergenceContent::renderWithAlphaTransition(const ci::Vec2i screenOffset, const Rectf & rect)
-{
-    Vec2i contentSize = mContentRect.getSize();
-
-    ci::gl::scissor(-screenOffset.x,//-screenOffset.x,
-                    0,
-                    contentSize.x,
-                    contentSize.y);
-
-    ci::gl::viewport(-screenOffset.x,
-                     -screenOffset.y,
-                     contentSize.x,
-                     contentSize.y);
-    
-    //Vec2i offset(0,0);
-    
-    float progress = getScalarMergeProgress();
-    float alpha = pow(progress, 6); //(float)mNumFramesRendered / (kNumFramesCamerasConverge * 6.0f);
-    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
-
-}
-
-void ConvergenceContent::renderWithExpandTransition(const ci::Vec2i screenOffset, const Rectf & rect)
-{
-    Vec2i contentSize = mContentRect.getSize();
-
-    ci::gl::viewport(-screenOffset.x,
-                     -screenOffset.y,
-                     contentSize.x,
-                     contentSize.y);
-
-    float progress = getScalarMergeProgress();
-    float linearProgress = std::min<float>(1.0, progress);
-    
-    float x = rect.x1 * (1.0 - linearProgress);
-    x -= screenOffset.x;
-    
-    float minY = contentSize.y - (rect.y2 - screenOffset.y);
-    float maxY = 0;
-    float y = minY + ((maxY - minY) * linearProgress);
-    
-    float widthDelta = contentSize.x - rect.getWidth();
-    float width = rect.getWidth() + (linearProgress * widthDelta);
-    
-    float heightDelta = contentSize.y - rect.getHeight();
-    float height = rect.getHeight() + (linearProgress * heightDelta);
-    
-    ci::gl::scissor(x,
-                    y,
-                    width,
-                    height);
-    
-    float minAlpha = 1;//0.15;
-    float alphaTravel = 1.0 - minAlpha;
-    float alpha = minAlpha + ((1.0-linearProgress) * alphaTravel);
-    static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
-    
-    float outlineAlpha = 1.0 - linearProgress;
-    outlineAlpha *= outlineAlpha;
-    
-    ci::gl::viewport(x,
-                     y,
-                     width,
-                     height);
-
-    mOutLine->setColor(ColorAf(1.0,1.0,1.0,outlineAlpha));
-    mOutLine->render();
 }
 
 void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
@@ -309,8 +211,13 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
 
     static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
 
+    gl::enableAlphaBlending();
+    
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;
+    
+    // TEST
+    outlineAlpha = alpha;
 
     ci::gl::viewport(rect.x1 - screenOffset.x,
                      contentSize.y - rect.y2 - screenOffset.y,

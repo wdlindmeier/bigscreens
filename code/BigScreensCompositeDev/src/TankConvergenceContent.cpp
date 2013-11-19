@@ -16,29 +16,17 @@ using namespace bigscreens;
 TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
 , mMSElapsedConvergence(0)
-// Why doesn't this work?
-//, mGroundScale(10000, 500, 10000)
-//, mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
 {
-//    mGroundContent = GroundContent(20000.0);
-    mGroundScale = Vec3f(10000, 800, 10000);
+    mDumbTank = ContentProviderNew::ActorContent::getAngledDumbTank();
+    mGroundScale = Vec3f(15000, 600, 15000);
+    // mGroundScale = Vec3f(10000, 0, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
 {
     mMSElapsedConvergence = msElapsedConvergence;
 }
-/*
-void TankConvergenceContent::loadShaders()
-{
-    TankContent::loadShaders();
-    gl::GlslProg::Format groundShaderFormat;
-    groundShaderFormat.vertex( ci::app::loadResource( "basic.vert" ) )
-    .fragment( ci::app::loadResource( "basic.frag" ) );
-    mTankShader = ci::gl::GlslProg::create( groundShaderFormat );
-    mTankShader->uniform("uColor", Color::white());
-}
-*/
+
 CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
                                                               int regionCount,
                                                               long msOffset,
@@ -108,6 +96,22 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     render(screenOffset, contentRect, 1.0f);
 }
 
+void TankConvergenceContent::fireTankGun()
+{
+    // TMP
+    // This kind of sucks
+    for (int i = 0; i < kNumTanksConverging; ++i)
+    {
+        PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
+        setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
+        
+        // TODO:
+        // BUG
+        // HOWEVER, we're not setting the orientation here
+        TankContent::fireTankGun(mDumbTank);
+    }
+}
+
 void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const ci::Rectf & contentRect,
                                     const float alpha)
@@ -138,6 +142,8 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     drawTank();
     
+    DumbTankContent::drawTankShots();
+    
     if (kUseGroundDepthTest)
     {
         gl::disableDepthWrite();
@@ -166,13 +172,8 @@ void TankConvergenceContent::drawTank()
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
         PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
-
         setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
-        //mTankPosition = tankOrient.position;
-        //mTankDirectionRadians = toRadians(tankOrient.directionDegrees);
-        
         TankContent::drawTank();
-
     }
 
     gl::popMatrices();
@@ -190,21 +191,6 @@ void TankConvergenceContent::renderPositionedTank()
     gl::drawElements(GL_LINES,
                      mDumbTank->getMesh()->getNumIndices(),
                      GL_UNSIGNED_INT, 0 );
-}
-
-void TankConvergenceContent::drawSingleTankAtPosition(const Vec3f & position, const float rotationDegrees)
-{
-    gl::pushMatrices();
-    gl::translate(position);
-    gl::rotate(rotationDegrees, 0, 1, 0);
-
-    gl::setDefaultShaderVars();
-    gl::drawElements(GL_LINES,
-                     mDumbTank->getMesh()->getNumIndices(),
-                     GL_UNSIGNED_INT, 0 );
-    
-    
-    gl::popMatrices();
 }
 
 void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)

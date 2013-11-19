@@ -14,24 +14,28 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-void DumbTank::load()
+DumbTank::DumbTank(const std::string & objName, const float barrelAngleDegrees) :
+FiringTank()
 {
+    mBarrelAngleDeg = barrelAngleDegrees;
+    mHeadRotationDeg = 0.0f;
+    
     loadShader();
-    loadModels();
+    loadModels(objName);
 }
 
 void DumbTank::loadShader()
 {
     gl::GlslProg::Format mRenderFormat;
-    mRenderFormat.vertex( ci::app::loadAsset("renderDumbTank.vert") )
-	.geometry( ci::app::loadAsset("renderDumbTank.geom") )
-    .fragment( ci::app::loadAsset("renderDumbTank.frag") );
+    mRenderFormat.vertex( ci::app::loadResource("renderDumbTank.vert") )
+	.geometry( ci::app::loadResource("renderDumbTank.geom") )
+    .fragment( ci::app::loadResource("renderDumbTank.frag") );
     mRenderTankShader = gl::GlslProg::create( mRenderFormat );
 }
 
-void DumbTank::loadModels()
+void DumbTank::loadModels(const std::string & modelName)
 {
-	DataSourceRef file = loadResource( "tank.obj" );
+	DataSourceRef file = loadResource(modelName);
     ObjLoader loader( file );
     mMesh = TriMesh::create( loader );
     
@@ -97,9 +101,10 @@ void DumbTank::loadModels()
 	
 }
 
-void DumbTank::update( const Vec3f & point )
+void DumbTank::update(long progressCounter)
 {
-	
+    // mHeadRotationDeg += 0.5;
+    FiringTank::update(progressCounter);
 }
 
 ci::gl::VaoRef DumbTank::getVao()

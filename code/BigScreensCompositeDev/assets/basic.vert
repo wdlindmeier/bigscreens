@@ -3,7 +3,7 @@
 
 uniform mat4        uModelViewProjection;
 uniform vec4        uColor;
-in vec4             vPosition;
+layout (location = 0) in vec4 vPosition;
 out lowp vec4       Color;
 
 void main()

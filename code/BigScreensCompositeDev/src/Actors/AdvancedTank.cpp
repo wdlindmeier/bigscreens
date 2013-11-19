@@ -15,12 +15,11 @@ using namespace ci::app;
 using namespace bigscreens;
 
 AdvancedTank::AdvancedTank() :
-mWheelProgressMulti(kDefaultTankWheelSpeedMulti)
-,mBarrelAngleDeg(0)
+FiringTank()
+,mWheelProgressMulti(kDefaultTankWheelSpeedMulti)
 ,mWheelRotation(0)
 ,mGearRotation(0)
 ,mShotProgress(0)
-,mHeadRotationDeg(0)
 ,mTargetPosition(0,0,0)
 {
     loadShader();
@@ -69,35 +68,6 @@ void AdvancedTank::setTargetPosition(const ci::Vec3f & targetPos)
     mTargetPosition = targetPos;
 }
 
-void AdvancedTank::setFrameContentID(const int contentID)
-{
-    mContentID = contentID;
-}
-
-void AdvancedTank::fire(const PositionOrientation & position,
-                        const GroundOrientaion & groundOrientation)
-{
-    // NOTE: ContentID is reset after Render
-    if (mContentID < 0)
-    {
-        console() << "ERROR: Can't Fire. Tank has a content ID of " << mContentID << std::endl;
-        return;
-    }
-    
-    const static float kShotVelocity = 200.0f;
-    
-    console() << "Firing w/ velocity " << kShotVelocity << " degrees: " << mBarrelAngleDeg << std::endl;
-
-    mShotsFired.push_back(TankShot(position,
-                                   groundOrientation,
-                                   toRadians(mHeadRotationDeg),
-                                   toRadians(mBarrelAngleDeg),
-                                   kShotVelocity,
-                                   mTankShader,
-                                   mContentID));
-    
-}
-
 void AdvancedTank::update(long progressCounter)
 {
     mWheelRotation = fmod(progressCounter * mWheelProgressMulti, 360.0f);
@@ -109,20 +79,10 @@ void AdvancedTank::update(long progressCounter)
     // TODO: Make the angle more intentional
     mBarrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
     
-    mHeadRotationDeg = toDegrees(radsTarget);
+    // NOTE: Aiming 20 degrees "ahead" of the minion
+    mHeadRotationDeg = toDegrees(radsTarget) + 20.0f;
 
-    vector<TankShot> keepTanks;
-    for (TankShot & shot : mShotsFired)
-    {
-        // Make this absolute, not relative?
-        // Maybe this is fine if it's always being updated on the frame.
-        shot.update(0.2f);
-        if (!shot.isDead())
-        {
-            keepTanks.push_back(shot);
-        }
-    }
-    mShotsFired = keepTanks;
+    FiringTank::update(progressCounter);
 }
 
 void AdvancedTank::render(const float alpha)
@@ -212,30 +172,3 @@ void AdvancedTank::render(const float alpha)
     
 }
 
-void AdvancedTank::renderShots(ci::CameraPersp & cam, const float alpha)
-{
-    // Draw the tip of the barrel for reference.
-    // This can be the shot bloom.
-
-    gl::bindStockShader(gl::ShaderDef().color());
-    gl::enableAdditiveBlending();
-
-    // Draw the shot lines
-    gl::disableDepthRead();
-    gl::disableDepthWrite();
-    for (TankShot & shot : mShotsFired)
-    {
-        if (shot.getContentID() == mContentID)
-        {
-            //gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
-            gl::color(ColorAf(1, 0, 0, 1.0f));
-            shot.renderLine();
-            
-            gl::color(1,1,1,alpha);
-            shot.renderMuzzleFlare(cam);
-            shot.renderExplosion(cam);
-        }
-    }
-
-    gl::disableAlphaBlending();
-}

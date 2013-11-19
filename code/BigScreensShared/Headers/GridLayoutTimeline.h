@@ -51,6 +51,7 @@ namespace bigscreens
         bool isPlaying();
         int getCurrentFrame(){ return mIdxCurrentLayout; };
         int getCurrentRegionCount();
+        long long getPlayheadMillisec();
         
     private:
         

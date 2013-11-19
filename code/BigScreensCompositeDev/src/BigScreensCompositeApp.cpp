@@ -21,6 +21,7 @@
 #include "ConvergenceContent.h"
 #include "ContentProvider.h"
 #include "DumbTankContent.h"
+#include "TankMultiOverheadContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -33,6 +34,7 @@ static const std::string kContentKeyTankOverhead = "tankOverhead";
 static const std::string kContentKeyTankHeightmap = "tankHeightmap";
 static const std::string kContentKeyTankWide = "tankWide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
+static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
@@ -65,6 +67,9 @@ public:
     void restart();
     void play();
     void pause();
+    
+    // Clock
+    void startConvergenceClock();
     
     // Update
 	void update();
@@ -102,6 +107,7 @@ public:
     RenderableContentRef mTextureContentBlank;
     RenderableContentRef mConvergenceContent;
     RenderableContentRef mDumbTankContent;
+    RenderableContentRef mMultiOverheadContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -178,9 +184,9 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<PerlinContent>(mPerlinContent)->reset();
     static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
     static_pointer_cast<DumbTankContent>(mDumbTankContent)->reset();
+    static_pointer_cast<TankMultiOverheadContent>(mMultiOverheadContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
-    
     
     vector<GridLayout> & layouts = mTimeline->getGridLayouts();
     int layoutSize = layouts.size();
@@ -214,7 +220,7 @@ void BigScreensCompositeApp::loadAssets()
     mTankContent = RenderableContentRef(tank);
     
     ConvergenceContent *converge = new ConvergenceContent();
-    converge->load(TRANSITION_FADE);
+    converge->load();
     Vec2i masterSize = mClient->getMasterSize();
     converge->setContentRect(Rectf(0,0,masterSize.x, masterSize.y));
     mConvergenceContent = RenderableContentRef(converge);
@@ -233,6 +239,10 @@ void BigScreensCompositeApp::loadAssets()
     DumbTankContent *dumbTank = new DumbTankContent();
     dumbTank->load();
     mDumbTankContent = RenderableContentRef(dumbTank);
+    
+    TankMultiOverheadContent *multiOver = new TankMultiOverheadContent();
+    multiOver->load();
+    mMultiOverheadContent = RenderableContentRef(multiOver);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -288,6 +298,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
         contentName == kContentKeyTankHeightmap )
     {
         return mTankContent;
+    }
+    else if (contentName == kContentKeyTankMultiOverhead)
+    {
+        return mMultiOverheadContent;
     }
     else if (contentName == kContentKeyTankHorizon)
     {
@@ -369,6 +383,8 @@ void BigScreensCompositeApp::play()
     console() << "play\n";
     mTimeline->play();
     mSoundtrack->play();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
+    startConvergenceClock();
 }
 
 void BigScreensCompositeApp::pause()
@@ -382,12 +398,14 @@ void BigScreensCompositeApp::advance()
 {
     console() << "advance\n";
     mTimeline->stepToNextLayout();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
 }
 
 void BigScreensCompositeApp::reverse()
 {
     console() << "reverse\n";
     mTimeline->stepToPreviousLayout();
+    mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
 }
 
 #pragma mark - Update
@@ -414,6 +432,22 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
         broadcastCurrentLayout();
         mLayoutIndex = mTimeline->getCurrentFrame();
         
+        startConvergenceClock();
+    }
+    
+    // Update the convergence duration
+    if (mMSConvergenceBegan > 0)
+    {
+        mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
+    }
+}
+
+void BigScreensCompositeApp::startConvergenceClock()
+{
+    if (mLayoutIndex == mPreConvergenceLayoutIndex)
+    {
+        long long timelineMS = mTimeline->getPlayheadMillisec();
+        
         // If this is the layout that starts the convergence,
         // make a note of the time.
         if (mLayoutIndex == mPreConvergenceLayoutIndex)
@@ -423,12 +457,6 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
             mMSElapsedConvergence = 0;
             mMSConvergenceBegan = timelineMS;
         }
-    }
-    
-    // Update the convergence duration
-    if (mMSConvergenceBegan > 0)
-    {
-        mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
     }
 }
 
@@ -547,6 +575,25 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             cam.lookAt(eyePos, taregtPos);
         });
     }
+    else if (contentInfo.contentKey == kContentKeyTankMultiOverhead)
+    {
+        shared_ptr<TankMultiOverheadContent> scene = static_pointer_cast<TankMultiOverheadContent>(content);
+        
+        scene->setGroundIsVisible(false);
+        // ?
+        Vec2f masterSize = mClient->getMasterSize();
+        float fullAspectRatio = masterSize.x / masterSize.y;
+        scene->update([=](CameraPersp & cam, DumbTankRef & tank)
+                      {
+                          float camX = 0;
+                          float camY = 80000;// - (contentElapsedFrames * 100);
+                          float camZ = 0;//(contentElapsedFrames * 100);
+                          cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
+                          // cam.setAspectRatio(fullAspectRatio);
+                          cam.lookAt(Vec3f(camX,camY,camZ),
+                                     Vec3f(0,0,0));
+                      });
+    }
     else if (contentInfo.contentKey == kContentKeyTankHorizon)
     {
         // Tank content horizon shot
@@ -557,7 +604,8 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
         scene->update([=](CameraPersp & cam, DumbTankRef & tank)
         {
-            // Move the camera, not the tank
+            if (mShouldFire) scene->fireTankGun();
+            
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
             float camX = -80000;
             float camY = 100;
@@ -591,7 +639,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         float fullAspectRatio = masterSize.x / masterSize.y;
         
         scene->update([=](CameraPersp & cam, DumbTankRef & tank)
-                      {
+                      {                          
+                          if (mShouldFire) scene->fireTankGun();
+                          
                           cam.setAspectRatio(fullAspectRatio);
                           cam.lookAt( orig.eye, orig.target );
                           cam.setLensShift(orig.camShift);

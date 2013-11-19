@@ -27,7 +27,7 @@ TankShot::TankShot(const PositionOrientation & tankPosition,
                    float barrelDirectionRads,
                    float barrelAngleRads,
                    float velocity,
-                   const gl::GlslProgRef & shader,
+                   //const gl::GlslProgRef & shader,
                    const int parentContentID) :
 mVelocity(velocity)
 , mTankMat(ci::Matrix44f::identity())
@@ -80,7 +80,7 @@ mVelocity(velocity)
     // Barrel length (tip) (on Z axis)
     mGunMat.translate(kShotAxis * dist);
     
-    generateLine(shader);
+    generateLine();
 };
 
 int TankShot::getContentID()
@@ -95,7 +95,7 @@ bool TankShot::isDead()
 
 const static float kLineProgressInterval = 0.5;
 
-void TankShot::generateLine(const gl::GlslProgRef & shader)
+void TankShot::generateLine()
 {
     TriMesh::Format meshFormat = TriMesh::Format().positions();
     TriMesh lineMesh(meshFormat);
@@ -158,7 +158,7 @@ void TankShot::generateLine(const gl::GlslProgRef & shader)
                                lineMesh.getVertices<3>(), GL_STATIC_DRAW );
     mLineVbo->bind();
     
-    GLint pos = shader->getAttribSemanticLocation( geom::Attrib::POSITION );
+    GLint pos = 0;//shader->getAttribSemanticLocation( geom::Attrib::POSITION );
     gl::enableVertexAttribArray( pos );
     gl::vertexAttribPointer( pos, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -174,7 +174,6 @@ void TankShot::update(float amount)
     {
         if (progress == mMaxProgress)
         {
-            ci::app::console() << "EXPLODE!!\n";
             mHasExploded = true;
             mExplosionScale = 1.5f;
         }
