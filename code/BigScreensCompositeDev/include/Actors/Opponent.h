@@ -28,7 +28,7 @@ public:
 	}
 	
 	void update( float percentage, const ci::Vec3f & smokeAccel );
-	void draw( float zDepth, const ci::Vec3f & cameraView );
+	void draw( float zDepth, const ci::Vec3f & lightPosition );
 	
 	void loadShaders();
 	

@@ -17,6 +17,7 @@
 #include "ObjModel.h"
 #include "TankShot.h"
 #include "FiringTank.h"
+#include "BigScreensConstants.h"
 
 #pragma once
 

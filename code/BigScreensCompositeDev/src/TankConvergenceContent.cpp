@@ -15,11 +15,12 @@ using namespace bigscreens;
 
 TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
+, mOpponent(ContentProviderNew::ActorContent::getOpponent())
 , mMSElapsedConvergence(0)
 {
     mDumbTank = ContentProviderNew::ActorContent::getAngledDumbTank();
     mGroundScale = Vec3f(15000, 600, 15000);
-    // mGroundScale = Vec3f(10000, 0, 10000);
+    //mGroundScale = Vec3f(10000, 600, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -62,6 +63,8 @@ CameraOrigin TankConvergenceContent::cameraForTankConvergence(int regionIndex,
     return orig;
 }
 
+// TODO: Update opponent
+
 PositionOrientation TankConvergenceContent::positionForTankWithProgress(const int tankNum, long msOffset)
 {
     float scalarProgress = 1.0 - std::min<float>(1.0, (float)msOffset / (float)kMSFullConvergence);
@@ -98,18 +101,32 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
 
 void TankConvergenceContent::fireTankGun()
 {
-    // TMP
-    // This kind of sucks
+    // This kind of sucks... but it works
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
         PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
         setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
-        
-        // TODO:
-        // BUG
-        // HOWEVER, we're not setting the orientation here
         TankContent::fireTankGun(mDumbTank);
     }
+}
+
+void TankConvergenceContent::renderOpponent(const float alpha)
+{
+    // Draw the opponent
+    gl::pushMatrices();
+    gl::setMatrices(mCam);
+    gl::scale(Vec3f(1000, 1000, 1000));
+    
+    // Arbitrary
+    Vec3f lightPos(sin(mNumFramesRendered * 0.1),
+                   cos(mNumFramesRendered * 0.06666),
+                   cos(mNumFramesRendered * 0.03333));
+    
+    float zDepth = mCam.getEyePoint().length();
+    // TODO: This should take an alpha so the opponent fades in w/ the rest
+    mOpponent->draw(zDepth, lightPos);
+    
+    gl::popMatrices();
 }
 
 void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
@@ -127,6 +144,9 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     drawScreen(screenOffset, contentRect);
     gl::viewport(viewport.first, viewport.second);
 
+    renderOpponent(alpha);
+    
+    // Draw the ground and tanks
     gl::enableAlphaBlending();
     
     // NOTE: Having issues w/ depth and blending during convergence
@@ -149,6 +169,7 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
         gl::disableDepthWrite();
         gl::disableDepthRead();
     }
+    
 }
 
 // NOTE: This draws a collection of tanks
@@ -235,4 +256,20 @@ void TankConvergenceContent::drawScreen(const ci::Vec2i & screenOffset, const ci
 void TankConvergenceContent::updateGroundCoordsForTank()
 {
     // Do nothing
+}
+
+void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, DumbTankRef& tank)> update_func)
+{
+    // First update the opponent
+    
+    // Sample: This is the same as the light position
+    Vec3f smokeDirection(sin(mNumFramesRendered * 0.1),
+                         cos(mNumFramesRendered * 0.06666),
+                         cos(mNumFramesRendered * 0.03333));
+
+    // QUESTION: What is "percentage"?
+    float percentage = sin(mNumFramesRendered * 0.1);
+    mOpponent->update(percentage, smokeDirection);
+    
+    DumbTankContent::update(update_func);
 }
