@@ -7,6 +7,7 @@
 //
 
 #include "TankShot.h"
+#include "BigScreensConstants.h"
 
 using namespace ci;
 using namespace bigscreens;

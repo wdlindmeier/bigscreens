@@ -9,6 +9,9 @@
 #include "cinder/TriMesh.h"
 #include "cinder/Rand.h"
 #include "AdvancedTank.h"
+#include "FloorPlane.h"
+#include "FloorPlane.h"
+#include "DumbTank.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -24,18 +27,28 @@ class OBJTestApp : public AppNative
     void keyUp(KeyEvent event);
 	void update();
 	void draw();
+    void drawGround();
     
-    AdvancedTankRef mTank;
+    AdvancedTankRef     mTank;
 
     CameraPersp         mCam;
     float               mCameraRotation;
     
     bool                mRotate;
+    
+    FloorPlaneRef       mFloorPlane;
+    Vec3f               mGroundScale;
+    
+    DumbTankRef         mDumbTank;
 };
 
 void OBJTestApp::setup()
 {
+    setFullScreen(true);
+    
     mTank = AdvancedTankRef(new AdvancedTank());
+    
+    mDumbTank = DumbTankRef(new DumbTank("tank_angled.obj", -18));
     
     // Cam
     mCam.setPerspective( 15.0f, (float)getWindowWidth() / getWindowHeight(), .01, 40000 );
@@ -43,12 +56,18 @@ void OBJTestApp::setup()
     
     mRotate = true;
     mCameraRotation = 0.0f;
+    
+    mFloorPlane = FloorPlaneRef(new FloorPlane(Vec2i(50,50)));
+    
+    mGroundScale = Vec3f(5000,100,5000);
 }
 
 void OBJTestApp::mouseDown( MouseEvent event )
 {
     mTank->setFrameContentID(1);
-    mTank->fire();
+    PositionOrientation po;
+    GroundOrientaion go;
+    mTank->fire(po,go);
 }
 
 void OBJTestApp::keyUp(KeyEvent event)
@@ -72,12 +91,31 @@ void OBJTestApp::update()
     
     Vec3f lookAt( 0, 0, 0 );
     // NOTE: Only for "tank.obj"
-    camY *= 120;
-    camX *= 60;
-    camZ *= 60;
+    camY *= 120 * 0.65;
+    camX *= 60 * 0.65;
+    camZ *= 60 * 0.65;
     lookAt.y = 100;
 
     mCam.lookAt( Vec3f( camX, camY, camZ ), lookAt );
+}
+
+void OBJTestApp::drawGround()
+{
+    gl::pushMatrices();
+    gl::setMatrices( mCam );
+    // Scale to taste
+    gl::scale(mGroundScale);
+    // Center
+    gl::translate(Vec3f(-0.5, 0, -0.5));
+    
+    //mGroundPlane->setNoiseTexture(heightMap);
+    
+    //const static bool kDrawColorGround = false;
+    //mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,mRenderAlpha));
+    
+    mFloorPlane->draw(getElapsedFrames(), false, ColorAf(0.5,0.5,0.5,1));
+
+    gl::popMatrices();
 }
 
 void OBJTestApp::draw()
@@ -85,16 +123,25 @@ void OBJTestApp::draw()
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) );
     
+    drawGround();
+    
     gl::pushMatrices();
     gl::setMatrices( mCam );
+    gl::enableAlphaBlending();
 
+    /*
     Vec3f target = Vec3f(cos(getElapsedFrames() * 0.01) * 2000,
                             800,
                             sin(getElapsedFrames() * 0.01) * 2000);
     mTank->setTargetPosition(target);
     mTank->setFrameContentID(1);
     mTank->update(getElapsedFrames());
-    mTank->render(mCam, 1);
+    //mTank->render(mCam, 1);
+    mTank->render(0.75f);
+    */
+    
+    gl::color(ColorAf(1,0,0,1));
+    mDumbTank->draw(0, Vec3f::zero());
     
     gl::popMatrices();
 }

@@ -20,7 +20,7 @@ void Opponent::update( float percentage, const ci::Vec3f & smokeAccel )
 		mDynamicGeometry->update( percentage, mTime );
 		mUpdateG = false;
 	}
-//	mSmokeEffect->update( smokeAccel, mTime );
+	mSmokeEffect->update( smokeAccel, mTime );
 }
 	
 void Opponent::draw( float zDepth, const ci::Vec3f & lightPosition )
@@ -35,7 +35,7 @@ void Opponent::draw( float zDepth, const ci::Vec3f & lightPosition )
 
 	ci::gl::disableDepthWrite();
 	
-//	mSmokeEffect->draw( zDepth );
+	mSmokeEffect->draw( zDepth );
 	
 	ci::gl::disableDepthRead();
 }

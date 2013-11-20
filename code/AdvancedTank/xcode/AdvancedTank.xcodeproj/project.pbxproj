@@ -33,6 +33,22 @@
 		A9C3E346183143E6003C3DA5 /* tank_wheel_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33C183143E6003C3DA5 /* tank_wheel_centered.obj */; };
 		A9C3E347183143E6003C3DA5 /* tank_wheel.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E33D183143E6003C3DA5 /* tank_wheel.obj */; };
 		A9CF4D051827F6BF000A350A /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CF4D041827F6BF000A350A /* explosion.png */; };
+		A9EE4B3E183D13900089FF27 /* FiringTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B3D183D13900089FF27 /* FiringTank.cpp */; };
+		A9EE4B41183D14120089FF27 /* FloorPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B40183D14120089FF27 /* FloorPlane.cpp */; };
+		A9EE4B4B183D14A70089FF27 /* ground_texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B43183D14A70089FF27 /* ground_texture.frag */; };
+		A9EE4B4C183D14A70089FF27 /* ground_texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B44183D14A70089FF27 /* ground_texture.vert */; };
+		A9EE4B4D183D14A70089FF27 /* quadOutline.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B45183D14A70089FF27 /* quadOutline.frag */; };
+		A9EE4B4E183D14A70089FF27 /* quadOutline.geom in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B46183D14A70089FF27 /* quadOutline.geom */; };
+		A9EE4B4F183D14A70089FF27 /* quadOutline.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B47183D14A70089FF27 /* quadOutline.vert */; };
+		A9EE4B50183D14A70089FF27 /* quadTriangle.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B48183D14A70089FF27 /* quadTriangle.frag */; };
+		A9EE4B51183D14A70089FF27 /* quadTriangle.geom in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B49183D14A70089FF27 /* quadTriangle.geom */; };
+		A9EE4B52183D14A70089FF27 /* quadTriangle.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B4A183D14A70089FF27 /* quadTriangle.vert */; };
+		A9EE4B54183D15170089FF27 /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B53183D15170089FF27 /* noise_map.png */; };
+		A9EE4B56183D162E0089FF27 /* tank_angled.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B55183D162E0089FF27 /* tank_angled.obj */; };
+		A9EE4B59183D165D0089FF27 /* DumbTank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B58183D165D0089FF27 /* DumbTank.cpp */; };
+		A9EE4B5D183D16C20089FF27 /* renderDumbTank.frag in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B5A183D16C20089FF27 /* renderDumbTank.frag */; };
+		A9EE4B5E183D16C20089FF27 /* renderDumbTank.geom in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B5B183D16C20089FF27 /* renderDumbTank.geom */; };
+		A9EE4B5F183D16C20089FF27 /* renderDumbTank.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B5C183D16C20089FF27 /* renderDumbTank.vert */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +85,28 @@
 		A9C3E33C183143E6003C3DA5 /* tank_wheel_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel_centered.obj; path = ../../BigScreensShared/Resources/tank_wheel_centered.obj; sourceTree = "<group>"; };
 		A9C3E33D183143E6003C3DA5 /* tank_wheel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_wheel.obj; path = ../../BigScreensShared/Resources/tank_wheel.obj; sourceTree = "<group>"; };
 		A9CF4D041827F6BF000A350A /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = explosion.png; path = ../../BigScreensShared/Resources/explosion.png; sourceTree = "<group>"; };
+		A9EE4B3A183D12A40089FF27 /* SharedTypes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SharedTypes.hpp; path = ../../BigScreensShared/Headers/SharedTypes.hpp; sourceTree = "<group>"; };
+		A9EE4B3B183D12EB0089FF27 /* BigScreensConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BigScreensConstants.h; path = ../../BigScreensCompositeDev/include/BigScreensConstants.h; sourceTree = "<group>"; };
+		A9EE4B3C183D137C0089FF27 /* FiringTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiringTank.h; path = ../../BigScreensCompositeDev/include/Actors/FiringTank.h; sourceTree = "<group>"; };
+		A9EE4B3D183D13900089FF27 /* FiringTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FiringTank.cpp; path = ../../BigScreensCompositeDev/src/Actors/FiringTank.cpp; sourceTree = "<group>"; };
+		A9EE4B3F183D14070089FF27 /* FloorPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorPlane.h; path = ../../BigScreensCompositeDev/include/Actors/FloorPlane.h; sourceTree = "<group>"; };
+		A9EE4B40183D14120089FF27 /* FloorPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FloorPlane.cpp; path = ../../BigScreensCompositeDev/src/Actors/FloorPlane.cpp; sourceTree = "<group>"; };
+		A9EE4B42183D14610089FF27 /* Utilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = ../../BigScreensShared/Headers/Utilities.hpp; sourceTree = "<group>"; };
+		A9EE4B43183D14A70089FF27 /* ground_texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ground_texture.frag; path = ../../BigScreensCompositeDev/assets/ground_texture.frag; sourceTree = "<group>"; };
+		A9EE4B44183D14A70089FF27 /* ground_texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ground_texture.vert; path = ../../BigScreensCompositeDev/assets/ground_texture.vert; sourceTree = "<group>"; };
+		A9EE4B45183D14A70089FF27 /* quadOutline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.frag; path = ../../BigScreensCompositeDev/assets/quadOutline.frag; sourceTree = "<group>"; };
+		A9EE4B46183D14A70089FF27 /* quadOutline.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.geom; path = ../../BigScreensCompositeDev/assets/quadOutline.geom; sourceTree = "<group>"; };
+		A9EE4B47183D14A70089FF27 /* quadOutline.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadOutline.vert; path = ../../BigScreensCompositeDev/assets/quadOutline.vert; sourceTree = "<group>"; };
+		A9EE4B48183D14A70089FF27 /* quadTriangle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.frag; path = ../../BigScreensCompositeDev/assets/quadTriangle.frag; sourceTree = "<group>"; };
+		A9EE4B49183D14A70089FF27 /* quadTriangle.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.geom; path = ../../BigScreensCompositeDev/assets/quadTriangle.geom; sourceTree = "<group>"; };
+		A9EE4B4A183D14A70089FF27 /* quadTriangle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = quadTriangle.vert; path = ../../BigScreensCompositeDev/assets/quadTriangle.vert; sourceTree = "<group>"; };
+		A9EE4B53183D15170089FF27 /* noise_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noise_map.png; path = ../../BigScreensShared/Resources/noise_map.png; sourceTree = "<group>"; };
+		A9EE4B55183D162E0089FF27 /* tank_angled.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tank_angled.obj; path = ../../BigScreensShared/Resources/tank_angled.obj; sourceTree = "<group>"; };
+		A9EE4B57183D16520089FF27 /* DumbTank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTank.h; path = ../../BigScreensCompositeDev/include/Actors/DumbTank.h; sourceTree = "<group>"; };
+		A9EE4B58183D165D0089FF27 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTank.cpp; path = ../../BigScreensCompositeDev/src/Actors/DumbTank.cpp; sourceTree = "<group>"; };
+		A9EE4B5A183D16C20089FF27 /* renderDumbTank.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.frag; path = ../../BigScreensCompositeDev/assets/renderDumbTank.frag; sourceTree = "<group>"; };
+		A9EE4B5B183D16C20089FF27 /* renderDumbTank.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.geom; path = ../../BigScreensCompositeDev/assets/renderDumbTank.geom; sourceTree = "<group>"; };
+		A9EE4B5C183D16C20089FF27 /* renderDumbTank.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderDumbTank.vert; path = ../../BigScreensCompositeDev/assets/renderDumbTank.vert; sourceTree = "<group>"; };
 		BB92D0E83EE44F3A84B6F812 /* AdvancedTankApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdvancedTankApp.cpp; path = ../src/AdvancedTankApp.cpp; sourceTree = "<group>"; };
 		FFAC57DCF4BA4FE4B5F63345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +223,26 @@
 		A9B50B491826D5E200C077BD /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				A9EE4B5A183D16C20089FF27 /* renderDumbTank.frag */,
+				A9EE4B5B183D16C20089FF27 /* renderDumbTank.geom */,
+				A9EE4B5C183D16C20089FF27 /* renderDumbTank.vert */,
+				A9EE4B58183D165D0089FF27 /* DumbTank.cpp */,
+				A9EE4B57183D16520089FF27 /* DumbTank.h */,
+				A9EE4B55183D162E0089FF27 /* tank_angled.obj */,
+				A9EE4B53183D15170089FF27 /* noise_map.png */,
+				A9EE4B43183D14A70089FF27 /* ground_texture.frag */,
+				A9EE4B44183D14A70089FF27 /* ground_texture.vert */,
+				A9EE4B45183D14A70089FF27 /* quadOutline.frag */,
+				A9EE4B46183D14A70089FF27 /* quadOutline.geom */,
+				A9EE4B47183D14A70089FF27 /* quadOutline.vert */,
+				A9EE4B48183D14A70089FF27 /* quadTriangle.frag */,
+				A9EE4B49183D14A70089FF27 /* quadTriangle.geom */,
+				A9EE4B4A183D14A70089FF27 /* quadTriangle.vert */,
+				A9EE4B42183D14610089FF27 /* Utilities.hpp */,
+				A9EE4B40183D14120089FF27 /* FloorPlane.cpp */,
+				A9EE4B3F183D14070089FF27 /* FloorPlane.h */,
+				A9EE4B3D183D13900089FF27 /* FiringTank.cpp */,
+				A9EE4B3C183D137C0089FF27 /* FiringTank.h */,
 				A9C3E334183143E6003C3DA5 /* tank_barrel_centered_head_offset.obj */,
 				A9C3E335183143E6003C3DA5 /* tank_barrel_centered.obj */,
 				A9C3E336183143E6003C3DA5 /* tank_barrel.obj */,
@@ -200,7 +258,9 @@
 				A9C3E32C18312144003C3DA5 /* ObjModel.h */,
 				A9C3E32D18312144003C3DA5 /* TankShot.h */,
 				A9C3E32418312127003C3DA5 /* AdvancedTank.cpp */,
+				A9EE4B3A183D12A40089FF27 /* SharedTypes.hpp */,
 				A9C3E32518312127003C3DA5 /* TankShot.cpp */,
+				A9EE4B3B183D12EB0089FF27 /* BigScreensConstants.h */,
 				A9CF4D041827F6BF000A350A /* explosion.png */,
 			);
 			name = Shared;
@@ -266,11 +326,24 @@
 				A9C3E347183143E6003C3DA5 /* tank_wheel.obj in Resources */,
 				A9B50AEA18229D6E00C077BD /* basic.frag in Resources */,
 				A9C3E345183143E6003C3DA5 /* tank_head.obj in Resources */,
+				A9EE4B56183D162E0089FF27 /* tank_angled.obj in Resources */,
 				A9C3E33F183143E6003C3DA5 /* tank_barrel_centered.obj in Resources */,
 				A9C3E340183143E6003C3DA5 /* tank_barrel.obj in Resources */,
 				A9C3E342183143E6003C3DA5 /* tank_gear_wheel_centered.obj in Resources */,
 				A9CF4D051827F6BF000A350A /* explosion.png in Resources */,
+				A9EE4B54183D15170089FF27 /* noise_map.png in Resources */,
 				A9B50AEB18229D6E00C077BD /* basic.vert in Resources */,
+				A9EE4B50183D14A70089FF27 /* quadTriangle.frag in Resources */,
+				A9EE4B4C183D14A70089FF27 /* ground_texture.vert in Resources */,
+				A9EE4B52183D14A70089FF27 /* quadTriangle.vert in Resources */,
+				A9EE4B4D183D14A70089FF27 /* quadOutline.frag in Resources */,
+				A9EE4B4F183D14A70089FF27 /* quadOutline.vert in Resources */,
+				A9EE4B4B183D14A70089FF27 /* ground_texture.frag in Resources */,
+				A9EE4B4E183D14A70089FF27 /* quadOutline.geom in Resources */,
+				A9EE4B51183D14A70089FF27 /* quadTriangle.geom in Resources */,
+				A9EE4B5E183D16C20089FF27 /* renderDumbTank.geom in Resources */,
+				A9EE4B5F183D16C20089FF27 /* renderDumbTank.vert in Resources */,
+				A9EE4B5D183D16C20089FF27 /* renderDumbTank.frag in Resources */,
 				A9C3E344183143E6003C3DA5 /* tank_head_centered.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,8 +355,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EE4B59183D165D0089FF27 /* DumbTank.cpp in Sources */,
 				62492195C3174C98A3123D8F /* AdvancedTankApp.cpp in Sources */,
+				A9EE4B41183D14120089FF27 /* FloorPlane.cpp in Sources */,
 				A9C3E32F18312162003C3DA5 /* ObjModel.cpp in Sources */,
+				A9EE4B3E183D13900089FF27 /* FiringTank.cpp in Sources */,
 				A9C3E32718312127003C3DA5 /* TankShot.cpp in Sources */,
 				A9C3E32618312127003C3DA5 /* AdvancedTank.cpp in Sources */,
 			);
