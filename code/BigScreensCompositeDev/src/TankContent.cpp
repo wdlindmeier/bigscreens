@@ -28,9 +28,9 @@ namespace bigscreens
 //    , mTankDirectionRadians(0)
 //    , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
-    , mTank( ContentProviderNew::ActorContent::getAdvancedTank() )
-    , mMinion( ContentProviderNew::ActorContent::getMinion() )
-    , mGroundPlane( ContentProviderNew::ActorContent::getFloorPlane() )
+    , mTank( ActorContentProvider::getAdvancedTank() )
+    , mMinion( ActorContentProvider::getMinion() )
+    , mGroundPlane( ActorContentProvider::getFloorPlane() )
     , mGroundPlotCoords(0,0,0)
     , mGroundScale(10000, 500, 10000) // Keep these symetrical x/z
     {
@@ -224,7 +224,7 @@ namespace bigscreens
         
         mGroundPlane->setNoiseTexture(heightMap);
 
-        const static bool kDrawColorGround = false;
+        const static bool kDrawColorGround = true;//false;
 		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,mRenderAlpha));
         
         gl::popMatrices();
@@ -262,7 +262,7 @@ namespace bigscreens
         {
             console() << "ERROR: Couldn't find position for firing\n";
         }
-        console() << "Firing from position: " << position.position << "\n";
+        // console() << "Firing from position: " << position.position << "\n";
 
         firingTank->fire(position, curGroundOrientation);
     }

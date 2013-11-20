@@ -39,7 +39,7 @@ static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
 
-class BigScreensCompositeApp : public AppNative, public MPEApp, public ContentProvider
+class BigScreensCompositeApp : public AppNative, public MPEApp, public SceneContentProvider
 {
     
 public:
@@ -88,7 +88,9 @@ public:
     
     // Content Provider
     RenderableContentRef contentForKey(const std::string & contentName);
-    
+    float * getFFTData();
+    float getFFTDataForChannel(const int channel);
+
     // Vars
     MPEClientRef mClient;
     
@@ -131,6 +133,7 @@ void BigScreensCompositeApp::prepareSettings(Settings *settings)
 #if IS_IAC
     settings->setFullScreen();
 #endif
+    SceneContentProvider::sharedContentProvider(this);
 }
 
 void BigScreensCompositeApp::setup()
@@ -147,7 +150,7 @@ void BigScreensCompositeApp::setup()
     
     mOutLine = OutLineBorderRef(new OutLineBorder());
 	
-	mFinalBillboard = ContentProviderNew::ActorContent::getFinalBillboard();
+	mFinalBillboard = ActorContentProvider::getFinalBillboard();
 	
     mShouldFire = false;
 	
@@ -322,6 +325,16 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
 
     // Default is a blank texture
     return mTextureContentBlank;
+}
+
+float * BigScreensCompositeApp::getFFTData()
+{
+    return mSoundtrack->getFftData();
+}
+
+float BigScreensCompositeApp::getFFTDataForChannel(const int channel)
+{
+    return mSoundtrack->getFftData()[channel];
 }
 
 #pragma mark - Input events
@@ -695,7 +708,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     // NOTE: DON'T transition on the last layout (this is the convergence scene)
     bool shouldTransition = mTimeline->getCurrentFrame() != mConvergenceLayoutIndex;
     
-    std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(this,
+    std::map<int, TimelineContentInfo > renderContent = mTimeline->getRenderContent(//this,
                                                                                     shouldTransition);
     
     Rectf clientRect = mClient->getVisibleRect();

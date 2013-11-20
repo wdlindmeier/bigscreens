@@ -15,10 +15,10 @@ using namespace bigscreens;
 
 TankConvergenceContent::TankConvergenceContent() :
 DumbTankContent()
-, mOpponent(ContentProviderNew::ActorContent::getOpponent())
+, mOpponent(ActorContentProvider::getOpponent())
 , mMSElapsedConvergence(0)
 {
-    mDumbTank = ContentProviderNew::ActorContent::getAngledDumbTank();
+    mDumbTank = ActorContentProvider::getAngledDumbTank();
     mGroundScale = Vec3f(15000, 600, 15000);
     //mGroundScale = Vec3f(10000, 600, 10000);
 };

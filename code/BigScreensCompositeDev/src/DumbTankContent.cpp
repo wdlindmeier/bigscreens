@@ -15,7 +15,7 @@ using namespace bigscreens;
 
 DumbTankContent::DumbTankContent() :
 TankContent()
-,mDumbTank(ContentProviderNew::ActorContent::getDumbTank())
+,mDumbTank(ActorContentProvider::getDumbTank())
 {
 };
 

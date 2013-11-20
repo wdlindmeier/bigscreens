@@ -40,18 +40,6 @@ namespace bigscreens
 
     typedef std::shared_ptr<class RenderableContent> RenderableContentRef;
     
-    // We'll use a content proivder rather than a global map so we
-    // can load and unload the content as needed, to save memory.
-    class ContentProvider
-    {
-
-    public:
-        
-        virtual ~ContentProvider(){}
-        // Passes back a pointer to some renderable content.
-        virtual RenderableContentRef contentForKey(const std::string & contentName) = 0;
-    };
-    
     // SceneWindow type, more interested in the dimensions from
 	// an origin for opengl.
 	typedef std::pair<ci::Vec2i, ci::Vec2i> OriginAndDimension;

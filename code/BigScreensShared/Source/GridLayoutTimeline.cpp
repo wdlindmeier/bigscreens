@@ -8,6 +8,7 @@
 
 #include "GridLayoutTimeline.h"
 #include "Utilities.hpp"
+#include "ContentProvider.h"
 
 using namespace ci;
 using namespace std;
@@ -235,7 +236,7 @@ namespace bigscreens
         return mGridLayouts[mIdxCurrentLayout].getRegions().size();
     }
     
-    std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(ContentProvider *contentProvider,
+    std::map<int, TimelineContentInfo> GridLayoutTimeline::getRenderContent(//SceneContentProvider *contentProvider,
                                                                             bool shouldTransition)
     {
         std::map< int, TimelineContentInfo > returnContent;
@@ -315,11 +316,18 @@ namespace bigscreens
             returnItem.rect = transitionRect;
             
             // Append content.
-            // returnItem.second = contentProvider->contentForKey(transitionReg.contentKey);
-            returnItem.contentKey = transitionReg.contentKey;
-            returnItem.contentRef = contentProvider->contentForKey(transitionReg.contentKey);
-            
-            returnContent[transitionReg.timelineID] = returnItem;
+            SceneContentProviderRef contentProvider = SceneContentProvider::sharedContentProvider();
+            if (contentProvider)
+            {
+                returnItem.contentKey = transitionReg.contentKey;
+                returnItem.contentRef = contentProvider->contentForKey(transitionReg.contentKey);
+                
+                returnContent[transitionReg.timelineID] = returnItem;
+            }
+            else
+            {
+                ci::app::console() << "ERROR: No content provider.\n";
+            }
         }
         
         return returnContent;

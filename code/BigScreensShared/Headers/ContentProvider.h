@@ -14,14 +14,42 @@
 #include "FloorPlane.h"
 #include "Opponent.h"
 #include "TankContent.h"
-//#include "GroundContent.h"
 #include "DumbTank.h"
 
 namespace bigscreens {
+    
+typedef std::shared_ptr<class SceneContentProvider> SceneContentProviderRef;
+    
+class SceneContentProvider
+{
+    
+public:
+    
+    virtual ~SceneContentProvider(){}
+    
+    // Passes back a pointer to some renderable content.
+    virtual RenderableContentRef contentForKey(const std::string & contentName) = 0;
+    virtual float * getFFTData() = 0;
+    virtual float getFFTDataForChannel(const int channel) = 0;
+    
+    // This is a crazy getter / setter combo.
+    // I tried defining the shared pointer outside of the accessor,
+    // but setting the value in a setter didn't carry over into the
+    // getter... Works for now, but it would be good to figure out
+    // the issue.
+    static SceneContentProviderRef sharedContentProvider(SceneContentProvider *contentProvider = NULL)
+	{
+        static SceneContentProviderRef SharedContentProvider;
+        if(!SharedContentProvider && contentProvider != NULL)
+        {
+            SharedContentProvider = SceneContentProviderRef(contentProvider);
+        }
+        return SharedContentProvider;
+	}
+};
 
-namespace ContentProviderNew {
 
-namespace ActorContent {
+namespace ActorContentProvider {
 	
 	static AdvancedTankRef getAdvancedTank()
 	{
@@ -100,24 +128,6 @@ namespace ActorContent {
 		}
         return masterAngledDumbTank;
 	}
-}
-	
-namespace SceneContent {
-	
-	static TankContentRef getTankContent()
-	{
-		static TankContentRef masterTankContent;
-		if( !masterTankContent )
-        {
-            ci::app::console() << "Initting Tank Content Ref\n";
-			masterTankContent = TankContentRef( new TankContent() );
-		}
-        return masterTankContent;
-	}
-	
-	
-}
-	
 }
 
 }
