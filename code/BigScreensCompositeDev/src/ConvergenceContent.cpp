@@ -53,6 +53,7 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
 void ConvergenceContent::update()
 {
     shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
+    content->resetPositions();
     content->setFramesRendered(mNumFramesRendered);
 }
 
@@ -218,7 +219,6 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;
     
-    // TEST
     outlineAlpha = alpha;
 
     ci::gl::viewport(rect.x1 - screenOffset.x,

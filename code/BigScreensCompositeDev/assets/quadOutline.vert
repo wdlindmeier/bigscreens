@@ -88,8 +88,12 @@ void main(void)
         textureHeight *= 1.0 + (unitDistanceFromTank * mountainMultiplier);
     }
     
+    // This sets the outlines slightly above the ground so theyre visible
+    // This should actually be a normal, but a Y offset is simpler
+    float lineVertOffset = 5.0 / groundScale.y;
+    
     gl_Position = projection * modelView * vec4(position.x,
-                                                position.y + textureHeight + 0.01,
+                                                position.y + textureHeight + lineVertOffset,
                                                 position.z,
                                                 1.0);
 

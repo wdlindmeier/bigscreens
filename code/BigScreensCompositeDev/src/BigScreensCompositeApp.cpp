@@ -32,7 +32,9 @@ using namespace bigscreens;
 static const std::string kContentKeyTankSpin = "tankSpin";
 static const std::string kContentKeyTankOverhead = "tankOverhead";
 static const std::string kContentKeyTankHeightmap = "tankHeightmap";
+static const std::string kContentKeyTankFlat = "tankFlat";
 static const std::string kContentKeyTankWide = "tankWide";
+static const std::string kContentKeyTankSideCarriage = "tankSide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
@@ -298,7 +300,9 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     if (contentName == kContentKeyTankSpin ||
         contentName == kContentKeyTankOverhead ||
         contentName == kContentKeyTankWide ||
-        contentName == kContentKeyTankHeightmap )
+        contentName == kContentKeyTankHeightmap ||
+        contentName == kContentKeyTankSideCarriage ||
+        contentName == kContentKeyTankFlat )
     {
         return mTankContent;
     }
@@ -492,9 +496,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Blinking tank rotation
         float tankRotation = contentElapsedFrames * 0.01;
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-
-        scene->setGroundIsVisible(true);
         scene->resetPositions();
+        scene->setDefaultGroundScale();
+        scene->setGroundIsVisible(true);
         
         // Center / still
         scene->setTankPosition(Vec3f::zero());
@@ -520,10 +524,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Flat texture ground
         float tankDistance = sinf(contentElapsedFrames * 0.0025);
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        
+        scene->resetPositions();
+        scene->setDefaultGroundScale();
         // scene->setGroundOffset(tankGroundOffset);
         scene->setGroundIsVisible(true);
-        scene->resetPositions();
         scene->setTankPosition(tankPosition);
         // Wheel speed has to happen before update
         scene->getTank()->setWheelSpeedMultiplier(6);
@@ -548,9 +552,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Tank content wide shot
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-        
-        scene->setGroundIsVisible(true);
         scene->resetPositions();
+        scene->setDefaultGroundScale();
+        scene->setGroundIsVisible(true);
         scene->setTankPosition(tankPosition);
         // Wheel speed has to happen before update
         scene->getTank()->setWheelSpeedMultiplier(6);
@@ -592,6 +596,8 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<TankMultiOverheadContent> scene = static_pointer_cast<TankMultiOverheadContent>(content);
         
+        scene->resetPositions();
+        scene->setDefaultGroundScale();
         scene->setGroundIsVisible(false);
         // ?
         Vec2f masterSize = mClient->getMasterSize();
@@ -612,6 +618,8 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Tank content horizon shot
         shared_ptr<DumbTankContent> scene = static_pointer_cast<DumbTankContent>(content);
 
+        scene->resetPositions();
+        scene->setDefaultGroundScale();
         scene->setTankPosition(Vec3f(0, 0, -45000 * (1.0-(contentElapsedFrames/4000.0))));
         scene->setGroundIsVisible(false);
 
@@ -636,6 +644,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
         shared_ptr<TankConvergenceContent> scene = static_pointer_cast<TankConvergenceContent>(content);
+        
+        // ! Don't reset
+        // scene->resetPositions();
+        
         scene->setMSElapsed(mMSElapsedConvergence);
         //mSingleTankConvergeContent
         // Nothing to see here
@@ -672,7 +684,8 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         // Heightmap
         shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
-
+        scene->resetPositions();
+        
         Vec3f tankPosition(contentElapsedFrames * 5, 0, contentElapsedFrames * 10);
         float theta = atan2(tankPosition.x, tankPosition.z);
         scene->setTankPosition(tankPosition, theta);
@@ -687,6 +700,58 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                        Vec3f( 0, 100, 0 ) + tankPosition);
         });
 
+    }
+    else if (contentInfo.contentKey == kContentKeyTankFlat)
+    {
+        // Heightmap
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->resetPositions();
+        scene->setGroundScale(Vec3f(10000,1,10000));
+        
+        Vec3f tankPosition(0, 0, contentElapsedFrames * 100);
+        scene->setTankPosition(tankPosition);
+        
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(6);
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+                      {
+                          if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+                          
+                          cam.lookAt(tankPosition + Vec3f( 0, kTankBodyCenterY, 2000 ),
+                                     tankPosition + Vec3f( 0, kTankBodyCenterY, 0 ));
+                      });
+        
+    }
+    else if (contentInfo.contentKey == kContentKeyTankSideCarriage)
+    {
+        shared_ptr<TankContent> scene = static_pointer_cast<TankContent>(content);
+        scene->resetPositions();
+
+        Vec3f tankPosition(contentElapsedFrames * 10,
+                           0,
+                           contentElapsedFrames * 15);
+        float theta = atan2(tankPosition.x, tankPosition.z);
+        scene->setTankPosition(tankPosition, theta);
+        
+        // Vec3f normalDirection = tankPosition.normalized();
+        
+        Vec3f eye(1500 + (cos(contentElapsedFrames * 0.01) * 800),
+                  500,// + (sin(contentElapsedFrames * 0.05) * 200),
+                  -400 );
+        eye.rotateY(-theta);
+        
+        Vec3f lookAt( 1000, 300, 10000);
+        lookAt.rotateY(theta);
+        
+        // Wheel speed has to happen before update
+        scene->getTank()->setWheelSpeedMultiplier(4);
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+                      {
+                          if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+                          cam.lookAt(tankPosition + eye,
+                                     tankPosition + lookAt);
+                      });
+        
     }
 }
 

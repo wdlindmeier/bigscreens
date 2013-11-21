@@ -20,7 +20,6 @@ DumbTankContent()
 {
     mDumbTank = ActorContentProvider::getAngledDumbTank();
     mGroundScale = Vec3f(15000, 600, 15000);
-    //mGroundScale = Vec3f(10000, 600, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
