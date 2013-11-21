@@ -4,9 +4,11 @@
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec4 tankOriginal;
 
-uniform mat4        modelView;
-uniform mat4		projection;
-uniform vec3		seperationPoint;
+uniform mat4 modelView;
+uniform mat4 projection;
+uniform vec3 seperationPoint;
+uniform vec3 tankPosition;
+uniform vec3 tankVector;
 
 out VS_OUT
 {

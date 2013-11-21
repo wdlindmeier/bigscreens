@@ -26,8 +26,11 @@ public:
 	~FloorPlane(){}
 	
     void draw(const long framesRendered,
-              const bool shouldRenderColor,
-              const ci::ColorAf & colorOutline = ci::ColorAf::white());
+              const float mountainMultiplier,
+              const ci::Vec3f & groundScale = ci::Vec3f::zero(),
+              const ci::Vec3f & groundOffset = ci::Vec3f::zero(),
+              const ci::Vec3f & tankPosition = ci::Vec3f::zero(),
+              const ci::Vec3f & tankVector = ci::Vec3f::zero());
 
     void setFarLimit( float farLimit );
     void setNearLimit( float nearLimit );

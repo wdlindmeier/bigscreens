@@ -99,10 +99,18 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     render(screenOffset, contentRect, 1.0f);
 }
 
-void TankConvergenceContent::fireTankGun()
+void TankConvergenceContent::fireTankGun(const int tankIndex)
 {
     // This kind of sucks... but it works
-    for (int i = 0; i < kNumTanksConverging; ++i)
+    int fromIdx = 0;
+    int upToIdx = kNumTanksConverging;
+    if (tankIndex != -1)
+    {
+        fromIdx = tankIndex;
+        upToIdx = tankIndex + 1;
+    }
+        
+    for (int i = fromIdx; i < upToIdx; ++i)
     {
         PositionOrientation tankOrient = positionForTankWithProgress(i, mMSElapsedConvergence);
         setTankPosition(tankOrient.position, toRadians(tankOrient.directionDegrees));
@@ -137,6 +145,9 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
     mRenderAlpha = ci::math<float>::clamp(alpha, 0, 1.0);
     mScreenAlpha = mRenderAlpha*mRenderAlpha*mRenderAlpha;
     
+    // Draw the ground and tanks
+    gl::enableAlphaBlending();
+
     gl::disableDepthRead();
     gl::disableDepthWrite();
     

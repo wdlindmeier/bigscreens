@@ -114,10 +114,11 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         static const int kLastContentID = 9999;
         mContent->setFrameContentID(kLastContentID);
 
-        // Ring of fire every 60 frames
-        if (!shouldDrawRegions && (mNumFramesRendered % 60 == 0))
+        if (!shouldDrawRegions &&
+            (arc4random() % 100) < 20)
         {
-            tanks->fireTankGun();
+            int fireTankIdx = arc4random() % kNumTanksConverging;
+            tanks->fireTankGun(fireTankIdx);
         }
 
         // This uses the final cam

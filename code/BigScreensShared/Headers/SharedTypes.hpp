@@ -100,6 +100,7 @@ namespace bigscreens
     struct PositionOrientation
     {
         ci::Vec3f position = ci::Vec3f::zero();
+        ci::Vec3f vector = ci::Vec3f::zero();
         float directionDegrees = 0;
     };
     

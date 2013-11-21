@@ -25,13 +25,12 @@ namespace bigscreens
     
     TankContent::TankContent() :
     RenderableContent()
-//    , mTankDirectionRadians(0)
-//    , mTankPosition(0,0,0)
     , mIsGroundVisible(true)
     , mTank( ActorContentProvider::getAdvancedTank() )
     , mMinion( ActorContentProvider::getMinion() )
     , mGroundPlane( ActorContentProvider::getFloorPlane() )
     , mGroundPlotCoords(0,0,0)
+    , mShouldAmplifyMountains(true)
     , mGroundScale(10000, 500, 10000) // Keep these symetrical x/z
     {
     }
@@ -41,6 +40,11 @@ namespace bigscreens
         RenderableContent::setFrameContentID(contentID);
         mTank->setFrameContentID(contentID);
     };
+    
+    void TankContent::setShouldAmplifyMountains(const bool shouldAmplify)
+    {
+        mShouldAmplifyMountains = shouldAmplify;
+    }
     
     void TankContent::setTankPosition(const ci::Vec3f tankPosition, const float directionRadians)
     {
@@ -53,6 +57,15 @@ namespace bigscreens
             PositionOrientation orientation;
             orientation.position = tankPosition;
             orientation.directionDegrees = toDegrees(directionRadians);
+            
+            Vec3f vector(0,0,0);
+            if (mPositionOrientations.find(mContentID) != mPositionOrientations.end())
+            {
+                PositionOrientation prevOrientation = mPositionOrientations[mContentID];
+                vector = tankPosition - prevOrientation.position;
+            }
+            orientation.vector = vector;
+            
             mPositionOrientations[mContentID] = orientation;
             // update ground orientation
             updateGroundOrientationWithCurrentPosition();
@@ -63,11 +76,22 @@ namespace bigscreens
     {
         if (mContentID == -1)
         {
-            console() << "ERROR: Can't find position. Tank content doesn't have a contentID\n";
+            console() << "ERROR: Can't find tank position. Tank content doesn't have a contentID\n";
             return Vec3f::zero();
         }
         PositionOrientation orientation = mPositionOrientations[mContentID];
         return orientation.position;
+    }
+    
+    ci::Vec3f TankContent::getTankVector()
+    {
+        if (mContentID == -1)
+        {
+            console() << "ERROR: Can't find tank vector. Tank content doesn't have a contentID\n";
+            return Vec3f::zero();
+        }
+        PositionOrientation orientation = mPositionOrientations[mContentID];
+        return orientation.vector;
     }
     
     ci::CameraPersp & TankContent::getCamera()
@@ -171,6 +195,7 @@ namespace bigscreens
     void TankContent::updateGroundCoordsForTank()
     {
         Vec3f tankPosition = getTankPosition();
+        
         // Get the current plot
         int plotX = (tankPosition.x + (mGroundScale.x * 0.5f)) / mGroundScale.x;
         int plotZ = (tankPosition.z + (mGroundScale.z * 0.5f)) / mGroundScale.z;
@@ -178,8 +203,10 @@ namespace bigscreens
         if (mGroundPlotCoords.x != plotX || mGroundPlotCoords.z != plotZ || mGroundMaps.size() == 0)
         {
             mGroundPlotCoords = Vec3i(plotX, 0, plotZ);
-            //generateGroundMaps();
         }
+        
+        // Pass the tank pos and vector into the ground
+
     }
     
     void TankContent::drawGround()
@@ -205,7 +232,7 @@ namespace bigscreens
     void TankContent::drawGroundTile(const ci::Vec3i & plot)
     {
         float plotKey = KeyFromPlot(plot.x, plot.z);
-        // console() << "ground " << plotKey << "\n";
+
         if (mGroundMaps.find(plotKey) == mGroundMaps.end())
         {
             generateGroundMapForPlot(plot);
@@ -218,14 +245,25 @@ namespace bigscreens
         // Scale to taste
         gl::scale(mGroundScale);
         // Center
-        gl::translate(Vec3f(-0.5 + plot.x,
-                            0,
-                            -0.5 + plot.z));
+        Vec3f groundOffset(-0.5 + plot.x, 0, -0.5 + plot.z);
+        gl::translate(groundOffset);
         
         mGroundPlane->setNoiseTexture(heightMap);
 
-        const static bool kDrawColorGround = true;//false;
-		mGroundPlane->draw(mNumFramesRendered, kDrawColorGround, ColorAf(0.5,0.5,0.5,mRenderAlpha));
+        Vec3f tankPosition = getTankPosition();
+        Vec3f tankVector = getTankVector();
+
+        float mountainMagnitude = 0;
+        if (mShouldAmplifyMountains && tankVector != Vec3f::zero())
+        {
+            mountainMagnitude = 5.0f;
+        }
+		mGroundPlane->draw(mNumFramesRendered,
+                           mountainMagnitude,
+                           mGroundScale,
+                           groundOffset,
+                           tankPosition,
+                           tankVector.normalized());
         
         gl::popMatrices();
     }

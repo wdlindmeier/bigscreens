@@ -37,6 +37,7 @@ public:
     void setGroundIsVisible(bool isVisible);
     void setTankPosition(const ci::Vec3f tankPosition, const float directionRadians = 0);
     ci::Vec3f getTankPosition();
+    ci::Vec3f getTankVector();
     ci::CameraPersp & getCamera();
     AdvancedTankRef & getTank();
     
@@ -47,7 +48,8 @@ public:
     virtual void reset();
     virtual void fireTankGun();
     virtual void setFrameContentID(const int contentID);
-    
+    void setShouldAmplifyMountains(const bool shouldAmplify);
+
 protected:
     
     // Funcs
@@ -91,6 +93,7 @@ protected:
     ci::Vec3i           mGroundPlotCoords;
     std::map<float, ci::gl::TextureRef> mGroundMaps;
     ci::Vec3f           mGroundScale;
+    bool                mShouldAmplifyMountains;
     
     // NOTE: These could all be wrapped up in a "Tank State" struct
     std::map<int, GroundOrientaion> mTankGroundOrientations;

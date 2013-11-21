@@ -6,7 +6,13 @@ layout (location = 0) in vec3 position;
 uniform mat4 projection;
 uniform mat4 modelView;
 uniform vec2 dimensions;
+uniform vec3 tankPosition;
+uniform vec3 tankVector;
 uniform int colorOffset;
+
+uniform vec3 groundScale;
+uniform vec3 groundOffset;
+uniform float mountainMultiplier;
 
 uniform sampler2D heightMap;
 
@@ -43,35 +49,13 @@ void main(void)
                                  vec4(1.0, 1.0, 1.0, 1.0),
                                  vec4(0.0, 0.0, 0.0, 1.0),
                                  vec4(0.0, 1.0, 1.0, 1.0));
-
-/*
-	int modulatedX = (int(position.x) + colorOffset) % count;
-	float heightPixel = texture( heightMap, vec2( float(modulatedX) / count , position.z / count ) ).x;
     
-	if( position.z < farLimit ) {
-		// This multiplies the heightPixel (e.g. 0.0-1.0) times a smoothed farlimit starting from the farlimit and incrementally getting bigger towards the count
-		gl_Position = projection * modelView * vec4( position.x, position.y - heightPixel * 100 * ( (position.z - farLimit) / (count - farLimit)), position.z, 1.0 );
-		vs_out.color = colors[((gl_VertexID + colorOffset) / 4) % 12];
-	}
-	else if( position.z > nearLimit ) {
-		// This multiplies the heightPixel (e.g. 0.0-1.0) times a smoothed nearlimit starting from the nearlimit and incrementally getting bigger towards the count
-		gl_Position = projection * modelView * vec4( position.x, position.y + heightPixel * 100 * ( (position.z - nearLimit) / (count - nearLimit)), position.z, 1.0 );
-		vs_out.color = colors[((gl_VertexID + colorOffset / 4)) % 12];
-    }
-*/
+    vec4 modelPosition = modelView * vec4(position, 1.0);
+    vec4 projectionPosition = projection * vec4(position, 1.0);
 
-
-    float textureHeight = texture( heightMap, vec2(position.x, position.z) ).x;// * fftHeightMulti;
-    gl_Position = projection * modelView * vec4(position.x,
-                                                position.y + textureHeight,
-                                                position.z,
-                                                1.0 );
-    
-    vec4 modelPosition = projection * vec4(position, 1.0);
-    
-    float scalarPosX = modelPosition.x;
-    float scalarPosY = modelPosition.y;
-    float scalarPosZ = modelPosition.z;
+    float scalarPosX = position.x;
+    float scalarPosY = position.y;
+    float scalarPosZ = position.z;
     
     float wrappingPosX = abs(1.0 - (scalarPosX));
     float wrappingPosZ = abs(1.0 - (scalarPosZ));
@@ -106,6 +90,26 @@ void main(void)
                          pickedColor.g * brightness,
                          pickedColor.b * brightness,
                          alpha);
+    
+    // Height and position
+    float textureHeight = texture( heightMap, vec2(position.x, position.z) ).x;
+    
+    if (mountainMultiplier > 0)
+    {
+        // Get the distance from the tank
+        vec3 groundPosition = (groundOffset + position) * groundScale;
+        vec3 antiVector = vec3(1.0,1.0,1.0) - tankVector;
+        float unitDistanceFromTank = length(((groundPosition - tankPosition) / groundScale) * antiVector);
+        // non-linear
+        unitDistanceFromTank *= unitDistanceFromTank;
+        textureHeight *= 1.0 + (unitDistanceFromTank * mountainMultiplier);
+    }
+    
+    gl_Position = projection * modelView * vec4(position.x,
+                                                position.y + textureHeight,
+                                                position.z,
+                                                1.0);
+
     
     vs_out.fog = gl_Position.z;
 }
