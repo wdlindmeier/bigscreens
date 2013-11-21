@@ -30,6 +30,7 @@ mSize(size)
 }
 
 void FloorPlane::draw(const long framesRendered,
+                      const float alpha,
                       const float mountainMultiplier,
                       const ci::Vec3f & groundScale,
                       const ci::Vec3f & groundOffset,
@@ -53,6 +54,7 @@ void FloorPlane::draw(const long framesRendered,
         TryAddingUniform(mQuadTriangleGlsl, "projection", ci::gl::getProjection());
         TryAddingUniform(mQuadTriangleGlsl, "modelView", ci::gl::getModelView() );
         
+        TryAddingUniform(mQuadTriangleGlsl, "alphaMultiplier", alpha);
         TryAddingUniform(mQuadTriangleGlsl, "groundScale", groundScale);
         TryAddingUniform(mQuadTriangleGlsl, "groundOffset", groundOffset);
         TryAddingUniform(mQuadTriangleGlsl, "mountainMultiplier", mountainMultiplier);
@@ -94,6 +96,7 @@ void FloorPlane::draw(const long framesRendered,
 	TryAddingUniform(mQuadOutlineGlsl, "projection", ci::gl::getProjection() );
 	TryAddingUniform(mQuadOutlineGlsl, "modelView", ci::gl::getModelView() );
     
+    TryAddingUniform(mQuadOutlineGlsl, "alphaMultiplier", alpha);
     TryAddingUniform(mQuadOutlineGlsl, "groundScale", groundScale);
     TryAddingUniform(mQuadOutlineGlsl, "groundOffset", groundOffset);
     TryAddingUniform(mQuadOutlineGlsl, "mountainMultiplier", mountainMultiplier);
@@ -140,7 +143,7 @@ void FloorPlane::loadShaders()
 {
 	// Terrain stuff
 	ci::gl::GlslProg::Format mQuadOutlineFormat;
-	mQuadOutlineFormat.vertex( ci::app::loadResource("quadOutline.vert") ) // NOTE: not using outline
+	mQuadOutlineFormat.vertex( ci::app::loadResource("quadOutline.vert") )
 	.geometry( ci::app::loadResource("quadOutline.geom") )
 	.fragment( ci::app::loadResource("quadOutline.frag") );
 	mQuadOutlineGlsl = ci::gl::GlslProg::create( mQuadOutlineFormat );

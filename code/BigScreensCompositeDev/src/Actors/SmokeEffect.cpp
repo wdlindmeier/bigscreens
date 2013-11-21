@@ -55,7 +55,8 @@ void SmokeEffect::update( const ci::Vec3f & accel, float currentTime )
 
 void SmokeEffect::draw( float zDepth )
 {
-	
+    // TODO: This needs alpha for the final transition.
+
 	mRenderOpponentParticlesGlsl->bind();
 	//		mSmokeTexture->bind();
 	glActiveTexture( GL_TEXTURE0 );

@@ -103,12 +103,14 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     ci::gl::enable( GL_SCISSOR_TEST );
     
-    //float fadeAlpha = 1.0 + std::max<float>(1.0f-progress, -1.0);
-    float fadeAlpha = 0.25 + std::max<float>(1.0f-progress, -1.0);
-    bool shouldDrawRegions = fadeAlpha > 0.01;
-    
     // Draw the "background" image that fades in at the end.
     const static float kFinalSceneProgressBegin = 0.75;
+    
+    float finalSceneAlpha = (progress*progress*progress*progress) - kFinalSceneProgressBegin;
+    float fadeAlpha = 1.5 - finalSceneAlpha;
+    finalSceneAlpha = std::min<float>(1.0, finalSceneAlpha);
+    bool shouldDrawRegions = fadeAlpha > 0.01;
+
     if (progress >= kFinalSceneProgressBegin)
     {
         static const int kLastContentID = 9999;
@@ -128,8 +130,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
             cam.setAspectRatio(fullAspectRatio);
             cam.lookAt( finalOrigin.eye, finalOrigin.target );
         });
-        // Subtracting the progress begin so the alpha is 0 when it comes in.
-        float finalSceneAlpha = std::min<float>(1.0, (progress*progress*progress*progress) - kFinalSceneProgressBegin);
+
         renderWithFadeTransition(screenOffset,
                                  mContentRect,
                                  finalSceneAlpha);

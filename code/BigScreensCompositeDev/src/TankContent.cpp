@@ -259,6 +259,7 @@ namespace bigscreens
             mountainMagnitude = 5.0f;
         }
 		mGroundPlane->draw(mNumFramesRendered,
+                           mRenderAlpha,
                            mountainMagnitude,
                            mGroundScale,
                            groundOffset,

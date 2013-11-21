@@ -13,6 +13,7 @@ uniform int colorOffset;
 uniform vec3 groundScale;
 uniform vec3 groundOffset;
 uniform float mountainMultiplier;
+uniform float alphaMultiplier;
 
 uniform sampler2D heightMap;
 
@@ -89,7 +90,7 @@ void main(void)
     vs_out.color =  vec4(pickedColor.r * brightness,
                          pickedColor.g * brightness,
                          pickedColor.b * brightness,
-                         alpha);
+                         alpha * alphaMultiplier);
     
     // Height and position
     float textureHeight = texture( heightMap, vec2(position.x, position.z) ).x;

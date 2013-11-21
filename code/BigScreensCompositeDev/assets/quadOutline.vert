@@ -13,6 +13,7 @@ uniform vec3 tankVector;
 uniform vec3 groundScale;
 uniform vec3 groundOffset;
 uniform float mountainMultiplier;
+uniform float alphaMultiplier;
 
 uniform sampler2D heightMap;
 
@@ -70,7 +71,7 @@ void main(void)
     float fftHeightMulti = 1.0;
     vec4 pickedColor = positionColor;
 
-    vs_out.color = vec4(pickedColor.rgb, 0.25);
+    vs_out.color = vec4(pickedColor.rgb, 0.25 * alphaMultiplier);
 
     // Height and position:
     
