@@ -7,6 +7,7 @@
 //
 
 #include "FloorPlane.h"
+#include "ContentProvider.h"
 
 using namespace ci;
 
@@ -29,14 +30,21 @@ mSize(size)
 }
 
 void FloorPlane::draw(const long framesRendered,
-                      const bool shouldRenderColor,
-                      const ci::ColorAf & colorOutline)
+                      const float mountainMultiplier,
+                      const ci::Vec3f & groundScale,
+                      const ci::Vec3f & groundOffset,
+                      const ci::Vec3f & tankPosition,
+                      const ci::Vec3f & tankVector)
 {
     mVao->bind();
     mLineElementVbo->bind();
     mNoiseTexture->bind();
+    
+    gl::enableAlphaBlending();
+    
+    float *fft = SceneContentProvider::sharedContentProvider()->getFFTData();
 
-    if (shouldRenderColor)
+    //if (shouldRenderColor)
     {
         
         // This shader draws the colored quads
@@ -44,13 +52,21 @@ void FloorPlane::draw(const long framesRendered,
         
         TryAddingUniform(mQuadTriangleGlsl, "projection", ci::gl::getProjection());
         TryAddingUniform(mQuadTriangleGlsl, "modelView", ci::gl::getModelView() );
+        
+        TryAddingUniform(mQuadTriangleGlsl, "groundScale", groundScale);
+        TryAddingUniform(mQuadTriangleGlsl, "groundOffset", groundOffset);
+        TryAddingUniform(mQuadTriangleGlsl, "mountainMultiplier", mountainMultiplier);
+        
         TryAddingUniform(mQuadTriangleGlsl, "chooseColor", true);
         TryAddingUniform(mQuadTriangleGlsl, "colorOffset", (int)framesRendered );
         TryAddingUniform(mQuadTriangleGlsl, "heightMap", 0);
         TryAddingUniform(mQuadTriangleGlsl, "dimensions", mSize);
         TryAddingUniform(mQuadTriangleGlsl, "farLimit", mFarLimit );
         TryAddingUniform(mQuadTriangleGlsl, "nearLimit", mNearLimit );
-
+        TryAddingUniform(mQuadTriangleGlsl, "tankPosition", tankPosition );
+        TryAddingUniform(mQuadTriangleGlsl, "tankVector", tankVector );
+        try { mQuadTriangleGlsl->uniform("fft", fft, kNumFFTChannels); } catch (cinder::gl::GlslUnknownUniform){}
+        
         //	mQuadTriangleGlsl->uniform( "divideNum", divideNum );
         // lines adjacency gives the geometry shader two points on either side of the line
         // this was the problem with the indexing, you have to give two other points when
@@ -77,10 +93,18 @@ void FloorPlane::draw(const long framesRendered,
     TryAddingUniform(mQuadOutlineGlsl, "dimensions", mSize);
 	TryAddingUniform(mQuadOutlineGlsl, "projection", ci::gl::getProjection() );
 	TryAddingUniform(mQuadOutlineGlsl, "modelView", ci::gl::getModelView() );
-    TryAddingUniform(mQuadOutlineGlsl, "uColor", colorOutline );
+    
+    TryAddingUniform(mQuadOutlineGlsl, "groundScale", groundScale);
+    TryAddingUniform(mQuadOutlineGlsl, "groundOffset", groundOffset);
+    TryAddingUniform(mQuadOutlineGlsl, "mountainMultiplier", mountainMultiplier);
+
+    //TryAddingUniform(mQuadOutlineGlsl, "uColor", colorOutline );
     TryAddingUniform(mQuadOutlineGlsl, "farLimit", mFarLimit );
     TryAddingUniform(mQuadOutlineGlsl, "nearLimit", mNearLimit );
+    TryAddingUniform(mQuadOutlineGlsl, "tankPosition", tankPosition );
+    TryAddingUniform(mQuadOutlineGlsl, "tankVector", tankVector );
 	TryAddingUniform(mQuadOutlineGlsl, "heightMap", 0 );
+    try { mQuadOutlineGlsl->uniform("fft", fft, kNumFFTChannels); } catch (cinder::gl::GlslUnknownUniform){}
 
 	ci::gl::drawElements( GL_LINES_ADJACENCY, mIndexCount, GL_UNSIGNED_INT, 0 );
 
@@ -116,7 +140,7 @@ void FloorPlane::loadShaders()
 {
 	// Terrain stuff
 	ci::gl::GlslProg::Format mQuadOutlineFormat;
-	mQuadOutlineFormat.vertex( ci::app::loadResource("quadTriangle.vert") ) // NOTE: not using outline
+	mQuadOutlineFormat.vertex( ci::app::loadResource("quadOutline.vert") ) // NOTE: not using outline
 	.geometry( ci::app::loadResource("quadOutline.geom") )
 	.fragment( ci::app::loadResource("quadOutline.frag") );
 	mQuadOutlineGlsl = ci::gl::GlslProg::create( mQuadOutlineFormat );

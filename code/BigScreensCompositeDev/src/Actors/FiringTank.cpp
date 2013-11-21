@@ -79,8 +79,8 @@ void FiringTank::renderShots(ci::CameraPersp & cam, const float alpha)
     {
         if (shot.getContentID() == mContentID)
         {
-            //gl::color(ColorAf(0.8, 1, 1, 0.5f * alpha));
-            gl::color(ColorAf(1, 0, 0, 1.0f));
+            gl::color(ColorAf(0, 0.5, 1, alpha));
+            //gl::color(ColorAf(1, 0, 0, 1.0f));
             shot.renderLine();
             
             gl::color(1,1,1,alpha);
