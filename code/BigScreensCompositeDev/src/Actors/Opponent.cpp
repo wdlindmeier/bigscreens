@@ -23,11 +23,13 @@ void Opponent::update( float percentage, const ci::Vec3f & smokeAccel )
 	mSmokeEffect->update( smokeAccel, mTime );
 }
 	
-void Opponent::draw( float zDepth, const ci::Vec3f & lightPosition )
+void Opponent::draw(float zDepth,
+                    const ci::Vec3f & lightPosition )
 {
 	// CAMERAVIEW - Will be used for lightPosition
 	// zDepth - Used for particle smoke
 	
+    // TODO: This needs alpha for the final transition.
 	ci::gl::enableDepthRead();
 	ci::gl::enableDepthWrite();
 

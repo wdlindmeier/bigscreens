@@ -26,6 +26,7 @@ public:
 	~FloorPlane(){}
 	
     void draw(const long framesRendered,
+              const float alpha,
               const float mountainMultiplier,
               const ci::Vec3f & groundScale = ci::Vec3f::zero(),
               const ci::Vec3f & groundOffset = ci::Vec3f::zero(),
