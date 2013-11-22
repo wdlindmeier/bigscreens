@@ -267,6 +267,9 @@
 		A9EE4B36183BF81E0089FF27 /* updateOppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B2E183BF81E0089FF27 /* updateOppSmoke.vert */; };
 		A9EE4B37183BF81E0089FF27 /* updateOppSmoke.vert in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B2E183BF81E0089FF27 /* updateOppSmoke.vert */; };
 		A9EE4B38183BF8900089FF27 /* smoke_blur.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC8182D889600FB7D2F /* smoke_blur.png */; };
+		A9EE4B62183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
+		A9EE4B63183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
+		A9EE4B64183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -436,6 +439,8 @@
 		A9EE4B2C183BF81E0089FF27 /* renderOppSmoke.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppSmoke.frag; path = ../assets/renderOppSmoke.frag; sourceTree = "<group>"; };
 		A9EE4B2D183BF81E0089FF27 /* renderOppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = renderOppSmoke.vert; path = ../assets/renderOppSmoke.vert; sourceTree = "<group>"; };
 		A9EE4B2E183BF81E0089FF27 /* updateOppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = updateOppSmoke.vert; path = ../assets/updateOppSmoke.vert; sourceTree = "<group>"; };
+		A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpponentContent.cpp; path = ../src/OpponentContent.cpp; sourceTree = "<group>"; };
+		A9EE4B65183EC5510089FF27 /* OpponentContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpponentContent.h; path = ../include/OpponentContent.h; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
@@ -832,6 +837,7 @@
 				B3115C4D182D524200FB7D2F /* Actors */,
 				A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */,
 				A9C5C7A918358A1D000554D6 /* DumbTankContent.h */,
+				A9EE4B65183EC5510089FF27 /* OpponentContent.h */,
 				A97122BE181AF14F006DD64E /* PerlinContent.h */,
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
@@ -847,6 +853,7 @@
 				B3115C54182D527100FB7D2F /* Actors */,
 				A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */,
 				A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */,
+				A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */,
 				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
@@ -1304,6 +1311,7 @@
 				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				A9EE4B62183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAD182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
@@ -1334,6 +1342,7 @@
 				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				A9EE4B63183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAE182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
@@ -1364,6 +1373,7 @@
 				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
 				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */,
+				A9EE4B64183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
 				B3115CAF182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,

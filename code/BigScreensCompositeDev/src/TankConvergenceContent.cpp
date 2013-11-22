@@ -122,7 +122,7 @@ void TankConvergenceContent::renderOpponent(const float alpha)
     // Draw the opponent
     gl::pushMatrices();
     gl::setMatrices(mCam);
-    gl::scale(Vec3f(1000, 1000, 1000));
+    gl::scale(Vec3f(kOpponentScale, kOpponentScale, kOpponentScale));
     
     // Arbitrary
     Vec3f lightPos(sin(mNumFramesRendered * 0.1),

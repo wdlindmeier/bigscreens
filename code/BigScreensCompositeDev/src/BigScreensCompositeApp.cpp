@@ -22,6 +22,7 @@
 #include "ContentProvider.h"
 #include "DumbTankContent.h"
 #include "TankMultiOverheadContent.h"
+#include "OpponentContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -40,6 +41,7 @@ static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
+static const std::string kContentKeyOpponent = "opponent";
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public SceneContentProvider
 {
@@ -112,6 +114,7 @@ public:
     RenderableContentRef mConvergenceContent;
     RenderableContentRef mDumbTankContent;
     RenderableContentRef mMultiOverheadContent;
+    RenderableContentRef mOpponentContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -248,6 +251,10 @@ void BigScreensCompositeApp::loadAssets()
     TankMultiOverheadContent *multiOver = new TankMultiOverheadContent();
     multiOver->load();
     mMultiOverheadContent = RenderableContentRef(multiOver);
+    
+    OpponentContent *opponentContent = new OpponentContent();
+    opponentContent->load();
+    mOpponentContent = RenderableContentRef(opponentContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -325,6 +332,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyPerlin)
     {
         return mPerlinContent;
+    }
+    else if (contentName == kContentKeyOpponent)
+    {
+        return mOpponentContent;
     }
 
     // Default is a blank texture
@@ -600,18 +611,52 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->setDefaultGroundScale();
         scene->setGroundIsVisible(false);
         // ?
-        Vec2f masterSize = mClient->getMasterSize();
-        float fullAspectRatio = masterSize.x / masterSize.y;
+        // Vec2f masterSize = mClient->getMasterSize();
+        // float fullAspectRatio = masterSize.x / masterSize.y;
         scene->update([=](CameraPersp & cam, DumbTankRef & tank)
                       {
                           float camX = 0;
-                          float camY = 80000;// - (contentElapsedFrames * 100);
-                          float camZ = 0;//(contentElapsedFrames * 100);
+                          float camY = 80000;
+                          float camZ = 0;
                           cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
                           // cam.setAspectRatio(fullAspectRatio);
                           cam.lookAt(Vec3f(camX,camY,camZ),
                                      Vec3f(0,0,0));
                       });
+    }
+    else if (contentInfo.contentKey == kContentKeyOpponent)
+    {
+        shared_ptr<OpponentContent> scene = static_pointer_cast<OpponentContent>(content);
+        scene->update([=](CameraPersp & cam, OpponentRef & opponent)
+        {
+            float progress = contentElapsedFrames / 800.0;
+            Vec3f eye(0,0,0);
+            Vec3f target(0,0,0);
+            switch (CLIENT_ID)
+            {
+                case 0:
+                    // Circle above
+                    eye.x = cos(progress * M_PI);
+                    eye.y = kOpponentScale;
+                    eye.z = sin(progress * M_PI);
+                    break;
+                case 1:
+                    // Drop
+                    eye.x = cos(progress * M_PI * 0.25) * (kOpponentScale * -2);
+                    eye.y = kOpponentScale * 2 * (1.5-progress);
+                    target.y = eye.y;
+                    eye.z = sin(progress * M_PI * 0.25) * (kOpponentScale * -2);
+                    break;
+                case 2:
+                    // Zoom way out to way in
+                    eye.x = 0;
+                    eye.y = kOpponentScale * 0.33;
+                    target.y = eye.y;
+                    eye.z = (kOpponentScale * -6) + ((kOpponentScale * 2) * progress);
+                    break;
+            }
+            cam.lookAt(eye, target);
+        });
     }
     else if (contentInfo.contentKey == kContentKeyTankHorizon)
     {
@@ -628,9 +673,9 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
             if (mShouldFire) scene->fireTankGun();
             
             cam.setPerspective(5, getWindowAspectRatio(), 0.01, 150000);
-            float camX = -80000;
-            float camY = 100;
-            float camZ = 0;
+            const float camX = -80000;
+            const float camY = 100;
+            const float camZ = 0;
             cam.lookAt(Vec3f( camX, camY, camZ ),
                        Vec3f( 0, camY, camZ ) );
         });        

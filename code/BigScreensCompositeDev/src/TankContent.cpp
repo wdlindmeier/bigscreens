@@ -523,8 +523,7 @@ namespace bigscreens
         // Spin baby
         // TODO: Give this realistic movement
         gl::translate(mMinionPosition);
-        
-        gl::scale(Vec3f(150,150,150));
+        gl::scale(Vec3f(kMinionScale,kMinionScale,kMinionScale));
         gl::color(1, 0, 0, mRenderAlpha);
         gl::setDefaultShaderVars();
         
