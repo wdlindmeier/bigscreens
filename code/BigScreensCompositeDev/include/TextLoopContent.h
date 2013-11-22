@@ -35,22 +35,18 @@ namespace bigscreens
         
         virtual void load();
         virtual void update();
-        virtual void setTextWithTiming(std::vector<std::pair<long, std::string> > & textWithTiming);
-        virtual void setAbsoluteLineHeightAndAlignment(const float height, TextAlign align);
+        void setTextForContentID(const std::string & str,
+                                 const int contentID,
+                                 const float absoluteLineHeight);
         virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         ci::CameraOrtho & getCamera() { return mCam; }
         virtual bool drawsOutline(){ return false; }
         
     protected:
-        
-        void setText(const std::string & string);
-        
-        std::vector<std::pair<long, std::string> > mTextWithTiming;
-        ci::gl::TextureRef  mTexture;
+
+        // std::vector<std::pair<long, std::string> > mTextWithTiming;
         ci::CameraOrtho     mCam;
         ci::Surface         mFontSurf;
-        TextAlign           mTextAlign;
-        float               mLineHeight;
-        std::string         mCurrentString;
+        std::map<int, ci::gl::TextureRef> mTextures;
     };
 }

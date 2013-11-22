@@ -39,7 +39,7 @@ static const std::string kContentKeyTankWide = "tankWide";
 static const std::string kContentKeyTankSideCarriage = "tankSide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
-static const std::string kContentKeyRandomText = "textRand";
+static const std::string kContentKeyTextPrefix = "text";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
@@ -320,10 +320,6 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     {
         return mTankContent;
     }
-    else if (contentName == kContentKeyRandomText)
-    {
-        return mTextLoopContent;
-    }
     else if (contentName == kContentKeyTankMultiOverhead)
     {
         return mMultiOverheadContent;
@@ -347,6 +343,12 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyOpponent)
     {
         return mOpponentContent;
+    }
+    // Keep this last
+    else if (contentName.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+    {
+        // starts with "text"...
+        return mTextLoopContent;
     }
 
     // Default is a blank texture
@@ -462,6 +464,15 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
     long long timelineMS = mTimeline->update();
     
+#if IS_IAC
+    if (serverFrameNumber > 1 &&
+        !mTimeline->isPlaying())
+    {
+        // start the playback
+        play();
+    }
+#endif
+    
     // FFT Data
     // float *fftData = mSoundtrack->getFftData();
     
@@ -569,11 +580,6 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                              tankPosition.z));
         });
         
-    }
-    else if (contentInfo.contentKey == kContentKeyRandomText)
-    {
-        shared_ptr<TextLoopContent> scene = static_pointer_cast<TextLoopContent>(content);
-        scene->update();
     }
     else if (contentInfo.contentKey == kContentKeyTankWide)
     {
@@ -813,6 +819,29 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                                      tankPosition + lookAt);
                       });
         
+    }
+    else if (contentInfo.contentKey.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+    {
+        // It's a text module.
+        shared_ptr<TextLoopContent> scene = static_pointer_cast<TextLoopContent>(content);
+        // This is where we set the text.
+        // Even though it's set every frame, the content is cached so we
+        // don't re-create the texture unless it's not there.
+        
+        // TODO: Make this a lookup
+        if (contentInfo.contentKey == "textRand")
+        {
+            scene->setTextForContentID("HELLO\nWORLD ]",
+                                       contentInfo.layoutIndex,
+                                       40 * kScreenScale);
+        }
+        else if (contentInfo.contentKey == "text0")
+        {
+            scene->setTextForContentID("ATTACK\nSEQUENCE\nDELTA",
+                                       contentInfo.layoutIndex,
+                                       40 * kScreenScale);
+        }
+        scene->update();
     }
 }
 

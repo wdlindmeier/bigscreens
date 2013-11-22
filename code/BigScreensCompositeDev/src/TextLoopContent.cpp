@@ -11,6 +11,7 @@
 #include "cinder/Text.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Font.h"
+#include "cinder/ip/Resize.h"
 #include "cinder/Utilities.h"
 
 using namespace std;
@@ -61,17 +62,13 @@ static ci::Rectf regionForChar(char c)
 }
 
 namespace bigscreens
-{
-    
+{    
     const static float kHyperspaceNativeLineHeight = 201.0f;
     
-    TextLoopContent::TextLoopContent() :
-    mLineHeight(20)
-    , mTextAlign(TextAlignLeft)
+    TextLoopContent::TextLoopContent()
     {
         mFontSurf = loadImage(loadResource("hyperspace.png"));
         mCam = CameraOrtho(0, 1, 1, 0, 0, 100000);
-        setText("HELLO\nWORLD ]");
     }
     
     void TextLoopContent::load()
@@ -83,67 +80,75 @@ namespace bigscreens
         //
     }
     
-    void TextLoopContent::setText(const std::string & str)
+    void TextLoopContent::setTextForContentID(const std::string & str,
+                                              const int contentID,
+                                              const float absoluteLineHeight)
     {
-        mCurrentString = str;
-        
-        // TODO: Account for alignment
-        float x = 0;
-        float y = 0;
-        vector<string> tokens = ci::split(mCurrentString, "\n");
-        int lineCount = tokens.size();
-        int maxChars = 0;
-        for (string line : tokens)
-        {
-            if (line.size() > maxChars)
-            {
-                maxChars = line.size();
-            }
-        }
-        
-        Surface textSurf(maxChars * kCharPxWide,
-                         lineCount * kCharPxTall,
-                         true);
-        // clear it out
-        for (int x = 0; x < textSurf.getWidth(); ++x)
-        {
-            for (int y = 0; y < textSurf.getWidth(); ++y)
-            {
-                textSurf.setPixel(Vec2i(x,y), ColorAf(0,0,0,0));
-            }
-        }
-        
-        for(char & c : mCurrentString)
-        {
-            if (c == '\n')
-            {
-                y += kCharPxTall;
-                x = 0;
-                continue;
-            }
-            Rectf charRegion = regionForChar(c);
-            textSurf.copyFrom(mFontSurf, ci::Area(charRegion), Vec2i((charRegion.x1 * -1) + x,
-                                                                     (charRegion.y1 * -1) + y));
-            x += kCharPxWide;
-        }
+        assert(mContentID > -1 && mContentID < 16000);
 
-        gl::Texture::Format texFormat;
-        texFormat.magFilter( GL_LINEAR_MIPMAP_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
-        gl::Texture *frameTex = new gl::Texture(textSurf, texFormat);
-        mTexture = gl::TextureRef(frameTex);
+        if (mTextures.find(mContentID) == mTextures.end())
+        {
+            // We don't already have it. Create the texture.
+            
+            float scale = (float)absoluteLineHeight / (float)kHyperspaceNativeLineHeight;
+            
+            // TODO: Account for alignment
+            float x = 0;
+            float y = 0;
+            vector<string> tokens = ci::split(str, "\n");
+            int lineCount = tokens.size();
+            int maxChars = 0;
+            for (string line : tokens)
+            {
+                if (line.size() > maxChars)
+                {
+                    maxChars = line.size();
+                }
+            }
+            
+            Surface textSurf(maxChars * kCharPxWide,
+                             lineCount * kCharPxTall,
+                             true);
+            // clear it out
+            for (int x = 0; x < textSurf.getWidth(); ++x)
+            {
+                for (int y = 0; y < textSurf.getWidth(); ++y)
+                {
+                    textSurf.setPixel(Vec2i(x,y), ColorAf(0,0,0,0));
+                }
+            }
+            
+            for(const char & c : str)
+            {
+                if (c == '\n')
+                {
+                    y += kCharPxTall;
+                    x = 0;
+                    continue;
+                }
+                Rectf charRegion = regionForChar(c);
+                textSurf.copyFrom(mFontSurf, ci::Area(charRegion), Vec2i((charRegion.x1 * -1) + x,
+                                                                         (charRegion.y1 * -1) + y));
+                x += kCharPxWide;
+            }
+            
+            int newWidth = textSurf.getWidth() * scale;
+            int newHeight = textSurf.getHeight() * scale;
+            Surface scaledSurf(newWidth, newHeight, true);
+
+            ip::resize(textSurf,
+                       Area(0,0,textSurf.getWidth(),textSurf.getHeight()),
+                       &scaledSurf,
+                       Area(0,0,newWidth,newHeight));
+
+            gl::Texture::Format texFormat;
+            texFormat.magFilter( GL_LINEAR_MIPMAP_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
+            gl::Texture *frameTex = new gl::Texture(scaledSurf, texFormat);
+
+            mTextures[contentID] = gl::TextureRef(frameTex);
+        }
     }
     
-    void TextLoopContent::setTextWithTiming(std::vector<std::pair<long, std::string> > & textWithTiming)
-    {
-        mTextWithTiming = textWithTiming;
-    }
-    
-    void TextLoopContent::setAbsoluteLineHeightAndAlignment(const float height, TextAlign align)
-    {
-        mLineHeight = height;
-        mTextAlign = align;
-    }
-
     void TextLoopContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::clear(ColorAf(0,0,0,0));
@@ -157,11 +162,10 @@ namespace bigscreens
         gl::color(1,1,1,1);
         gl::setDefaultShaderVars();
 
-        float scale = (float)mLineHeight / (float)kHyperspaceNativeLineHeight;
-        Rectf drawRect(0, 0,
-                       mTexture->getWidth() * scale,
-                       mTexture->getHeight() * scale);
-        gl::draw(mTexture, drawRect);
+        assert(mContentID > -1 && mContentID < 16000);
+
+        gl::TextureRef tex = mTextures[mContentID];
+        gl::draw(tex);
 
         gl::disableAlphaBlending();
         gl::popMatrices();
