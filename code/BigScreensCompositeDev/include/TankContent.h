@@ -48,7 +48,9 @@ public:
     virtual void reset();
     virtual void fireTankGun();
     virtual void setFrameContentID(const int contentID);
-    void setShouldAmplifyMountains(const bool shouldAmplify);
+    void         setMountainMagnitude(const float magnitude);
+    void         setGroundScale(const ci::Vec3f & groundScale);
+    void         setDefaultGroundScale();
 
 protected:
     
@@ -93,13 +95,12 @@ protected:
     ci::Vec3i           mGroundPlotCoords;
     std::map<float, ci::gl::TextureRef> mGroundMaps;
     ci::Vec3f           mGroundScale;
-    bool                mShouldAmplifyMountains;
     
     // NOTE: These could all be wrapped up in a "Tank State" struct
     std::map<int, GroundOrientaion> mTankGroundOrientations;
     std::map<int, PositionOrientation> mPositionOrientations;
     float               mRenderAlpha;
     float               mScreenAlpha;
-    
+    float               mMountainMagnitude;
 };
 }

@@ -20,6 +20,10 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
+const static float kDefaultGroundScaleX = 10000;
+const static float kDefaultGroundScaleY = 500;
+const static float kDefaultGroundScaleZ = kDefaultGroundScaleX;
+
 namespace bigscreens
 {
     
@@ -30,8 +34,8 @@ namespace bigscreens
     , mMinion( ActorContentProvider::getMinion() )
     , mGroundPlane( ActorContentProvider::getFloorPlane() )
     , mGroundPlotCoords(0,0,0)
-    , mShouldAmplifyMountains(true)
-    , mGroundScale(10000, 500, 10000) // Keep these symetrical x/z
+    , mMountainMagnitude(5.0f)
+    , mGroundScale(kDefaultGroundScaleX, kDefaultGroundScaleY, kDefaultGroundScaleZ)
     {
     }
     
@@ -41,9 +45,14 @@ namespace bigscreens
         mTank->setFrameContentID(contentID);
     };
     
-    void TankContent::setShouldAmplifyMountains(const bool shouldAmplify)
+    void TankContent::setGroundScale(const ci::Vec3f & groundScale)
     {
-        mShouldAmplifyMountains = shouldAmplify;
+        mGroundScale = groundScale;
+    }
+    
+    void TankContent::setMountainMagnitude(const float magnitude)
+    {
+        mMountainMagnitude = magnitude;
     }
     
     void TankContent::setTankPosition(const ci::Vec3f tankPosition, const float directionRadians)
@@ -253,10 +262,10 @@ namespace bigscreens
         Vec3f tankPosition = getTankPosition();
         Vec3f tankVector = getTankVector();
 
-        float mountainMagnitude = 0;
-        if (mShouldAmplifyMountains && tankVector != Vec3f::zero())
+        float mountainMagnitude = mMountainMagnitude;
+        if (tankVector == Vec3f::zero())
         {
-            mountainMagnitude = 5.0f;
+            mountainMagnitude = 0.0f;
         }
 		mGroundPlane->draw(mNumFramesRendered,
                            mRenderAlpha,
@@ -309,6 +318,11 @@ namespace bigscreens
     void TankContent::reset()
     {
         resetPositions();
+    }
+
+    void TankContent::setDefaultGroundScale()
+    {
+        mGroundScale = Vec3f(kDefaultGroundScaleX, kDefaultGroundScaleY, kDefaultGroundScaleZ);
     }
     
     void TankContent::resetPositions()
@@ -509,8 +523,7 @@ namespace bigscreens
         // Spin baby
         // TODO: Give this realistic movement
         gl::translate(mMinionPosition);
-        
-        gl::scale(Vec3f(150,150,150));
+        gl::scale(Vec3f(kMinionScale,kMinionScale,kMinionScale));
         gl::color(1, 0, 0, mRenderAlpha);
         gl::setDefaultShaderVars();
         

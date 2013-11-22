@@ -20,7 +20,6 @@ DumbTankContent()
 {
     mDumbTank = ActorContentProvider::getAngledDumbTank();
     mGroundScale = Vec3f(15000, 600, 15000);
-    //mGroundScale = Vec3f(10000, 600, 10000);
 };
 
 void TankConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -123,7 +122,7 @@ void TankConvergenceContent::renderOpponent(const float alpha)
     // Draw the opponent
     gl::pushMatrices();
     gl::setMatrices(mCam);
-    gl::scale(Vec3f(1000, 1000, 1000));
+    gl::scale(Vec3f(kOpponentScale, kOpponentScale, kOpponentScale));
     
     // Arbitrary
     Vec3f lightPos(sin(mNumFramesRendered * 0.1),

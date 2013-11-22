@@ -54,7 +54,6 @@ extern long MSConvergeBeforeCameraMerge;// TBD: Determined by the layout timelin
 // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
 
 // Model Measurements
-
 const static float kTankBarrelTipZ = 470.0f;
 const static float kTankBarrelTipY = 164.0f;
 const static float kTankBarrelTipX = 0.0f;
@@ -69,3 +68,7 @@ const static float kTankBarrelLength = 461.0f;
 
 const static float kTankBodyFrontZ = 267.0f;
 const static float kTankBodyCenterY = 107.0f;
+
+// Scale
+const static float kOpponentScale = 1000.0f;
+const static float kMinionScale = 150.0f;

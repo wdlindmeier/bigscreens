@@ -17,7 +17,7 @@ DumbTankContent::DumbTankContent() :
 TankContent()
 ,mDumbTank(ActorContentProvider::getDumbTank())
 {
-    mShouldAmplifyMountains = false;
+    mMountainMagnitude = 0;
 };
 
 void DumbTankContent::loadShaders()
