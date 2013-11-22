@@ -23,6 +23,7 @@
 #include "DumbTankContent.h"
 #include "TankMultiOverheadContent.h"
 #include "OpponentContent.h"
+#include "TextLoopContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -38,6 +39,7 @@ static const std::string kContentKeyTankWide = "tankWide";
 static const std::string kContentKeyTankSideCarriage = "tankSide";
 static const std::string kContentKeyTankHorizon = "tankHorizon";
 static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
+static const std::string kContentKeyRandomText = "textRand";
 static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
@@ -115,6 +117,7 @@ public:
     RenderableContentRef mDumbTankContent;
     RenderableContentRef mMultiOverheadContent;
     RenderableContentRef mOpponentContent;
+    RenderableContentRef mTextLoopContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -255,6 +258,10 @@ void BigScreensCompositeApp::loadAssets()
     OpponentContent *opponentContent = new OpponentContent();
     opponentContent->load();
     mOpponentContent = RenderableContentRef(opponentContent);
+    
+    TextLoopContent *textLoopContent = new TextLoopContent();
+    textLoopContent->load();
+    mTextLoopContent = RenderableContentRef(textLoopContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -312,6 +319,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
         contentName == kContentKeyTankFlat )
     {
         return mTankContent;
+    }
+    else if (contentName == kContentKeyRandomText)
+    {
+        return mTextLoopContent;
     }
     else if (contentName == kContentKeyTankMultiOverhead)
     {
@@ -558,6 +569,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                              tankPosition.z));
         });
         
+    }
+    else if (contentInfo.contentKey == kContentKeyRandomText)
+    {
+        shared_ptr<TextLoopContent> scene = static_pointer_cast<TextLoopContent>(content);
+        scene->update();
     }
     else if (contentInfo.contentKey == kContentKeyTankWide)
     {
@@ -907,18 +923,21 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
 
             }
 
-            // NOTE: Convergence takes care of it's own outlines
-            if (renderMe.contentKey != kContentKeyTanksConverge)
+            if (content->drawsOutline())
             {
-                mOutLine->render();
+                // NOTE: Convergence takes care of it's own outlines
+                if (renderMe.contentKey != kContentKeyTanksConverge)
+                {
+                    mOutLine->render();
 #if IS_IAC
-                // Drawing a second, inner line at IAC because we're missing some edges
-                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x + 1,
-                                 contentOrigAndDim.first.y - screenOffset.y + 1,
-                                 contentOrigAndDim.second.x - 2,
-                                 contentOrigAndDim.second.y - 2);
-                mOutLine->render();
+                    // Drawing a second, inner line at IAC because we're missing some edges
+                    ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x + 1,
+                                     contentOrigAndDim.first.y - screenOffset.y + 1,
+                                     contentOrigAndDim.second.x - 2,
+                                     contentOrigAndDim.second.y - 2);
+                    mOutLine->render();
 #endif
+                }
             }
             
             ci::gl::disable( GL_SCISSOR_TEST );
