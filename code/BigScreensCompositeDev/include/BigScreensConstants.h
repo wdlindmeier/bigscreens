@@ -22,6 +22,7 @@ static const std::string kContentKeyTanksConverge = "tanksConverge";
 static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
 static const std::string kContentKeyOpponent = "opponent";
+static const std::string kContentKeyStatic = "static";
 
 // MPE Messages
 const static std::string kMPEMessagePlay = "play";

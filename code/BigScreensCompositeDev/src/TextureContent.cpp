@@ -7,7 +7,6 @@
 //
 
 #include "TextureContent.h"
-
 #include "TankContent.h"
 #include "cinder/ObjLoader.h"
 #include "cinder/app/App.h"
@@ -39,11 +38,11 @@ namespace bigscreens
     {
         gl::pushMatrices();
         gl::bindStockShader(gl::ShaderDef().color());
-        gl::setMatricesWindow(getWindowSize());
+        gl::setMatricesWindow(contentRect.getSize());
         gl::enableAlphaBlending();
         gl::color(1,1,1,1);
         gl::setDefaultShaderVars();
-        Rectf screenRect(0, 0, getWindowWidth(), getWindowHeight());
+        Rectf screenRect(0, 0, contentRect.getWidth(), contentRect.getHeight());
         gl::draw(mTexture, screenRect);
         gl::disableAlphaBlending();
         gl::popMatrices();

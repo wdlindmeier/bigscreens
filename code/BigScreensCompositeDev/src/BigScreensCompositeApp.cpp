@@ -24,6 +24,7 @@
 #include "TankMultiOverheadContent.h"
 #include "OpponentContent.h"
 #include "TextLoopContent.h"
+#include "StaticContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -104,6 +105,7 @@ public:
     RenderableContentRef mMultiOverheadContent;
     RenderableContentRef mOpponentContent;
     RenderableContentRef mTextLoopContent;
+    RenderableContentRef mStaticContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -248,6 +250,10 @@ void BigScreensCompositeApp::loadAssets()
     TextLoopContent *textLoopContent = new TextLoopContent();
     textLoopContent->load();
     mTextLoopContent = RenderableContentRef(textLoopContent);
+    
+    StaticContent *staticContent = new StaticContent();
+    staticContent->load();
+    mStaticContent = RenderableContentRef(staticContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -309,6 +315,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyTankMultiOverhead)
     {
         return mMultiOverheadContent;
+    }
+    else if (contentName == kContentKeyStatic)
+    {
+        return mStaticContent;
     }
     else if (contentName == kContentKeyTankHorizon)
     {
@@ -538,6 +548,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                              kTankBodyCenterY + 300,
                              0));
         });
+    }
+    else if (contentInfo.contentKey == kContentKeyStatic)
+    {
+        shared_ptr<StaticContent> scene = static_pointer_cast<StaticContent>(content);
+        // scene->update();
     }
     else if (contentInfo.contentKey == kContentKeyTankOverhead)
     {

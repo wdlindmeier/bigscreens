@@ -42,7 +42,11 @@ void SmokeEffect::update( const ci::Vec3f & accel, float currentTime )
 	
 	ci::gl::enable( GL_RASTERIZER_DISCARD );
 	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
+    
+    glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[1-drawBuf]->getId() );
+    glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[1-drawBuf]->getId() );
+    glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 2, mPStartTimes[1-drawBuf]->getId() );
 	
 	glBeginTransformFeedback( GL_POINTS );
 	mPVao[drawBuf]->bind();
@@ -196,19 +200,19 @@ void SmokeEffect::initBuffers()
 	ci::gl::enableVertexAttribArray( 3 );
 	
 	// INITIALIZE THE TRANSFORM FEEDBACK OBJECTS
-	glGenTransformFeedbacks( 2, mTFOs );
-	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[0]->getId() );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[0]->getId() );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 2, mPStartTimes[0]->getId() );
-	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1] );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[1]->getId() );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[1]->getId() );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 2, mPStartTimes[1]->getId() );
-	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
+//	glGenTransformFeedbacks( 2, mTFOs );
+//	
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[0]->getId() );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[0]->getId() );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 2, mPStartTimes[0]->getId() );
+//	
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1] );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPPositions[1]->getId() );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 1, mPVelocities[1]->getId() );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 2, mPStartTimes[1]->getId() );
+//	
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
 }
 
 void SmokeEffect::loadTexture()
