@@ -167,6 +167,16 @@ namespace bigscreens
         mIsPlaying = true;
     }
     
+    std::vector<GridLayout> & GridLayoutTimeline::getGridLayouts()
+    {
+        return mGridLayouts;
+    };
+    
+    GridLayout & GridLayoutTimeline::getCurrentLayout()
+    {
+        return mGridLayouts[mIdxCurrentLayout];
+    };
+    
     void GridLayoutTimeline::pause()
     {
         mIsPlaying = false;

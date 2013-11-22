@@ -49,6 +49,36 @@ public:
 };
 
 
+namespace TextContentProvider {
+    
+    struct TextTimelineAndHeight
+    {
+        TextTimeline timeline;
+        float absoluteLineHeight;
+    };
+    
+    static TextTimelineAndHeight textTimelineForContentKey(const std::string & contentKey)
+    {
+        std::vector<TextWithFramecount> textTimeline;
+        float lineHeight = 0;
+        if (contentKey == "textRand")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("LAUNCH\nCODE ]", 30));
+            textTimeline.push_back(TextWithFramecount("LAUNCH\nCODE", 30));
+        }
+        else if (contentKey == "text0")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("ATTACK\nSEQUENCE\nDELTA", 10000));
+        }
+        TextTimelineAndHeight ret;
+        ret.timeline = textTimeline;
+        ret.absoluteLineHeight = lineHeight;
+        return ret;
+    }
+}
+    
 namespace ActorContentProvider {
 	
 	static AdvancedTankRef getAdvancedTank()

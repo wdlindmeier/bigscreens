@@ -81,7 +81,7 @@ public:
 	void update();
     void mpeFrameUpdate(long serverFrameNumber);
     void updatePlaybackState();
-	void updateContentForRender(const TimelineContentInfo & contentInfo);
+	void updateContentForRender(const TimelineContentInfo & contentInfo, const int contentID);
     
     // Draw
     void draw();
@@ -90,7 +90,7 @@ public:
     
     // Messages
     void mpeMessageReceived(const std::string &message, const int fromClientID);
-    void broadcastCurrentLayout();
+    void newLayoutWasSet();
     
     // Content Provider
     RenderableContentRef contentForKey(const std::string & contentName);
@@ -479,9 +479,9 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     // Send the controller the current frame if it's changed
     if (mLayoutIndex != mTimeline->getCurrentFrame())
     {
-        broadcastCurrentLayout();
         mLayoutIndex = mTimeline->getCurrentFrame();
-        
+        newLayoutWasSet();
+
         startConvergenceClock();
     }
     
@@ -512,7 +512,8 @@ void BigScreensCompositeApp::startConvergenceClock()
 
 const static int kChanceFire = 100;
 
-void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
+void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo,
+                                                    const int contentID)
 {
     long long contentElapsedFrames = contentInfo.numRenderFrames;
     
@@ -521,7 +522,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     
     RenderableContentRef content = contentInfo.contentRef;
     content->setFramesRendered(contentElapsedFrames);
-    content->setFrameContentID(contentInfo.layoutIndex);
+    content->setFrameContentID(contentID);
     
     // TODO: Use blink spin / dumbTank update
     if (contentInfo.contentKey == kContentKeyTankSpin) // TMP
@@ -719,7 +720,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         //mSingleTankConvergeContent
         // Nothing to see here
 
-        int i = contentInfo.layoutIndex;
+        int i = contentInfo.layoutIndex; // this is fine
         int regionCount = mTimeline->getCurrentRegionCount();
         Vec2f masterSize = mClient->getMasterSize();
 
@@ -828,19 +829,15 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // Even though it's set every frame, the content is cached so we
         // don't re-create the texture unless it's not there.
         
-        // TODO: Make this a lookup
-        if (contentInfo.contentKey == "textRand")
+        if (!scene->hasTextForContentID(contentID))
         {
-            scene->setTextForContentID("HELLO\nWORLD ]",
-                                       contentInfo.layoutIndex,
-                                       40 * kScreenScale);
+            TextContentProvider::TextTimelineAndHeight timeAndHeight =
+                TextContentProvider::textTimelineForContentKey(contentInfo.contentKey);
+            scene->setTextForContentID(timeAndHeight.timeline,
+                                       contentID,
+                                       timeAndHeight.absoluteLineHeight * kScreenScale);
         }
-        else if (contentInfo.contentKey == "text0")
-        {
-            scene->setTextForContentID("ATTACK\nSEQUENCE\nDELTA",
-                                       contentInfo.layoutIndex,
-                                       40 * kScreenScale);
-        }
+        
         scene->update();
     }
 }
@@ -903,7 +900,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             // Some module won't be rendered (and therefor shouldn't be updated)
             // and other modules will be rendered (and updated) more than once.
             
-            updateContentForRender(renderMe);
+            updateContentForRender(renderMe, contentID);
             
             // NOTE: I removed SceneWindow for 2 reasons:
             // 1) We can pull the same behavior into the app w/out having to allocate memory for each render.
@@ -1064,8 +1061,11 @@ void BigScreensCompositeApp::mpeMessageReceived(const std::string &message, cons
     }
 }
 
-void BigScreensCompositeApp::broadcastCurrentLayout()
+void BigScreensCompositeApp::newLayoutWasSet()
 {
+    shared_ptr<TextLoopContent> textScene = static_pointer_cast<TextLoopContent>(mTextLoopContent);
+    textScene->newLayoutWasSet(mTimeline->getCurrentLayout());
+    
     // We want the frame to be sent even if there's only 1 client connected.
     // That means it will be sent more than once when more than 1 are rendering.
     // if (CLIENT_ID == 1)
