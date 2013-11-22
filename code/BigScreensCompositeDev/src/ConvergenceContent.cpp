@@ -228,5 +228,14 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
 
     mOutLine->setColor(ColorAf(1.0,1.0,1.0,outlineAlpha));
     mOutLine->render();
+#if IS_IAC
+    // Drawing a second, inner line at IAC because we're missing some edges
+    ci::gl::viewport(rect.x1 - screenOffset.x + 1,
+                     contentSize.y - rect.y2 - screenOffset.y + 1,
+                     rect.getWidth() - 2,
+                     rect.getHeight() - 2);
+    mOutLine->render();
+#endif
+
 }
 

@@ -902,8 +902,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
                 // Reset the viewport for the outline
                 ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x,
                                  contentOrigAndDim.first.y - screenOffset.y,
-                                 contentOrigAndDim.second.x,// - 1, // TEST: Does this (-1) fix the IAC jumbo?
-                                 contentOrigAndDim.second.y);// - 1);
+                                 contentOrigAndDim.second.x,
+                                 contentOrigAndDim.second.y);
 
             }
 
@@ -911,6 +911,14 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             if (renderMe.contentKey != kContentKeyTanksConverge)
             {
                 mOutLine->render();
+#if IS_IAC
+                // Drawing a second, inner line at IAC because we're missing some edges
+                ci::gl::viewport(contentOrigAndDim.first.x - screenOffset.x + 1,
+                                 contentOrigAndDim.first.y - screenOffset.y + 1,
+                                 contentOrigAndDim.second.x - 2,
+                                 contentOrigAndDim.second.y - 2);
+                mOutLine->render();
+#endif
             }
             
             ci::gl::disable( GL_SCISSOR_TEST );
