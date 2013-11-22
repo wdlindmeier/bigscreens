@@ -32,6 +32,7 @@ namespace bigscreens
 		// so that we can use different windows
 		// for our content.
 		virtual ci::Camera & getCamera() = 0;
+        virtual bool drawsOutline(){ return true; }
         
     protected:
         long long mNumFramesRendered;

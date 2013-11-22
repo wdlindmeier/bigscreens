@@ -37,6 +37,7 @@ namespace bigscreens
     
     void TextureContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
+        gl::pushMatrices();
         gl::bindStockShader(gl::ShaderDef().color());
         gl::setMatricesWindow(getWindowSize());
         gl::enableAlphaBlending();
@@ -45,6 +46,7 @@ namespace bigscreens
         Rectf screenRect(0, 0, getWindowWidth(), getWindowHeight());
         gl::draw(mTexture, screenRect);
         gl::disableAlphaBlending();
+        gl::popMatrices();
     }
 	
 }

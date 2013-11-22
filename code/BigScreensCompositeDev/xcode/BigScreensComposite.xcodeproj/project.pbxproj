@@ -270,6 +270,12 @@
 		A9EE4B62183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
 		A9EE4B63183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
 		A9EE4B64183EC5390089FF27 /* OpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */; };
+		A9EE4B68183F01E20089FF27 /* TextLoopContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */; };
+		A9EE4B69183F01E20089FF27 /* TextLoopContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */; };
+		A9EE4B6A183F01E20089FF27 /* TextLoopContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */; };
+		A9EE4B6D183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
+		A9EE4B6E183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
+		A9EE4B6F183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -441,6 +447,9 @@
 		A9EE4B2E183BF81E0089FF27 /* updateOppSmoke.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = updateOppSmoke.vert; path = ../assets/updateOppSmoke.vert; sourceTree = "<group>"; };
 		A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpponentContent.cpp; path = ../src/OpponentContent.cpp; sourceTree = "<group>"; };
 		A9EE4B65183EC5510089FF27 /* OpponentContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpponentContent.h; path = ../include/OpponentContent.h; sourceTree = "<group>"; };
+		A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLoopContent.cpp; path = ../src/TextLoopContent.cpp; sourceTree = "<group>"; };
+		A9EE4B6B183F01FC0089FF27 /* TextLoopContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLoopContent.h; path = ../include/TextLoopContent.h; sourceTree = "<group>"; };
+		A9EE4B6C183F08AB0089FF27 /* hyperspace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hyperspace.png; path = ../resources/hyperspace.png; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
@@ -644,6 +653,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9EE4B6C183F08AB0089FF27 /* hyperspace.png */,
 				A97122B5181ABABA006DD64E /* pause.png */,
 				A97122B6181ABABA006DD64E /* play.png */,
 				A971227218196D60006DD64E /* blank_texture.png */,
@@ -842,6 +852,7 @@
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
 				A969C9BD183AF0C70030569D /* TankMultiOverheadContent.h */,
+				A9EE4B6B183F01FC0089FF27 /* TextLoopContent.h */,
 				A971227F18196DDD006DD64E /* TextureContent.h */,
 			);
 			name = Headers;
@@ -859,6 +870,7 @@
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
 				A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */,
 				A971227A18196DCB006DD64E /* TextureContent.cpp */,
+				A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1045,6 +1057,7 @@
 				B349E43E1837CC4E008E5592 /* heightmap.frag in Resources */,
 				B349E43F1837CC4E008E5592 /* heightmap.vert in Resources */,
 				B349E4401837CC4E008E5592 /* minion.frag in Resources */,
+				A9EE4B6D183F08AB0089FF27 /* hyperspace.png in Resources */,
 				B349E4411837CC4E008E5592 /* minion.vert in Resources */,
 				B349E4421837CC4E008E5592 /* offset_texture.frag in Resources */,
 				B349E4431837CC4E008E5592 /* offset_texture.vert in Resources */,
@@ -1124,6 +1137,7 @@
 				A971227418196D60006DD64E /* blank_texture.png in Resources */,
 				A9712286181986DA006DD64E /* test.png in Resources */,
 				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
+				A9EE4B6E183F08AB0089FF27 /* hyperspace.png in Resources */,
 				A9E48EE118103CE300F2F1C9 /* settings.1.IAC.xml in Resources */,
 				B3115CE2182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
 				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
@@ -1203,6 +1217,7 @@
 				A971227518196D60006DD64E /* blank_texture.png in Resources */,
 				A9712287181986DA006DD64E /* test.png in Resources */,
 				B3115CE3182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
+				A9EE4B6F183F08AB0089FF27 /* hyperspace.png in Resources */,
 				A9E48F0D18103CE900F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
 				A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */,
 				B3115CCE182D889600FB7D2F /* smoke_blur.png in Resources */,
@@ -1317,6 +1332,7 @@
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C58182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9EE4B68183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5B182D527100FB7D2F /* ObjModel.cpp in Sources */,
@@ -1348,6 +1364,7 @@
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C59182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9EE4B69183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5C182D527100FB7D2F /* ObjModel.cpp in Sources */,
@@ -1379,6 +1396,7 @@
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C5A182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9EE4B6A183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
 				B3115C5D182D527100FB7D2F /* ObjModel.cpp in Sources */,
