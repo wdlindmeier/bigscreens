@@ -61,16 +61,71 @@ namespace TextContentProvider {
     {
         std::vector<TextWithFramecount> textTimeline;
         float lineHeight = 0;
-        if (contentKey == "textRand")
+        if (contentKey == "textLaunchCode")
         {
             lineHeight = 40;
             textTimeline.push_back(TextWithFramecount("LAUNCH\nCODE ]", 30));
             textTimeline.push_back(TextWithFramecount("LAUNCH\nCODE", 30));
         }
-        else if (contentKey == "text0")
+        else if (contentKey == "textSeqDelta")
         {
             lineHeight = 40;
             textTimeline.push_back(TextWithFramecount("ATTACK\nSEQUENCE\nDELTA", 10000));
+        }
+        else if (contentKey == "textTargetEngaged")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("TARGET ENGAGED", 10000));
+        }
+        else if (contentKey == "textTargetAcquired")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("TARGET ACQUIRED", 10000));
+        }
+        else if (contentKey == "textAssistanceRequested")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("ASSISTANCE REQUESTED", 10000));
+        }
+        if (contentKey == "textCounter")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("95:920", 40));
+            textTimeline.push_back(TextWithFramecount("95:921", 40));
+            textTimeline.push_back(TextWithFramecount("95:922", 40));
+            textTimeline.push_back(TextWithFramecount("95:923", 40));
+            textTimeline.push_back(TextWithFramecount("95:924", 40));
+            textTimeline.push_back(TextWithFramecount("95:925", 40));
+            textTimeline.push_back(TextWithFramecount("95:926", 40));
+            textTimeline.push_back(TextWithFramecount("95:927", 40));
+            textTimeline.push_back(TextWithFramecount("95:928", 40));
+            textTimeline.push_back(TextWithFramecount("95:929", 40));
+        }
+        if (contentKey == "textComInterrupt")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("COM INTERRUPT ]", 30));
+            textTimeline.push_back(TextWithFramecount("COM INTERRUPT", 30));
+        }
+        if (contentKey == "textID0")
+        {
+            lineHeight = 20;
+            textTimeline.push_back(TextWithFramecount("VEHICLE:\n1103284", 30));
+        }
+        if (contentKey == "textID1")
+        {
+            lineHeight = 20;
+            textTimeline.push_back(TextWithFramecount("VEHICLE:\n1107288", 30));
+        }
+        if (contentKey == "textID2")
+        {
+            lineHeight = 20;
+            textTimeline.push_back(TextWithFramecount("VEHICLE:\n1000315", 30));
+        }
+        if (contentKey == "textAss")
+        {
+            lineHeight = 100;
+            textTimeline.push_back(TextWithFramecount("*", 30));
         }
         TextTimelineAndHeight ret;
         ret.timeline = textTimeline;

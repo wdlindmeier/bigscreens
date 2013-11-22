@@ -8,6 +8,21 @@
 
 #pragma once
 
+// Content Keys
+static const std::string kContentKeyTankSpin = "tankSpin";
+static const std::string kContentKeyTankOverhead = "tankOverhead";
+static const std::string kContentKeyTankHeightmap = "tankHeightmap";
+static const std::string kContentKeyTankFlat = "tankFlat";
+static const std::string kContentKeyTankWide = "tankWide";
+static const std::string kContentKeyTankSideCarriage = "tankSide";
+static const std::string kContentKeyTankHorizon = "tankHorizon";
+static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
+static const std::string kContentKeyTextPrefix = "text";
+static const std::string kContentKeyTanksConverge = "tanksConverge";
+static const std::string kContentKeySingleTankConverge = "singleTankConverge";
+static const std::string kContentKeyPerlin = "perlin";
+static const std::string kContentKeyOpponent = "opponent";
+
 // MPE Messages
 const static std::string kMPEMessagePlay = "play";
 const static std::string kMPEMessagePause = "pause";

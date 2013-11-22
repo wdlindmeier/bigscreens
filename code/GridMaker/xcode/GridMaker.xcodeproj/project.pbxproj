@@ -71,6 +71,7 @@
 		A97C88E318107B0400AE2AE2 /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridLayout.h; sourceTree = "<group>"; };
 		A97C88E418107B0C00AE2AE2 /* GridLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridLayout.cpp; sourceTree = "<group>"; };
 		A9E48E9618103A2900F2F1C9 /* Slider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Slider.hpp; path = ../include/Slider.hpp; sourceTree = "<group>"; };
+		A9EE4B70183FE5FF0089FF27 /* BigScreensConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BigScreensConstants.h; path = ../../BigScreensCompositeDev/include/BigScreensConstants.h; sourceTree = "<group>"; };
 		C6D3B8C47C954AA2A2F7C3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA5C793A3B7B4899B5EDA233 /* GridMakerApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GridMakerApp.cpp; path = ../src/GridMakerApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +177,7 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				A9EE4B70183FE5FF0089FF27 /* BigScreensConstants.h */,
 				A90D312D18118B100068E386 /* TankContent.h */,
 				2C262FEFEEC147B9AE7DC2FE /* GridMaker_Prefix.pch */,
 				3A6B2A5F9BF24A92996041F7 /* Resources.h */,
