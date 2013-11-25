@@ -142,6 +142,15 @@ void BigScreensCompositeApp::setup()
     
     GridLayoutTimeline *timeline = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC),
                                                           kScreenScale);
+    
+    gl::Fbo::Format mFormat;
+    mFormat.colorTexture().depthBuffer( GL_DEPTH_COMPONENT32F );
+    mFbo = gl::Fbo::create( mClient->getVisibleRect().getWidth(), mClient->getVisibleRect().getHeight(), mFormat );
+    
+    mFbo->bindFramebuffer();
+    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    mFbo->unbindFramebuffer();
+    
     mTimeline = GridLayoutTimelineRef(timeline);
     
     mOutLine = OutLineBorderRef(new OutLineBorder());
@@ -453,7 +462,10 @@ void BigScreensCompositeApp::update()
     {
         mClient->start();
     }
-    //updatePlaybackState();
+    if (IS_IAC)
+    {
+        hideCursor();
+    }
 }
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
@@ -868,7 +880,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i screenOffset = clientRect.getUpperLeft();
     Vec2f masterSize = mClient->getMasterSize();
     
-	// mFbo->bindFramebuffer();
+	mFbo->bindFramebuffer();
+    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     for (auto & kv : renderContent)
     {
@@ -971,9 +984,9 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         }
     }
     
-//    mFbo->unbindFramebuffer();
+    mFbo->unbindFramebuffer();
 	
-//	mFinalBillboard->draw( mFbo->getTexture() );
+	mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {
