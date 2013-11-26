@@ -64,6 +64,7 @@ const static int kNumFFTChannels = 64;
 // Timing
 // This should be synchronized w/ the timeline.
 const long kMSFullConvergence = 30000; // 30 sec
+const long kMSFullPlayDuration = 30000 * 6.5; // 3:15
 extern long MSCamerasConverge;// TBD: Determined by the layout timeline
 extern long MSConvergeBeforeCameraMerge;// TBD: Determined by the layout timeline
 // ... was kMSFullConvergence - kMSCamerasConverge;

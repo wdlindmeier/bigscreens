@@ -82,6 +82,7 @@ namespace bigscreens
     
     void TextLoopContent::newLayoutWasSet(const GridLayout & currentLayout)
     {
+        return;
         // Prune any content not found in this layout
         //map<string, string> address_book;
         //for ( auto address_entry : address_book )
@@ -117,14 +118,14 @@ namespace bigscreens
     
     bool TextLoopContent::hasTextForContentID(const int contentID)
     {
-        return mTextures.find(mContentID) != mTextures.end();
+        return mTextures.find(contentID) != mTextures.end();
     }
     
     void TextLoopContent::setTextForContentID(const TextTimeline & textWithTime,
                                               const int contentID,
                                               const float absoluteLineHeight)
     {
-        assert(mContentID > -1 && mContentID < 16000);
+        // assert(mContentID > -1 && mContentID < 16000);
         
         if (!hasTextForContentID(contentID))
         {

@@ -40,7 +40,7 @@ namespace bigscreens
         
         void load();
         void setMSElapsed(const long msElapsedConvergence);
-        void update();
+        void update(const float totalTimelineProgress);
         void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();
@@ -64,6 +64,7 @@ namespace bigscreens
         OutLineBorderRef mOutLine;
         long mMSElapsedConvergence;
         ci::EaseInOutCubic mCamEase;
+        float mTotalTimelineProgress;
 
     };
 

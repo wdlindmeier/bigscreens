@@ -219,6 +219,28 @@ void BigScreensCompositeApp::reload()
                  " MSCamerasConverge: " << MSCamerasConverge << endl;
     
     static_pointer_cast<ConvergenceContent>(mConvergenceContent)->reset(penultimateLayout);
+    
+    // Now that the timeline is loaded, pre-load the text modules
+    // TODO: Make this it's own method
+    shared_ptr<TextLoopContent> textContent = static_pointer_cast<TextLoopContent>(mTextLoopContent);
+    for (GridLayout & gl : layouts)
+    {
+        for (ScreenRegion & sr : gl.getRegions())
+        {
+            if (rectsOverlap(mClient->getVisibleRect(), sr.rect))
+            {
+                if (sr.contentKey.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+                {
+                    TextContentProvider::TextTimelineAndHeight timeAndHeight =
+                    TextContentProvider::textTimelineForContentKey(sr.contentKey);
+                    textContent->setTextForContentID(timeAndHeight.timeline,
+                                                     sr.timelineID,
+                                                     timeAndHeight.absoluteLineHeight * kScreenScale);
+                }
+            }
+        }
+    }
+
 }
 
 void BigScreensCompositeApp::loadAssets()
@@ -720,7 +742,10 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<ConvergenceContent> scene = static_pointer_cast<ConvergenceContent>(content);
         scene->setMSElapsed(mMSElapsedConvergence);
-        scene->update();
+        // TODO: This could be a member of the app
+        float scalarProgress = (double)mTimeline->getPlayheadMillisec() / (double)kMSFullPlayDuration;
+        console() << "scalarProgress: " << scalarProgress << "\n";
+        scene->update(scalarProgress);
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
@@ -841,7 +866,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         // This is where we set the text.
         // Even though it's set every frame, the content is cached so we
         // don't re-create the texture unless it's not there.
-        
+        /*
         if (!scene->hasTextForContentID(contentID))
         {
             TextContentProvider::TextTimelineAndHeight timeAndHeight =
@@ -850,6 +875,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                                        contentID,
                                        timeAndHeight.absoluteLineHeight * kScreenScale);
         }
+        */
         
         scene->update();
     }
@@ -880,8 +906,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i screenOffset = clientRect.getUpperLeft();
     Vec2f masterSize = mClient->getMasterSize();
     
-	mFbo->bindFramebuffer();
-    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	//mFbo->bindFramebuffer();
+    //gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     for (auto & kv : renderContent)
     {
@@ -984,9 +1010,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         }
     }
     
-    mFbo->unbindFramebuffer();
-	
-	mFinalBillboard->draw( mFbo->getTexture() );
+    // mFbo->unbindFramebuffer();
+	// mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {

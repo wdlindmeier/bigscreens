@@ -27,9 +27,9 @@ void main()
 	// start with the source texture and misalign the rays it a bit
     // TODO animate misalignment upon hit or similar event
 	if ( oricol.r != oricol.g && oricol.r != oricol.b ) {
-		col.r = texture( fboTexture, vec2( texCoord.x + 0.003, texCoord.y ) ).x;
+		col.r = texture( fboTexture, vec2( texCoord.x + 0.0005, texCoord.y ) ).x;
 		col.g = texture( fboTexture, vec2( texCoord.x + 0.000, texCoord.y ) ).y;
-		col.b = texture( fboTexture, vec2( texCoord.x - 0.003, texCoord.y ) ).z;
+		col.b = texture( fboTexture, vec2( texCoord.x - 0.0005, texCoord.y ) ).z;
 		col.a = texture( fboTexture, vec2( texCoord.x, texCoord.y ) ).a;
 	}
 	else {
@@ -40,7 +40,7 @@ void main()
 	{
         for (j = -2; j < 2; j++ )
         {
-            sum += texture( fboTexture, texCoord + vec2(j, i)*0.003) * 0.5;
+            sum += texture( fboTexture, texCoord + vec2(j, i)*0.0005) * 0.5;
         }
 	}
 	if ( col.r < 0.3 )
