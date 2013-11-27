@@ -157,6 +157,12 @@
 		A9C3E34A1831444A003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E35B18347D01003C3DA5 /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
+		A9C5968C18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5968D18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5968E18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5969118468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
+		A9C5969218468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
+		A9C5969318468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
 		A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
@@ -424,6 +430,9 @@
 		A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DumbTank.cpp; sourceTree = "<group>"; };
 		A9C3E32018304B54003C3DA5 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
 		A9C3E34818314439003C3DA5 /* tank_head_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_head_centered.obj; sourceTree = "<group>"; };
+		A9C5968B18468E6D00C8DBDC /* landscape_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_flat.png; path = ../../BigScreensCompositeDev/resources/landscape_flat.png; sourceTree = "<group>"; };
+		A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeContent.cpp; path = ../src/LandscapeContent.cpp; sourceTree = "<group>"; };
+		A9C5969418468F1D00C8DBDC /* LandscapeContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapeContent.h; path = ../include/LandscapeContent.h; sourceTree = "<group>"; };
 		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
 		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
@@ -799,6 +808,7 @@
 		A9E48EAC18103A8300F2F1C9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9C5968B18468E6D00C8DBDC /* landscape_flat.png */,
 				A9C3E32018304B54003C3DA5 /* explosion.png */,
 				B3115CC7182D889600FB7D2F /* noise_map.png */,
 				A9E48EAD18103A8300F2F1C9 /* paused.png */,
@@ -867,6 +877,7 @@
 				B3115C4D182D524200FB7D2F /* Actors */,
 				A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */,
 				A9C5C7A918358A1D000554D6 /* DumbTankContent.h */,
+				A9C5969418468F1D00C8DBDC /* LandscapeContent.h */,
 				A9EE4B65183EC5510089FF27 /* OpponentContent.h */,
 				A97122BE181AF14F006DD64E /* PerlinContent.h */,
 				A9EE4B82184007FB0089FF27 /* StaticContent.h */,
@@ -885,6 +896,7 @@
 				B3115C54182D527100FB7D2F /* Actors */,
 				A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */,
 				A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */,
+				A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */,
 				A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */,
 				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
 				A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */,
@@ -1076,6 +1088,7 @@
 				B349E43B1837CC4E008E5592 /* finalEffects.vert in Resources */,
 				B349E43C1837CC4E008E5592 /* ground_texture.frag in Resources */,
 				B349E43D1837CC4E008E5592 /* ground_texture.vert in Resources */,
+				A9C5968C18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				B349E43E1837CC4E008E5592 /* heightmap.frag in Resources */,
 				B349E43F1837CC4E008E5592 /* heightmap.vert in Resources */,
 				B349E4401837CC4E008E5592 /* minion.frag in Resources */,
@@ -1159,6 +1172,7 @@
 				B3115CEB182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
+				A9C5968D18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				A971227418196D60006DD64E /* blank_texture.png in Resources */,
 				A9712286181986DA006DD64E /* test.png in Resources */,
 				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
@@ -1242,6 +1256,7 @@
 				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
+				A9C5968E18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				A971227518196D60006DD64E /* blank_texture.png in Resources */,
 				A9712287181986DA006DD64E /* test.png in Resources */,
 				B3115CE3182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
@@ -1367,6 +1382,7 @@
 				A9EE4B68183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969118468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5B182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C62182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227C18196DCB006DD64E /* TextureContent.cpp in Sources */,
@@ -1400,6 +1416,7 @@
 				A9EE4B69183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969218468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5C182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C63182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227D18196DCB006DD64E /* TextureContent.cpp in Sources */,
@@ -1433,6 +1450,7 @@
 				A9EE4B6A183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969318468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5D182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C64182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227E18196DCB006DD64E /* TextureContent.cpp in Sources */,

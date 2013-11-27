@@ -18,6 +18,7 @@ using namespace bigscreens;
 
 extern long MSCamerasConverge = 1000;
 extern long MSConvergeBeforeCameraMerge = 1000;
+//extern float MaxExplosionScale;// = kDefaultExplosionScale;
 
 ConvergenceContent::ConvergenceContent() : mMSElapsedConvergence(0)
 {

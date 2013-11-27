@@ -23,6 +23,7 @@ static const std::string kContentKeySingleTankConverge = "singleTankConverge";
 static const std::string kContentKeyPerlin = "perlin";
 static const std::string kContentKeyOpponent = "opponent";
 static const std::string kContentKeyStatic = "static";
+static const std::string kContentKeyLandscape = "landscape";
 
 // MPE Messages
 const static std::string kMPEMessagePlay = "play";
@@ -69,6 +70,10 @@ extern long MSCamerasConverge;// TBD: Determined by the layout timeline
 extern long MSConvergeBeforeCameraMerge;// TBD: Determined by the layout timeline
 // ... was kMSFullConvergence - kMSCamerasConverge;
 // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
+
+// Explosions
+const static float kDefaultExplosionScale = 1.5f;
+extern float MaxExplosionScale;
 
 // Model Measurements
 const static float kTankBarrelTipZ = 470.0f;

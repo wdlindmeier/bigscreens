@@ -25,6 +25,7 @@
 #include "OpponentContent.h"
 #include "TextLoopContent.h"
 #include "StaticContent.h"
+#include "LandscapeContent.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -106,6 +107,7 @@ public:
     RenderableContentRef mOpponentContent;
     RenderableContentRef mTextLoopContent;
     RenderableContentRef mStaticContent;
+    RenderableContentRef mLandscapeContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -120,6 +122,7 @@ public:
     long long            mMSConvergenceBegan;
     
     bool                 mShouldFire;
+    float                mScalarTimelineProgress;
 };
 
 #pragma mark - Setup
@@ -174,9 +177,11 @@ void BigScreensCompositeApp::shutdown()
 
 extern long MSConvergeBeforeCameraMerge;
 extern long MSCamerasConverge;
+extern float MaxExplosionScale = kDefaultExplosionScale;
 
 void BigScreensCompositeApp::reload()
 {
+    mScalarTimelineProgress = 0;
     mLayoutIndex = -1;
     mCurrentContentInfo.clear();
     mTimeline->reload();
@@ -285,6 +290,10 @@ void BigScreensCompositeApp::loadAssets()
     StaticContent *staticContent = new StaticContent();
     staticContent->load();
     mStaticContent = RenderableContentRef(staticContent);
+    
+    LandscapeContent *landscapeContent = new LandscapeContent();
+    landscapeContent->load("landscape_flat.png");
+    mLandscapeContent = RenderableContentRef(landscapeContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -342,6 +351,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
         contentName == kContentKeyTankFlat )
     {
         return mTankContent;
+    }
+    else if (contentName == kContentKeyLandscape)
+    {
+        return mLandscapeContent;
     }
     else if (contentName == kContentKeyTankMultiOverhead)
     {
@@ -519,6 +532,19 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     if (mMSConvergenceBegan > 0)
     {
         mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
+    }
+    
+    // Slowly increase the explosion scale at the end to fade out
+    mScalarTimelineProgress = (double)mTimeline->getPlayheadMillisec() / (double)kMSFullPlayDuration;
+    const static float kAmtScaleExplosion = 0.75f;
+    float fadeOutAmt = std::max<float>(0.0, mScalarTimelineProgress - (1.0-kAmtScaleExplosion)) / kAmtScaleExplosion;
+    if (fadeOutAmt > 0)
+    {
+        MaxExplosionScale = kDefaultExplosionScale + (fadeOutAmt * kDefaultExplosionScale * 10.0f);
+    }
+    else
+    {
+        MaxExplosionScale = kDefaultExplosionScale;
     }
 }
 
@@ -742,10 +768,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<ConvergenceContent> scene = static_pointer_cast<ConvergenceContent>(content);
         scene->setMSElapsed(mMSElapsedConvergence);
-        // TODO: This could be a member of the app
-        float scalarProgress = (double)mTimeline->getPlayheadMillisec() / (double)kMSFullPlayDuration;
-        console() << "scalarProgress: " << scalarProgress << "\n";
-        scene->update(scalarProgress);
+        scene->update(mScalarTimelineProgress);
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
@@ -858,6 +881,20 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                                      tankPosition + lookAt);
                       });
         
+    }
+    else if (contentInfo.contentKey == kContentKeyLandscape)
+    {
+        // Landscape
+        shared_ptr<LandscapeContent> scene = static_pointer_cast<LandscapeContent>(content);
+        int xDir = (contentID % 3) - 1;
+        float xVec = xDir * 0.1;
+        scene->setScrollVector(Vec2f(xVec, -0.5f));
+        float offsetX = 0;
+        if (xVec < 0)
+        {
+            offsetX = -256.0f;
+        }
+        scene->setInitialOffset(Vec2f(offsetX,-50 * contentID));
     }
     else if (contentInfo.contentKey.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
     {

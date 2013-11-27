@@ -9,6 +9,8 @@
 #include "TankShot.h"
 #include "BigScreensConstants.h"
 
+extern float MaxExplosionScale;// = kDefaultExplosionScale;
+
 using namespace ci;
 using namespace bigscreens;
 
@@ -176,7 +178,7 @@ void TankShot::update(float amount)
         if (progress == mMaxProgress)
         {
             mHasExploded = true;
-            mExplosionScale = 1.5f;
+            mExplosionScale = MaxExplosionScale;
         }
     }
     else
@@ -249,7 +251,7 @@ void TankShot::renderExplosion(ci::CameraPersp & cam)
         
         gl::setDefaultShaderVars();
         Rectf blastRect(-512, -512, 512, 512);
-        blastRect *= std::min<float>(mExplosionScale, 1.0f);
+        blastRect *= mExplosionScale; //std::min<float>(mExplosionScale, 1.0f);
         gl::draw(ExplosionTexture, blastRect);
         gl::popMatrices();
     }
