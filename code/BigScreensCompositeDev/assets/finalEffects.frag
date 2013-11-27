@@ -7,6 +7,7 @@ uniform sampler2D fboTexture;
 
 uniform vec2 texSize;
 uniform float time;
+uniform float volume;
 
 out vec4 color;
 
@@ -25,17 +26,21 @@ void main()
     vec4 col;
 	
 	// start with the source texture and misalign the rays it a bit
-    // TODO animate misalignment upon hit or similar event
+
 	if ( oricol.r != oricol.g && oricol.r != oricol.b ) {
-		col.r = texture( fboTexture, vec2( texCoord.x + 0.0005, texCoord.y ) ).x;
-		col.g = texture( fboTexture, vec2( texCoord.x + 0.000, texCoord.y ) ).y;
-		col.b = texture( fboTexture, vec2( texCoord.x - 0.0005, texCoord.y ) ).z;
-		col.a = texture( fboTexture, vec2( texCoord.x, texCoord.y ) ).a;
+		col.r = texture( fboTexture, vec2(texCoord.x + (0.0005 * volume),
+                                          texCoord.y ) ).x;
+		col.g = texture( fboTexture, vec2(texCoord.x + (0.000 * volume),
+                                          texCoord.y ) ).y;
+		col.b = texture( fboTexture, vec2(texCoord.x + (-0.0005 * volume),
+                                          texCoord.y ) ).z;
+		col.a = texture( fboTexture, vec2(texCoord.x,
+                                          texCoord.y ) ).a;
 	}
 	else {
 		col = oricol;
 	}
-	
+    
 	for( i = -2 ; i < 2; i++ )
 	{
         for (j = -2; j < 2; j++ )
@@ -65,15 +70,15 @@ void main()
 	// contrast curve
     col = clamp( col * 0.5 + 0.5 * col * col * 1.2, 0.0, 1.0 );
 	
-	//vignette
-    col *= 0.6 + 0.4 * 16.0 * uv.x * uv.y * ( 1.0 - uv.x ) * ( 1.0 - uv.y );
+	// vignette
+    col *= 0.8 + 0.2 * 16.0 * uv.x * uv.y * ( 1.0 - uv.x ) * ( 1.0 - uv.y );
 	
 	//color tint
 //    col *= vec4( 0.9, 1.0, 0.7, 1.0 );
 	
 	//scanline (last 2 constants are crawl speed and size)
     //TODO make size dependent on viewport
-    col *= 0.8 + 0.2 * sin( 10.0 * time + uv.y * 900.0 );
+    col *= 0.9 + 0.1 * sin( 10.0 * time + uv.y * 1500.0 );
 	
 	//flickering (semi-randomized)
 //    col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );

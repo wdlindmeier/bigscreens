@@ -147,8 +147,9 @@ void BigScreensCompositeApp::setup()
                                                           kScreenScale);
     
     gl::Fbo::Format mFormat;
-    mFormat.colorTexture().depthBuffer( GL_DEPTH_COMPONENT32F );
-    mFbo = gl::Fbo::create( mClient->getVisibleRect().getWidth(), mClient->getVisibleRect().getHeight(), mFormat );
+    mFormat.colorTexture().depthBuffer( GL_DEPTH_COMPONENT32F ).samples(4);
+    mFbo = gl::Fbo::create(mClient->getVisibleRect().getWidth(),
+                           mClient->getVisibleRect().getHeight(), mFormat );
     
     mFbo->bindFramebuffer();
     gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -943,8 +944,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i screenOffset = clientRect.getUpperLeft();
     Vec2f masterSize = mClient->getMasterSize();
     
-	//mFbo->bindFramebuffer();
-    //gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	mFbo->bindFramebuffer();
+    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     for (auto & kv : renderContent)
     {
@@ -1047,8 +1048,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         }
     }
     
-    // mFbo->unbindFramebuffer();
-	// mFinalBillboard->draw( mFbo->getTexture() );
+    mFbo->unbindFramebuffer();
+	mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {

@@ -163,6 +163,9 @@
 		A9C5969118468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
 		A9C5969218468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
 		A9C5969318468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
+		A9C5969718469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
+		A9C5969818469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
+		A9C5969918469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
 		A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
@@ -433,6 +436,7 @@
 		A9C5968B18468E6D00C8DBDC /* landscape_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_flat.png; path = ../../BigScreensCompositeDev/resources/landscape_flat.png; sourceTree = "<group>"; };
 		A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeContent.cpp; path = ../src/LandscapeContent.cpp; sourceTree = "<group>"; };
 		A9C5969418468F1D00C8DBDC /* LandscapeContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapeContent.h; path = ../include/LandscapeContent.h; sourceTree = "<group>"; };
+		A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FinalBillboard.cpp; sourceTree = "<group>"; };
 		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
 		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
@@ -921,6 +925,7 @@
 				B3115CB5182D629B00FB7D2F /* OpponentGeometry.cpp */,
 				A9EE4B28183BF7990089FF27 /* SmokeEffect.cpp */,
 				B3115C57182D527100FB7D2F /* TankShot.cpp */,
+				A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */,
 			);
 			name = Actors;
 			path = ../src/Actors;
@@ -1375,6 +1380,7 @@
 				A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B62183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				C0FFB04683A940D1BC4299FD /* BigScreensCompositeApp.cpp in Sources */,
+				A9C5969718469FF400C8DBDC /* FinalBillboard.cpp in Sources */,
 				B3115CAD182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
@@ -1409,6 +1415,7 @@
 				A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B63183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				A9E48EF718103CE300F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				A9C5969818469FF400C8DBDC /* FinalBillboard.cpp in Sources */,
 				B3115CAE182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
@@ -1443,6 +1450,7 @@
 				A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B64183EC5390089FF27 /* OpponentContent.cpp in Sources */,
 				A9E48F2418103CE900F2F1C9 /* BigScreensCompositeApp.cpp in Sources */,
+				A9C5969918469FF400C8DBDC /* FinalBillboard.cpp in Sources */,
 				B3115CAF182D61A400FB7D2F /* Opponent.cpp in Sources */,
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
