@@ -24,26 +24,14 @@
 #include "TankMultiOverheadContent.h"
 #include "OpponentContent.h"
 #include "TextLoopContent.h"
+#include "StaticContent.h"
+#include "LandscapeContent.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 using namespace mpe;
 using namespace bigscreens;
-
-static const std::string kContentKeyTankSpin = "tankSpin";
-static const std::string kContentKeyTankOverhead = "tankOverhead";
-static const std::string kContentKeyTankHeightmap = "tankHeightmap";
-static const std::string kContentKeyTankFlat = "tankFlat";
-static const std::string kContentKeyTankWide = "tankWide";
-static const std::string kContentKeyTankSideCarriage = "tankSide";
-static const std::string kContentKeyTankHorizon = "tankHorizon";
-static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
-static const std::string kContentKeyRandomText = "textRand";
-static const std::string kContentKeyTanksConverge = "tanksConverge";
-static const std::string kContentKeySingleTankConverge = "singleTankConverge";
-static const std::string kContentKeyPerlin = "perlin";
-static const std::string kContentKeyOpponent = "opponent";
 
 class BigScreensCompositeApp : public AppNative, public MPEApp, public SceneContentProvider
 {
@@ -81,7 +69,7 @@ public:
 	void update();
     void mpeFrameUpdate(long serverFrameNumber);
     void updatePlaybackState();
-	void updateContentForRender(const TimelineContentInfo & contentInfo);
+	void updateContentForRender(const TimelineContentInfo & contentInfo, const int contentID);
     
     // Draw
     void draw();
@@ -90,7 +78,7 @@ public:
     
     // Messages
     void mpeMessageReceived(const std::string &message, const int fromClientID);
-    void broadcastCurrentLayout();
+    void newLayoutWasSet();
     
     // Content Provider
     RenderableContentRef contentForKey(const std::string & contentName);
@@ -118,6 +106,8 @@ public:
     RenderableContentRef mMultiOverheadContent;
     RenderableContentRef mOpponentContent;
     RenderableContentRef mTextLoopContent;
+    RenderableContentRef mStaticContent;
+    RenderableContentRef mLandscapeContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -132,6 +122,7 @@ public:
     long long            mMSConvergenceBegan;
     
     bool                 mShouldFire;
+    float                mScalarTimelineProgress;
 };
 
 #pragma mark - Setup
@@ -154,6 +145,15 @@ void BigScreensCompositeApp::setup()
     
     GridLayoutTimeline *timeline = new GridLayoutTimeline(SharedGridAssetPath(!IS_IAC),
                                                           kScreenScale);
+    
+    gl::Fbo::Format mFormat;
+    mFormat.colorTexture().depthBuffer( GL_DEPTH_COMPONENT32F );
+    mFbo = gl::Fbo::create( mClient->getVisibleRect().getWidth(), mClient->getVisibleRect().getHeight(), mFormat );
+    
+    mFbo->bindFramebuffer();
+    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    mFbo->unbindFramebuffer();
+    
     mTimeline = GridLayoutTimelineRef(timeline);
     
     mOutLine = OutLineBorderRef(new OutLineBorder());
@@ -177,9 +177,11 @@ void BigScreensCompositeApp::shutdown()
 
 extern long MSConvergeBeforeCameraMerge;
 extern long MSCamerasConverge;
+extern float MaxExplosionScale = kDefaultExplosionScale;
 
 void BigScreensCompositeApp::reload()
 {
+    mScalarTimelineProgress = 0;
     mLayoutIndex = -1;
     mCurrentContentInfo.clear();
     mTimeline->reload();
@@ -222,6 +224,28 @@ void BigScreensCompositeApp::reload()
                  " MSCamerasConverge: " << MSCamerasConverge << endl;
     
     static_pointer_cast<ConvergenceContent>(mConvergenceContent)->reset(penultimateLayout);
+    
+    // Now that the timeline is loaded, pre-load the text modules
+    // TODO: Make this it's own method
+    shared_ptr<TextLoopContent> textContent = static_pointer_cast<TextLoopContent>(mTextLoopContent);
+    for (GridLayout & gl : layouts)
+    {
+        for (ScreenRegion & sr : gl.getRegions())
+        {
+            if (rectsOverlap(mClient->getVisibleRect(), sr.rect))
+            {
+                if (sr.contentKey.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+                {
+                    TextContentProvider::TextTimelineAndHeight timeAndHeight =
+                    TextContentProvider::textTimelineForContentKey(sr.contentKey);
+                    textContent->setTextForContentID(timeAndHeight.timeline,
+                                                     sr.timelineID,
+                                                     timeAndHeight.absoluteLineHeight * kScreenScale);
+                }
+            }
+        }
+    }
+
 }
 
 void BigScreensCompositeApp::loadAssets()
@@ -262,6 +286,14 @@ void BigScreensCompositeApp::loadAssets()
     TextLoopContent *textLoopContent = new TextLoopContent();
     textLoopContent->load();
     mTextLoopContent = RenderableContentRef(textLoopContent);
+    
+    StaticContent *staticContent = new StaticContent();
+    staticContent->load();
+    mStaticContent = RenderableContentRef(staticContent);
+    
+    LandscapeContent *landscapeContent = new LandscapeContent();
+    landscapeContent->load("landscape_flat.png");
+    mLandscapeContent = RenderableContentRef(landscapeContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -320,13 +352,17 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     {
         return mTankContent;
     }
-    else if (contentName == kContentKeyRandomText)
+    else if (contentName == kContentKeyLandscape)
     {
-        return mTextLoopContent;
+        return mLandscapeContent;
     }
     else if (contentName == kContentKeyTankMultiOverhead)
     {
         return mMultiOverheadContent;
+    }
+    else if (contentName == kContentKeyStatic)
+    {
+        return mStaticContent;
     }
     else if (contentName == kContentKeyTankHorizon)
     {
@@ -347,6 +383,12 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
     else if (contentName == kContentKeyOpponent)
     {
         return mOpponentContent;
+    }
+    // Keep this last
+    else if (contentName.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+    {
+        // starts with "text"...
+        return mTextLoopContent;
     }
 
     // Default is a blank texture
@@ -455,12 +497,24 @@ void BigScreensCompositeApp::update()
     {
         mClient->start();
     }
-    //updatePlaybackState();
+    if (IS_IAC)
+    {
+        hideCursor();
+    }
 }
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
 {
     long long timelineMS = mTimeline->update();
+    
+#if IS_IAC
+    if (serverFrameNumber > 1 &&
+        !mTimeline->isPlaying())
+    {
+        // start the playback
+        play();
+    }
+#endif
     
     // FFT Data
     // float *fftData = mSoundtrack->getFftData();
@@ -468,9 +522,9 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     // Send the controller the current frame if it's changed
     if (mLayoutIndex != mTimeline->getCurrentFrame())
     {
-        broadcastCurrentLayout();
         mLayoutIndex = mTimeline->getCurrentFrame();
-        
+        newLayoutWasSet();
+
         startConvergenceClock();
     }
     
@@ -478,6 +532,19 @@ void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
     if (mMSConvergenceBegan > 0)
     {
         mMSElapsedConvergence = timelineMS - mMSConvergenceBegan;
+    }
+    
+    // Slowly increase the explosion scale at the end to fade out
+    mScalarTimelineProgress = (double)mTimeline->getPlayheadMillisec() / (double)kMSFullPlayDuration;
+    const static float kAmtScaleExplosion = 0.75f;
+    float fadeOutAmt = std::max<float>(0.0, mScalarTimelineProgress - (1.0-kAmtScaleExplosion)) / kAmtScaleExplosion;
+    if (fadeOutAmt > 0)
+    {
+        MaxExplosionScale = kDefaultExplosionScale + (fadeOutAmt * kDefaultExplosionScale * 10.0f);
+    }
+    else
+    {
+        MaxExplosionScale = kDefaultExplosionScale;
     }
 }
 
@@ -501,7 +568,8 @@ void BigScreensCompositeApp::startConvergenceClock()
 
 const static int kChanceFire = 100;
 
-void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo)
+void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo,
+                                                    const int contentID)
 {
     long long contentElapsedFrames = contentInfo.numRenderFrames;
     
@@ -510,7 +578,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     
     RenderableContentRef content = contentInfo.contentRef;
     content->setFramesRendered(contentElapsedFrames);
-    content->setFrameContentID(contentInfo.layoutIndex);
+    content->setFrameContentID(contentID);
     
     // TODO: Use blink spin / dumbTank update
     if (contentInfo.contentKey == kContentKeyTankSpin) // TMP
@@ -541,6 +609,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                              0));
         });
     }
+    else if (contentInfo.contentKey == kContentKeyStatic)
+    {
+        shared_ptr<StaticContent> scene = static_pointer_cast<StaticContent>(content);
+        // scene->update();
+    }
     else if (contentInfo.contentKey == kContentKeyTankOverhead)
     {
         // Flat texture ground
@@ -569,11 +642,6 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                              tankPosition.z));
         });
         
-    }
-    else if (contentInfo.contentKey == kContentKeyRandomText)
-    {
-        shared_ptr<TextLoopContent> scene = static_pointer_cast<TextLoopContent>(content);
-        scene->update();
     }
     else if (contentInfo.contentKey == kContentKeyTankWide)
     {
@@ -700,7 +768,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<ConvergenceContent> scene = static_pointer_cast<ConvergenceContent>(content);
         scene->setMSElapsed(mMSElapsedConvergence);
-        scene->update();
+        scene->update(mScalarTimelineProgress);
     }
     else if (contentInfo.contentKey == kContentKeySingleTankConverge)
     {
@@ -713,7 +781,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         //mSingleTankConvergeContent
         // Nothing to see here
 
-        int i = contentInfo.layoutIndex;
+        int i = contentInfo.layoutIndex; // this is fine
         int regionCount = mTimeline->getCurrentRegionCount();
         Vec2f masterSize = mClient->getMasterSize();
 
@@ -814,6 +882,40 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                       });
         
     }
+    else if (contentInfo.contentKey == kContentKeyLandscape)
+    {
+        // Landscape
+        shared_ptr<LandscapeContent> scene = static_pointer_cast<LandscapeContent>(content);
+        int xDir = (contentID % 3) - 1;
+        float xVec = xDir * 0.1;
+        scene->setScrollVector(Vec2f(xVec, -0.5f));
+        float offsetX = 0;
+        if (xVec < 0)
+        {
+            offsetX = -256.0f;
+        }
+        scene->setInitialOffset(Vec2f(offsetX,-50 * contentID));
+    }
+    else if (contentInfo.contentKey.compare(0, kContentKeyTextPrefix.length(), kContentKeyTextPrefix) == 0)
+    {
+        // It's a text module.
+        shared_ptr<TextLoopContent> scene = static_pointer_cast<TextLoopContent>(content);
+        // This is where we set the text.
+        // Even though it's set every frame, the content is cached so we
+        // don't re-create the texture unless it's not there.
+        /*
+        if (!scene->hasTextForContentID(contentID))
+        {
+            TextContentProvider::TextTimelineAndHeight timeAndHeight =
+                TextContentProvider::textTimelineForContentKey(contentInfo.contentKey);
+            scene->setTextForContentID(timeAndHeight.timeline,
+                                       contentID,
+                                       timeAndHeight.absoluteLineHeight * kScreenScale);
+        }
+        */
+        
+        scene->update();
+    }
 }
 
 #pragma mark - Render
@@ -841,7 +943,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     Vec2i screenOffset = clientRect.getUpperLeft();
     Vec2f masterSize = mClient->getMasterSize();
     
-	// mFbo->bindFramebuffer();
+	//mFbo->bindFramebuffer();
+    //gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     for (auto & kv : renderContent)
     {
@@ -874,7 +977,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             // Some module won't be rendered (and therefor shouldn't be updated)
             // and other modules will be rendered (and updated) more than once.
             
-            updateContentForRender(renderMe);
+            updateContentForRender(renderMe, contentID);
             
             // NOTE: I removed SceneWindow for 2 reasons:
             // 1) We can pull the same behavior into the app w/out having to allocate memory for each render.
@@ -944,9 +1047,8 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
         }
     }
     
-//    mFbo->unbindFramebuffer();
-	
-//	mFinalBillboard->draw( mFbo->getTexture() );
+    // mFbo->unbindFramebuffer();
+	// mFinalBillboard->draw( mFbo->getTexture() );
 	
     if (mIsDrawingColumns)
     {
@@ -1035,8 +1137,11 @@ void BigScreensCompositeApp::mpeMessageReceived(const std::string &message, cons
     }
 }
 
-void BigScreensCompositeApp::broadcastCurrentLayout()
+void BigScreensCompositeApp::newLayoutWasSet()
 {
+    shared_ptr<TextLoopContent> textScene = static_pointer_cast<TextLoopContent>(mTextLoopContent);
+    textScene->newLayoutWasSet(mTimeline->getCurrentLayout());
+    
     // We want the frame to be sent even if there's only 1 client connected.
     // That means it will be sent more than once when more than 1 are rendering.
     // if (CLIENT_ID == 1)

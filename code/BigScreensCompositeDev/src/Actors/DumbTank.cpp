@@ -87,7 +87,7 @@ void DumbTank::loadModels(const std::string & modelName)
     mElementVbo = gl::Vbo::create(GL_ELEMENT_ARRAY_BUFFER,
                                   mMesh->getNumIndices() * 4,
                                   mMesh->getIndices().data(), GL_STATIC_DRAW );
-	
+	/*
 	glGenTransformFeedbacks( 2, mTFOs );
 	
 	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
@@ -97,7 +97,7 @@ void DumbTank::loadModels(const std::string & modelName)
 	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mFeedbackPositionVbo[1]->getId() );
     
 	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
-	
+	*/
 	
 }
 

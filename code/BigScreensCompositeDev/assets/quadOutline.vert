@@ -71,7 +71,7 @@ void main(void)
     float fftHeightMulti = 1.0;
     vec4 pickedColor = positionColor;
 
-    vs_out.color = vec4(pickedColor.rgb, 0.25 * alphaMultiplier);
+    vs_out.color = vec4(pickedColor.rgb, 0.5 * alphaMultiplier);
 
     // Height and position:
     
@@ -90,7 +90,10 @@ void main(void)
     
     // This sets the outlines slightly above the ground so theyre visible
     // This should actually be a normal, but a Y offset is simpler
-    float lineVertOffset = 5.0 / groundScale.y;
+    
+    //float lineVertOffset = 5.0 / groundScale.y;
+    // Better for IAC
+    float lineVertOffset = 1.0 / groundScale.y;
     
     gl_Position = projection * modelView * vec4(position.x,
                                                 position.y + textureHeight + lineVertOffset,

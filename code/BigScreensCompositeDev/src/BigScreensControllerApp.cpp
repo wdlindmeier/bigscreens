@@ -15,7 +15,9 @@ using namespace bigscreens;
 
 class BigScreensControllerApp : public AppNative, public MPEApp
 {
+
 public:
+    
 	void setup();
     ci::DataSourceRef mpeSettingsFile();
     void mpeReset();

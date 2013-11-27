@@ -18,6 +18,7 @@ using namespace bigscreens;
 
 extern long MSCamerasConverge = 1000;
 extern long MSConvergeBeforeCameraMerge = 1000;
+//extern float MaxExplosionScale;// = kDefaultExplosionScale;
 
 ConvergenceContent::ConvergenceContent() : mMSElapsedConvergence(0)
 {
@@ -50,8 +51,9 @@ void ConvergenceContent::reset(const GridLayout & previousLayout)
     mLayout = previousLayout;
 }
 
-void ConvergenceContent::update()
+void ConvergenceContent::update(const float totalTimelineProgress)
 {
+    mTotalTimelineProgress = totalTimelineProgress;
     shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
     content->resetPositions();
     content->setFramesRendered(mNumFramesRendered);
@@ -112,7 +114,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     finalSceneAlpha = std::min<float>(1.0, finalSceneAlpha);
     bool shouldDrawRegions = fadeAlpha > 0.01;
 
-    if (progress >= kFinalSceneProgressBegin)
+    if (progress >= kFinalSceneProgressBegin && finalSceneAlpha > 0.0f)
     {
         static const int kLastContentID = 9999;
         mContent->setFrameContentID(kLastContentID);
@@ -190,6 +192,19 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     }
 
     ci::gl::disable( GL_SCISSOR_TEST );
+
+    // A simple fade out. Tweak as necessary.
+    const static float kPercentFadeOut = 0.05;
+    if (mTotalTimelineProgress > (1.0 - kPercentFadeOut))
+    {
+        float fadeOutAmt = (1.0 - mTotalTimelineProgress) / kPercentFadeOut;
+        gl::setMatricesWindow(contentRect.getWidth(), contentRect.getHeight());
+        gl::bindStockShader(ShaderDef().color());
+        gl::enableAlphaBlending();
+        gl::color(ColorAf(0,0,0,1.0-fadeOutAmt));
+        gl::setDefaultShaderVars();
+        gl::drawSolidRect(Rectf(0,0,contentRect.getWidth(), contentRect.getHeight()));
+    }
 }
 
 void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,

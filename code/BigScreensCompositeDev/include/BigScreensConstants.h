@@ -8,6 +8,23 @@
 
 #pragma once
 
+// Content Keys
+static const std::string kContentKeyTankSpin = "tankSpin";
+static const std::string kContentKeyTankOverhead = "tankOverhead";
+static const std::string kContentKeyTankHeightmap = "tankHeightmap";
+static const std::string kContentKeyTankFlat = "tankFlat";
+static const std::string kContentKeyTankWide = "tankWide";
+static const std::string kContentKeyTankSideCarriage = "tankSide";
+static const std::string kContentKeyTankHorizon = "tankHorizon";
+static const std::string kContentKeyTankMultiOverhead = "tankMultiOver";
+static const std::string kContentKeyTextPrefix = "text";
+static const std::string kContentKeyTanksConverge = "tanksConverge";
+static const std::string kContentKeySingleTankConverge = "singleTankConverge";
+static const std::string kContentKeyPerlin = "perlin";
+static const std::string kContentKeyOpponent = "opponent";
+static const std::string kContentKeyStatic = "static";
+static const std::string kContentKeyLandscape = "landscape";
+
 // MPE Messages
 const static std::string kMPEMessagePlay = "play";
 const static std::string kMPEMessagePause = "pause";
@@ -48,10 +65,15 @@ const static int kNumFFTChannels = 64;
 // Timing
 // This should be synchronized w/ the timeline.
 const long kMSFullConvergence = 30000; // 30 sec
+const long kMSFullPlayDuration = 30000 * 6.5; // 3:15
 extern long MSCamerasConverge;// TBD: Determined by the layout timeline
 extern long MSConvergeBeforeCameraMerge;// TBD: Determined by the layout timeline
 // ... was kMSFullConvergence - kMSCamerasConverge;
 // The last layout must come kNumFramesConvergeBeforeCameraMerge frames after the second to last
+
+// Explosions
+const static float kDefaultExplosionScale = 1.5f;
+extern float MaxExplosionScale;
 
 // Model Measurements
 const static float kTankBarrelTipZ = 470.0f;

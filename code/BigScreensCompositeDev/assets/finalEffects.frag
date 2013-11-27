@@ -21,40 +21,46 @@ void main()
 	int j;
 	int i;
 	
-	for( i = -4 ; i < 4; i++ )
+	vec4 oricol = texture( fboTexture, texCoord );
+    vec4 col;
+	
+	// start with the source texture and misalign the rays it a bit
+    // TODO animate misalignment upon hit or similar event
+	if ( oricol.r != oricol.g && oricol.r != oricol.b ) {
+		col.r = texture( fboTexture, vec2( texCoord.x + 0.0005, texCoord.y ) ).x;
+		col.g = texture( fboTexture, vec2( texCoord.x + 0.000, texCoord.y ) ).y;
+		col.b = texture( fboTexture, vec2( texCoord.x - 0.0005, texCoord.y ) ).z;
+		col.a = texture( fboTexture, vec2( texCoord.x, texCoord.y ) ).a;
+	}
+	else {
+		col = oricol;
+	}
+	
+	for( i = -2 ; i < 2; i++ )
 	{
-        for (j = -4; j < 4; j++ )
+        for (j = -2; j < 2; j++ )
         {
-            sum += texture( fboTexture, texCoord + vec2(j, i)*0.003) * 0.25;
+            sum += texture( fboTexture, texCoord + vec2(j, i)*0.0005) * 0.5;
         }
 	}
-	if ( texture( fboTexture, texCoord).r < 0.3 )
+	if ( col.r < 0.3 )
     {
-		color = sum*sum*0.012 + texture( fboTexture, texCoord);
+		col = sum*sum*0.012 + col;
     }
     else
     {
-        if ( texture( fboTexture, texCoord).r < 0.5 )
+        if ( col.r < 0.5 )
         {
-            color = sum*sum*0.009 + texture( fboTexture, texCoord );
+            col = sum*sum*0.009 + col;
         }
         else
         {
-            color = sum*sum*0.0075 + texture( fboTexture, texCoord );
+            col = sum*sum*0.0075 + col;
         }
     }
 	
 	// subtle zoom in/out
 	vec2 uv = 0.5 + ( texCoord - 0.5 ) * ( 0.98 + 0.006 * sin( 0.9 * time ) );
-	
-	vec3 oricol = texture( fboTexture, texCoord ).xyz;
-    vec3 col;
-	
-	// start with the source texture and misalign the rays it a bit
-    // TODO animate misalignment upon hit or similar event
-	col.r = texture( fboTexture, vec2( texCoord.x + 0.003, texCoord.y ) ).x;
-    col.g = texture( fboTexture, vec2( texCoord.x + 0.000, texCoord.y ) ).y;
-    col.b = texture( fboTexture, vec2( texCoord.x - 0.003, texCoord.y ) ).z;
 	
 	// contrast curve
     col = clamp( col * 0.5 + 0.5 * col * col * 1.2, 0.0, 1.0 );
@@ -63,16 +69,16 @@ void main()
     col *= 0.6 + 0.4 * 16.0 * uv.x * uv.y * ( 1.0 - uv.x ) * ( 1.0 - uv.y );
 	
 	//color tint
-    col *= vec3( 0.9, 1.0, 0.7 );
+//    col *= vec4( 0.9, 1.0, 0.7, 1.0 );
 	
 	//scanline (last 2 constants are crawl speed and size)
     //TODO make size dependent on viewport
     col *= 0.8 + 0.2 * sin( 10.0 * time + uv.y * 900.0 );
 	
 	//flickering (semi-randomized)
-    col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );
+//    col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );
 	
-	color = (vec4(col,1.0) * color);
+	color = col;
 }
 
 

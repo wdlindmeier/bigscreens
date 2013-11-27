@@ -1,17 +1,15 @@
 //
-//  TextureContent.cpp
+//  LandscapeContent.cpp
 //  BigScreensComposite
 //
-//  Created by William Lindmeier on 10/24/13.
+//  Created by William Lindmeier on 11/27/13.
 //
 //
 
-#include "TextureContent.h"
-#include "TankContent.h"
+#include "LandscapeContent.h"
 #include "cinder/ObjLoader.h"
 #include "cinder/app/App.h"
 #include "cinder/Utilities.h"
-#include "cinder/Camera.h"
 #include "cinder/gl/Shader.h"
 #include "Utilities.hpp"
 
@@ -22,11 +20,23 @@ using namespace bigscreens;
 namespace bigscreens
 {
     
-    TextureContent::TextureContent()
+    LandscapeContent::LandscapeContent() :
+    mInitialOffset(0.0f,-500.0f)
+    ,mScrollVector(0,-0.5)
     {
     }
     
-    void TextureContent::load(const std::string & textureName)
+    void LandscapeContent::setInitialOffset(const ci::Vec2i & offset)
+    {
+        mInitialOffset = offset;
+    }
+    
+    void LandscapeContent::setScrollVector(const ci::Vec2f & vector)
+    {
+        mScrollVector = vector;
+    }
+    
+    void LandscapeContent::load(const std::string & textureName)
     {
         gl::Texture::Format texFormat;
         texFormat.magFilter( GL_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
@@ -34,18 +44,16 @@ namespace bigscreens
         mTexture = gl::TextureRef(new gl::Texture(loadImage(app::loadResource(textureName)), texFormat));
     }
     
-    void TextureContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
+    void LandscapeContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::pushMatrices();
         gl::bindStockShader(gl::ShaderDef().color());
         gl::setMatricesWindow(contentRect.getSize());
-        gl::enableAlphaBlending();
+        gl::disableAlphaBlending();
         gl::color(1,1,1,1);
         gl::setDefaultShaderVars();
-        Rectf screenRect(0, 0, contentRect.getWidth(), contentRect.getHeight());
-        gl::draw(mTexture, screenRect);
-        gl::disableAlphaBlending();
+        gl::translate(mInitialOffset + (mScrollVector * mNumFramesRendered));
+        gl::draw(mTexture);
         gl::popMatrices();
-    }
-	
+    }	
 }

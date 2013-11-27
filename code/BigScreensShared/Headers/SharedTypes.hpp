@@ -16,6 +16,10 @@
 
 namespace bigscreens
 {
+    
+    typedef std::pair<std::string, int> TextWithFramecount;
+    typedef std::vector<TextWithFramecount> TextTimeline;
+
     class RenderableContent
     {
     public:

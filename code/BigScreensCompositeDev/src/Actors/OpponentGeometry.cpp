@@ -48,8 +48,9 @@ void DynamicOpponent::update( float percentage, float time )
 	
 	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, query);
 	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
-	
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1-drawBuf] );
+	glBindBufferBase( GL_TRANSFORM_FEEDBACK, 0, mPositionVbo[1-drawBuf]->getId() );
+    
 	glBeginTransformFeedback(GL_POINTS);
 	mVao[drawBuf]->bind();
 	ci::gl::drawArrays( GL_POINTS, 0, mPyramid->getTrimesh()->getNumVertices() );
@@ -114,15 +115,15 @@ void DynamicOpponent::loadBuffers()
 	ci::gl::enableVertexAttribArray(0);
 	ci::gl::vertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
 	
-	glGenTransformFeedbacks(2, mTFOs);
-	
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[0]->getId() );
-
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1] );
-	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[1]->getId() );
-
-	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
+//	glGenTransformFeedbacks(2, mTFOs);
+//	
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[0] );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[0]->getId() );
+//
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, mTFOs[1] );
+//	glBindBufferBase( GL_TRANSFORM_FEEDBACK_BUFFER, 0, mPositionVbo[1]->getId() );
+//
+//	glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, 0 );
 }
 	
 void DynamicOpponent::loadShaders()

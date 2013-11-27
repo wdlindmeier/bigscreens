@@ -9,6 +9,7 @@
 #include "GridLayout.h"
 #include "TankContent.h"
 #include "cinder/params/Params.h"
+#include "BigScreensConstants.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -129,12 +130,14 @@ class GridMakerApp : public AppNative {
 
 #pragma mark - Setup
 
+/*
 const static int kNumScreens = 3;
 const static int kScreenWidth = 3840;
 const static int kScreenHeight = 1080;
 const static int kScreenMarginBottom = 133;
 const static int kScreenMarginRight = 147; // Estimate
 const static float kScreenScale = 0.25f;
+*/
 
 void GridMakerApp::prepareSettings(Settings *settings)
 {
@@ -737,7 +740,73 @@ void GridMakerApp::renderLayout(const GridLayout & layout,
             }
             ColorAf transColor = reg.color;
             transColor[3] = alpha;
-            gl::color(transColor);
+            
+            if (reg.contentKey == "")
+            {
+                gl::color(0.5,0.5,0.5);
+            }
+            // Text
+            else  if (reg.contentKey.compare(0, kContentKeyTextPrefix.size(), kContentKeyTextPrefix) == 0)
+            {
+                // CYAN
+                gl::color(0,1,1);
+            }
+            else if (reg.contentKey == kContentKeyOpponent)
+            {
+                // HOT PINK
+                gl::color(1,0,0.5);
+            }
+            /*
+            else if (reg.contentKey == kContentKeyPerlin)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeySingleTankConverge)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankFlat)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankHeightmap)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankHorizon)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankMultiOverhead)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankOverhead)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTanksConverge)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankSideCarriage)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankSpin)
+            {
+                
+            }
+            else if (reg.contentKey == kContentKeyTankWide)
+            {
+                
+            }
+            */
+            else
+            {
+                gl::color(1,1,1);
+            }
+            //gl::color(transColor);
             
             mScreenTexture.enableAndBind();
             

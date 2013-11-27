@@ -157,6 +157,12 @@
 		A9C3E34A1831444A003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */ = {isa = PBXBuildFile; fileRef = A9C3E34818314439003C3DA5 /* tank_head_centered.obj */; };
 		A9C3E35B18347D01003C3DA5 /* noise_map.png in Resources */ = {isa = PBXBuildFile; fileRef = B3115CC7182D889600FB7D2F /* noise_map.png */; };
+		A9C5968C18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5968D18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5968E18468E6D00C8DBDC /* landscape_flat.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C5968B18468E6D00C8DBDC /* landscape_flat.png */; };
+		A9C5969118468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
+		A9C5969218468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
+		A9C5969318468EF900C8DBDC /* LandscapeContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */; };
 		A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
@@ -276,6 +282,18 @@
 		A9EE4B6D183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
 		A9EE4B6E183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
 		A9EE4B6F183F08AB0089FF27 /* hyperspace.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B6C183F08AB0089FF27 /* hyperspace.png */; };
+		A9EE4B741840076A0089FF27 /* static_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B711840076A0089FF27 /* static_0.png */; };
+		A9EE4B751840076A0089FF27 /* static_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B711840076A0089FF27 /* static_0.png */; };
+		A9EE4B761840076A0089FF27 /* static_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B711840076A0089FF27 /* static_0.png */; };
+		A9EE4B771840076A0089FF27 /* static_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B721840076A0089FF27 /* static_1.png */; };
+		A9EE4B781840076A0089FF27 /* static_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B721840076A0089FF27 /* static_1.png */; };
+		A9EE4B791840076A0089FF27 /* static_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B721840076A0089FF27 /* static_1.png */; };
+		A9EE4B7A1840076A0089FF27 /* static_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B731840076A0089FF27 /* static_2.png */; };
+		A9EE4B7B1840076A0089FF27 /* static_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B731840076A0089FF27 /* static_2.png */; };
+		A9EE4B7C1840076A0089FF27 /* static_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EE4B731840076A0089FF27 /* static_2.png */; };
+		A9EE4B7F1840077F0089FF27 /* StaticContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */; };
+		A9EE4B801840077F0089FF27 /* StaticContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */; };
+		A9EE4B811840077F0089FF27 /* StaticContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */; };
 		B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
 		B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3115C49182D507500FB7D2F /* ContentProvider.cpp */; };
@@ -412,6 +430,9 @@
 		A9C3E31C183034C0003C3DA5 /* DumbTank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DumbTank.cpp; sourceTree = "<group>"; };
 		A9C3E32018304B54003C3DA5 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
 		A9C3E34818314439003C3DA5 /* tank_head_centered.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tank_head_centered.obj; sourceTree = "<group>"; };
+		A9C5968B18468E6D00C8DBDC /* landscape_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_flat.png; path = ../../BigScreensCompositeDev/resources/landscape_flat.png; sourceTree = "<group>"; };
+		A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeContent.cpp; path = ../src/LandscapeContent.cpp; sourceTree = "<group>"; };
+		A9C5969418468F1D00C8DBDC /* LandscapeContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapeContent.h; path = ../include/LandscapeContent.h; sourceTree = "<group>"; };
 		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
 		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
@@ -450,6 +471,11 @@
 		A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLoopContent.cpp; path = ../src/TextLoopContent.cpp; sourceTree = "<group>"; };
 		A9EE4B6B183F01FC0089FF27 /* TextLoopContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLoopContent.h; path = ../include/TextLoopContent.h; sourceTree = "<group>"; };
 		A9EE4B6C183F08AB0089FF27 /* hyperspace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hyperspace.png; path = ../resources/hyperspace.png; sourceTree = "<group>"; };
+		A9EE4B711840076A0089FF27 /* static_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = static_0.png; path = ../resources/static_0.png; sourceTree = "<group>"; };
+		A9EE4B721840076A0089FF27 /* static_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = static_1.png; path = ../resources/static_1.png; sourceTree = "<group>"; };
+		A9EE4B731840076A0089FF27 /* static_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = static_2.png; path = ../resources/static_2.png; sourceTree = "<group>"; };
+		A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StaticContent.cpp; path = ../src/StaticContent.cpp; sourceTree = "<group>"; };
+		A9EE4B82184007FB0089FF27 /* StaticContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticContent.h; path = ../include/StaticContent.h; sourceTree = "<group>"; };
 		AC0EE697804E47DF989DE276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3115C45182D505C00FB7D2F /* ContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
 		B3115C49182D507500FB7D2F /* ContentProvider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentProvider.cpp; sourceTree = "<group>"; };
@@ -653,6 +679,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9EE4B711840076A0089FF27 /* static_0.png */,
+				A9EE4B721840076A0089FF27 /* static_1.png */,
+				A9EE4B731840076A0089FF27 /* static_2.png */,
 				A9EE4B6C183F08AB0089FF27 /* hyperspace.png */,
 				A97122B5181ABABA006DD64E /* pause.png */,
 				A97122B6181ABABA006DD64E /* play.png */,
@@ -779,6 +808,7 @@
 		A9E48EAC18103A8300F2F1C9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9C5968B18468E6D00C8DBDC /* landscape_flat.png */,
 				A9C3E32018304B54003C3DA5 /* explosion.png */,
 				B3115CC7182D889600FB7D2F /* noise_map.png */,
 				A9E48EAD18103A8300F2F1C9 /* paused.png */,
@@ -847,8 +877,10 @@
 				B3115C4D182D524200FB7D2F /* Actors */,
 				A9B52B40182C1BD9009B0D71 /* ConvergenceContent.h */,
 				A9C5C7A918358A1D000554D6 /* DumbTankContent.h */,
+				A9C5969418468F1D00C8DBDC /* LandscapeContent.h */,
 				A9EE4B65183EC5510089FF27 /* OpponentContent.h */,
 				A97122BE181AF14F006DD64E /* PerlinContent.h */,
+				A9EE4B82184007FB0089FF27 /* StaticContent.h */,
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
 				A969C9BD183AF0C70030569D /* TankMultiOverheadContent.h */,
@@ -864,13 +896,15 @@
 				B3115C54182D527100FB7D2F /* Actors */,
 				A9B52B3B182C1BC3009B0D71 /* ConvergenceContent.cpp */,
 				A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */,
+				A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */,
 				A9EE4B60183EC5390089FF27 /* OpponentContent.cpp */,
 				A97122B9181AF13B006DD64E /* PerlinContent.cpp */,
+				A9EE4B7D1840077F0089FF27 /* StaticContent.cpp */,
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
 				A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */,
-				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 				A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */,
+				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1054,6 +1088,7 @@
 				B349E43B1837CC4E008E5592 /* finalEffects.vert in Resources */,
 				B349E43C1837CC4E008E5592 /* ground_texture.frag in Resources */,
 				B349E43D1837CC4E008E5592 /* ground_texture.vert in Resources */,
+				A9C5968C18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				B349E43E1837CC4E008E5592 /* heightmap.frag in Resources */,
 				B349E43F1837CC4E008E5592 /* heightmap.vert in Resources */,
 				B349E4401837CC4E008E5592 /* minion.frag in Resources */,
@@ -1062,6 +1097,7 @@
 				B349E4421837CC4E008E5592 /* offset_texture.frag in Resources */,
 				B349E4431837CC4E008E5592 /* offset_texture.vert in Resources */,
 				B349E4441837CC4E008E5592 /* oppBasic.frag in Resources */,
+				A9EE4B741840076A0089FF27 /* static_0.png in Resources */,
 				B349E4451837CC4E008E5592 /* oppBasic.geom in Resources */,
 				B349E4461837CC4E008E5592 /* oppBasic.vert in Resources */,
 				B349E4471837CC4E008E5592 /* oppDynamic.frag in Resources */,
@@ -1099,6 +1135,7 @@
 				A9E48EC118103A8300F2F1C9 /* screen.png in Resources */,
 				A971227318196D60006DD64E /* blank_texture.png in Resources */,
 				A9712285181986DA006DD64E /* test.png in Resources */,
+				A9EE4B7A1840076A0089FF27 /* static_2.png in Resources */,
 				A9E48EBB18103A8300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
 				B3115CC9182D889600FB7D2F /* noise_map.png in Resources */,
 				A9E48ED418103CA900F2F1C9 /* settings.1.IAC.xml in Resources */,
@@ -1110,6 +1147,7 @@
 				A9E48ED618103CA900F2F1C9 /* settings.2.IAC.xml in Resources */,
 				A9C3E32118304B54003C3DA5 /* explosion.png in Resources */,
 				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
+				A9EE4B771840076A0089FF27 /* static_1.png in Resources */,
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
 				A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A9EE4B35183BF81E0089FF27 /* updateOppSmoke.vert in Resources */,
@@ -1134,6 +1172,7 @@
 				B3115CEB182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
+				A9C5968D18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				A971227418196D60006DD64E /* blank_texture.png in Resources */,
 				A9712286181986DA006DD64E /* test.png in Resources */,
 				A9E48EE018103CE300F2F1C9 /* Hyperspace Bold Italic.ttf in Resources */,
@@ -1142,6 +1181,7 @@
 				B3115CE2182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
 				A9E48EE218103CE300F2F1C9 /* paused.png in Resources */,
 				A9EE4B38183BF8900089FF27 /* smoke_blur.png in Resources */,
+				A9EE4B751840076A0089FF27 /* static_0.png in Resources */,
 				A9E48EE618103CE300F2F1C9 /* settings.1.xml in Resources */,
 				A9E48EE818103CE300F2F1C9 /* CinderApp.icns in Resources */,
 				A9E48EE918103CE300F2F1C9 /* settings.2.xml in Resources */,
@@ -1179,6 +1219,7 @@
 				A96237EA183985DB00C1CF83 /* texture.frag in Resources */,
 				A96237E6183985DB00C1CF83 /* renderDumbTank.vert in Resources */,
 				A96237CB183985DB00C1CF83 /* finalEffects.vert in Resources */,
+				A9EE4B7B1840076A0089FF27 /* static_2.png in Resources */,
 				A96237EC183985DB00C1CF83 /* updateOppDynamic.vert in Resources */,
 				A96237D0183985DB00C1CF83 /* minion.frag in Resources */,
 				A96237E7183985DB00C1CF83 /* renderOppDynamic.frag in Resources */,
@@ -1190,6 +1231,7 @@
 				A96237C9183985DB00C1CF83 /* basic.vert in Resources */,
 				A96237C8183985DB00C1CF83 /* basic.frag in Resources */,
 				A96237E3183985DB00C1CF83 /* quadTriangle.vert in Resources */,
+				A9EE4B781840076A0089FF27 /* static_1.png in Resources */,
 				A96237CC183985DB00C1CF83 /* ground_texture.frag in Resources */,
 				A96237D3183985DB00C1CF83 /* offset_texture.vert in Resources */,
 				A96237DA183985DB00C1CF83 /* oppSmoke.frag in Resources */,
@@ -1214,6 +1256,7 @@
 				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
+				A9C5968E18468E6D00C8DBDC /* landscape_flat.png in Resources */,
 				A971227518196D60006DD64E /* blank_texture.png in Resources */,
 				A9712287181986DA006DD64E /* test.png in Resources */,
 				B3115CE3182D99C300FB7D2F /* tank_gear_wheel_centered.obj in Resources */,
@@ -1222,6 +1265,7 @@
 				A9E48F0E18103CE900F2F1C9 /* settings.1.IAC.xml in Resources */,
 				B3115CCE182D889600FB7D2F /* smoke_blur.png in Resources */,
 				A9E48F0F18103CE900F2F1C9 /* paused.png in Resources */,
+				A9EE4B761840076A0089FF27 /* static_0.png in Resources */,
 				A9E48F1318103CE900F2F1C9 /* settings.1.xml in Resources */,
 				A9E48F1518103CE900F2F1C9 /* CinderApp.icns in Resources */,
 				A9C3E34B1831444B003C3DA5 /* tank_head_centered.obj in Resources */,
@@ -1259,6 +1303,7 @@
 				A9623811183985DC00C1CF83 /* updateOppDynamic.vert in Resources */,
 				A96237F5183985DC00C1CF83 /* minion.frag in Resources */,
 				A962380C183985DC00C1CF83 /* renderOppDynamic.frag in Resources */,
+				A9EE4B7C1840076A0089FF27 /* static_2.png in Resources */,
 				A9623810183985DC00C1CF83 /* texture.vert in Resources */,
 				A9623802183985DC00C1CF83 /* outline.vert in Resources */,
 				A9623804183985DC00C1CF83 /* quadOutline.geom in Resources */,
@@ -1270,6 +1315,7 @@
 				A96237F1183985DC00C1CF83 /* ground_texture.frag in Resources */,
 				A96237F8183985DC00C1CF83 /* offset_texture.vert in Resources */,
 				A96237FF183985DC00C1CF83 /* oppSmoke.frag in Resources */,
+				A9EE4B791840076A0089FF27 /* static_1.png in Resources */,
 				A96237FA183985DC00C1CF83 /* oppBasic.geom in Resources */,
 				A9EE4B37183BF81E0089FF27 /* updateOppSmoke.vert in Resources */,
 				A9EE4B31183BF81E0089FF27 /* renderOppSmoke.frag in Resources */,
@@ -1324,6 +1370,7 @@
 				A97122BB181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313018118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DE18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A9EE4B7F1840077F0089FF27 /* StaticContent.cpp in Sources */,
 				A97C889B1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B62183EC5390089FF27 /* OpponentContent.cpp in Sources */,
@@ -1335,6 +1382,7 @@
 				A9EE4B68183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969118468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5B182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C62182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227C18196DCB006DD64E /* TextureContent.cpp in Sources */,
@@ -1356,6 +1404,7 @@
 				A97122BC181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313118118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88DF18107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A9EE4B801840077F0089FF27 /* StaticContent.cpp in Sources */,
 				A97C889C1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B63183EC5390089FF27 /* OpponentContent.cpp in Sources */,
@@ -1367,6 +1416,7 @@
 				A9EE4B69183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969218468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5C182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C63182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227D18196DCB006DD64E /* TextureContent.cpp in Sources */,
@@ -1388,6 +1438,7 @@
 				A97122BD181AF13B006DD64E /* PerlinContent.cpp in Sources */,
 				A90D313218118B2E0068E386 /* TankContent.cpp in Sources */,
 				A97C88E018107A8200AE2AE2 /* GridLayoutTimeline.cpp in Sources */,
+				A9EE4B811840077F0089FF27 /* StaticContent.cpp in Sources */,
 				A97C889D1810440800AE2AE2 /* MPEClient.cpp in Sources */,
 				A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */,
 				A9EE4B64183EC5390089FF27 /* OpponentContent.cpp in Sources */,
@@ -1399,6 +1450,7 @@
 				A9EE4B6A183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
+				A9C5969318468EF900C8DBDC /* LandscapeContent.cpp in Sources */,
 				B3115C5D182D527100FB7D2F /* ObjModel.cpp in Sources */,
 				B3115C64182D560F00FB7D2F /* FloorPlane.cpp in Sources */,
 				A971227E18196DCB006DD64E /* TextureContent.cpp in Sources */,
@@ -1448,6 +1500,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;
@@ -1464,7 +1517,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
-				PRODUCT_NAME = BigScreens1;
+				PRODUCT_NAME = TanksIAC;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
@@ -1500,6 +1553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/2";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;
@@ -1516,7 +1570,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
-				PRODUCT_NAME = BigScreens2;
+				PRODUCT_NAME = TanksIAC;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
@@ -1552,6 +1606,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/555";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;
@@ -1604,6 +1659,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/0";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;
@@ -1620,7 +1676,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
-				PRODUCT_NAME = BigScreens0;
+				PRODUCT_NAME = TanksIAC;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;

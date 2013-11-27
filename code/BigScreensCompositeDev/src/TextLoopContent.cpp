@@ -11,6 +11,7 @@
 #include "cinder/Text.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Font.h"
+#include "cinder/ip/Resize.h"
 #include "cinder/Utilities.h"
 
 using namespace std;
@@ -61,17 +62,13 @@ static ci::Rectf regionForChar(char c)
 }
 
 namespace bigscreens
-{
-    
+{    
     const static float kHyperspaceNativeLineHeight = 201.0f;
     
-    TextLoopContent::TextLoopContent() :
-    mLineHeight(20)
-    , mTextAlign(TextAlignLeft)
+    TextLoopContent::TextLoopContent()
     {
         mFontSurf = loadImage(loadResource("hyperspace.png"));
         mCam = CameraOrtho(0, 1, 1, 0, 0, 100000);
-        setText("HELLO\nWORLD ]");
     }
     
     void TextLoopContent::load()
@@ -83,14 +80,84 @@ namespace bigscreens
         //
     }
     
-    void TextLoopContent::setText(const std::string & str)
+    void TextLoopContent::newLayoutWasSet(const GridLayout & currentLayout)
     {
-        mCurrentString = str;
+        return;
+        // Prune any content not found in this layout
+        //map<string, string> address_book;
+        //for ( auto address_entry : address_book )
+        //address_entry.first << " < " << address_entry.second
+        vector<int> pruneTextureIDs;
+        for (auto contentTexture : mTextures)
+        {
+            bool didFindContent = false;
+            int texContentID = contentTexture.first;
+            for (ScreenRegion & sr : currentLayout.getRegions())
+            {
+                if (texContentID == sr.timelineID)
+                {
+                    didFindContent = true;
+                    break;
+                }
+            }
+            if (!didFindContent)
+            {
+                pruneTextureIDs.push_back(texContentID);
+                // Clear from the map
+            }
+        }
+        for (int tID : pruneTextureIDs)
+        {
+            // Remove from map
+            // console() << "ALERT: ERASING CONTENT FOR ID: " << tID << "\n";
+            mTextures.erase(tID);
+            mTextureDurations.erase(tID);
+            mContentDurations.erase(tID);
+        }
+    }
+    
+    bool TextLoopContent::hasTextForContentID(const int contentID)
+    {
+        return mTextures.find(contentID) != mTextures.end();
+    }
+    
+    void TextLoopContent::setTextForContentID(const TextTimeline & textWithTime,
+                                              const int contentID,
+                                              const float absoluteLineHeight)
+    {
+        // assert(mContentID > -1 && mContentID < 16000);
         
+        if (!hasTextForContentID(contentID))
+        {
+            console() << "ALERT: CREATING NEW STRINGS FOR ID: " << contentID << "\n";
+            float scale = (float)absoluteLineHeight / (float)kHyperspaceNativeLineHeight;
+            
+            std::vector<ci::gl::TextureRef> textures;
+            std::vector<int> durations;
+            int totalDuration = 0;
+            for (auto textTime : textWithTime)
+            {
+                // string is first
+                gl::TextureRef tex = textureForString(textTime.first, scale);
+                textures.push_back(tex);
+                
+                // duration frames is second
+                durations.push_back(textTime.second);
+                totalDuration += textTime.second;
+            }
+            
+            mTextures[contentID] = textures;
+            mTextureDurations[contentID] = durations;
+            mContentDurations[contentID] = totalDuration;
+        }
+    }
+
+    gl::TextureRef TextLoopContent::textureForString(const std::string & str, const float scale)
+    {
         // TODO: Account for alignment
         float x = 0;
         float y = 0;
-        vector<string> tokens = ci::split(mCurrentString, "\n");
+        vector<string> tokens = ci::split(str, "\n");
         int lineCount = tokens.size();
         int maxChars = 0;
         for (string line : tokens)
@@ -113,7 +180,7 @@ namespace bigscreens
             }
         }
         
-        for(char & c : mCurrentString)
+        for(const char & c : str)
         {
             if (c == '\n')
             {
@@ -126,24 +193,46 @@ namespace bigscreens
                                                                      (charRegion.y1 * -1) + y));
             x += kCharPxWide;
         }
+        
+        int newWidth = textSurf.getWidth() * scale;
+        int newHeight = textSurf.getHeight() * scale;
+        Surface scaledSurf(newWidth, newHeight, true);
+
+        ip::resize(textSurf,
+                   Area(0,0,textSurf.getWidth(),textSurf.getHeight()),
+                   &scaledSurf,
+                   Area(0,0,newWidth,newHeight));
 
         gl::Texture::Format texFormat;
         texFormat.magFilter( GL_LINEAR_MIPMAP_LINEAR ).minFilter( GL_LINEAR_MIPMAP_LINEAR ).mipMap().internalFormat( GL_RGBA );
-        gl::Texture *frameTex = new gl::Texture(textSurf, texFormat);
-        mTexture = gl::TextureRef(frameTex);
+        gl::Texture *frameTex = new gl::Texture(scaledSurf, texFormat);
+        return gl::TextureRef(frameTex);
     }
     
-    void TextLoopContent::setTextWithTiming(std::vector<std::pair<long, std::string> > & textWithTiming)
+    gl::TextureRef TextLoopContent::currentContentFrame()
     {
-        mTextWithTiming = textWithTiming;
+        // Find the approp frame
+        std::vector<ci::gl::TextureRef> textures = mTextures[mContentID];
+        std::vector<int> durations = mTextureDurations[mContentID];
+        int totalDuration = mContentDurations[mContentID];
+        int subFrame = mNumFramesRendered % totalDuration;
+        int frameOffset = 0;
+        gl::TextureRef tex;
+        
+        for (int i = 0; i < durations.size(); ++i)
+        {
+            int frameDuration = durations[i];
+            frameOffset += frameDuration;
+            if (subFrame <= frameOffset)
+            {
+                tex = textures[i];
+                break;
+            }
+        }
+        assert(tex);
+        return tex;
     }
     
-    void TextLoopContent::setAbsoluteLineHeightAndAlignment(const float height, TextAlign align)
-    {
-        mLineHeight = height;
-        mTextAlign = align;
-    }
-
     void TextLoopContent::render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect)
     {
         gl::clear(ColorAf(0,0,0,0));
@@ -157,11 +246,10 @@ namespace bigscreens
         gl::color(1,1,1,1);
         gl::setDefaultShaderVars();
 
-        float scale = (float)mLineHeight / (float)kHyperspaceNativeLineHeight;
-        Rectf drawRect(0, 0,
-                       mTexture->getWidth() * scale,
-                       mTexture->getHeight() * scale);
-        gl::draw(mTexture, drawRect);
+        assert(mContentID > -1 && mContentID < 16000);
+        
+        gl::TextureRef tex = currentContentFrame();
+        gl::draw(tex);
 
         gl::disableAlphaBlending();
         gl::popMatrices();
