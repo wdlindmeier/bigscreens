@@ -26,6 +26,8 @@
 #include "TextLoopContent.h"
 #include "StaticContent.h"
 #include "LandscapeContent.h"
+#include "cinder/ImageIo.h"
+#include "cinder/ip/Flip.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -398,12 +400,16 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
 
 float * BigScreensCompositeApp::getFFTData()
 {
+#if RENDER_FRAMES
+    return (float *)kCannedFFTData[mClient->getCurrentRenderFrame()];
+#else
     return mSoundtrack->getFftData();
+#endif
 }
 
 float BigScreensCompositeApp::getFFTDataForChannel(const int channel)
 {
-    return mSoundtrack->getFftData()[channel];
+    return getFFTData()[channel];
 }
 
 #pragma mark - Input events
@@ -1059,6 +1065,17 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     mCurrentContentInfo = newContentInfo;
     
     mShouldFire = false;
+    
+#if RENDER_FRAMES
+    // TMP
+    if (mLayoutIndex == 2)
+    {
+        gl::Texture & fboTex = *mFbo->getTexture();
+        Surface flipped(fboTex);
+        ci::ip::flipVertical(&flipped);
+        ci::writeImage(getHomeDirectory() / "Documents" / "BigScreensRender" / (std::to_string(mClient->getCurrentRenderFrame()) + ".png"), flipped);
+    }
+#endif
     
 }
 

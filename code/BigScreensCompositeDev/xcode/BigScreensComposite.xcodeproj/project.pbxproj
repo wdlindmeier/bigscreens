@@ -437,6 +437,7 @@
 		A9C5968F18468EF800C8DBDC /* LandscapeContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeContent.cpp; path = ../src/LandscapeContent.cpp; sourceTree = "<group>"; };
 		A9C5969418468F1D00C8DBDC /* LandscapeContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapeContent.h; path = ../include/LandscapeContent.h; sourceTree = "<group>"; };
 		A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FinalBillboard.cpp; sourceTree = "<group>"; };
+		A9C5969C1847B48D00C8DBDC /* fftData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fftData.h; path = ../../BigScreensCompositeDev/include/fftData.h; sourceTree = "<group>"; };
 		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
 		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
@@ -798,6 +799,7 @@
 		A9E48EA518103A8300F2F1C9 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				A9C5969C1847B48D00C8DBDC /* fftData.h */,
 				B3115C45182D505C00FB7D2F /* ContentProvider.h */,
 				A97C88E718107B3000AE2AE2 /* GridLayout.h */,
 				A97C88E218107A8900AE2AE2 /* GridLayoutTimeline.h */,
