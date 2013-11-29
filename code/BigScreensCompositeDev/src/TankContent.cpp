@@ -20,10 +20,6 @@ using namespace ci;
 using namespace ci::app;
 using namespace bigscreens;
 
-const static float kDefaultGroundScaleX = 10000;
-const static float kDefaultGroundScaleY = 500;
-const static float kDefaultGroundScaleZ = kDefaultGroundScaleX;
-
 namespace bigscreens
 {
     

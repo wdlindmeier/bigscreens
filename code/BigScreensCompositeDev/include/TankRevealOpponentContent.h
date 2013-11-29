@@ -12,6 +12,7 @@
 #include "TankContent.h"
 #include "SharedTypes.hpp"
 #include "ContentProvider.h"
+#include "cinder/Easing.h"
 
 namespace bigscreens
 {
@@ -26,7 +27,9 @@ public:
     
     // void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect);
     // Override draw minion to draw the opponent
+    void update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func);
     void drawMinion();
+    void renderOpponent();
 
 private:
 

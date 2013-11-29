@@ -24,6 +24,7 @@ static const std::string kContentKeyPerlin = "perlin";
 static const std::string kContentKeyOpponent = "opponent";
 static const std::string kContentKeyStatic = "static";
 static const std::string kContentKeyLandscape = "landscape";
+static const std::string kContentKeyRevealOpponent = "opponentReveal";
 
 // MPE Messages
 const static std::string kMPEMessagePlay = "play";
@@ -94,3 +95,7 @@ const static float kTankBodyCenterY = 107.0f;
 // Scale
 const static float kOpponentScale = 1000.0f;
 const static float kMinionScale = 150.0f;
+
+const static float kDefaultGroundScaleX = 10000;
+const static float kDefaultGroundScaleY = 500;
+const static float kDefaultGroundScaleZ = kDefaultGroundScaleX;
