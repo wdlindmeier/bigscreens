@@ -26,8 +26,10 @@
 #include "TextLoopContent.h"
 #include "StaticContent.h"
 #include "LandscapeContent.h"
+#include "TankRevealOpponentContent.h"
 #include "cinder/ImageIo.h"
 #include "cinder/ip/Flip.h"
+#include "cinder/Easing.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -110,6 +112,7 @@ public:
     RenderableContentRef mTextLoopContent;
     RenderableContentRef mStaticContent;
     RenderableContentRef mLandscapeContent;
+    RenderableContentRef mRevealOpponentContent;
     
     OutLineBorderRef     mOutLine;
     
@@ -201,6 +204,7 @@ void BigScreensCompositeApp::reload()
     static_pointer_cast<TankConvergenceContent>(mSingleTankConvergeContent)->reset();
     static_pointer_cast<DumbTankContent>(mDumbTankContent)->reset();
     static_pointer_cast<TankMultiOverheadContent>(mMultiOverheadContent)->reset();
+    static_pointer_cast<TankRevealOpponentContent>(mRevealOpponentContent)->reset();
     // NOTE: This assumes the last layout is convergence and the second to last
     // is the grid that is merged
     
@@ -297,6 +301,10 @@ void BigScreensCompositeApp::loadAssets()
     LandscapeContent *landscapeContent = new LandscapeContent();
     landscapeContent->load("landscape_flat.png");
     mLandscapeContent = RenderableContentRef(landscapeContent);
+    
+    TankRevealOpponentContent *revealContent = new TankRevealOpponentContent();
+    revealContent->load();
+    mRevealOpponentContent = RenderableContentRef(revealContent);
 }
 
 void BigScreensCompositeApp::loadAudio()
@@ -359,6 +367,10 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
         contentName == kContentKeyTankFlat )
     {
         return mTankContent;
+    }
+    else if (contentName == kContentKeyRevealOpponent)
+    {
+        return mRevealOpponentContent;
     }
     else if (contentName == kContentKeyLandscape)
     {
@@ -625,6 +637,40 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     {
         shared_ptr<StaticContent> scene = static_pointer_cast<StaticContent>(content);
         // scene->update();
+    }
+    else if (contentInfo.contentKey == kContentKeyRevealOpponent)
+    {
+        shared_ptr<TankRevealOpponentContent> scene = static_pointer_cast<TankRevealOpponentContent>(content);
+
+        float overflowProgress = (double)contentElapsedFrames / 700.0f;
+        float progressCam = std::min<float>(1.0f, overflowProgress);
+        float progressTank = std::max<float>(0, overflowProgress - 1.0f);
+        float easeCam = ci::EaseInOutCubic()(progressCam);
+        float easeTank = ci::EaseInCubic()(progressTank);
+        
+        Vec3f tankPosition(0,0,-50000 * easeTank);
+        scene->setTankPosition(tankPosition);
+        scene->getTank()->setWheelSpeedMultiplier(easeTank * 10);
+        
+        Vec3f camEye(0,
+                     std::max<float>(200, tankPosition.y + 200 + ((1.0 - easeCam) * 5000)),
+                     easeCam * 1200);
+        
+        Vec3f camTarget(0,
+                        std::max<float>(400, tankPosition.y + 400),
+                        0);
+
+        scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
+                      {
+                          cam.setPerspective( 45.0f, ci::app::getWindowAspectRatio(), .01, 100000 );
+                          tank->setTargetPosition(Vec3f(0,0,-10000));
+                          tank->setBarrelAngleAndRotation(-35, 180);
+                          cam.lookAt(camEye, camTarget);
+                          if (progressTank > 0.2 && arc4random() % 100 < 2)
+                          {
+                              scene->fireTankGun();
+                          }
+                      });
     }
     else if (contentInfo.contentKey == kContentKeyTankOverhead)
     {

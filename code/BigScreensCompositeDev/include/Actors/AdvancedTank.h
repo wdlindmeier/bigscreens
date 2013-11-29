@@ -40,6 +40,7 @@ public:
     void render(const float alpha = 1.0);
     void setWheelSpeedMultiplier(const float wheelMultiplier);
     void setTargetPosition(const ci::Vec3f & targetPos);
+    void setBarrelAngleAndRotation(const float barrelAngleDegrees, const float barrelRotationDegrees);
     
 protected:
     

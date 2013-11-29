@@ -77,12 +77,20 @@ void AdvancedTank::update(long progressCounter)
     float radsTarget = atan2f(mTargetPosition.x, mTargetPosition.z);
 
     // TODO: Make the angle more intentional
-    mBarrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
+    float barrelAngleDeg = (10.0f + (((1.0 + sin(progressCounter * 0.01)) * 0.5) * 40.0f)) * -1;
     
     // NOTE: Aiming 20 degrees "ahead" of the minion
-    mHeadRotationDeg = toDegrees(radsTarget) + 20.0f;
+    float headRotationDeg = toDegrees(radsTarget) + 20.0f;
+    
+    setBarrelAngleAndRotation(barrelAngleDeg, headRotationDeg);
 
     FiringTank::update(progressCounter);
+}
+
+void AdvancedTank::setBarrelAngleAndRotation(const float barrelAngleDegrees, const float barrelRotationDegrees)
+{
+    mBarrelAngleDeg = barrelAngleDegrees;
+    mHeadRotationDeg = barrelRotationDegrees;
 }
 
 void AdvancedTank::render(const float alpha)
