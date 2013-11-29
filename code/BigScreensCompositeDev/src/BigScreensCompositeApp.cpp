@@ -649,7 +649,11 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         float easeTank = ci::EaseInCubic()(progressTank);
         
         Vec3f tankPosition(0,0,-50000 * easeTank);
+        
+        // Set twice to establish a non-zero vector
+        // scene->setTankPosition(tankPosition + Vec3f(0,0,-100)); // we want the vector to be (0,0,1)
         scene->setTankPosition(tankPosition);
+        
         scene->getTank()->setWheelSpeedMultiplier(easeTank * 10);
         
         Vec3f camEye(0,

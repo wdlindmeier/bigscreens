@@ -15,8 +15,10 @@ using namespace bigscreens;
 TankRevealOpponentContent::TankRevealOpponentContent() :
 mOpponent(ActorContentProvider::getOpponent())
 {
-    mGroundScale = Vec3f(kDefaultGroundScaleX, 10, kDefaultGroundScaleZ);
-    mMountainMagnitude = 0;
+    mGroundScale = Vec3f(kDefaultGroundScaleX * 1.5,
+                         10,
+                         kDefaultGroundScaleZ * 1.5);
+    mMountainMagnitude = 500;
 }
 
 // Override draw minion to draw the opponent
@@ -26,10 +28,20 @@ void TankRevealOpponentContent::drawMinion()
     renderOpponent();
 }
 
-void TankRevealOpponentContent::renderOpponent()
+void TankRevealOpponentContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
 {
     mOpponent->update(10, Vec3f(0,1,0));
     
+    TankContent::update(update_func);
+
+    // Put this in update
+    PositionOrientation orientation = mPositionOrientations[mContentID];
+    orientation.vector = Vec3f(0,0,1000);
+    mPositionOrientations[mContentID] = orientation;
+}
+
+void TankRevealOpponentContent::renderOpponent()
+{    
     // Draw the opponent
     gl::pushMatrices();
     
