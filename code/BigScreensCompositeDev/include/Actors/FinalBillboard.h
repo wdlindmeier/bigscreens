@@ -29,7 +29,7 @@ public:
 	
 	void setupBuffers();
 	void loadShaders();
-	void draw( const ci::gl::TextureRef billboardTex );
+	void draw( const ci::gl::TextureRef billboardTex, long numFramesRendered );
     
 private:
     

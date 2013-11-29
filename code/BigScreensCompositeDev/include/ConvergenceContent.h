@@ -19,6 +19,7 @@
 #include "GridLayout.h"
 #include "OutLineBorder.hpp"
 #include "cinder/Easing.h"
+#include "cinder/Rand.h"
 
 namespace bigscreens
 {
@@ -65,6 +66,7 @@ namespace bigscreens
         long mMSElapsedConvergence;
         ci::EaseInOutCubic mCamEase;
         float mTotalTimelineProgress;
+        ci::Rand mRand;
 
     };
 

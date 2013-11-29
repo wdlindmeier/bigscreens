@@ -22,13 +22,12 @@ public:
 	Opponent()
 	: mDynamicGeometry( new DynamicOpponent() ),
 		mSmokeEffect( new SmokeEffect() ),
-		mTime( ci::app::getElapsedSeconds() ),
 		mUpdateG( false )
 	{
 	}
 	
-	void update( float percentage, const ci::Vec3f & smokeAccel );
-	void draw( float zDepth, const ci::Vec3f & lightPosition );
+    void update(long numFramesRendered, float percentage, const ci::Vec3f & smokeAccel );
+	void draw( float zDepth, const ci::Vec3f & lightPosition, long numFramesRendered );
 	
 	void loadShaders();
 	
@@ -39,7 +38,6 @@ private:
 private:
 	DynamicOpponentRef		mDynamicGeometry;
 	SmokeEffectRef			mSmokeEffect;
-	float					mTime;
 	bool					mUpdateG;
 };
 	

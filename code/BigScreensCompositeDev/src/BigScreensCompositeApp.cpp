@@ -621,7 +621,8 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+            
+            if (mShouldFire || (Rand::randInt(100) == 1) ) scene->fireTankGun();
             
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
@@ -1110,7 +1111,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mFbo->unbindFramebuffer();
-	mFinalBillboard->draw( mFbo->getTexture() );
+	mFinalBillboard->draw( mFbo->getTexture(), mClient->getCurrentRenderFrame() );
 	
     if (mIsDrawingColumns)
     {

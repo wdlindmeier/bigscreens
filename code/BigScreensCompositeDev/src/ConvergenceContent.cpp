@@ -36,6 +36,8 @@ void ConvergenceContent::load()
     content->reset();
     mContent = RenderableContentRef(content);
     mOutLine = OutLineBorderRef(new OutLineBorder());
+    
+    mRand.seed(1221);
 }
 
 void ConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -120,9 +122,9 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         mContent->setFrameContentID(kLastContentID);
 
         if (!shouldDrawRegions &&
-            (arc4random() % 100) < 20)
+            mRand.nextInt(100) < 20)
         {
-            int fireTankIdx = arc4random() % kNumTanksConverging;
+            int fireTankIdx = mRand.nextInt(kNumTanksConverging);
             tanks->fireTankGun(fireTankIdx);
         }
 
