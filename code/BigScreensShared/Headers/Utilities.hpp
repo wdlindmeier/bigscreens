@@ -19,6 +19,10 @@
 #define QUOTE(str) #str
 #define EXPAND_AND_QUOTE(str) QUOTE(str)
 
+#ifdef RENDER_FRAMES
+#include "fftData.h"
+#endif
+
 namespace bigscreens
 {
     template<typename T>
@@ -30,15 +34,21 @@ namespace bigscreens
         (int)rectA.y2 == (int)rectB.y2;
     }
     
-    static int getMilliCount()
+    static long getMilliCount()
     {
+#ifdef RENDER_FRAMES
+        const static float kSimFPS = 60.0f;
+        float secondsElapsed = ci::app::getElapsedFrames() / kSimFPS;
+        return (long)(secondsElapsed * 1000);
+#else
         timeb tb;
         ftime(&tb);
-        int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
+        long nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
         return nCount;
+#endif
     }
     
-    static int getMilliSpan(int nTimeStart)
+    static long getMilliSpan(int nTimeStart)
     {
         int nSpan = getMilliCount() - nTimeStart;
         if(nSpan < 0)
