@@ -326,11 +326,16 @@ void BigScreensCompositeApp::loadAudio()
 
 ci::DataSourceRef BigScreensCompositeApp::mpeSettingsFile()
 {
-# if IS_IAC
+#ifdef RENDER_FRAMES
+    string settingsFilename = "settings."+to_string(CLIENT_ID)+".render.xml";
+#else
+#if IS_IAC
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".IAC.xml";
 #else
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".xml";
 #endif
+#endif // ifdef
+    console() << "Loading settings: " << settingsFilename << "\n";
     return ci::app::loadResource(settingsFilename);
 }
 
@@ -400,7 +405,7 @@ RenderableContentRef BigScreensCompositeApp::contentForKey(const std::string & c
 
 float * BigScreensCompositeApp::getFFTData()
 {
-#if RENDER_FRAMES
+#ifdef RENDER_FRAMES
     return (float *)kCannedFFTData[mClient->getCurrentRenderFrame()];
 #else
     return mSoundtrack->getFftData();
@@ -1066,14 +1071,12 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     
     mShouldFire = false;
     
-#if RENDER_FRAMES
-    // TMP
-    if (mLayoutIndex == 2)
+#ifdef RENDER_FRAMES
     {
         gl::Texture & fboTex = *mFbo->getTexture();
         Surface flipped(fboTex);
         ci::ip::flipVertical(&flipped);
-        ci::writeImage(getHomeDirectory() / "Documents" / "BigScreensRender" / (std::to_string(mClient->getCurrentRenderFrame()) + ".png"), flipped);
+        ci::writeImage(getHomeDirectory() / "Documents" / "BigScreensRender" / std::to_string(CLIENT_ID) / (std::to_string(mClient->getCurrentRenderFrame()) + ".png"), flipped);
     }
 #endif
     

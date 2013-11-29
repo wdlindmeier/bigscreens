@@ -78,11 +78,15 @@ void BigScreensControllerApp::setup()
 
 ci::DataSourceRef BigScreensControllerApp::mpeSettingsFile()
 {
-# if IS_IAC
+#ifdef RENDER_FRAMES
+    string settingsFilename = "settings."+to_string(CLIENT_ID)+".render.xml";
+#else
+#if IS_IAC
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".IAC.xml";
 #else
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".xml";
 #endif
+#endif // ifdef    console() << "Loading settings: " << settingsFilename << "\n";
     return ci::app::loadResource(settingsFilename);
 }
 

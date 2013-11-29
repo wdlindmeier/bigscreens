@@ -18,9 +18,8 @@
 
 #define QUOTE(str) #str
 #define EXPAND_AND_QUOTE(str) QUOTE(str)
-#define RENDER_FRAMES   1
 
-#if RENDER_FRAMES
+#ifdef RENDER_FRAMES
 #include "fftData.h"
 #endif
 
@@ -37,7 +36,7 @@ namespace bigscreens
     
     static long getMilliCount()
     {
-#if RENDER_FRAMES
+#ifdef RENDER_FRAMES
         const static float kSimFPS = 60.0f;
         float secondsElapsed = ci::app::getElapsedFrames() / kSimFPS;
         return (long)(secondsElapsed * 1000);

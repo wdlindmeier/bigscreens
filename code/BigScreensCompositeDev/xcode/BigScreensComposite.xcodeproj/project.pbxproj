@@ -166,6 +166,18 @@
 		A9C5969718469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
 		A9C5969818469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
 		A9C5969918469FF400C8DBDC /* FinalBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */; };
+		A9C596A61848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C596A51848F77600C8DBDC /* TankRevealOpponentContent.cpp */; };
+		A9C596A71848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C596A51848F77600C8DBDC /* TankRevealOpponentContent.cpp */; };
+		A9C596A81848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C596A51848F77600C8DBDC /* TankRevealOpponentContent.cpp */; };
+		A9C596B11848FC2700C8DBDC /* settings.0.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AE1848FC2700C8DBDC /* settings.0.render.xml */; };
+		A9C596B21848FC2700C8DBDC /* settings.0.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AE1848FC2700C8DBDC /* settings.0.render.xml */; };
+		A9C596B31848FC2700C8DBDC /* settings.0.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AE1848FC2700C8DBDC /* settings.0.render.xml */; };
+		A9C596B41848FC2700C8DBDC /* settings.1.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AF1848FC2700C8DBDC /* settings.1.render.xml */; };
+		A9C596B51848FC2700C8DBDC /* settings.1.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AF1848FC2700C8DBDC /* settings.1.render.xml */; };
+		A9C596B61848FC2700C8DBDC /* settings.1.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596AF1848FC2700C8DBDC /* settings.1.render.xml */; };
+		A9C596B71848FC2700C8DBDC /* settings.2.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596B01848FC2700C8DBDC /* settings.2.render.xml */; };
+		A9C596B81848FC2700C8DBDC /* settings.2.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596B01848FC2700C8DBDC /* settings.2.render.xml */; };
+		A9C596B91848FC2700C8DBDC /* settings.2.render.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9C596B01848FC2700C8DBDC /* settings.2.render.xml */; };
 		A9C5C7A618358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A718358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
 		A9C5C7A818358A01000554D6 /* DumbTankContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */; };
@@ -438,6 +450,11 @@
 		A9C5969418468F1D00C8DBDC /* LandscapeContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapeContent.h; path = ../include/LandscapeContent.h; sourceTree = "<group>"; };
 		A9C5969518469FF400C8DBDC /* FinalBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FinalBillboard.cpp; sourceTree = "<group>"; };
 		A9C5969C1847B48D00C8DBDC /* fftData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fftData.h; path = ../../BigScreensCompositeDev/include/fftData.h; sourceTree = "<group>"; };
+		A9C596A41848F76600C8DBDC /* TankRevealOpponentContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TankRevealOpponentContent.h; path = ../include/TankRevealOpponentContent.h; sourceTree = "<group>"; };
+		A9C596A51848F77600C8DBDC /* TankRevealOpponentContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TankRevealOpponentContent.cpp; path = ../src/TankRevealOpponentContent.cpp; sourceTree = "<group>"; };
+		A9C596AE1848FC2700C8DBDC /* settings.0.render.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.0.render.xml; sourceTree = "<group>"; };
+		A9C596AF1848FC2700C8DBDC /* settings.1.render.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.1.render.xml; sourceTree = "<group>"; };
+		A9C596B01848FC2700C8DBDC /* settings.2.render.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.2.render.xml; sourceTree = "<group>"; };
 		A9C5C7A418358A01000554D6 /* DumbTankContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DumbTankContent.cpp; path = ../src/DumbTankContent.cpp; sourceTree = "<group>"; };
 		A9C5C7A918358A1D000554D6 /* DumbTankContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DumbTankContent.h; path = ../include/DumbTankContent.h; sourceTree = "<group>"; };
 		A9E48EA118103A8300F2F1C9 /* Hyperspace Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hyperspace Bold Italic.ttf"; sourceTree = "<group>"; };
@@ -847,10 +864,13 @@
 			isa = PBXGroup;
 			children = (
 				A9E48ECA18103CA900F2F1C9 /* settings.0.IAC.xml */,
+				A9C596AE1848FC2700C8DBDC /* settings.0.render.xml */,
 				A9E48ECB18103CA900F2F1C9 /* settings.0.xml */,
 				A9E48ECC18103CA900F2F1C9 /* settings.1.IAC.xml */,
+				A9C596AF1848FC2700C8DBDC /* settings.1.render.xml */,
 				A9E48ECD18103CA900F2F1C9 /* settings.1.xml */,
 				A9E48ECE18103CA900F2F1C9 /* settings.2.IAC.xml */,
+				A9C596B01848FC2700C8DBDC /* settings.2.render.xml */,
 				A9E48ECF18103CA900F2F1C9 /* settings.2.xml */,
 				A9E48ED018103CA900F2F1C9 /* settings.555.IAC.xml */,
 				A9E48ED118103CA900F2F1C9 /* settings.555.xml */,
@@ -890,6 +910,7 @@
 				A90D312E18118B260068E386 /* TankContent.h */,
 				A9B50AFA1822F2F300C077BD /* TankConvergenceContent.h */,
 				A969C9BD183AF0C70030569D /* TankMultiOverheadContent.h */,
+				A9C596A41848F76600C8DBDC /* TankRevealOpponentContent.h */,
 				A9EE4B6B183F01FC0089FF27 /* TextLoopContent.h */,
 				A971227F18196DDD006DD64E /* TextureContent.h */,
 			);
@@ -909,6 +930,7 @@
 				A90D312F18118B2E0068E386 /* TankContent.cpp */,
 				A9B50AF51822F2DA00C077BD /* TankConvergenceContent.cpp */,
 				A969C9B8183AF0A50030569D /* TankMultiOverheadContent.cpp */,
+				A9C596A51848F77600C8DBDC /* TankRevealOpponentContent.cpp */,
 				A9EE4B66183F01E20089FF27 /* TextLoopContent.cpp */,
 				A971227A18196DCB006DD64E /* TextureContent.cpp */,
 			);
@@ -1092,6 +1114,7 @@
 				B349E4381837CC4E008E5592 /* basic.frag in Resources */,
 				B349E4391837CC4E008E5592 /* basic.vert in Resources */,
 				B349E43A1837CC4E008E5592 /* finalEffects.frag in Resources */,
+				A9C596B71848FC2700C8DBDC /* settings.2.render.xml in Resources */,
 				B349E43B1837CC4E008E5592 /* finalEffects.vert in Resources */,
 				B349E43C1837CC4E008E5592 /* ground_texture.frag in Resources */,
 				B349E43D1837CC4E008E5592 /* ground_texture.vert in Resources */,
@@ -1133,6 +1156,7 @@
 				B3115CCC182D889600FB7D2F /* smoke_blur.png in Resources */,
 				B3115CF0182D99C300FB7D2F /* tank.obj in Resources */,
 				A971229F1819E369006DD64E /* height_sample.png in Resources */,
+				A9C596B41848FC2700C8DBDC /* settings.1.render.xml in Resources */,
 				B3115CDE182D99C300FB7D2F /* tank_body.obj in Resources */,
 				A9E48ED818103CA900F2F1C9 /* settings.555.IAC.xml in Resources */,
 				A9E48EC018103A8300F2F1C9 /* playing.png in Resources */,
@@ -1156,6 +1180,7 @@
 				A9E48EBD18103A8300F2F1C9 /* Hyperspace Italic.ttf in Resources */,
 				A9EE4B771840076A0089FF27 /* static_1.png in Resources */,
 				A9E48EBC18103A8300F2F1C9 /* Hyperspace Bold.ttf in Resources */,
+				A9C596B11848FC2700C8DBDC /* settings.0.render.xml in Resources */,
 				A97122C1181B1555006DD64E /* escape_from_ny_theme.mp3 in Resources */,
 				A9EE4B35183BF81E0089FF27 /* updateOppSmoke.vert in Resources */,
 				A9EE4B2F183BF81E0089FF27 /* renderOppSmoke.frag in Resources */,
@@ -1176,6 +1201,7 @@
 				A9E48EDC18103CE300F2F1C9 /* settings.555.IAC.xml in Resources */,
 				A97122A01819E369006DD64E /* height_sample.png in Resources */,
 				A9E48EDD18103CE300F2F1C9 /* playing.png in Resources */,
+				A9C596B81848FC2700C8DBDC /* settings.2.render.xml in Resources */,
 				B3115CEB182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				A9E48EDE18103CE300F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48EDF18103CE300F2F1C9 /* screen.png in Resources */,
@@ -1217,6 +1243,7 @@
 				A96237DC183985DB00C1CF83 /* outline.frag in Resources */,
 				A96237D8183985DB00C1CF83 /* oppDynamic.geom in Resources */,
 				A96237CE183985DB00C1CF83 /* heightmap.frag in Resources */,
+				A9C596B51848FC2700C8DBDC /* settings.1.render.xml in Resources */,
 				A96237D7183985DB00C1CF83 /* oppDynamic.frag in Resources */,
 				A96237D6183985DB00C1CF83 /* oppBasic.vert in Resources */,
 				A96237E9183985DB00C1CF83 /* renderOppDynamic.vert in Resources */,
@@ -1240,6 +1267,7 @@
 				A96237E3183985DB00C1CF83 /* quadTriangle.vert in Resources */,
 				A9EE4B781840076A0089FF27 /* static_1.png in Resources */,
 				A96237CC183985DB00C1CF83 /* ground_texture.frag in Resources */,
+				A9C596B21848FC2700C8DBDC /* settings.0.render.xml in Resources */,
 				A96237D3183985DB00C1CF83 /* offset_texture.vert in Resources */,
 				A96237DA183985DB00C1CF83 /* oppSmoke.frag in Resources */,
 				A96237D5183985DB00C1CF83 /* oppBasic.geom in Resources */,
@@ -1260,6 +1288,7 @@
 				A9E48F0918103CE900F2F1C9 /* settings.555.IAC.xml in Resources */,
 				B3115CEC182D99C300FB7D2F /* tank_wheel_centered.obj in Resources */,
 				A97122A11819E369006DD64E /* height_sample.png in Resources */,
+				A9C596B91848FC2700C8DBDC /* settings.2.render.xml in Resources */,
 				A9E48F0A18103CE900F2F1C9 /* playing.png in Resources */,
 				A9E48F0B18103CE900F2F1C9 /* settings.0.IAC.xml in Resources */,
 				A9E48F0C18103CE900F2F1C9 /* screen.png in Resources */,
@@ -1301,6 +1330,7 @@
 				A96237FC183985DC00C1CF83 /* oppDynamic.frag in Resources */,
 				A96237FB183985DC00C1CF83 /* oppBasic.vert in Resources */,
 				A962380E183985DC00C1CF83 /* renderOppDynamic.vert in Resources */,
+				A9C596B61848FC2700C8DBDC /* settings.1.render.xml in Resources */,
 				A9623803183985DC00C1CF83 /* quadOutline.frag in Resources */,
 				A96237F2183985DC00C1CF83 /* ground_texture.vert in Resources */,
 				A9623800183985DC00C1CF83 /* oppSmoke.vert in Resources */,
@@ -1324,6 +1354,7 @@
 				A96237FF183985DC00C1CF83 /* oppSmoke.frag in Resources */,
 				A9EE4B791840076A0089FF27 /* static_1.png in Resources */,
 				A96237FA183985DC00C1CF83 /* oppBasic.geom in Resources */,
+				A9C596B31848FC2700C8DBDC /* settings.0.render.xml in Resources */,
 				A9EE4B37183BF81E0089FF27 /* updateOppSmoke.vert in Resources */,
 				A9EE4B31183BF81E0089FF27 /* renderOppSmoke.frag in Resources */,
 				A9EE4B34183BF81E0089FF27 /* renderOppSmoke.vert in Resources */,
@@ -1387,6 +1418,7 @@
 				B3115C4A182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF71822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C58182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9C596A61848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */,
 				A9EE4B68183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C889F1810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88E918107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
@@ -1422,6 +1454,7 @@
 				B3115C4B182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF81822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C59182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9C596A71848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */,
 				A9EE4B69183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A01810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EA18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
@@ -1457,6 +1490,7 @@
 				B3115C4C182D507500FB7D2F /* ContentProvider.cpp in Sources */,
 				A9B50AF91822F2DA00C077BD /* TankConvergenceContent.cpp in Sources */,
 				B3115C5A182D527100FB7D2F /* AdvancedTank.cpp in Sources */,
+				A9C596A81848F77600C8DBDC /* TankRevealOpponentContent.cpp in Sources */,
 				A9EE4B6A183F01E20089FF27 /* TextLoopContent.cpp in Sources */,
 				A97C88A11810440800AE2AE2 /* TCPAsyncClient.cpp in Sources */,
 				A97C88EB18107B3B00AE2AE2 /* GridLayout.cpp in Sources */,
@@ -1481,6 +1515,140 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		A9C596A91848FA6B00C8DBDC /* Render */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				CINDER_PATH = ../../../cinder_dev;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SRC_PATH=\"$(SRCROOT)/..\"",
+					"IS_IAC=1",
+					"RENDER_FRAMES=1",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+			};
+			name = Render;
+		};
+		A9C596AA1848FA6B00C8DBDC /* Render */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/0";
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CLIENT_ID=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = TanksIAC;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Render;
+		};
+		A9C596AB1848FA6B00C8DBDC /* Render */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1";
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = TanksIAC;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Render;
+		};
+		A9C596AC1848FA6B00C8DBDC /* Render */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/2";
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=2",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = TanksIAC;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Render;
+		};
+		A9C596AD1848FA6B00C8DBDC /* Render */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/555";
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BigScreensComposite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CLIENT_ID=555",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				PRODUCT_NAME = BigScreensController;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SYMROOT = ./build;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Render;
+		};
 		A9E48F0318103CE300F2F1C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1744,6 +1912,7 @@
 			buildConfigurations = (
 				A9E48F0318103CE300F2F1C9 /* Debug */,
 				A9E48F0418103CE300F2F1C9 /* Release */,
+				A9C596AB1848FA6B00C8DBDC /* Render */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1753,6 +1922,7 @@
 			buildConfigurations = (
 				A9E48F3018103CE900F2F1C9 /* Debug */,
 				A9E48F3118103CE900F2F1C9 /* Release */,
+				A9C596AC1848FA6B00C8DBDC /* Render */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1762,6 +1932,7 @@
 			buildConfigurations = (
 				A9E48F5D18103CF500F2F1C9 /* Debug */,
 				A9E48F5E18103CF500F2F1C9 /* Release */,
+				A9C596AD1848FA6B00C8DBDC /* Render */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1771,6 +1942,7 @@
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
 				C01FCF4C08A954540054247B /* Release */,
+				A9C596AA1848FA6B00C8DBDC /* Render */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1780,6 +1952,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				A9C596A91848FA6B00C8DBDC /* Render */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
