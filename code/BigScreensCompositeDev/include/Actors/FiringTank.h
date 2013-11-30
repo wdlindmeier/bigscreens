@@ -30,7 +30,7 @@ public:
     void fire(const PositionOrientation & position,
               const GroundOrientaion & groundOrientation);
     void setFrameContentID(const int contentID);
-    void update(long progressCounter);
+    void update(long framesRendered);
     void renderShots(ci::CameraPersp & cam, const float alpha = 1.0);
 
 protected:

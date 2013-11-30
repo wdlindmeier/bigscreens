@@ -39,7 +39,7 @@ public:
 
     float           getProgress();
     int             getContentID();
-    void            update(float amount);
+    void            update(float amount, long currentFrameCount);
     bool            isDead();
 
     void            renderExplosion(ci::CameraPersp & cam);
@@ -70,6 +70,8 @@ private:
     ci::gl::VboRef  mLineVbo;
     
     int             mContentID;
+    
+    long            mUpdatedAtFrameCount;
 };
     
 }

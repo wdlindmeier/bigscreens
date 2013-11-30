@@ -15,6 +15,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "cinder/CinderMath.h"
 #include "cinder/gl/Texture.h"
+#include "cinder/Rand.h"
 
 namespace bigscreens {
 
@@ -54,6 +55,7 @@ private:
 	ci::TriMeshRef		mTrimesh;
 	ci::gl::TextureRef	mRandomTexture;
 	GLuint				mRenderSub, mUpdateSub, mTFOs[2], drawBuf;
+    ci::Rand            mRand;
 };
 	
 class SphericalGeometry {

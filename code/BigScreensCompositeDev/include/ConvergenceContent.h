@@ -46,6 +46,8 @@ namespace bigscreens
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();
         void setContentRect(const ci::Rectf & rect);
+        void setFramesRendered(const long long numFramesRendered);
+        void setConvergenceTankContent(RenderableContentRef content);
         
     protected:
         
@@ -67,6 +69,7 @@ namespace bigscreens
         ci::EaseInOutCubic mCamEase;
         float mTotalTimelineProgress;
         ci::Rand mRand;
+        long mNumFramesPrevLayoutRendered;
 
     };
 

@@ -87,7 +87,7 @@ void SmokeEffect::draw( float zDepth, long numFramesRendered )
 	
 	ci::gl::enableAlphaBlending();
 	
-	mRenderOpponentParticlesGlsl->uniform( "Time", (float)(numFramesRendered / 60.0f) );
+	mRenderOpponentParticlesGlsl->uniform( "Time", (float)((double)numFramesRendered / 60.0f) );
 	mRenderOpponentParticlesGlsl->uniform( "projection", ci::gl::getProjection() );
 	mRenderOpponentParticlesGlsl->uniform( "modelView", ci::gl::getModelView() );
 	mRenderOpponentParticlesGlsl->uniform( "MinParticleSize", 1.0f  );

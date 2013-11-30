@@ -21,17 +21,20 @@ mBarrelAngleDeg(0)
     
 }
 
-void FiringTank::update(long progressCounter)
+void FiringTank::update(long framesRendered)
 {
     vector<TankShot> keepShots;
     for (TankShot & shot : mShotsFired)
     {
-        // Make this absolute, not relative?
-        // Maybe this is fine if it's always being updated on the frame.
-        shot.update(0.2f);
-        if (!shot.isDead())
+        // TEST
+        // Only update when it's your content ID
+        if (shot.getContentID() == mContentID)
         {
-            keepShots.push_back(shot);
+            shot.update(0.2f, framesRendered);
+            if (!shot.isDead())
+            {
+                keepShots.push_back(shot);
+            }
         }
     }
     mShotsFired = keepShots;

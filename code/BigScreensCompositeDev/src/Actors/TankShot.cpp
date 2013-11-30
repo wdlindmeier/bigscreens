@@ -45,6 +45,7 @@ mVelocity(velocity)
 ,mContentID(parentContentID)
 ,mGroundOrientation(groundOrientation)
 ,mTankOrientation(tankPosition)
+,mUpdatedAtFrameCount(0)
 {
     if (!ExplosionTexture)
     {
@@ -169,28 +170,33 @@ void TankShot::generateLine()
     mLineVao->unbind();
 }
 
-void TankShot::update(float amount)
+void TankShot::update(float amount, long currentFrameCount)
 {
-    mProgress += amount;
-    float progress = std::min<float>(mProgress, mMaxProgress);
-    if (!mHasExploded)
+    // Since the update amount is a fixed value, make sure we're not
+    // adding it more than once per render frame.
+    if (mUpdatedAtFrameCount < currentFrameCount)
     {
-        if (progress == mMaxProgress)
+        mUpdatedAtFrameCount = currentFrameCount;
+        mProgress += amount;
+        float progress = std::min<float>(mProgress, mMaxProgress);
+        if (!mHasExploded)
         {
-            mHasExploded = true;
-            mExplosionScale = MaxExplosionScale;
+            if (progress >= mMaxProgress)
+            {
+                mHasExploded = true;
+                mExplosionScale = MaxExplosionScale;
+            }
+        }
+        else
+        {
+            // Countdown to death
+            mExplosionScale *= 0.95;
+            if (mExplosionScale < 0.05)
+            {
+                mIsDead = true;
+            }
         }
     }
-    else
-    {
-        // Countdown to death
-        mExplosionScale *= 0.95;
-        if (mExplosionScale < 0.05)
-        {
-            mIsDead = true;
-        }
-    }
-    
 }
 
 void TankShot::renderLine()

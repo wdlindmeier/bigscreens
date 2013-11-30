@@ -33,6 +33,7 @@ namespace bigscreens
     , mMountainMagnitude(5.0f)
     , mGroundScale(kDefaultGroundScaleX, kDefaultGroundScaleY, kDefaultGroundScaleZ)
     {
+        mRand.seed(1221);
     }
     
     void TankContent::setFrameContentID(const int contentID)
@@ -524,7 +525,7 @@ namespace bigscreens
         gl::setDefaultShaderVars();
         
         ColorAf randColor(CM_HSV,
-                          Rand::randFloat(),
+                          mRand.nextFloat(),
                           1.0f,
                           1.0f,
                           mRenderAlpha);

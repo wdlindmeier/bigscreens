@@ -11,10 +11,13 @@ uniform float volume;
 
 out vec4 color;
 
+// IMPORANT:
+// DONT use random in shaders. These won't sync across screens.
+/*
 float rand(vec2 co) {
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
-
+*/
 void main()
 {
 	vec4 sum = vec4(0);
@@ -80,8 +83,10 @@ void main()
     //TODO make size dependent on viewport
     col *= 0.9 + 0.1 * sin( 10.0 * time + uv.y * 1500.0 );
 	
+    // IMPORANT:
+    // DONT use random in shaders. These won't sync across screens
 	//flickering (semi-randomized)
-//    col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );
+    // col *= 1.0 - 0.07 * rand( vec2( time, tan( time ) ) );
 	
 	color = col;
 }

@@ -140,7 +140,6 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const ci::Rectf & contentRect,
                                     const float alpha)
 {
-    
     mRenderAlpha = ci::math<float>::clamp(alpha, 0, 1.0);
     mScreenAlpha = mRenderAlpha*mRenderAlpha*mRenderAlpha;
     
