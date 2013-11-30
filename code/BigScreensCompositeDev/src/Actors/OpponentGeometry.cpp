@@ -21,6 +21,7 @@ DynamicOpponent::DynamicOpponent()
 	loadBuffers();
 	loadTexture();
 	createRandomMap();
+    mRand.seed(1221);
 }
 	
 void DynamicOpponent::update( float percentage, float time )
@@ -152,10 +153,11 @@ void DynamicOpponent::createRandomMap()
 	ci::Surface32f mSurface(400, 400, false);
 	auto iter = mSurface.getIter();
 	while(iter.line()) {
-		while(iter.pixel()) {
-			iter.r() = ci::randFloat( 0.0f, 1.0f );
-			iter.g() = ci::randFloat( 0.0f, 1.0f );
-			iter.b() = ci::randFloat( 0.0f, 1.0f );
+		while(iter.pixel())
+        {
+			iter.r() = mRand.nextFloat(0, 1.0f);
+			iter.g() = mRand.nextFloat(0, 1.0f);
+			iter.b() = mRand.nextFloat(0, 1.0f);
 		}
 	}
 	

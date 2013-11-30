@@ -20,7 +20,9 @@ extern long MSCamerasConverge = 1000;
 extern long MSConvergeBeforeCameraMerge = 1000;
 //extern float MaxExplosionScale;// = kDefaultExplosionScale;
 
-ConvergenceContent::ConvergenceContent() : mMSElapsedConvergence(0)
+ConvergenceContent::ConvergenceContent() :
+mMSElapsedConvergence(0)
+,mNumFramesPrevLayoutRendered(0)
 {
 }
 
@@ -31,11 +33,19 @@ void ConvergenceContent::setContentRect(const ci::Rectf & rect)
 
 void ConvergenceContent::load()
 {
+    /*
     TankConvergenceContent *content = new TankConvergenceContent();
     content->load();
     content->reset();
     mContent = RenderableContentRef(content);
-    mOutLine = OutLineBorderRef(new OutLineBorder());
+    */
+    mOutLine = OutLineBorderRef(new OutLineBorder());    
+    mRand.seed(1221);
+}
+
+void ConvergenceContent::setConvergenceTankContent(RenderableContentRef content)
+{
+    mContent = content;
 }
 
 void ConvergenceContent::setMSElapsed(const long msElapsedConvergence)
@@ -43,11 +53,21 @@ void ConvergenceContent::setMSElapsed(const long msElapsedConvergence)
     mMSElapsedConvergence = msElapsedConvergence;
 }
 
+// We 
+void ConvergenceContent::setFramesRendered(const long long numFramesRendered)
+{
+    RenderableContent::setFramesRendered(numFramesRendered);
+    if (mNumFramesPrevLayoutRendered == 0)
+    {
+        mNumFramesPrevLayoutRendered = mContent->getFramesRendered();
+        ci::app::console() << "PREV num frames rendered: " << mNumFramesPrevLayoutRendered << "\n";
+    }
+}
+
 void ConvergenceContent::reset(const GridLayout & previousLayout)
 {
     shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
     content->reset();
-
     mLayout = previousLayout;
 }
 
@@ -55,8 +75,8 @@ void ConvergenceContent::update(const float totalTimelineProgress)
 {
     mTotalTimelineProgress = totalTimelineProgress;
     shared_ptr<TankConvergenceContent> content = static_pointer_cast<TankConvergenceContent>(mContent);
-    content->resetPositions();
-    content->setFramesRendered(mNumFramesRendered);
+    content->resetPositions();    
+    content->setFramesRendered(mNumFramesPrevLayoutRendered + mNumFramesRendered);
 }
 
 ci::Camera & ConvergenceContent::getCamera()
@@ -120,9 +140,9 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         mContent->setFrameContentID(kLastContentID);
 
         if (!shouldDrawRegions &&
-            (arc4random() % 100) < 20)
+            mRand.nextInt(100) < 20)
         {
-            int fireTankIdx = arc4random() % kNumTanksConverging;
+            int fireTankIdx = mRand.nextInt(kNumTanksConverging);
             tanks->fireTankGun(fireTankIdx);
         }
 

@@ -26,7 +26,8 @@ namespace bigscreens
         RenderableContent() : mContentID(-1), mNumFramesRendered(0){};
         virtual ~RenderableContent(){};
         virtual void render(const ci::Vec2i & screenOffset, const ci::Rectf & contentRect) = 0;
-        void setFramesRendered(const long long numFramesRendered){ mNumFramesRendered = numFramesRendered; };
+        virtual void setFramesRendered(const long long numFramesRendered){ mNumFramesRendered = numFramesRendered; };
+        long long getFramesRendered(){ return mNumFramesRendered; };
         // NOTE: Set a tmp content ID before rendering
         // and before firing a shot. All shots are tied to
         // a specific content ID.

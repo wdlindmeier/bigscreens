@@ -49,8 +49,8 @@ public:
 };
 
 
-namespace TextContentProvider {
-    
+namespace TextContentProvider
+{    
     struct TextTimelineAndHeight
     {
         TextTimeline timeline;

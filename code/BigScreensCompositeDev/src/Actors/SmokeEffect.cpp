@@ -8,11 +8,13 @@
 
 #include "SmokeEffect.h"
 
-namespace bigscreens {
+namespace bigscreens
+{
 
 SmokeEffect::SmokeEffect()
-: drawBuf(1), time(0), deltaT(0)
+: drawBuf(1)//, time(0), deltaT(0)
 {
+    mRand.seed(1221);
 	ci::TriMesh::Format mTrimeshFormat;
 	mTrimeshFormat.positions(3).normals();
 	mTrimesh = ci::TriMesh::create( mTrimeshFormat );
@@ -24,19 +26,22 @@ SmokeEffect::SmokeEffect()
 	mCam.setPerspective( 60.0f, ci::app::getWindowAspectRatio(), .1, 1000);
 	mCam.lookAt( ci::Vec3f( 0, 0, 10 ), ci::Vec3f( 0, 0, 0 ) );
 }
-	
-void SmokeEffect::update( const ci::Vec3f & accel, float currentTime )
+    
+void SmokeEffect::update( const ci::Vec3f & accel, long numFramesRendered )
 {
 	drawBuf = 1 - drawBuf;
+    
+    /*
 	deltaT = ci::app::getElapsedSeconds() - time;
 	time = ci::app::getElapsedSeconds();
-	
+	*/
+    
 	mUpdateOpponentParticlesGlsl->bind();
 	
 	// UPDATE
 	
-	mUpdateOpponentParticlesGlsl->uniform( "Time", time );
-	mUpdateOpponentParticlesGlsl->uniform( "H", deltaT );
+	mUpdateOpponentParticlesGlsl->uniform( "Time", numFramesRendered / 60.0f );
+	mUpdateOpponentParticlesGlsl->uniform( "H", (float)(1.0/60.0f) );
 	mUpdateOpponentParticlesGlsl->uniform( "Accel", accel );
 	mUpdateOpponentParticlesGlsl->uniform( "ParticleLifetime", 3.0f );
 	
@@ -57,7 +62,7 @@ void SmokeEffect::update( const ci::Vec3f & accel, float currentTime )
 	mUpdateOpponentParticlesGlsl->unbind();
 }
 
-void SmokeEffect::draw( float zDepth )
+void SmokeEffect::draw( float zDepth, long numFramesRendered )
 {
     // TODO: This needs alpha for the final transition.
 
@@ -82,7 +87,7 @@ void SmokeEffect::draw( float zDepth )
 	
 	ci::gl::enableAlphaBlending();
 	
-	mRenderOpponentParticlesGlsl->uniform( "Time", time );
+	mRenderOpponentParticlesGlsl->uniform( "Time", (float)((double)numFramesRendered / 60.0f) );
 	mRenderOpponentParticlesGlsl->uniform( "projection", ci::gl::getProjection() );
 	mRenderOpponentParticlesGlsl->uniform( "modelView", ci::gl::getModelView() );
 	mRenderOpponentParticlesGlsl->uniform( "MinParticleSize", 1.0f  );
@@ -122,8 +127,8 @@ void SmokeEffect::initBuffers()
 	ci::Vec3f v(0.0f, 0.0f, 0.0f);
 	float velocity, theta, phi;
 	for( int i = 0; i < nParticles; i++ ) {
-		theta = mix( 0.0f, (float)pi / 6.0f, ci::randFloat() );
-		phi = mix( 0.0f, (float)(2 * pi), ci::randFloat() );
+		theta = mix( 0.0f, (float)pi / 6.0f, mRand.nextFloat() );
+		phi = mix( 0.0f, (float)(2 * pi), mRand.nextFloat() );
 		
 		//			v.x = sinf(i) * cosf(i);
 		//			v.y = cosf(phi) * sinf(i);
@@ -132,12 +137,12 @@ void SmokeEffect::initBuffers()
 		//			v.y = sin( -M_PI_2 + M_PI + i );
 		//			v.z = sin( 2* M_PI * i * (i/nParticles) ) * sin( M_PI + i );
 		
-		float angle = ci::randFloat( 0.0f, pi*2.0f );// random(0,TWO_PI);
-		v.z = ci::randFloat( -1.0f, 1.0 );
+		float angle = mRand.nextFloat( 0.0f, pi*2.0f );// random(0,TWO_PI);
+		v.z = mRand.nextFloat( -1.0f, 1.0 );
 		v.x = sqrt(1-v.z*v.z)*cos(angle);
 		v.y = sqrt(1-v.z*v.z)*sin(angle);
 		
-		velocity = mix( 0.0f, 1.5f, ci::randFloat() );
+		velocity = mix( 0.0f, 1.5f, mRand.nextFloat() );
 		v = v.normalized() * velocity;
 		mTrimesh->appendNormal( v );
 	}

@@ -92,7 +92,7 @@ void OpponentContent::update(std::function<void (ci::CameraPersp & cam, Opponent
                          cos(mNumFramesRendered * 0.003333));
     
     float percentage = sin(mNumFramesRendered * 0.01);
-    mOpponent->update(percentage, smokeDirection);
+    mOpponent->update(mNumFramesRendered, percentage, smokeDirection);
     
     update_func(mCam, mOpponent);
 }
@@ -137,7 +137,7 @@ void OpponentContent::renderOpponent()
     
     float zDepth = mCam.getEyePoint().length();
     
-    mOpponent->draw(zDepth, lightPos);
+    mOpponent->draw(zDepth, lightPos, mNumFramesRendered);
     
     gl::popMatrices();
 }

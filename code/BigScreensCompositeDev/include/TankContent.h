@@ -21,6 +21,7 @@
 #include "OpponentGeometry.h"
 #include "FloorPlane.h"
 #include "PerlinContent.h"
+#include "cinder/Rand.h"
 
 namespace bigscreens {
 
@@ -102,5 +103,7 @@ protected:
     float               mRenderAlpha;
     float               mScreenAlpha;
     float               mMountainMagnitude;
+    
+    ci::Rand            mRand;
 };
 }

@@ -19,7 +19,6 @@
 #include "cinder/gl/Texture.h"
 #include "Utilities.hpp"
 
-
 namespace bigscreens {
 	
 const int nParticles = 4000;
@@ -37,9 +36,11 @@ public:
 //		draw(zDepth);
 	}
 	
-	void update( const ci::Vec3f & accel, float time );
+	//void update( const ci::Vec3f & accel, float time );
+    void update( const ci::Vec3f & accel, long numFramesRendered );
 	
-	void draw( float zDepth );
+	void draw( float zDepth, long numFramesRendered );
+    void resetRand();
 	
 	
 private:
@@ -62,10 +63,11 @@ private:
 	ci::gl::GlslProgRef	mUpdateOpponentParticlesGlsl, mRenderOpponentParticlesGlsl;
 	ci::gl::TextureRef	mSmokeTexture;
 	ci::CameraPersp		mCam;
-	float				time;
-	float				deltaT;
+	//float				time;
+	//float				deltaT;
 	GLuint				renderSub, updateSub, query, drawBuf;
 	ci::TriMeshRef		mTrimesh;
+    ci::Rand            mRand;
 };
 	
 }

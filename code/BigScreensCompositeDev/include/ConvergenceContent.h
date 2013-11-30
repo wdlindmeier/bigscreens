@@ -19,6 +19,7 @@
 #include "GridLayout.h"
 #include "OutLineBorder.hpp"
 #include "cinder/Easing.h"
+#include "cinder/Rand.h"
 
 namespace bigscreens
 {
@@ -45,6 +46,8 @@ namespace bigscreens
         void reset(const GridLayout & previousLayout);
 		ci::Camera & getCamera();
         void setContentRect(const ci::Rectf & rect);
+        void setFramesRendered(const long long numFramesRendered);
+        void setConvergenceTankContent(RenderableContentRef content);
         
     protected:
         
@@ -65,6 +68,8 @@ namespace bigscreens
         long mMSElapsedConvergence;
         ci::EaseInOutCubic mCamEase;
         float mTotalTimelineProgress;
+        ci::Rand mRand;
+        long mNumFramesPrevLayoutRendered;
 
     };
 

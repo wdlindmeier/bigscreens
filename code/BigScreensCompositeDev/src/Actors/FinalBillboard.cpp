@@ -54,7 +54,7 @@ void FinalBillboard::loadShaders()
     mEffectsGlsl = ci::gl::GlslProg::create( mEffectsFormat );
 }
 	
-void FinalBillboard::draw( const ci::gl::TextureRef billboardTex )
+void FinalBillboard::draw( const ci::gl::TextureRef billboardTex, long numFramesRendered )
 {
     
     ci::gl::pushMatrices();
@@ -68,7 +68,8 @@ void FinalBillboard::draw( const ci::gl::TextureRef billboardTex )
     mEffectsGlsl->bind();
     mEffectsGlsl->uniform( "fboTexture", 0 );
     //		mEffectsGlsl->uniform( "texSize", billboardTex->getSize() );
-    TryAddingUniform(mEffectsGlsl, "time", (float)ci::app::getElapsedSeconds());
+    // TODO
+    TryAddingUniform(mEffectsGlsl, "time", (float)(numFramesRendered / 60.0f));
     //mEffectsGlsl->uniform( "time", (float)ci::app::getElapsedSeconds() );
     
     // NOTE: Channel 20 seems like a good sampling band

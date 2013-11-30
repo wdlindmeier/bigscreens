@@ -131,7 +131,7 @@ void TankConvergenceContent::renderOpponent(const float alpha)
     
     float zDepth = mCam.getEyePoint().length();
     // TODO: This should take an alpha so the opponent fades in w/ the rest
-    mOpponent->draw(zDepth, lightPos);
+    mOpponent->draw(zDepth, lightPos, mNumFramesRendered);
     
     gl::popMatrices();
 }
@@ -140,7 +140,6 @@ void TankConvergenceContent::render(const ci::Vec2i & screenOffset,
                                     const ci::Rectf & contentRect,
                                     const float alpha)
 {
-    
     mRenderAlpha = ci::math<float>::clamp(alpha, 0, 1.0);
     mScreenAlpha = mRenderAlpha*mRenderAlpha*mRenderAlpha;
     
@@ -279,7 +278,7 @@ void TankConvergenceContent::update(std::function<void (ci::CameraPersp & cam, D
 
     // QUESTION: What is "percentage"?
     float percentage = sin(mNumFramesRendered * 0.1);
-    mOpponent->update(percentage, smokeDirection);
+    mOpponent->update(mNumFramesRendered, percentage, smokeDirection);
     
     DumbTankContent::update(update_func);
 }

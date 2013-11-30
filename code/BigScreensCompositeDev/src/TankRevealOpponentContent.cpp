@@ -30,7 +30,7 @@ void TankRevealOpponentContent::drawMinion()
 
 void TankRevealOpponentContent::update(std::function<void (ci::CameraPersp & cam, AdvancedTankRef & tank)> update_func)
 {
-    mOpponent->update(10, Vec3f(0,1,0));
+    mOpponent->update(mNumFramesRendered, 10, Vec3f(0,1,0));
     
     TankContent::update(update_func);
 
@@ -55,6 +55,6 @@ void TankRevealOpponentContent::renderOpponent()
                    cos(mNumFramesRendered * 0.03333));
     
     float zDepth = mCam.getEyePoint().length();
-    mOpponent->draw(zDepth, lightPos);
+    mOpponent->draw(zDepth, lightPos, mNumFramesRendered);
     gl::popMatrices();
 }

@@ -11,20 +11,26 @@
 
 namespace bigscreens {
 	
-void Opponent::update( float percentage, const ci::Vec3f & smokeAccel )
+void Opponent::update(long numFramesRendered,
+                      float percentage,
+                      const ci::Vec3f & smokeAccel )
 {
 	// Smoke should have the opposite accel as movement
-	float deltaT = (ci::app::getElapsedSeconds() / 1000) - mTime;
-	mTime = ci::app::getElapsedSeconds() / 1000;
-	if( mUpdateG ) {
-		mDynamicGeometry->update( percentage, mTime );
+
+    float progress = numFramesRendered * 0.001f;
+    
+	if( mUpdateG )
+    {
+		mDynamicGeometry->update( percentage, progress);
 		mUpdateG = false;
 	}
-	mSmokeEffect->update( smokeAccel, mTime );
+    
+	mSmokeEffect->update( smokeAccel, numFramesRendered );
 }
 	
 void Opponent::draw(float zDepth,
-                    const ci::Vec3f & lightPosition )
+                    const ci::Vec3f & lightPosition,
+                    long numFramesRendered)
 {
 	// CAMERAVIEW - Will be used for lightPosition
 	// zDepth - Used for particle smoke
@@ -37,7 +43,7 @@ void Opponent::draw(float zDepth,
 
 	ci::gl::disableDepthWrite();
 	
-	mSmokeEffect->draw( zDepth );
+	mSmokeEffect->draw( zDepth, numFramesRendered );
 	
 	ci::gl::disableDepthRead();
 }

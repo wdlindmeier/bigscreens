@@ -128,6 +128,8 @@ public:
     
     bool                 mShouldFire;
     float                mScalarTimelineProgress;
+    
+    Rand                 mRand;
 };
 
 #pragma mark - Setup
@@ -169,6 +171,8 @@ void BigScreensCompositeApp::setup()
     mShouldFire = false;
 	
     mIsDrawingColumns = false;
+    
+    mRand.seed(1221);
 
     loadAudio();
     loadAssets();
@@ -261,12 +265,6 @@ void BigScreensCompositeApp::loadAssets()
     tank->load();
     mTankContent = RenderableContentRef(tank);
     
-    ConvergenceContent *converge = new ConvergenceContent();
-    converge->load();
-    Vec2i masterSize = mClient->getMasterSize();
-    converge->setContentRect(Rectf(0,0,masterSize.x, masterSize.y));
-    mConvergenceContent = RenderableContentRef(converge);
-    
     PerlinContent *perlinContent = new PerlinContent();
     mPerlinContent = RenderableContentRef(perlinContent);
 
@@ -278,6 +276,14 @@ void BigScreensCompositeApp::loadAssets()
     tankConverge->load();
     mSingleTankConvergeContent = RenderableContentRef(tankConverge);
     
+    // Load this after TankConvergenceContent
+    ConvergenceContent *converge = new ConvergenceContent();
+    converge->load();
+    Vec2i masterSize = mClient->getMasterSize();
+    converge->setContentRect(Rectf(0,0,masterSize.x, masterSize.y));
+    converge->setConvergenceTankContent(mSingleTankConvergeContent);
+    mConvergenceContent = RenderableContentRef(converge);
+
     DumbTankContent *dumbTank = new DumbTankContent();
     dumbTank->load();
     mDumbTankContent = RenderableContentRef(dumbTank);
@@ -621,7 +627,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+            if (mShouldFire || (mRand.nextInt(100) == 1) ) scene->fireTankGun();
             
             float camX = cosf(tankRotation) * 1000;
             float camZ = sinf(tankRotation) * 1000;
@@ -670,7 +676,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
                           tank->setTargetPosition(Vec3f(0,0,-10000));
                           tank->setBarrelAngleAndRotation(-35, 180);
                           cam.lookAt(camEye, camTarget);
-                          if (progressTank > 0.2 && arc4random() % 100 < 2)
+                          if (progressTank > 0.2 && mRand.nextInt(100) < 2)
                           {
                               scene->fireTankGun();
                           }
@@ -693,7 +699,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         {
             // Zoom in and out
 
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+            if (mShouldFire || (mRand.nextInt(kChanceFire) == 1) ) scene->fireTankGun();
             
             float camZ = tankPosition.z + (tankDistance * 1000);
             cam.lookAt(Vec3f(tankPosition.x + 100,
@@ -718,7 +724,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
 
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+            if (mShouldFire || (mRand.nextInt(kChanceFire) == 1) ) scene->fireTankGun();
 
             float camX, camY, camZ;
             switch (CLIENT_ID)
@@ -885,7 +891,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->getTank()->setWheelSpeedMultiplier(6);
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
         {
-            if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+            if (mShouldFire || (mRand.nextInt(kChanceFire) == 1) ) scene->fireTankGun();
             
             cam.lookAt(Vec3f( 0, 1200, -1000 ) + tankPosition,
                        Vec3f( 0, 100, 0 ) + tankPosition);
@@ -906,7 +912,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->getTank()->setWheelSpeedMultiplier(6);
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
                       {
-                          if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+                          if (mShouldFire || (mRand.nextInt(kChanceFire) == 1) ) scene->fireTankGun();
                           
                           cam.lookAt(tankPosition + Vec3f( 0, kTankBodyCenterY, 2000 ),
                                      tankPosition + Vec3f( 0, kTankBodyCenterY, 0 ));
@@ -938,7 +944,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
         scene->getTank()->setWheelSpeedMultiplier(4);
         scene->update([=](CameraPersp & cam, AdvancedTankRef & tank)
                       {
-                          if (mShouldFire || ((int)arc4random() % kChanceFire == 1) ) scene->fireTankGun();
+                          if (mShouldFire || (mRand.nextInt(kChanceFire) == 1) ) scene->fireTankGun();
                           cam.lookAt(tankPosition + eye,
                                      tankPosition + lookAt);
                       });
@@ -1110,7 +1116,7 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mFbo->unbindFramebuffer();
-	mFinalBillboard->draw( mFbo->getTexture() );
+	mFinalBillboard->draw( mFbo->getTexture(), mClient->getCurrentRenderFrame() );
 	
     if (mIsDrawingColumns)
     {
