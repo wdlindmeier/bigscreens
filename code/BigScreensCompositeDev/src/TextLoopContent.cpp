@@ -25,10 +25,10 @@ const static char kCharMap[] =
     'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
     'Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6',
     '7','8','9','0','-','=','@','#',':','%','*','_','+',':','.',']',
-    ' ' // space is always last
+    '$','>',' ' // space is always last
 };
 
-const static int kCharCount = 49;
+const static int kCharCount = 51;
 const static int kCharsWide = 16;
 const static int kCharPxTall = 201;
 const static float kCharPxWide = 2048.0f / kCharsWide;

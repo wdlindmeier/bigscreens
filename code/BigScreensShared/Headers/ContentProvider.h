@@ -107,6 +107,12 @@ namespace TextContentProvider
             textTimeline.push_back(TextWithFramecount("COM INTERRUPT ]", 30));
             textTimeline.push_back(TextWithFramecount("COM INTERRUPT", 30));
         }
+        if (contentKey == "textPrompt")
+        {
+            lineHeight = 40;
+            textTimeline.push_back(TextWithFramecount("$> ]", 30));
+            textTimeline.push_back(TextWithFramecount("$>  ", 30));
+        }
         if (contentKey == "textID0")
         {
             lineHeight = 20;
@@ -126,6 +132,7 @@ namespace TextContentProvider
         {
             lineHeight = 100;
             textTimeline.push_back(TextWithFramecount("*", 30));
+            textTimeline.push_back(TextWithFramecount(" ", 30));
         }
         TextTimelineAndHeight ret;
         ret.timeline = textTimeline;
