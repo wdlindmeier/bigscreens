@@ -95,7 +95,8 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
 
     gl::clear( Color( 0.0, 0.0, 0.0 ) );
     
-    gl::enableAdditiveBlending();
+    //gl::enableAdditiveBlending();
+    gl::enableAlphaBlending();
     
     vector<ScreenRegion> regions = mLayout.getRegions();
     int regionCount = regions.size();
@@ -130,7 +131,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
     const static float kFinalSceneProgressBegin = 0.75;
     
     float finalSceneAlpha = (progress*progress*progress*progress) - kFinalSceneProgressBegin;
-    float fadeAlpha = 1.5 - finalSceneAlpha;
+    float fadeAlpha = std::min<float>(1.0f, 1.5f - finalSceneAlpha);
     finalSceneAlpha = std::min<float>(1.0, finalSceneAlpha);
     bool shouldDrawRegions = fadeAlpha > 0.01;
 
@@ -234,6 +235,8 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
                                                   const Rectf & rect,
                                                   const float alpha)
 {
+    gl::disableAlphaBlending();
+    
     // Clip the viewport, similar to SceneWindow
     Vec2i contentSize = mContentRect.getSize();
 
@@ -252,8 +255,6 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
 
     static_pointer_cast<TankConvergenceContent>(mContent)->render(screenOffset, rect, alpha);
 
-    gl::enableAlphaBlending();
-    
     float outlineAlpha = 1.0 - linearProgress;
     outlineAlpha *= outlineAlpha;
     
@@ -264,6 +265,10 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
                      rect.getWidth(),
                      rect.getHeight());
 
+    if (outlineAlpha < 1.0f)
+    {
+        gl::enableAlphaBlending();
+    }
     mOutLine->setColor(ColorAf(1.0,1.0,1.0,outlineAlpha));
     mOutLine->render();
 #if IS_IAC
@@ -274,6 +279,6 @@ void ConvergenceContent::renderWithFadeTransition(const ci::Vec2i screenOffset,
                      rect.getHeight() - 2);
     mOutLine->render();
 #endif
-
+    gl::disableAlphaBlending();
 }
 
