@@ -125,6 +125,7 @@ public:
     int                  mPreConvergenceLayoutIndex;
     long long            mMSElapsedConvergence;
     long long            mMSConvergenceBegan;
+    long long            mLastFrameRendered;
     
     bool                 mShouldFire;
     float                mScalarTimelineProgress;
@@ -191,6 +192,7 @@ extern float MaxExplosionScale = kDefaultExplosionScale;
 
 void BigScreensCompositeApp::reload()
 {
+    mLastFrameRendered = -1;
     mScalarTimelineProgress = 0;
     mLayoutIndex = -1;
     mCurrentContentInfo.clear();
@@ -589,7 +591,7 @@ void BigScreensCompositeApp::startConvergenceClock()
         if (mLayoutIndex == mPreConvergenceLayoutIndex)
         {
             // reset
-            console() << "STARTING CONVERGENCE CLOCK\n";
+            // console() << "STARTING CONVERGENCE CLOCK\n";
             mMSElapsedConvergence = 0;
             mMSConvergenceBegan = timelineMS;
         }
@@ -601,7 +603,11 @@ const static int kChanceFire = 100;
 void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & contentInfo,
                                                     const int contentID)
 {
-    long long contentElapsedFrames = contentInfo.numRenderFrames;
+    long long contentElapsedFrames = 0;
+    if (contentInfo.startRenderFrame > -1)
+    {
+        contentElapsedFrames = (mClient->getCurrentRenderFrame() - contentInfo.startRenderFrame) + 1;
+    }
     
     // Arbitrary
     Vec3f tankPosition(0, 0, contentElapsedFrames * 10);
@@ -610,8 +616,7 @@ void BigScreensCompositeApp::updateContentForRender(const TimelineContentInfo & 
     content->setFramesRendered(contentElapsedFrames);
     content->setFrameContentID(contentID);
     
-    // TODO: Use blink spin / dumbTank update
-    if (contentInfo.contentKey == kContentKeyTankSpin) // TMP
+    if (contentInfo.contentKey == kContentKeyTankSpin)
     {
         // Blinking tank rotation
         float tankRotation = contentElapsedFrames * 0.01;
@@ -995,6 +1000,13 @@ void BigScreensCompositeApp::draw()
 
 void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
 {
+    if (mLastFrameRendered >= mClient->getCurrentRenderFrame())
+    {
+        // Don't draw if this is the same frame
+        return;
+    }
+    mLastFrameRendered = mClient->getCurrentRenderFrame();
+    
     gl::clear( Color( 0, 0, 0 ), true );
     
     // Create a new map of render times.
@@ -1026,15 +1038,15 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
             if (mCurrentContentInfo.count(contentID))
             {
                 TimelineContentInfo prevContentInfo = mCurrentContentInfo[contentID];
-                renderMe.numRenderFrames = prevContentInfo.numRenderFrames + 1;
+                renderMe.startRenderFrame = prevContentInfo.startRenderFrame;
             }
-            else
+            if (renderMe.startRenderFrame < 0)
             {
-                renderMe.numRenderFrames = 1;
+                renderMe.startRenderFrame = mClient->getCurrentRenderFrame();
             }
+            
             newContentInfo[contentID] = renderMe;
         }
-        
 
         // Check if this should be rendered at all.
         if (rectsOverlap(renderMe.rect, mClient->getVisibleRect()))

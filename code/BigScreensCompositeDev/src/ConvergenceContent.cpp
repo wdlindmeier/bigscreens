@@ -139,11 +139,14 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         static const int kLastContentID = 9999;
         mContent->setFrameContentID(kLastContentID);
 
-        if (!shouldDrawRegions &&
-            mRand.nextInt(100) < 20)
+        if (!shouldDrawRegions)
         {
-            int fireTankIdx = mRand.nextInt(kNumTanksConverging);
-            tanks->fireTankGun(fireTankIdx);
+//            console() << "mNumFramesRendered: " << mNumFramesRendered << " mMSElapsedConvergence: " << mMSElapsedConvergence << "\n";
+            if (mRand.nextInt(100) < 20)
+            {
+                int fireTankIdx = mRand.nextInt(kNumTanksConverging);
+                tanks->fireTankGun(fireTankIdx);
+            }
         }
 
         // This uses the final cam
