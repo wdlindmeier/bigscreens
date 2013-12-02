@@ -228,6 +228,7 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         gl::color(ColorAf(0,0,0,1.0-fadeOutAmt));
         gl::setDefaultShaderVars();
         gl::drawSolidRect(Rectf(0,0,contentRect.getWidth(), contentRect.getHeight()));
+        gl::disableAlphaBlending();
     }
 }
 

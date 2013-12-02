@@ -563,9 +563,9 @@ namespace bigscreens
         
         drawTank();
 
-        drawTankShots();
-        
         drawMinion();
+        
+        drawTankShots();
         
         // Clear out the content ID.
         // Do it through the getter.
