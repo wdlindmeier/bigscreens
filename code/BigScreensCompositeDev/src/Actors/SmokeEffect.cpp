@@ -90,8 +90,13 @@ void SmokeEffect::draw( float zDepth, long numFramesRendered )
 	mRenderOpponentParticlesGlsl->uniform( "Time", (float)((double)numFramesRendered / 60.0f) );
 	mRenderOpponentParticlesGlsl->uniform( "projection", ci::gl::getProjection() );
 	mRenderOpponentParticlesGlsl->uniform( "modelView", ci::gl::getModelView() );
-	mRenderOpponentParticlesGlsl->uniform( "MinParticleSize", 1.0f  );
+#if DEBUG // small screen
+	mRenderOpponentParticlesGlsl->uniform( "MinParticleSize", 2.0f  );
 	mRenderOpponentParticlesGlsl->uniform( "MaxParticleSize", 64.0f );//maxParticleSize > 10.0f ? maxParticleSize : 10.0f );
+#else
+	mRenderOpponentParticlesGlsl->uniform( "MinParticleSize", 8.0f  );
+    mRenderOpponentParticlesGlsl->uniform( "MaxParticleSize", 256.0f );//maxParticleSize > 10.0f ? maxParticleSize : 10.0f );
+#endif
 	mRenderOpponentParticlesGlsl->uniform( "ParticleLifetime", 3.0f );
 	
 	

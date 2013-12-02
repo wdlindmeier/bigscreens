@@ -198,6 +198,7 @@ void TankConvergenceContent::drawTank()
     gl::setMatrices( mCam );
 
     mTankShader->uniform("uColor", ColorAf(1, 1, 1, 0.5f * mRenderAlpha));
+    //console() << "Rendering ID " << mContentID << " mRenderAlpha: " << mRenderAlpha << " frame num: " << mNumFramesRendered << "\n";
     
     for (int i = 0; i < kNumTanksConverging; ++i)
     {
