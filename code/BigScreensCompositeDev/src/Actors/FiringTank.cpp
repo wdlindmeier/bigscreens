@@ -26,15 +26,14 @@ void FiringTank::update(long framesRendered)
     vector<TankShot> keepShots;
     for (TankShot & shot : mShotsFired)
     {
-        // TEST
         // Only update when it's your content ID
         if (shot.getContentID() == mContentID)
         {
-            shot.update(0.2f, framesRendered);
-            if (!shot.isDead())
-            {
-                keepShots.push_back(shot);
-            }
+            shot.update(0.2f);
+        }
+        if (!shot.isDead())
+        {
+            keepShots.push_back(shot);
         }
     }
     mShotsFired = keepShots;

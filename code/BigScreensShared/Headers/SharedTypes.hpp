@@ -82,7 +82,7 @@ namespace bigscreens
     // aren't visible on the current screen.
     struct TimelineContentInfo
     {
-        long long numRenderFrames = 0;
+        long long startRenderFrame = -1;
         std::string contentKey = "";
         ci::Rectf rect = ci::Rectf(0,0,0,0);
         RenderableContentRef contentRef;
