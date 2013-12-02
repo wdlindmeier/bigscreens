@@ -484,19 +484,23 @@ void BigScreensCompositeApp::restart()
 {
     console() << "restart\n";
     mTimeline->restart();
+#ifndef RENDER_FRAMES
     mSoundtrack->seekToStart();
     if (mTimeline->isPlaying())
     {
         mSoundtrack->play();
     }
+#endif
 }
 
 void BigScreensCompositeApp::play()
 {
     console() << "play\n";
     mTimeline->play();
+#ifndef RENDER_FRAMES
     mSoundtrack->play();
     mSoundtrack->seekToTime(mTimeline->getPlayheadMillisec() * 0.001);
+#endif
     startConvergenceClock();
 }
 
@@ -533,6 +537,12 @@ void BigScreensCompositeApp::update()
     {
         hideCursor();
     }
+#ifdef RENDER_FRAMES
+    if (mClient->isConnected() && !mTimeline->isPlaying())
+    {
+        play();
+    }
+#endif
 }
 
 void BigScreensCompositeApp::mpeFrameUpdate(long serverFrameNumber)
