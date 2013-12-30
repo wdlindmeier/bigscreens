@@ -120,7 +120,9 @@ public:
 	
 	FinalBillboardRef    mFinalBillboard;
 	gl::FboRef           mFbo;
-    
+#ifdef RENDER_FRAMES
+    gl::FboRef           mFboRender;
+#endif
     int                  mConvergenceLayoutIndex;
     int                  mPreConvergenceLayoutIndex;
     long long            mMSElapsedConvergence;
@@ -162,6 +164,20 @@ void BigScreensCompositeApp::setup()
     mFbo->bindFramebuffer();
     gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     mFbo->unbindFramebuffer();
+    
+#ifdef RENDER_FRAMES
+    gl::Fbo::Format mRenderFormat;
+    mRenderFormat.setColorBufferInternalFormat(GL_RGBA8);
+    //mRenderFormat.colorTexture().samples(4);
+    mRenderFormat.colorTexture().samples(4);
+    mFboRender = gl::Fbo::create(mClient->getVisibleRect().getWidth(),
+                                 mClient->getVisibleRect().getHeight(), mFormat);// mRenderFormat);
+    /*
+    mFboRender->bindFramebuffer();
+    gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    mFboRender->unbindFramebuffer();
+    */
+#endif
     
     mTimeline = GridLayoutTimelineRef(timeline);
     
@@ -342,15 +358,15 @@ void BigScreensCompositeApp::loadAudio()
 
 ci::DataSourceRef BigScreensCompositeApp::mpeSettingsFile()
 {
+#if IS_IAC
 #ifdef RENDER_FRAMES
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".render.xml";
 #else
-#if IS_IAC
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".IAC.xml";
+#endif
 #else
     string settingsFilename = "settings."+to_string(CLIENT_ID)+".xml";
 #endif
-#endif // ifdef
     console() << "Loading settings: " << settingsFilename << "\n";
     return ci::app::loadResource(settingsFilename);
 }
@@ -1035,7 +1051,6 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     
 	mFbo->bindFramebuffer();
     gl::clear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
     for (auto & kv : renderContent)
     {
         int contentID = kv.first;
@@ -1138,8 +1153,36 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     }
     
     mFbo->unbindFramebuffer();
-	mFinalBillboard->draw( mFbo->getTexture(), mClient->getCurrentRenderFrame() );
-	
+
+#ifdef RENDER_FRAMES
+    
+    mFboRender->bindFramebuffer();
+    gl::enableAlphaBlending(true);
+    gl::clear( Color( 0, 0, 0 ), true );
+    
+#endif
+    
+    mFinalBillboard->draw( mFbo->getTexture(), mClient->getCurrentRenderFrame() );
+
+#ifdef RENDER_FRAMES
+    
+    mFboRender->unbindFramebuffer();
+    // Draw the texture to the screen for preview
+    gl::TextureRef fboTex = mFboRender->getTexture();
+    fboTex->setFlipped();
+    
+    // draw it for reference
+    gl::draw(fboTex);
+
+    Surface flipped(*fboTex);
+    ci::ip::flipVertical(&flipped);
+    
+    ci::writeImage(getHomeDirectory() / "Documents" / "BigScreensRender" / std::to_string(CLIENT_ID) / (std::to_string(mClient->getCurrentRenderFrame()) + ".png"), flipped);
+    
+    gl::disableAlphaBlending();
+    
+#endif
+    
     if (mIsDrawingColumns)
     {
         renderColumns();
@@ -1148,15 +1191,6 @@ void BigScreensCompositeApp::mpeFrameRender(bool isNewFrame)
     mCurrentContentInfo = newContentInfo;
     
     mShouldFire = false;
-    
-#ifdef RENDER_FRAMES
-    {
-        gl::Texture & fboTex = *mFbo->getTexture();
-        Surface flipped(fboTex);
-        ci::ip::flipVertical(&flipped);
-        ci::writeImage(getHomeDirectory() / "Documents" / "BigScreensRender" / std::to_string(CLIENT_ID) / (std::to_string(mClient->getCurrentRenderFrame()) + ".png"), flipped);
-    }
-#endif
     
 }
 

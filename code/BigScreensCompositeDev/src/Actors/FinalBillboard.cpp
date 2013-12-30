@@ -55,8 +55,7 @@ void FinalBillboard::loadShaders()
 }
 	
 void FinalBillboard::draw( const ci::gl::TextureRef billboardTex, long numFramesRendered )
-{
-    
+{    
     ci::gl::pushMatrices();
     ci::gl::viewport( ci::Vec2i(), billboardTex->getSize() );
     

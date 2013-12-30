@@ -229,6 +229,12 @@ void ConvergenceContent::render(const ci::Vec2i & screenOffset,
         gl::setDefaultShaderVars();
         gl::drawSolidRect(Rectf(0,0,contentRect.getWidth(), contentRect.getHeight()));
         gl::disableAlphaBlending();
+#ifdef RENDER_FRAMES
+        if (fadeOutAmt < -1.0)
+        {
+            exit(0);
+        }
+#endif
     }
 }
 
